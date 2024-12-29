@@ -65,7 +65,6 @@
       ruff
       pyyaml
       pygame
-      pytube
       yt-dlp
     ]))
     ffmpeg
