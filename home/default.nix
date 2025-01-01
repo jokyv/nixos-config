@@ -79,6 +79,7 @@
     git-crypt
     gitleaks
     just
+    jq
     libreoffice-qt-fresh # no space left for this app
     nautilus
     nom
