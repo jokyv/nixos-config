@@ -26,6 +26,7 @@
 
         # Font settings
         title-font = "monospace:size=12";
+        summary-font = "monospace:size=12";
         body-font = "monospace:size=10";
       };
 
