@@ -4,6 +4,11 @@
   programs.niri.package = pkgs.niri;
 
   programs.niri.settings = {
+    cursor = {
+      hide-when-typing = true;
+      hide-after-inactive-ms = 1000;
+    };
+
     hotkey-overlay.skip-at-startup = true;
     prefer-no-csd = true;
 
@@ -16,7 +21,8 @@
         # accel-profile = "flat";
         # scroll-method = "no-scroll";
       };
-      # focus-follows-mouse = true;
+      warp-mouse-to-focus = true;
+      focus-follows-mouse.enable = true;
       workspace-auto-back-and-forth = true;
     };
 
@@ -94,6 +100,8 @@
     binds = with config.lib.niri.actions;
       let
         sh = spawn "sh" "-c";
+        # term = args: "kitty sh -c '${lib.escape [ "'" ] args}'";
+
       in
       lib.attrsets.mergeAttrsList [
         {
@@ -105,14 +113,21 @@
           # Browser apps
           "Mod+B".action.spawn = "firefox";
           "Mod+Shift+B".action.spawn = "brave";
-          # other apps
+          # Launch app launcher 
           "Mod+D".action.spawn = "fuzzel";
+          # Launch file manager
           "Mod+E".action.spawn = "nautilus";
+          # "Mod+Shift+E".action = term "yy ${config.home.homeDirectory}/downloads/";
+          # Change wallpaper
           "Mod+W".action = sh ''notify-send -c critical "wallpaper" "changing wallpaper..." | waypaper --random'';
 
-          # "Mod+Shift+E".action =
-          #   { execute = "kitty ${yy}"; };
-          "Mod+M".action = sh "my_logout.sh";
+          # Scripts
+          "Mod+Shift+W".action = sh "${config.home.homeDirectory}/scripts/bin/define_word.sh";
+          "Mod+Shift+M".action = sh "${config.home.homeDirectory}/scripts/bin/my_logout.sh";
+          # replace with https://github.com/sentriz/cliphist
+          "Mod+Shift+C".action = sh "${config.home.homeDirectory}/scripts/bin/clip_hist.sh add";
+          "Mod+Shift+V".action = sh "wl-paste";
+          "Mod+Shift+S".action = sh "${config.home.homeDirectory}/scripts/bin/clip_hist.sh sel";
 
           # System actions
           "Mod+Q".action = close-window;
@@ -125,10 +140,6 @@
           "Mod+Shift+R".action = reset-window-height;
           "Mod+F".action = maximize-column;
           "Mod+Shift+F".action = fullscreen-window;
-
-          # Clipboard
-          # "Mod+Shift+C".command = sh "\"t env DISPLAY=:0 xsel -ob | wl-copy\"";
-          # "Mod+Shift+V".command = sh "\"wl-paste -n | t env DISPLAY=:0 xsel -ib\"";
 
           # Audio controls
           "Mod+F7".action = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
