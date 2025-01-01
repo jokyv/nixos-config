@@ -12,9 +12,12 @@
     ./programs/foot.nix
     ./programs/kitty.nix
 
+    # BROWSER
+    # ./programs/brave.nix
+    ./programs/firefox.nix
+
     ./programs/bat.nix
     ./programs/fastfetch.nix
-    ./programs/firefox.nix
     ./programs/fnott.nix
     ./programs/fuzzel.nix
     ./programs/fzf.nix
@@ -88,7 +91,6 @@
     psst
     sops
     tabiew
-    taplo
     trashy
     typos
     unimatrix
@@ -106,6 +108,7 @@
     marksman
     nixd
     nixpkgs-fmt
+    taplo
     vscode-langservers-extracted
     yaml-language-server
   ];
