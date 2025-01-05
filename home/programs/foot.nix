@@ -5,12 +5,15 @@
     enable = true;
     settings = {
       main = {
-        term = "xterm-256color";
+        # term = "xterm-256color";
         # font = "FiraCode Nerd Font Mono:size=11";
-        initial-window-size-pixels = "1920x1080";
+        # initial-window-size-pixels = "1920x1080";
+        # initial-window-size-pixels = "700x500";
         # Set the initial window mode (windowed, maximized, fullscreen)
-        initial-window-mode = "windowed";
-        pad = "10x10";
+        # initial-window-mode = "maximized";
+        # pad = "10x10";
+        resize-by-cells = "yes";
+        # resize-keep-grid = "yes";
       };
       mouse = {
         hide-when-typing = "yes";
@@ -23,19 +26,19 @@
       csd = {
         # Configure client-side decorations
         # preferred = "client";
-        preferred = "server";
-        color = "000000"; # Black background
-        button-color = "ffffff"; # White buttons
-        button-minimize-color = "ffffff";
-        button-maximize-color = "ffffff";
-        button-close-color = "ffffff";
+        # preferred = "server";
+        # color = "000000"; # Black background
+        # button-color = "ffffff"; # White buttons
+        # button-minimize-color = "ffffff";
+        # button-maximize-color = "ffffff";
+        # button-close-color = "ffffff";
       };
       key-bindings = {
         # Custom key bindings
         scrollback-up-page = "Shift+Page_Up";
         scrollback-down-page = "Shift+Page_Down";
-        clipboard-copy = "Control+Shift+c XF86Copy";
-        clipboard-paste = "Control+Shift+v XF86Paste";
+        # clipboard-copy = "Control+Shift+c XF86Copy";
+        # clipboard-paste = "Control+Shift+v XF86Paste";
       };
       search-bindings = {
         # Search-specific key bindings
