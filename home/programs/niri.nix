@@ -86,6 +86,15 @@
       { command = [ "kitty" ]; }
       { command = [ "waybar" ]; }
       { command = [ "waypaper" "--restore" ]; }
+      # { command = [ "cliphist" "daemon" ]; }
+      {
+        command = [
+          "wl-paste"
+          "--watch"
+          "cliphist"
+          "store"
+        ];
+      }
     ];
 
     screenshot-path = "~/pics/screenshots/screenshot from %Y-%m-%d %H-%M-%S.png";
@@ -109,7 +118,8 @@
 
           # Terminal apps
           "Mod+T".action.spawn = "kitty";
-          "Mod+Shift+T".action.spawn = "foot";
+          # "Mod+Shift+T".action.spawn = "foot";
+          "Mod+Shift+T".action = sh "${pkgs.foot}/bin/foot";
           # Browser apps
           "Mod+B".action.spawn = "firefox";
           "Mod+Shift+B".action.spawn = "brave";
@@ -124,10 +134,9 @@
           # Scripts
           "Mod+Shift+W".action = sh "${config.home.homeDirectory}/scripts/bin/define_word.sh";
           "Mod+Shift+M".action = sh "${config.home.homeDirectory}/scripts/bin/my_logout.sh";
-          # replace with https://github.com/sentriz/cliphist
-          "Mod+Shift+C".action = sh "${config.home.homeDirectory}/scripts/bin/clip_hist.sh add";
-          "Mod+Shift+V".action = sh "wl-paste";
-          "Mod+Shift+S".action = sh "${config.home.homeDirectory}/scripts/bin/clip_hist.sh sel";
+          "Mod+Shift+C".action = sh "${config.home.homeDirectory}/scripts/bin/clip_hist.py add";
+          "Mod+Shift+V".action = sh "${config.home.homeDirectory}/scripts/bin/clip_hist.py paste";
+          "Mod+Shift+S".action = sh "${config.home.homeDirectory}/scripts/bin/clip_hist.py sel";
 
           # System actions
           "Mod+Q".action = close-window;
