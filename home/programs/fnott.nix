@@ -12,8 +12,8 @@
         # max-visible = 5;
 
         # Timing
-        default-timeout = 30;
-        max-timeout = 60;
+        default-timeout = 20;
+        max-timeout = 30;
 
         # Display settings
         # title = true;
