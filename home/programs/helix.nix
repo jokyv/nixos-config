@@ -179,6 +179,12 @@
         }
 
         {
+          name = "nu";
+          auto-format = true;
+          formatter = { command = "nufmt"; args = [ "format" "--stdin" ]; };
+        }
+
+        {
           name = "bash";
           auto-format = true;
           scope = "source.bash";
@@ -230,6 +236,7 @@
           auto-format = true;
           file-types = [ "md" ];
           language-servers = [ "marksman" ];
+          # language-servers = [ "markdown-oxide" ];
           formatter = {
             command = "dprint";
             args = [ "fmt" "--stdin" "md" ];
