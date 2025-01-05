@@ -62,34 +62,24 @@
 
   # install packages with their default configs
   home.packages = with pkgs; [
-    age
     alacritty
     atuin
     base16-schemes
-    bash
-    bat
     brave
     cowsay
     dconf
-    ddgr
+    ddgr # duckduckgo on the terminal
     delta
     eza
-    fastfetch
     fd
-    font-awesome
     fzf
     git-cliff
-    git-crypt
-    gitleaks
     just
     jq
     libreoffice-qt-fresh # no space left for this app
     nautilus
-    nom
     nh
-    noto-fonts
     psst
-    sops
     tabiew
     trashy
     typos
@@ -97,20 +87,37 @@
     uv
     virtualenv # need this for python virtual env
     waybar
-    wl-clipboard
     xonsh
     zathura
 
-    # LANGUAGES
+    # Clipboard
+    cliphist
+    wl-clipboard
+    wtype # need this for my script clip_hist.py
+
+    # Fonts
+    font-awesome
+    noto-fonts
+
+    # Language servers
     bash-completion
     bash-language-server
     dprint
+    markdown-oxide
     marksman
     nixd
     nixpkgs-fmt
+    nufmt
+    shfmt
     taplo
     vscode-langservers-extracted
     yaml-language-server
+
+    # Secrets
+    age
+    gitleaks
+    git-crypt
+    sops
   ];
 
 
