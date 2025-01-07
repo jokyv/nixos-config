@@ -13,7 +13,13 @@
     prefer-no-csd = true;
 
     input = {
-      keyboard.xkb.layout = "us";
+      keyboard = {
+        xkb = {
+          layout = "us, gr"; # US and Greek layouts
+          model = "pc105";
+          options = "grp:alt_shift_toggle"; # Note: changed from 'options' to 'xkb-options'
+        };
+      };
       mouse = {
         # off = false;
         # natural-scroll = false;

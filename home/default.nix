@@ -29,6 +29,7 @@
     ./programs/starship.nix
     ./programs/stylix.nix
     ./programs/swaylock.nix
+    ./programs/waybar.nix
     ./programs/waypaper.nix
     ./programs/yazi.nix
     ./programs/zathura.nix
@@ -80,13 +81,13 @@
     nautilus
     nh
     psst
+    pwvucontrol
     tabiew
     trashy
     typos
     unimatrix
     uv
     virtualenv # need this for python virtual env
-    waybar
     xonsh
     zathura
 
@@ -97,7 +98,10 @@
 
     # Fonts
     font-awesome
+    liberation_ttf
     noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-emoji
 
     # Language servers
     bash-completion

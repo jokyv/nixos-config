@@ -12,7 +12,7 @@
         # Set the initial window mode (windowed, maximized, fullscreen)
         # initial-window-mode = "maximized";
         # pad = "10x10";
-        resize-by-cells = "yes";
+        resize-by-cells = "no";
         # resize-keep-grid = "yes";
       };
       mouse = {

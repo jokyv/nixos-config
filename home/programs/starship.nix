@@ -7,7 +7,25 @@
     settings = {
       # Global prompt configuration
       format = ''
-        $username$hostname$directory$sudo$git_branch$git_commit$git_state$git_status$git_metrics$gcloud$fill$jobs $python $rust $cmd_duration $time$line_break$status$character
+        $username\
+        $hostname\
+        $directory\
+        $sudo\
+        $git_branch\
+        $git_commit\
+        $git_state\
+        $git_status\
+        $git_metrics\
+        $gcloud\
+        $fill\
+        $jobs\
+        $python\
+        $rust\
+        $cmd_duration\
+        $time\
+        $line_break\
+        $status\
+        $character
       '';
 
       # Timeouts and general settings
@@ -32,7 +50,7 @@
 
       cmd_duration = {
         disabled = false;
-        min_time = 2000;
+        min_time = 2000; # show duration if takes more than 2 seconds
         format = "\\[[tt: $duration]($style)\\]";
         show_milliseconds = true;
         show_notifications = false;
@@ -41,7 +59,7 @@
 
       directory = {
         disabled = false;
-        truncation_length = 2;
+        truncation_length = 3;
         truncate_to_repo = true;
         truncation_symbol = "../";
         fish_style_pwd_dir_length = 0;
@@ -70,6 +88,7 @@
         format = "(\\[$symbol$branch\\]($style)) ";
         symbol = " ";
         truncation_symbol = "…";
+        ignore_branches = [ "main" "master" ];
       };
 
       git_commit = {
