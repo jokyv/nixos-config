@@ -16,6 +16,8 @@
         rulers = [ 120 ];
         scrolloff = 10;
         true-color = true;
+        end-of-line-diagnostics = "hint";
+        inline-diagnostics.cursor-line = "error";
 
         statusline = {
           left = [ "mode" "spinner" "diagnostics" ];
