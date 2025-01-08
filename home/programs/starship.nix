@@ -163,9 +163,9 @@
       };
 
       sudo = {
-        disabled = true;
+        disabled = false;
         format = "\\[[$symbol($version)]($style)\\]";
-        symbol = " ";
+        symbol = "";
       };
 
       time = {
