@@ -1,3 +1,4 @@
+{ config, ... }:
 {
   programs.waybar = {
     enable = true;
@@ -28,24 +29,31 @@
           "network"
           "niri/language"
           "clock"
+          "custom/off_button"
         ];
 
         "niri/language" = {
           format = "{}";
-          "format-en" = "ENG";
-          "format-gr" = "ΕΛ";
+          format-en = "ENG";
+          format-gr = "ΕΛ";
         };
 
         "niri/workspaces" = {
-          "icon-size" = 32;
+          icon-size = 32;
           spacing = 16;
-          "on-scroll-up" = "hyprctl dispatch workspace r+1";
-          "on-scroll-down" = "hyprctl dispatch workspace r-1";
+          on-scroll-up = "hyprctl dispatch workspace r+1";
+          on-scroll-down = "hyprctl dispatch workspace r-1";
         };
 
         "custom/os_button" = {
           format = "";
-          "on-click" = "fuzzel";
+          on-click = "fuzzel";
+          tooltip = false;
+        };
+
+        "custom/off_button" = {
+          format = "";
+          on-click = "${config.home.homeDirectory}/scripts/bin/my_logout.sh";
           tooltip = false;
         };
 
@@ -53,6 +61,26 @@
           interval = 5;
           format = "󰻠 {usage}%";
           max-length = 10;
+          on-click = "foot -F btop";
+        };
+
+        disk = {
+          interval = 30;
+          format = "󰋊 {percentage_used}%";
+          path = "/";
+          tooltip = true;
+          unit = "GB";
+          tooltip-format = "Available {free} of {total}";
+          on-click = "foot -F btop";
+        };
+
+        memory = {
+          interval = 10;
+          format = "  {percentage}%"; # needs more space here
+          max-length = 10;
+          tooltip = true;
+          tooltip-format = "RAM - {used:0.1f}GiB used";
+          on-click = "foot -F btop";
         };
 
         temperature = {
@@ -64,31 +92,14 @@
           format = " {temperatureC}°C";
         };
 
-        disk = {
-          interval = 30;
-          format = "󰋊 {percentage_used}%";
-          path = "/";
-          tooltip = true;
-          unit = "GB";
-          tooltip-format = "Available {free} of {total}";
-        };
-
-        memory = {
-          interval = 10;
-          format = "  {percentage}%";
-          max-length = 10;
-          tooltip = true;
-          tooltip-format = "RAM - {used:0.1f}GiB used";
-        };
-
         "wlr/taskbar" = {
           format = "{icon} {title:.17}";
-          "icon-size" = 28;
+          icon-size = 28;
           spacing = 3;
-          "on-click-middle" = "close";
-          "tooltip-format" = "{title}";
-          "ignore-list" = [ ];
-          "on-click" = "activate";
+          on-click-middle = "close";
+          tooltip-format = "{title}";
+          ignore-list = [ ];
+          on-click = "activate";
         };
 
         tray = {
@@ -222,13 +233,26 @@
 
       #custom-os_button {
         font-family: "JetBrainsMono Nerd Font";
-        font-size: 24px;
+        font-size: 32px;
         padding-left: 12px;
         padding-right: 20px;
         transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
       }
 
       #custom-os_button:hover {
+        background: @bg_hover;
+        color: @content_main;
+      }
+
+      #custom-off_button {
+        font-family: "JetBrainsMono Nerd Font";
+        font-size: 24px;
+        padding-left: 12px;
+        padding-right: 20px;
+        transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+
+      #custom-off_button:hover {
         background: @bg_hover;
         color: @content_main;
       }
