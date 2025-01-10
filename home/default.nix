@@ -47,7 +47,7 @@
 
   # SOPS configuration
   sops = {
-    age.keyFile = "${config.home.homeDirectory}/.config/sops/age/nix-secrets.key";
+    age.keyFile = "${config.home.homeDirectory}/.config/sops/age/secrets.key";
     # age.keyFile = "${userConfig.home}/.config/sops/age/nix-secrets.key";
     defaultSopsFile = ../secrets.enc.yaml;
     defaultSopsFormat = "yaml";

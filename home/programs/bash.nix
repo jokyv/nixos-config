@@ -183,7 +183,7 @@
       export NIX_PATH=nixpkgs=https://github.com/nixos/nixpkgs/archive/refs/heads/master.tar.gz
 
       # SOPS
-      export SOPS_AGE_KEY_FILE=~/.config/sops/age/nix-secrets.key
+      export SOPS_AGE_KEY_FILE=~/.config/sops/age/secrets.key
 
       # Print sourced confirmation
       echo "-- aliases loaded"

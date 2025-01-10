@@ -88,7 +88,7 @@
 
     environmentVariables = {
       # SOPS
-      SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops/age/nix-secrets.key";
+      SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops/age/secrets.key";
 
 
     };
