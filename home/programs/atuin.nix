@@ -22,6 +22,7 @@
     };
 
     enableBashIntegration = true;
+    enableNushellIntegration = true;
     # enableZshIntegration = true;
     # enableFishIntegration = true;
   };
