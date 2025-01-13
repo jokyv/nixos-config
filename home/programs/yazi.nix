@@ -1,6 +1,7 @@
 {
   programs.yazi = {
     enable = true;
+    enableNushellIntegration = true;
     settings = {
       manager = {
         ratio = [ 2 4 3 ];
