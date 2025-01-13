@@ -8,8 +8,8 @@
         position = "top";
         mod = "dock";
         exclusive = true;
-        "gtk-layer-shell" = true;
-        "margin-bottom" = -1;
+        gtk-layer-shell = true;
+        margin-bottom = -1;
         passthrough = false;
         height = 41;
 
