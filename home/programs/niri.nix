@@ -9,6 +9,7 @@
       hide-after-inactive-ms = 1000;
     };
 
+    screenshot-path = "${config.home.homeDirectory}/pics/screenshots/screenshot from %Y-%m-%d %H-%M-%S.png";
     hotkey-overlay.skip-at-startup = true;
     prefer-no-csd = true;
 
@@ -103,7 +104,6 @@
       }
     ];
 
-    screenshot-path = "~/pics/screenshots/screenshot from %Y-%m-%d %H-%M-%S.png";
 
     # config-notification-open-close.spring = {
     #   damping-ratio = 0.6;
@@ -227,7 +227,7 @@
           "Mod+Shift+Equal".action = set-window-height "+10%";
 
           # Screenshots
-          "Mod+S".action = sh "take_screenshot.sh";
+          "Mod+S".action = sh "${config.home.homeDirectory}/scripts/bin/take_screenshot.sh";
           "Mod+Shift+Y".action = screenshot-screen;
           "Mod+Ctrl+Y".action = screenshot-window;
         }
