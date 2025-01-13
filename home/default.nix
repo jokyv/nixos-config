@@ -16,8 +16,11 @@
     # ./programs/brave.nix
     ./programs/firefox.nix
 
+    # OTHER
+    ./programs/atuin.nix
     ./programs/bat.nix
     ./programs/fastfetch.nix
+    ./programs/fd.nix
     ./programs/fnott.nix
     ./programs/fuzzel.nix
     ./programs/fzf.nix
@@ -34,10 +37,11 @@
     ./programs/yazi.nix
     ./programs/zathura.nix
     ./programs/zoxide.nix
+
     ./env.nix
 
-    # ./programs/ly.nix
-    # ./programs/nh.nix
+    # ./programs/ly.nix # home-manager does not support it yet
+    # ./programs/nh.nix # errors....
 
   ];
 
@@ -64,15 +68,14 @@
   # install packages with their default configs
   home.packages = with pkgs; [
     alacritty
-    atuin
     base16-schemes
     brave
+    btop
     cowsay
     dconf
     ddgr # duckduckgo on the terminal
     delta
     eza
-    fd
     fzf
     git-cliff
     just
@@ -90,6 +93,11 @@
     virtualenv # need this for python virtual env
     xonsh
     zathura
+
+    # Take screenshot
+    grim
+    slurp
+    swappy
 
     # Clipboard
     cliphist
@@ -154,6 +162,7 @@
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "24.05";
   programs.home-manager.enable = true;
+  # programs.home-manager.backupFileExtension = "backup"; # error option does not exist
   # programs.home-manager.useGlobalPkgs = true;
   # programs.home-manager.useUserPackages = true;
 
