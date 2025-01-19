@@ -28,7 +28,6 @@
     ./programs/git.nix
     ./programs/helix.nix
     ./programs/niri.nix
-    ./programs/obsidian.nix
     ./programs/ripgrep.nix
     ./programs/starship.nix
     ./programs/stylix.nix
@@ -41,6 +40,7 @@
 
     ./env.nix
 
+    # ./programs/obsidian.nix # home-manager does not support it yet
     # ./programs/ly.nix # home-manager does not support it yet
     # ./programs/nh.nix # errors....
 
@@ -62,6 +62,7 @@
   home.homeDirectory = "/home/jokyv";
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";
+    OBSIDIAN_USE_WAYLAND = "1";
     # ELECTRON_OZONE_PLATFORM = "wayland";
     # OZONE_PLATFORM = "wayland";
     # MOZ_ENABLE_WAYLAND = "1";
@@ -98,11 +99,12 @@
     eza
     fzf
     git-cliff
-    just
     jq
+    just
     libreoffice-qt-fresh # no space left for this app
     nautilus
     nh
+    obsidian
     psst
     pwvucontrol
     tabiew
@@ -135,7 +137,7 @@
     bash-completion
     bash-language-server
     dprint
-    markdown-oxide
+    markdown-oxide # https://oxide.md/v0/Articles/Markdown-Oxide+v0
     marksman
     nixd
     nixpkgs-fmt
