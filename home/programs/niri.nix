@@ -142,7 +142,7 @@
           "Mod+W".action = sh ''notify-send -c critical "wallpaper" "changing wallpaper..." | waypaper --random'';
 
           # Launch obsidian
-          "Mod+O".action.spawn = "obsidian";
+          "Mod+O".action = sh "obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland";
 
           # Scripts
           "Mod+Shift+W".action = sh "${config.home.homeDirectory}/scripts/bin/define_word.sh";
@@ -234,7 +234,7 @@
           "Mod+Shift+Equal".action = set-window-height "+10%";
 
           # Screenshots
-          "Mod+S".action = sh "${config.home.homeDirectory}/scripts/bin/take_screenshot.sh";
+          "Mod+Y".action = sh "${config.home.homeDirectory}/scripts/bin/take_screenshot.sh";
           "Mod+Shift+Y".action = screenshot-screen;
           "Mod+Ctrl+Y".action = screenshot-window;
         }
