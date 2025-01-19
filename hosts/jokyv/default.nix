@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   imports =
@@ -8,7 +8,7 @@
       inputs.niri.nixosModules.niri
     ];
 
-  # Bootloader.
+  # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 20;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -71,8 +71,11 @@
     smartmontools # disk health
     usbutils # lsusb
     waybar
-    wayland
     wget
+
+    # wayland
+    xwayland
+    wayland
   ];
 
   # Select internationalisation properties.

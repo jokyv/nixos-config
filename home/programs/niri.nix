@@ -126,16 +126,23 @@
           "Mod+T".action.spawn = "kitty";
           # "Mod+Shift+T".action.spawn = "foot";
           "Mod+Shift+T".action = sh "${pkgs.foot}/bin/foot";
+
           # Browser apps
           "Mod+B".action.spawn = "firefox";
           "Mod+Shift+B".action.spawn = "brave";
+
           # Launch app launcher 
           "Mod+D".action.spawn = "fuzzel";
+
           # Launch file manager
           "Mod+E".action.spawn = "nautilus";
           # "Mod+Shift+E".action = term "yy ${config.home.homeDirectory}/downloads/";
+
           # Change wallpaper
           "Mod+W".action = sh ''notify-send -c critical "wallpaper" "changing wallpaper..." | waypaper --random'';
+
+          # Launch obsidian
+          "Mod+O".action.spawn = "obsidian";
 
           # Scripts
           "Mod+Shift+W".action = sh "${config.home.homeDirectory}/scripts/bin/define_word.sh";

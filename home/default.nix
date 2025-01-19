@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
@@ -13,7 +13,7 @@
     ./programs/kitty.nix
 
     # BROWSER
-    # ./programs/brave.nix
+    ./programs/brave.nix
     ./programs/firefox.nix
 
     # OTHER
@@ -28,6 +28,7 @@
     ./programs/git.nix
     ./programs/helix.nix
     ./programs/niri.nix
+    ./programs/obsidian.nix
     ./programs/ripgrep.nix
     ./programs/starship.nix
     ./programs/stylix.nix
@@ -45,9 +46,28 @@
 
   ];
 
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      # Add additional package names here
+      "obsidian"
+    ];
+
+  nixpkgs.config =
+    {
+      # allowUnfree = true; # make it explicit with the above
+      permittedInsecurePackages = [ "electron-24" ];
+    };
 
   home.username = "jokyv";
   home.homeDirectory = "/home/jokyv";
+  home.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    # ELECTRON_OZONE_PLATFORM = "wayland";
+    # OZONE_PLATFORM = "wayland";
+    # MOZ_ENABLE_WAYLAND = "1";
+    # MOZ_DBUS_REMOTE = "1";
+    # ELECTRON_FALLBACK_TO_X11 = "1";
+  };
 
   # SOPS configuration
   sops = {
@@ -69,12 +89,12 @@
   home.packages = with pkgs; [
     alacritty
     base16-schemes
-    brave
     btop
     cowsay
     dconf
     ddgr # duckduckgo on the terminal
     delta
+    electron
     eza
     fzf
     git-cliff
@@ -131,12 +151,6 @@
     git-crypt
     sops
   ];
-
-
-  nixpkgs.config.allowUnfreePredicate =
-    pkg: builtins.elem (pkgs.lib.getName pkg) [
-      "discord"
-    ];
 
 
   # install packages AND specify their configs
