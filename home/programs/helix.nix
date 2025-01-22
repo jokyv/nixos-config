@@ -139,6 +139,15 @@
           };
         };
 
+        typos = {
+          command = "typos-lsp";
+          # config.typos =
+          #   {
+          #     diagnosticSeverity = "Hint"; # ["Error", "Warning", "Information", "Hint"]
+          #     logLevel = "info"; # ["off", "error", "warn", "info", "debug", "trace"]
+          #   };
+        };
+
         json-server = {
           command = "vscode-json-language-server";
         };
@@ -238,8 +247,8 @@
           name = "markdown";
           auto-format = true;
           file-types = [ "md" ];
-          language-servers = [ "marksman" ];
-          # language-servers = [ "markdown-oxide" ];
+          # language-servers = [ "marksman" ];
+          language-servers = [ "markdown-oxide" "typos" ];
           formatter = {
             command = "dprint";
             args = [ "fmt" "--stdin" "md" ];

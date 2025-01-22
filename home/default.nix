@@ -109,7 +109,6 @@
     pwvucontrol
     tabiew
     trashy
-    typos
     unimatrix
     uv
     virtualenv # need this for python virtual env
@@ -137,6 +136,7 @@
     bash-completion
     bash-language-server
     dprint
+    # ltex-ls-plus # more strict than typos
     markdown-oxide # https://oxide.md/v0/Articles/Markdown-Oxide+v0
     marksman
     nixd
@@ -144,6 +144,8 @@
     nufmt
     shfmt
     taplo
+    typos
+    typos-lsp
     vscode-langservers-extracted
     yaml-language-server
 
