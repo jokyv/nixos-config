@@ -90,10 +90,9 @@
     };
 
     spawn-at-startup = [
-      { command = [ "kitty" ]; }
+      { command = [ "foot" ]; }
       { command = [ "waybar" ]; }
       { command = [ "waypaper" "--restore" ]; }
-      # { command = [ "cliphist" "daemon" ]; }
       {
         command = [
           "wl-paste"
@@ -103,7 +102,6 @@
         ];
       }
     ];
-
 
     # config-notification-open-close.spring = {
     #   damping-ratio = 0.6;
@@ -115,7 +113,7 @@
     binds = with config.lib.niri.actions;
       let
         sh = spawn "sh" "-c";
-        # term = args: "kitty sh -c '${lib.escape [ "'" ] args}'";
+        # term = args: "foot sh -c '${lib.escape [ "'" ] args}'";
 
       in
       lib.attrsets.mergeAttrsList [
@@ -123,10 +121,8 @@
           "Mod+Shift+Slash".action.show-hotkey-overlay = { };
 
           # Terminal apps
-          # "Mod+T".action.spawn = "kitty";
-          "Mod+T".action = sh "${pkgs.kitty}/bin/kitty";
-          # "Mod+Shift+T".action.spawn = "foot";
-          "Mod+Shift+T".action = sh "${pkgs.foot}/bin/foot";
+          "Mod+T".action = sh "${pkgs.foot}/bin/foot";
+          "Mod+Shift+T".action = sh "${pkgs.kitty}/bin/kitty";
 
           # Browser apps
           "Mod+B".action.spawn = "firefox";
@@ -146,7 +142,7 @@
           "Mod+O".action = sh "obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland";
 
           # Launrch newsraft
-          "Mod+N".action = sh "kitty -e newsraft";
+          "Mod+N".action = sh "foot -e newsraft";
 
           # Scripts
           "Mod+Shift+W".action = sh "${config.home.homeDirectory}/scripts/bin/define_word.sh";
@@ -159,11 +155,15 @@
           "Mod+Q".action = close-window;
           "Mod+Shift+Q".action = quit;
           "Mod+Shift+P".action = power-off-monitors;
+
+          # Alt commands
           "Mod+Alt+L".action = sh "swaylock";
+          "Mod+Alt+F".action = toggle-window-floating;
+          "Mod+SHift+Alt+F".action = switch-focus-between-floating-and-tiling;
 
           # Window management
           "Mod+R".action = switch-preset-column-width;
-          "Mod+Shift+R".action = reset-window-height;
+          # "Mod+Shift+R".action = reset-window-width; # seems does not exist
           "Mod+F".action = maximize-column;
           "Mod+Shift+F".action = fullscreen-window;
 
@@ -249,7 +249,6 @@
         colors = config.lib.stylix.colors.withHashtag;
       in
       [{
-        default-column-width = { };
         geometry-corner-radius =
           let
             r = 8.0;
