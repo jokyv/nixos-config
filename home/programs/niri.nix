@@ -18,7 +18,7 @@
         xkb = {
           layout = "us, gr"; # US and Greek layouts
           model = "pc105";
-          options = "grp:alt_shift_toggle";
+          options = "grp:alt_ctrl_shift_toggle";
         };
       };
       mouse = {
@@ -159,7 +159,7 @@
           # Alt commands
           "Mod+Alt+L".action = sh "swaylock";
           "Mod+Alt+F".action = toggle-window-floating;
-          "Mod+SHift+Alt+F".action = switch-focus-between-floating-and-tiling;
+          "Mod+Shift+Alt+F".action = switch-focus-between-floating-and-tiling;
 
           # Window management
           "Mod+R".action = switch-preset-column-width;
