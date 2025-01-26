@@ -50,12 +50,13 @@
     builtins.elem (lib.getName pkg) [
       # Add additional package names here
       "obsidian"
+      "keymapp"
     ];
 
   nixpkgs.config =
     {
       # allowUnfree = true; # make it explicit with the above
-      permittedInsecurePackages = [ "electron-24" ];
+      # permittedInsecurePackages = [ "electron-24" ];
     };
 
   home.username = "jokyv";
@@ -73,7 +74,6 @@
   # SOPS configuration
   sops = {
     age.keyFile = "${config.home.homeDirectory}/.config/sops/age/secrets.key";
-    # age.keyFile = "${userConfig.home}/.config/sops/age/nix-secrets.key";
     defaultSopsFile = ../secrets.enc.yaml;
     defaultSopsFormat = "yaml";
 
@@ -101,8 +101,10 @@
     git-cliff
     jq
     just
+    keymapp
     libreoffice-qt-fresh # no space left for this app
     nautilus
+    newsraft
     nh
     obsidian
     psst
@@ -138,7 +140,7 @@
     dprint
     # ltex-ls-plus # more strict than typos
     markdown-oxide # https://oxide.md/v0/Articles/Markdown-Oxide+v0
-    marksman
+    # marksman # using markdown-oxide currently
     nixd
     nixpkgs-fmt
     nufmt

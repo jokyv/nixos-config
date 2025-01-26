@@ -123,7 +123,8 @@
           "Mod+Shift+Slash".action.show-hotkey-overlay = { };
 
           # Terminal apps
-          "Mod+T".action.spawn = "kitty";
+          # "Mod+T".action.spawn = "kitty";
+          "Mod+T".action = sh "${pkgs.kitty}/bin/kitty";
           # "Mod+Shift+T".action.spawn = "foot";
           "Mod+Shift+T".action = sh "${pkgs.foot}/bin/foot";
 
@@ -143,6 +144,9 @@
 
           # Launch obsidian
           "Mod+O".action = sh "obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland";
+
+          # Launrch newsraft
+          "Mod+N".action = sh "kitty -e newsraft";
 
           # Scripts
           "Mod+Shift+W".action = sh "${config.home.homeDirectory}/scripts/bin/define_word.sh";

@@ -5,6 +5,7 @@
     [
       # hardware configuration
       ./hardware-configuration.nix
+      ./zsa-udev-rules.nix
       inputs.niri.nixosModules.niri
     ];
 
