@@ -1,3 +1,8 @@
+# Niri wiki: https://github.com/YaLTeR/niri/wiki
+# Niri flake wiki: https://github.com/sodiboo/niri-flake/blob/main/docs.md
+# Niri flake example: https://github.com/sodiboo/system/blob/main/niri.mod.nix
+
+
 { config, lib, pkgs, ... }:
 
 {
@@ -248,19 +253,34 @@
       let
         colors = config.lib.stylix.colors.withHashtag;
       in
-      [{
-        geometry-corner-radius =
-          let
-            r = 8.0;
-          in
-          {
-            top-left = r;
-            top-right = r;
-            bottom-left = r;
-            bottom-right = r;
-          };
-        clip-to-geometry = true;
-        border.active.color = colors.base0B;
-      }];
+      [
+        {
+          geometry-corner-radius =
+            let
+              r = 8.0;
+            in
+            {
+              top-left = r;
+              top-right = r;
+              bottom-left = r;
+              bottom-right = r;
+            };
+          clip-to-geometry = true;
+          border.active.color = colors.base0B;
+        }
+        {
+          matches = [{ app-id = "^firefox$"; }];
+          open-maximized = true;
+        }
+        {
+          matches = [
+            {
+              app-id = "^firefox$";
+              title = "Private Browsing";
+            }
+          ];
+          border.active.color = colors.base01; # TODO color does not change
+        }
+      ];
   };
 }
