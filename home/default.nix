@@ -88,6 +88,7 @@
 
   # install packages with their default configs
   home.packages = with pkgs; [
+    aider-chat
     alacritty
     base16-schemes
     btop
