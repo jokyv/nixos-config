@@ -120,15 +120,31 @@
 
     languages = {
       language-server = {
+        bash-language-server = {
+          command = "bash-language-server";
+          args = [ "start" ];
+        };
+        json-server = {
+          command = "vscode-json-language-server";
+        };
+        markdown-oxide = {
+          command = "markdown-oxide";
+        };
+        typos = {
+          command = "typos-lsp";
+          # config.typos =
+          #   {
+          #     diagnosticSeverity = "Hint"; # ["Error", "Warning", "Information", "Hint"]
+          #     logLevel = "info"; # ["off", "error", "warn", "info", "debug", "trace"]
+          #   };
+        };
         nixd = {
           command = "nixd";
         };
-
         ruff = {
           command = "ruff";
           args = [ "server" "--preview" ];
         };
-
         pylsp = {
           command = "pylsp";
           config.pylsp.plugins = {
@@ -138,89 +154,38 @@
             };
           };
         };
-
-        typos = {
-          command = "typos-lsp";
-          # config.typos =
-          #   {
-          #     diagnosticSeverity = "Hint"; # ["Error", "Warning", "Information", "Hint"]
-          #     logLevel = "info"; # ["off", "error", "warn", "info", "debug", "trace"]
-          #   };
-        };
-
-        json-server = {
-          command = "vscode-json-language-server";
+        yaml-language-server = {
+          command = "yaml-language-server";
+          args = [ "--stdio" ];
         };
       };
 
       language = [
         {
-          name = "nix";
-          language-servers = [ "nixd" ];
-          auto-format = true;
-          formatter = {
-            command = "nixpkgs-fmt";
-          };
-        }
-
-        {
-          name = "python";
-          auto-format = true;
-          language-servers = [ "ruff" "pylsp" ];
-          formatter = {
-            command = "ruff";
-            args = [ "format" "--quiet" "-" ];
-          };
-        }
-
-        {
-          name = "yaml";
-          auto-format = true;
-          file-types = [ "yaml" "yml" ];
-          language-servers = [ "yaml-language-server" ];
-          formatter = {
-            command = "prettier";
-            args = [ "--parser" "yaml" ];
-          };
-        }
-
-        {
-          name = "rust";
-          auto-format = true;
-          language-servers = [ "rust-analyzer" ];
-        }
-
-        {
-          name = "nu";
-          auto-format = true;
-          formatter = { command = "nufmt"; args = [ "format" "--stdin" ]; };
-        }
-
-        {
           name = "bash";
           auto-format = true;
           scope = "source.bash";
-          file-types = [
-            "sh"
-            "bash"
-            "text"
-            "config"
-            "ignore"
-            ".conf"
-            ".config"
-            ".aliases"
-            ".env"
-            ".bashrc"
-            ".bash_profile"
-            ".exports"
-            ".profile"
-          ];
+          # file-types = [
+          #   "sh"
+          #   "bash"
+          #   "text"
+          #   "config"
+          #   "ignore"
+          #   ".conf"
+          #   ".config"
+          #   ".aliases"
+          #   ".env"
+          #   ".bashrc"
+          #   ".bash_profile"
+          #   ".exports"
+          #   ".profile"
+          # ];
+          language-servers = [ "bash-language-server" ];
           formatter = {
             command = "shfmt";
             args = [ "-l" "-w" ];
           };
         }
-
         {
           name = "json";
           auto-format = true;
@@ -231,7 +196,45 @@
             args = [ "fmt" "--stdin" "json" ];
           };
         }
-
+        {
+          name = "markdown";
+          auto-format = true;
+          # file-types = [ "md" ];
+          # language-servers = [ "marksman" ];
+          language-servers = [ "markdown-oxide" "typos" ];
+          formatter = {
+            command = "dprint";
+            args = [ "fmt" "--stdin" "md" ];
+          };
+        }
+        {
+          name = "nix";
+          language-servers = [ "nixd" ];
+          auto-format = true;
+          formatter = {
+            command = "nixpkgs-fmt";
+          };
+        }
+        {
+          name = "nu";
+          auto-format = true;
+          # language-servers = [ "nu-lsp" ]; # TODO: can not find it in nixos packages...
+          formatter = { command = "nufmt"; args = [ "format" "--stdin" ]; };
+        }
+        {
+          name = "python";
+          auto-format = true;
+          language-servers = [ "ruff" "pylsp" ];
+          formatter = {
+            command = "ruff";
+            args = [ "format" "--quiet" "-" ];
+          };
+        }
+        {
+          name = "rust";
+          auto-format = true;
+          language-servers = [ "rust-analyzer" ];
+        }
         {
           name = "toml";
           auto-format = true;
@@ -242,16 +245,14 @@
             args = [ "fmt" "-" ];
           };
         }
-
         {
-          name = "markdown";
+          name = "yaml";
           auto-format = true;
-          file-types = [ "md" ];
-          # language-servers = [ "marksman" ];
-          language-servers = [ "markdown-oxide" "typos" ];
+          file-types = [ "yaml" "yml" ];
+          language-servers = [ "yaml-language-server" ];
           formatter = {
-            command = "dprint";
-            args = [ "fmt" "--stdin" "md" ];
+            command = "prettier";
+            args = [ "--parser" "yaml" ];
           };
         }
       ];
@@ -279,6 +280,7 @@
         "<" = ">";
         "`" = "`";
         "*" = "*";
+        "_" = "_";
       };
     };
   };
