@@ -49,6 +49,7 @@
             | split row (char esep) 
             | append [
                 "~/scripts/bin"
+                "~/.local/share/uv/tools/aider-chat/bin/"
             ]
         )
 
