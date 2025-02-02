@@ -152,9 +152,11 @@
           # Scripts
           "Mod+Shift+W".action = sh "${config.home.homeDirectory}/scripts/bin/define_word.sh";
           "Mod+Shift+M".action = sh "${config.home.homeDirectory}/scripts/bin/my_logout.sh";
+          # Clipboard history custom script
           "Mod+Shift+C".action = sh "${config.home.homeDirectory}/scripts/bin/clip_hist.py add";
           "Mod+Shift+V".action = sh "${config.home.homeDirectory}/scripts/bin/clip_hist.py paste";
           "Mod+Shift+S".action = sh "${config.home.homeDirectory}/scripts/bin/clip_hist.py sel";
+          "Mod+Shift+D".action = sh "${config.home.homeDirectory}/scripts/bin/clip_hist.py del";
 
           # System actions
           "Mod+Q".action = close-window;
@@ -266,10 +268,14 @@
               bottom-right = r;
             };
           clip-to-geometry = true;
-          border.active.color = colors.base0B;
+          # border.active.color = colors.base0B;
         }
         {
           matches = [{ app-id = "^firefox$"; }];
+          open-maximized = true;
+        }
+        {
+          matches = [{ app-id = "^obsidian$"; }];
           open-maximized = true;
         }
         {
@@ -279,7 +285,8 @@
               title = "Private Browsing";
             }
           ];
-          border.active.color = colors.base01; # TODO color does not change
+          border.active.color = "rgb(255 0 153)"; # red
+          # TODO color does not change when colors.base0E is used
         }
       ];
   };
