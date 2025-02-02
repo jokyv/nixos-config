@@ -65,8 +65,8 @@
       rich
       ruff
       pyyaml
-      pygame
-      yt-dlp
+      # pygame
+      # yt-dlp
     ]))
     ffmpeg
     smartmontools # disk health
