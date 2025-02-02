@@ -48,8 +48,9 @@
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
-      # Add additional package names here
+      # Add unfree package names here
       "obsidian"
+      "discord"
       "keymapp"
     ];
 
@@ -64,6 +65,7 @@
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     OBSIDIAN_USE_WAYLAND = "1";
+    DISCORD_USE_WAYLAND = "1";
     # ELECTRON_OZONE_PLATFORM = "wayland";
     # OZONE_PLATFORM = "wayland";
     # MOZ_ENABLE_WAYLAND = "1";
@@ -88,7 +90,6 @@
 
   # install packages with their default configs
   home.packages = with pkgs; [
-    aider-chat
     alacritty
     base16-schemes
     btop
@@ -96,6 +97,7 @@
     dconf
     ddgr # duckduckgo on the terminal
     delta
+    discord
     electron
     eza
     fzf
@@ -117,6 +119,10 @@
     virtualenv # need this for python virtual env
     xonsh
     zathura
+
+    # talk to AI
+    # aider-chat
+    # playwright-driver
 
     # Take screenshot
     grim
