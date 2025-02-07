@@ -65,10 +65,10 @@
     # };
   };
 
-  xdg.configFile."Kvantum/kvantum.kvconfig".source = (pkgs.formats.ini { }).generate "kvantum.kvconfig" {
-    # ls ~/.nix-profile/share/Kvantum/*/*.kvconfig
-    General.theme = "Catppuccin-Mocha-Maroon";
-  };
+  # xdg.configFile."Kvantum/kvantum.kvconfig".source = (pkgs.formats.ini { }).generate "kvantum.kvconfig" {
+  #   # ls ~/.nix-profile/share/Kvantum/*/*.kvconfig
+  #   General.theme = "Catppuccin-Mocha-Maroon";
+  # };
 
   qt = {
     enable = true;
