@@ -198,6 +198,7 @@
         }
         {
           name = "markdown";
+          comment-tokens = [ "-" "+" "*" "1." ">" "- [ ]" ];
           auto-format = true;
           # file-types = [ "md" ];
           # language-servers = [ "marksman" ];
