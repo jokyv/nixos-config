@@ -143,6 +143,7 @@
       "pua" = "python_pip_update.py -A";
       "pic" = "python_init_code.py";
       "a" = "bash -c \". ~/uv_default/bin/activate && nu\"";
+      "talk" = "bash -c \". ~/talk_to_ai/bin/activate && nu\"";
       "d" = "deactivate";
 
       # Trashy
