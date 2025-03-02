@@ -59,7 +59,10 @@
           skip-levels = 1;
         };
 
-        soft-wrap.enable = true;
+        soft-wrap = {
+          enable = true;
+          wrap-indicator = "";
+        };
       };
 
       keys = {
@@ -109,6 +112,10 @@
         };
 
         normal.space.c = {
+          # toggle zen mode
+          "z" = ":toggle gutters.line-numbers.min-width 25 3";
+          # toggle soft warp
+          "s" = ":toggle soft-wrap.enable";
           "r" = [ ":w" ":config-reload" ];
           "o" = ":config-open";
           "w" = ":wq";
@@ -199,9 +206,13 @@
         {
           name = "markdown";
           comment-tokens = [ "-" "+" "*" "1." ">" "- [ ]" ];
+          soft-wrap.enable = true;
+          text-width = 80;
+          soft-wrap.wrap-at-text-width = true;
           auto-format = true;
           # file-types = [ "md" ];
-          # language-servers = [ "marksman" ];
+          # ltex-ls-plus uses https://languagetool.org/ under the hood.
+          # language-servers = [ "marksman" "ltex-ls-plus"];
           language-servers = [ "markdown-oxide" "typos" ];
           formatter = {
             command = "dprint";
