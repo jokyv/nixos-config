@@ -33,8 +33,7 @@
                 isolation: false
             }
             filesize: {
-                metric: true
-                format: "auto"
+                unit: "MB"
             }
             footer_mode: 25
             float_precision: 2
