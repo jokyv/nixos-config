@@ -102,6 +102,7 @@
     eza
     fzf
     git-cliff
+    gh
     jq
     just
     keymapp
