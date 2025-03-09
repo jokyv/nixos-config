@@ -9,7 +9,7 @@ A complete NixOS ecosystem featuring modern Linux desktop capabilities with decl
 ## Featured Stack
 ### Core Components
 - **Display Protocol:** Wayland
-- **Compositor:** [Niri](https://niri.sr.ht/) (Scrollable-tiling Wayland compositor)
+- **Compositor:** [Niri](https://github.com/YaLTeR/niri) (Scrollable-tiling Wayland compositor)
 - **Security:** sops-nix with AGE encryption
 - **Theming:** Stylix unified theming engine
 - **Package Management:** Nix Flakes + Home Manager
