@@ -1,36 +1,83 @@
-# NixOS-Config
+# NixOS Configuration Framework
 
-This is my NixOS configuration files/setup
+**Next-gen Declarative System Configuration**  
+![NixOS](https://img.shields.io/badge/NixOS-24.05-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-> [!IMPORTANT]
-> Configs under heavy development, expect breaks and frequent changes.
+A complete NixOS ecosystem featuring modern Linux desktop capabilities with declarative configuration management.
 
-## How this repo is organised:
+## Featured Stack
+### Core Components
+- **Display Protocol:** Wayland
+- **Compositor:** [Niri](https://niri.sr.ht/) (Scrollable-tiling Wayland compositor)
+- **Security:** sops-nix with AGE encryption
+- **Theming:** Stylix unified theming engine
+- **Package Management:** Nix Flakes + Home Manager
 
-- home folder contains everything related to [home-manager](https://github.com/nix-community/home-manager) configs.
-- host/jokyv folder contains this nixos configuration and hardware-configuration nix files.
-- flake.nix and flake.lock
-- justfile has collection of utility scripts related to nixos setup ONLY.
-- .sops.yaml the configuration for sops
-- secrets stored under `secrets.enc.yaml`
+### Development Ecosystem
+- **Language Servers:** Nixd, Rust-analyzer, Python-LSP, Markdown Oxide
+- **Version Control:** Git with Delta diff viewer
+- **Shell Environments:** Nushell, Bash, Xonsh
+- **Package Management:** UV (Python), Cargo (Rust)
 
-## Programs
+### Desktop Environment
+- **Terminals:** Kitty, Foot
+- **Editors:** Helix (Modern Vim alternative)
+- **Browsers:** Firefox, Brave
+- **File Management:** Nautilus, Yazi (Terminal file manager)
+- **Productivity:** Obsidian, Zathura (PDF viewer)
+- **System Utilities:** Waybar, Fuzzel (App launcher), Cliphist (Clipboard manager)
 
-- Window system: [Wayland](https://wayland.freedesktop.org/)
-- Wayland Compositor: [Niri](https://github.com/YaLTeR/niri)
-- ~~Terminal: [Alacritty](https://github.com/alacritty/alacritty)~~
-- Terminal: [Kitty](https://github.com/kovidgoyal/kitty) and [foot](https://codeberg.org/dnkl/foot)
-- Editor: [Helix](https://github.com/helix-editor/helix)
-- Prompt: [Starship](https://github.com/starship/starship)
-- Browser: [Firefox](https://www.mozilla.org/en-US/firefox) and [Brave](https://github.com/brave/brave-browser)
-- Fonts: [Hack Nerd Font](https://www.nerdfonts.com/)
-- Colorscheme: [Everforest](https://github.com/sainnhe/everforest)
-- Application Launcher: [Fuzzel](https://codeberg.org/dnkl/fuzzel)
-- File manager: [Nautilus](https://gitlab.gnome.org/GNOME/nautilus)
-- Status Bar: [Waybar](https://github.com/Alexays/Waybar)
-- Screenshots: [Grim](https://github.com/emersion/grim)/[slurp](https://github.com/emersion/slurp)/[swappy](https://github.com/jtheoof/swappy) or [Gnome-Screenshot](https://gitlab.gnome.org/GNOME/gnome-screenshot)
-- Clipboard manager: [Cliphist](https://github.com/sentriz/cliphist) and [wl-clipboard](https://github.com/bugaevc/wl-clipboard)
-- Document viewer: [Zathura](https://github.com/pwmt/zathura)
-- Login Manager: [Ly](https://github.com/fairyglade/ly)
-- Notification daemon: [fnot](https://codeberg.org/dnkl/fnott)
-- Screenlock: [Swaylock](https://github.com/swaywm/swaylock)
+## Configuration Structure
+```
+nixos-config/
+├── CHANGELOG.md
+├── LICENSE
+├── README.md
+├── dprint.json
+├── flake.lock
+├── flake.nix
+├── home/               # Home Manager configurations
+│   ├── default.nix
+│   ├── env.nix
+│   └── programs/       # Individual program configurations
+├── hosts/              # Host-specific configurations
+│   └── jokyv/
+│       ├── default.nix
+│       ├── hardware-configuration.nix
+│       └── zsa-udev-rules.nix
+├── justfile            # Task automation
+└── secrets.enc.yaml    # Encrypted secrets
+```
+
+## Key Features
+- **Declarative Configuration:** Entire system state defined in Nix expressions
+- **Reproducible Builds:** Deterministic package management
+- **Atomic Upgrades:** Rollback support for system changes
+- **Secrets Management:** Encrypted credentials with sops-nix
+- **Unified Theming:** Consistent appearance across all applications
+- **Modern Workflow:** Wayland-based desktop with tiling window management
+
+## Getting Started
+1. **Prerequisites:**
+   - NixOS installation
+   - Flakes support enabled
+   - Age encryption keys configured
+
+2. **Installation:**
+   ```bash
+   nixos-rebuild switch --flake .#nixos
+   ```
+
+3. **Home Manager Setup:**
+   ```bash
+   home-manager switch --flake .#jokyv
+   ```
+
+4. **Common Tasks:**
+   - Update system: `just up`
+   - Rebuild configuration: `just switch`
+   - Manage secrets: `just encode` / `just decode`
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
