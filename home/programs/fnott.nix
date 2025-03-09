@@ -1,10 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   services.fnott = {
     enable = true;
 
-    settings = {
+    settings = lib.mkDefault {
       main = {
         # Position and layout
         anchor = "top-right";
