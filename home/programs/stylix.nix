@@ -105,12 +105,12 @@
         #   name = "Everforest-Dark-B";
         #   package = pkgs.everforest-gtk-theme;
         # };
-        gtk3.extraConfig = {
-          gtk-application-prefer-dark-theme = true;
-        };
-        gtk4.extraConfig = {
-          gtk-application-prefer-dark-theme = true;
-        };
+        # gtk3.extraConfig = {
+        #   gtk-application-prefer-dark-theme = true;
+        # };
+        # gtk4.extraConfig = {
+        #   gtk-application-prefer-dark-theme = true;
+        # };
       };
 
       # dconf.settings = {
