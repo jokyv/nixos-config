@@ -44,7 +44,7 @@
         sizes = {
           terminal = 15;
           applications = 12;
-          popups = 12;
+          popups = 15;
           desktop = 12;
         };
       };
@@ -63,61 +63,74 @@
     #   height = 768;
     #   logoScale = 3.0;
     # };
-  };
 
-  # xdg.configFile."Kvantum/kvantum.kvconfig".source = (pkgs.formats.ini { }).generate "kvantum.kvconfig" {
-  #   # ls ~/.nix-profile/share/Kvantum/*/*.kvconfig
-  #   General.theme = "Catppuccin-Mocha-Maroon";
-  # };
-
-  qt = {
-    enable = true;
-    platformTheme.name = "qtct";
-    style.name = lib.mkForce "kvantum";
-  };
-
-  gtk = {
-    enable = true;
-    iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
-      # name = "Tela";
-      # package = pkgs.tela-icon-theme;
-      # name = "everforest";
-      # package = pkgs.everforest-gtk-theme;
-      # name = "candy";
-      # package = pkgs.candy-icons;
-      # name = "sweet";
-      # package = pkgs.sweet-folders;
-    };
-    # theme = {
-    #   name = "Everforest-Dark-B";
-    #   package = pkgs.everforest-gtk-theme;
+    # xdg.configFile."Kvantum/kvantum.kvconfig".source = (pkgs.formats.ini { }).generate "kvantum.kvconfig" {
+    #   # ls ~/.nix-profile/share/Kvantum/*/*.kvconfig
+    #   General.theme = "Catppuccin-Mocha-Maroon";
     # };
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = true;
+    targets = {
+
+      # Configure the Fnott target
+      fnott.enable = false;
+
+      # Configure the Firefox target  
+      firefox = {
+        enable = true;
+        profileNames = [ "default" ];
+      };
+
+      # Configure the qt target  
+      qt = {
+        enable = true;
+        platformTheme.name = "qtct";
+        style.name = lib.mkForce "kvantum";
+      };
+
+      # Configure the gtk target  
+      gtk = {
+        enable = true;
+        iconTheme = {
+          name = "Papirus-Dark";
+          package = pkgs.papirus-icon-theme;
+          # name = "Tela";
+          # package = pkgs.tela-icon-theme;
+          # name = "everforest";
+          # package = pkgs.everforest-gtk-theme;
+          # name = "candy";
+          # package = pkgs.candy-icons;
+          # name = "sweet";
+          # package = pkgs.sweet-folders;
+        };
+        # theme = {
+        #   name = "Everforest-Dark-B";
+        #   package = pkgs.everforest-gtk-theme;
+        # };
+        gtk3.extraConfig = {
+          gtk-application-prefer-dark-theme = true;
+        };
+        gtk4.extraConfig = {
+          gtk-application-prefer-dark-theme = true;
+        };
+      };
+
+      # dconf.settings = {
+      #   "org/gnome/nautilus/icon-view" = {
+      #     default-zoom-level = "standard";
+      #   };
+      #   "org/gnome/desktop/interface" = {
+      #     color-scheme = "prefer-dark";
+      #   };
+      # };
     };
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = true;
-    };
+
+    # home.packages = [
+    #   pkgs.libsForQt5.qtstyleplugin-kvantum
+    #   pkgs.catppuccin-qt5ct
+    #   (pkgs.catppuccin-kvantum.override {
+    #     variant = "mocha";
+    #     accent = "maroon";
+    #   })
+    # ];
   };
-
-  # dconf.settings = {
-  #   "org/gnome/nautilus/icon-view" = {
-  #     default-zoom-level = "standard";
-  #   };
-  #   "org/gnome/desktop/interface" = {
-  #     color-scheme = "prefer-dark";
-  #   };
-  # };
-
-  home.packages = [
-    pkgs.libsForQt5.qtstyleplugin-kvantum
-    pkgs.catppuccin-qt5ct
-    (pkgs.catppuccin-kvantum.override {
-      variant = "mocha";
-      accent = "maroon";
-    })
-  ];
 }
 
