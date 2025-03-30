@@ -60,12 +60,12 @@
     openssh
     pciutils # lspci
     pulseaudio # Audio control
-    (python3Full.withPackages (ps: with ps; [
+    (python312.withPackages (ps: with ps; [
       python-lsp-server
       rich
       ruff
       pyyaml
-      tk
+      # tk
       # ttkbootstrap
       # pygame
       # yt-dlp

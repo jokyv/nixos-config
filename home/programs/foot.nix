@@ -52,8 +52,8 @@
         launch = "xdg-open \${url}";
         label-letters = "sadfjklewcmpgh";
         osc8-underline = "url-mode";
-        protocols = "http, https, ftp, ftps, file, gemini, gopher";
-        uri-characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.,~:;/?#@!$&%*+='()[]";
+        # protocols = "http, https, ftp, ftps, file, gemini, gopher";
+        # uri-characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_.,~:;/?#@!$&%*+='()[]";
       };
       cursor = {
         # Cursor settings
