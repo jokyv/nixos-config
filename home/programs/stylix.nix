@@ -1,11 +1,6 @@
 { pkgs, lib, ... }:
 
 {
-  # home.sessionVariables = {
-  #   # GTK_THEME = "Catppuccin-Mocha-Compact-Maroon-Dark";
-  #   GTK_THEME = "Everforest-Dark";
-  # };
-
   stylix = {
     enable = true;
     autoEnable = true;
@@ -23,9 +18,6 @@
     fonts =
       {
         monospace = {
-          # htts://www.nerdfonts.com/font-downloads
-          # package = pkgs.nerd-fonts.override { fonts = [ "martian-mono" "fira-code" "symbols-only" ]; };
-          # package = pkgs.nerd-fonts.override [ "martian-mono" "fira-code" "symbols-only" ];
           package = pkgs.nerd-fonts.martian-mono;
           name = "Martian Mono Nerd Font Mono";
         };
@@ -49,7 +41,6 @@
         };
       };
 
-
     opacity = {
       terminal = 0.9;
       applications = 0.9;
@@ -64,10 +55,6 @@
     #   logoScale = 3.0;
     # };
 
-    # xdg.configFile."Kvantum/kvantum.kvconfig".source = (pkgs.formats.ini { }).generate "kvantum.kvconfig" {
-    #   # ls ~/.nix-profile/share/Kvantum/*/*.kvconfig
-    #   General.theme = "Catppuccin-Mocha-Maroon";
-    # };
     targets = {
 
       # Configure the Fnott target
@@ -82,45 +69,27 @@
       # Configure the qt target  
       qt = {
         enable = true;
-        platformTheme.name = "qtct";
-        style.name = lib.mkForce "kvantum";
+        # platformTheme.name = "qtct";
+        # style.name = lib.mkForce "kvantum";
       };
 
       # Configure the gtk target  
       gtk = {
         enable = true;
-        iconTheme = {
-          name = "Papirus-Dark";
-          package = pkgs.papirus-icon-theme;
-          # name = "Tela";
-          # package = pkgs.tela-icon-theme;
-          # name = "everforest";
-          # package = pkgs.everforest-gtk-theme;
-          # name = "candy";
-          # package = pkgs.candy-icons;
-          # name = "sweet";
-          # package = pkgs.sweet-folders;
-        };
-        # theme = {
-        #   name = "Everforest-Dark-B";
+        # iconTheme = {
+        #   name = "Papirus-Dark";
+        #   package = pkgs.papirus-icon-theme;
+        #   name = "Tela";
+        #   package = pkgs.tela-icon-theme;
+        #   name = "everforest";
         #   package = pkgs.everforest-gtk-theme;
-        # };
-        # gtk3.extraConfig = {
-        #   gtk-application-prefer-dark-theme = true;
-        # };
-        # gtk4.extraConfig = {
-        #   gtk-application-prefer-dark-theme = true;
+        #   name = "candy";
+        #   package = pkgs.candy-icons;
+        #   name = "sweet";
+        #   package = pkgs.sweet-folders;
         # };
       };
 
-      # dconf.settings = {
-      #   "org/gnome/nautilus/icon-view" = {
-      #     default-zoom-level = "standard";
-      #   };
-      #   "org/gnome/desktop/interface" = {
-      #     color-scheme = "prefer-dark";
-      #   };
-      # };
     };
 
     # home.packages = [

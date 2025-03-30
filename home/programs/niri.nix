@@ -246,8 +246,8 @@
 
           # Screenshots
           "Mod+Y".action = sh "${config.home.homeDirectory}/scripts/bin/take_screenshot.sh";
-          "Mod+Shift+Y".action = screenshot-screen;
-          "Mod+Ctrl+Y".action = screenshot-window;
+          # "Mod+Shift+Y".action = screenshot-screen;
+          # "Mod+Ctrl+Y".action = screenshot-window;
         }
       ];
 
