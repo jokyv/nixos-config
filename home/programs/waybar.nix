@@ -189,7 +189,7 @@
       };
     };
     style = ''
-      {
+      window#waybar {
         text-shadow: none;
         box-shadow: none;
         border: none;
@@ -197,9 +197,6 @@
         font-family: "Segoe UI", "Ubuntu";
         font-weight: 600;
         font-size: 12.7px;
-      }
-
-      window#waybar {
         background: @bg_main;
         border-top: 1px solid @border_main;
         color: @content_main;
