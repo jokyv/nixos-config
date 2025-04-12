@@ -282,7 +282,7 @@
         margin-right: 2px;
         padding-left: 8px;
         padding-right: 8px;
-        color: white;
+        color: @content_main;
         transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
       }
 
@@ -315,34 +315,28 @@
         transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
       }
 
-      #window {
-        border-radius: 10px;
-        margin-left: 20px;
-        margin-right: 20px;
-      }
-
       #tray {
         margin-left: 5px;
         margin-right: 5px;
       }
 
-      #tray > .passive {
+      #tray widget.passive {
         border-bottom: none;
       }
 
-      #tray > .active {
+      #tray widget.active {
         border-bottom: 3px solid white;
       }
 
-      #tray > .needs-attention {
+      #tray widget.needs-attention {
         border-bottom: 3px solid @warning_color;
       }
 
-      #tray > widget {
+      #tray widget {
         transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
       }
 
-      #tray > widget:hover {
+      #tray widget:hover {
         background: @bg_hover;
       }
 
