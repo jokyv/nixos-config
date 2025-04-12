@@ -198,7 +198,6 @@
         font-weight: 600;
         font-size: 12.7px;
         background: @bg_main;
-        border-top: 1px solid @border_main;
         color: @content_main;
       }
 
