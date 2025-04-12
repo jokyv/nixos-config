@@ -75,7 +75,7 @@
 
         memory = {
           interval = 10;
-          format = "  {percentage}%"; # needs more space here
+          format = " {percentage}%"; # needs more space here
           max-length = 10;
           tooltip = true;
           tooltip-format = "RAM - {used:0.1f}GiB used";
@@ -107,8 +107,8 @@
         };
 
         clock = {
-          format = "      {:%R\n %d.%m.%Y}";
-          "tooltip-format" = "<tt><small>{calendar}</small></tt>";
+          format = "   {:%R\n %d.%m.%Y}";
+          tooltip-format = "<tt><small>{calendar}</small></tt>";
           calendar = {
             mode = "year";
             "mode-mon-col" = 3;
@@ -137,11 +137,11 @@
           "format-ethernet" = "󰈁 ";
           "format-disconnected" = "󰌙";
           "format-icons" = [
-            "󰤯 "
-            "󰤟 "
-            "󰤢 "
-            "󰤢 "
-            "󰤨 "
+            "󰤯"
+            "󰤟"
+            "󰤢"
+            "󰤢"
+            "󰤨"
           ];
         };
 
@@ -347,8 +347,8 @@
       }
 
       #network {
-        padding-left: 3px;
-        padding-right: 3px;
+        padding-left: 5px;
+        padding-right: 5px;
       }
 
       #language {

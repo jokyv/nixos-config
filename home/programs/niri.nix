@@ -96,8 +96,10 @@
 
     spawn-at-startup = [
       { command = [ "foot" ]; }
-      { command = [ "waybar" ]; }
+      { command = [ "xdg-desktop-portal" ]; }
+      { command = [ "xdg-desktop-portal-gtk" ]; }
       { command = [ "waypaper" "--restore" ]; }
+      { command = [ "waybar" ]; }
       {
         command = [
           "wl-paste"

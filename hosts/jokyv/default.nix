@@ -28,7 +28,17 @@
   services.displayManager.ly.enable = true;
   services.xserver.enable = true;
   services.openssh.enable = true;
+  services.dbus.enable = true;
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-gnome
+      xdg-desktop-portal-wlr
+    ];
+    config.common.default = [ "*" ];
+  };
   programs.niri.enable = true;
   programs.nix-ld.enable = true; # for python uv
 
