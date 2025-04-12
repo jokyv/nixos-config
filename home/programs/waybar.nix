@@ -189,21 +189,7 @@
       };
     };
     style = ''
-      /* Base background color */
-      @define-color bg_main rgba(25, 25, 25, 0.65);
-      @define-color bg_main_tooltip rgba(0, 0, 0, 0.7);
-      /* Base background color of selections */
-      @define-color bg_hover rgba(200, 200, 200, 0.3);
-      /* Base background color of active elements */
-      @define-color bg_active rgba(100, 100, 100, 0.5);
-      /* Base border color */
-      @define-color border_main rgba(255, 255, 255, 0.2);
-      /* Text color for entries, views and content in general */
-      @define-color content_main white;
-      /* Text color for entries that are unselected */
-      @define-color content_inactive rgba(255, 255, 255, 0.25);
-
-      * {
+      {
         text-shadow: none;
         box-shadow: none;
         border: none;
