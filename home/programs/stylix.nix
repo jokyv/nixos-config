@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   stylix = {
@@ -7,7 +7,8 @@
     image = ../wallpaper.png;
     polarity = "dark";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest.yaml";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest-dark-hard.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest-dark-hard.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
 
     cursor = {
       package = pkgs.bibata-cursors;
