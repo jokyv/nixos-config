@@ -359,7 +359,6 @@
       #clock {
         padding-right: 5px;
         padding-left: 5px;
-        halign: center;
         transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
       }
 
