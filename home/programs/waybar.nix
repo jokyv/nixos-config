@@ -18,7 +18,7 @@
           "niri/workspaces"
           "wlr/taskbar"
         ];
-        "modules-center" = [ ];
+        "modules-center" = [ "clock" ];
         "modules-right" = [
           "cpu"
           # "temperature"
@@ -28,7 +28,6 @@
           "pulseaudio"
           "network"
           "niri/language"
-          "clock"
           "custom/off_button"
         ];
 
