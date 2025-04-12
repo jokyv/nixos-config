@@ -167,21 +167,6 @@
   ];
 
   # ---------------------------------------------
-  # Enable main XDG desktop portal service
-  # ---------------------------------------------
-
-  # services.dbus.enable = true; # Ensure D-Bus is enabled
-  # xdg.portal.config.common.default = "*";
-  # xdg.portal = {
-  #   enable = true;
-  #   # Use extraPortals to specify which backend implementations to enable.
-  #   #     # 'with pkgs;' allows you to refer to packages directly without 'pkgs.' prefix.
-  #   extraPortals = with pkgs; [
-  #     xdg-desktop-portal-wlr # For wlroots-based compositors (Sway, Hyprland, etc.)
-  #     xdg-desktop-portal-gtk # For GTK apps (recommended for broad compatibility)
-  #   ];
-  # };
-
   # install packages AND specify their configs
   # environment variables
   # environment.variables = {
