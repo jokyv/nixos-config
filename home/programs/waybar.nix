@@ -201,7 +201,7 @@
       }
 
       tooltip {
-        background: @bg_main_tooltip;
+        background: @bg_main;
         border-radius: 5px;
         border-width: 1px;
         border-style: solid;
