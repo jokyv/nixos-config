@@ -174,6 +174,7 @@
       "gsa" = "git_util.py --status_all_dirs";
       "gclean" = "git_util.py --clean_up";
       "gd" = "git diff -w";
+      "gh-create" = "git_util.py --create_push_gh_repo";
     };
   };
 }
