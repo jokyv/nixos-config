@@ -97,7 +97,6 @@
     spawn-at-startup = [
       { command = [ "foot" ]; }
       { command = [ "xdg-desktop-portal" ]; }
-      { command = [ "xdg-desktop-portal-gtk" ]; }
       { command = [ "waypaper" "--restore" ]; }
       { command = [ "waybar" ]; }
       {
@@ -161,6 +160,7 @@
           "Mod+Shift+D".action = sh "${config.home.homeDirectory}/scripts/bin/clip_hist.py del";
 
           # System actions
+          # "Mod+Z".action = toggle-overview;
           "Mod+Q".action = close-window;
           "Mod+Shift+Q".action = quit;
           "Mod+Shift+P".action = power-off-monitors;
