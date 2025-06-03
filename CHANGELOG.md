@@ -2,62 +2,123 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.2.0] - 2025-02-06
-
-### Summary
-
-- Added `fd`, `aider`, `obsidian`, `typos-lsp`
-- `Foot` is now the main terminal
-- Added many more key bindings with niri and my custom scripts
-- Cleaning and refactoring on many places
+## [0.3.0] - 2025-06-03
 
 ### 🚀 Features
 
-- _(atuin.nix)_ Enabled nushell integration
-- _(brave.nix)_ Config for brave on wayland
-- _(fd.nix)_ Added fd nix configs
-- _(fnott.nix)_ Decrease the timeout values
-- _(fnott.nix)_ Specify summary font
-- _(foot.nix)_ Removed a lot of settings for troubleshooting
-- _(helix.nix)_ Re-organising the languages section
-- _(helix.nix)_ Added inline errors
-- _(helix.nix)_ Added nufmt and markdown-oxide to languages part
-- _(home/default.nix)_ Add discord but failing to launch
-- _(home/default.nix)_ Added aider
-- _(home/default.nix)_ Add jq program
-- _(home/default.nix)_ Added more programs managed by home-manager
-- _(hosts/jokyv/default.nix)_ Removed some python packaages i do not need
-- _(hosts/jokyv/default.nix)_ Removing python programs that i dn not need
-- _(niri.nix)_ Added window rules for firefox + URL refs with examples
-- _(niri.nix)_ Add key binding for clip_hist.py del
-- _(niri.nix)_ Add scripts to niri binds
-- _(niri.nix)_ Clip_hist.py bindings and cliphist spawn at startup
-- _(niri.nix)_ Shortcuts for obsidian and take screenshot script
-- _(nu.nix)_ Add path for aider app
-- _(nu.nix)_ Switched to variable home inetead of username
-- _(obsidian.nix)_ Added obsidian and small refactoring
-- _(starship.nix)_ Enable nushell integration
-- _(starship.nix)_ Enabled sudo and added icons for it
-- _(typos)_ Add typos-lsp for typos support on markdown files
-- _(waybar.nix)_ Added off button functionality
-- _(yazi.nix)_ Enable nushell integration
+- _(helix.nix)_ Continue to next row if markdown list
+- _(nu)_ Added alias to activate venv for AI
+- _(helix.nix)_ Markdown config updates
+- Add GitHub CLI (gh) to default home packages
+- Add scripts/apps directory, Python packages and mkDefault for fnott
+- Add gh-create alias for creating and pushing to GitHub repo
 
 ### 🐛 Bug Fixes
 
-- _(foot.nix)_ Fixed issue with foot and made it the default terminal
-- _(niri.nix)_ Issues with typos and floating commands
-- _(niri.nix)_ Take screenshot path, script etc
-- _(starship.nix)_ Fix the format
-- _(zsa)_ Added zsa udev rules for my keyboard
+- _(stylix.nix)_ Commented out kvantum config part
+- _(nu.nix)_ Replaced depreceated config due to update
+- Comment out GTK dark theme preference in Stylix
+- Move style properties to window#waybar selector to fix CSS error
+- Use @bg_active for Waybar tooltip background to ensure solidity
+- Remove xdg-desktop-portal-gtk from portal config
 
 ### 💼 Other
 
 - Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
 
 ### 🚜 Refactor
 
-- _(home/default.nix)_ Refactoring the packages list.
+- Restructure stylix config using targets and enable Firefox
+- Simplify configs and update python to 3.12
+- Remove commented-out XDG portal config from home-manager
+- Center clock module by moving it to modules-center
+
+### 📚 Documentation
+
+- Create changelog for my commits/releases
+- Restructure and expand README documentation
+
+### 🎨 Styling
+
+- Remove unnecessary color definitions from waybar config
+- Refactor waybar styles for consistency and correctness
+- Remove top border from waybar config
+- Center the clock text in the waybar module
+- Replace text-align with halign in waybar config
+- Remove halign from waybar clock module style
+- Make tooltip background solid by using @bg_main color.
+
+### ⚙️ Miscellaneous Tasks
+
+- Comment out xdg-desktop-portal configuration
+- Update niri, stylix, waybar configs and jokyv host config
+
+## [0.2.0] - 2025-02-02
+
+### 🚀 Features
+
+- _(nu.nix)_ Switched to variable home inetead of username
+- _(jokyv/default.nix)_ Removing python programs that i dn not need
+- _(fnott.nix)_ Specify summary font
+- _(niri.nix)_ Add scripts to niri binds
+- _(home/default.nix)_ Add jq program
+- _(helix.nix)_ Added nufmt and markdown-oxide to languages part
+- _(fnott.nix)_ Decrease the timeout values
+- _(foot.nix)_ Removed a lot of settings for troubleshooting
+- _(niri.nix)_ Clip_hist.py bindings and cliphist spawn at startup
+- _(waybar.nix)_ Added off button functionality
+- _(helix.nix)_ Added inline errors
+- _(starship.nix)_ Enabled sudo and added icons for it
+- _(fd)_ Added fd nix configs
+- _(atuin.nix)_ Enabled nushell integration
+- _(yazi.nix)_ Enable nushell integration
+- _(starship.nix)_ Enable nushell integration
+- _(home/default.nix)_ Added more programs managed by home-manager
+- _(brave.nix)_ Config for brave on wayland
+- _(obsidian.nix)_ Added obsidian and small refactoring
+- _(niri.nix)_ Shortcuts for obsidian and take screenshot script
+- _(typos)_ Add typos-lsp for typos support on markdown files
+- _(niri)_ Added window rules for firefox + URL refs with examples
+- _(home)_ Added aider
+- _(helix)_ Re-organising the languages section
+- _(nu.nix)_ Add path for aider app
+- _(home)_ Add discord but failing to launch
+- _(niri.nix)_ Add key binding for clip_hist.py del
+- _(hosts/jokyv)_ Removed some python packaages i do not need
+
+### 🐛 Bug Fixes
+
+- _(starship.nix)_ Fix the format
+- _(niri.nix)_ Take screenshot path, script etc
+- _(zsa)_ Added zsa udev rules for my keyboard
+- _(foot)_ Fixed issue with foot and made it the default terminal
+- _(niri)_ Issues with typos and floating commands
+
+### 💼 Other
+
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+
+### 🚜 Refactor
+
 - _(home/default.nix)_ Small changes
+- _(home/default.nix)_ Refactoring the packages list.
 - _(waybar.nix)_ Small changes
 
 ### 📚 Documentation
