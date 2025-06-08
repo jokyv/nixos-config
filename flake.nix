@@ -58,7 +58,7 @@
         inherit pkgs;
         modules = [
           ./home/default.nix
-          stylix.homeManagerModules.stylix
+          stylix.homeModules.stylix
           sops-nix.homeManagerModules.sops
           niri.homeModules.niri
           # nh.homeModules.default
