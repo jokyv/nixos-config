@@ -33,7 +33,7 @@
     ./programs/stylix.nix
     ./programs/swaylock.nix
     ./programs/waybar.nix
-    ./programs/waypaper.nix
+    ./programs/swww.nix
     ./programs/yazi.nix
     ./programs/zathura.nix
     ./programs/zoxide.nix
