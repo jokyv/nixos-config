@@ -97,7 +97,7 @@
     spawn-at-startup = [
       { command = [ "foot" ]; }
       { command = [ "xdg-desktop-portal" ]; }
-      { command = [ "waypaper" "--restore" ]; }
+      { command = [ "swww" "img" "~/pics/wallpapers/gankar_1.png" ]; }
       { command = [ "waybar" ]; }
       {
         command = [
@@ -142,7 +142,7 @@
           # "Mod+Shift+E".action = term "yy ${config.home.homeDirectory}/downloads/";
 
           # Change wallpaper
-          "Mod+W".action = sh ''notify-send -c critical "wallpaper" "changing wallpaper..." | waypaper --random'';
+          "Mod+W".action = sh "${config.home.homeDirectory}/scripts/bin/update_wall.sh";
 
           # Launch obsidian
           "Mod+O".action = sh "obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland";
@@ -293,3 +293,4 @@
       ];
   };
 }
+
