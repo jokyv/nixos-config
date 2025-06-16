@@ -12,7 +12,7 @@
     };
     Service = {
       ExecStart = "${pkgs.swww}/bin/swww init";
-      Restart = "on-failure";
+      Type = "oneshot";
     };
     Install = {
       WantedBy = [ "graphical-session.target" ];
@@ -23,7 +23,7 @@
   systemd.user.services.swww-set = {
     Unit = {
       Description = "Set wallpaper with swww";
-      After = [ "swww-daemon.service" ];
+      After = [ "swww-init.service" ];
       Requires = [ "swww-init.service" ];
     };
     Service = {
