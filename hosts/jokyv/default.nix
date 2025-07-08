@@ -46,7 +46,7 @@
   users.users.jokyv = {
     isNormalUser = true;
     description = "jokyv";
-    shell = pkgs.nushell;
+    shell = pkgs.bash;
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
@@ -94,7 +94,7 @@
   # Select internationalisation properties.
   i18n = {
     defaultLocale = "en_US.UTF-8";
-    supportedLocales = [
+    extraLocales = [
       "en_US.UTF-8/UTF-8"
       "el_GR.UTF-8/UTF-8" # Greek locale
     ];
