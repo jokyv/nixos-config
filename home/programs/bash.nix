@@ -68,6 +68,7 @@
       "pua" = "python_pip_update.py -A";
       "pic" = "python_init_code.py";
       "a" = "source ~/uv_default/bin/activate";
+      "talk" = "source ~/talk_to_ai/bin/activate";
       "d" = "deactivate";
 
       # Rust/Cargo
@@ -161,13 +162,11 @@
         if test -r "$1"; then source "$1"; fi
       }
 
-      # Add personal scripts to $PATH
-      add_to_path $HOME/repost/personal_scripts
       # Uncomment if you're using Cargo (Rust) binaries
       # add_to_path $HOME/.local/share/cargo/bin
 
       # Source personal scripts
-      source_if_exists $HOME/scripts/bin/
+      add_to_path $HOME/scripts/bin/
       
       # Source additional scripts, aliases, and exports
       source_if_exists $HOME/nixos-config/bin/linux_scripts.sh
