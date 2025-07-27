@@ -81,8 +81,8 @@
     extraConfig = {
       alias = {
         ignore = "!gi() { local IFS=','; curl -sL \"https://www.toptal.com/developers/gitignore/api/\\$*\"; }; gi";
-        l = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
-        graph = "log --all --graph --decorate --oneline";
+        l = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -5";
+        graph = "log --all --graph --decorate --oneline -5";
       };
       init = {
         defaultBranch = "main";
