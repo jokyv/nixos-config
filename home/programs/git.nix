@@ -81,8 +81,8 @@
     extraConfig = {
       alias = {
         ignore = "!gi() { local IFS=','; curl -sL \"https://www.toptal.com/developers/gitignore/api/\\$*\"; }; gi";
-        l = "!f() { count=$1; if [ -z \"$count\" ]; then count=5; fi; git log -$count --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit; }; f";
-        graph = "!f() { count=$1; if [ -z \"$count\" ]; then count=5; fi; git log -$count --all --graph --decorate --oneline; }; f";
+        l = "!f() { count=$1; if [ -z \"$count\" ]; then count=5; fi; git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -n \"$count\"; }; f";
+        graph = "!f() { count=$1; if [ -z \"$count\" ]; then count=5; fi; git log --all --graph --decorate --oneline -n \"$count\"; }; f";
       };
       init = {
         defaultBranch = "main";
