@@ -101,7 +101,7 @@
       };
 
       add.interactive = {
-        seBuilting = false;
+        useBuiltin = false;
       };
 
       delta = {
