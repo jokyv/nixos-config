@@ -89,7 +89,11 @@
 
       core = {
         editor = "hx";
-        pager = "delta";
+        pager = "cat";
+      };
+
+      color = {
+        ui = "auto";
       };
 
       credential = {
