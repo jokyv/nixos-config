@@ -33,7 +33,7 @@
         # accel-profile = "flat";
         # scroll-method = "no-scroll";
       };
-      warp-mouse-to-focus = true;
+      warp-mouse-to-focus.enable = true;
       focus-follows-mouse.enable = true;
       workspace-auto-back-and-forth = true;
     };
@@ -97,8 +97,9 @@
     spawn-at-startup = [
       { command = [ "foot" ]; }
       { command = [ "xdg-desktop-portal" ]; }
-      { command = [ "swww" "img" "~/pics/wallpapers/gankar_1.png" ]; }
       { command = [ "waybar" ]; }
+      # { command = [ "swww" "img" "~/pics/wallpapers/gankar_1.png" ]; }
+      { command = [ "swww img ~/pics/wallpapers/gankar_1.png" ]; }
       {
         command = [
           "wl-paste"
