@@ -41,24 +41,21 @@
     ./env.nix
 
     # ./programs/obsidian.nix # home-manager does not support it yet
-    # ./programs/ly.nix # home-manager does not support it yet
-    # ./programs/nh.nix # errors....
+    
+    ./programs/nh.nix
 
   ];
 
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      # Add unfree package names here
-      "obsidian"
-      "discord"
-      "keymapp"
-    ];
-
-  nixpkgs.config =
-    {
-      # allowUnfree = true; # make it explicit with the above
-      # permittedInsecurePackages = [ "electron-24" ];
-    };
+  nixpkgs.config = {
+    allowUnfreePredicate = pkg:
+      builtins.elem (lib.getName pkg) [
+        # Add unfree package names here
+        "obsidian"
+        "discord"
+        "keymapp"
+      ];
+    # permittedInsecurePackages = [ "electron-24" ];
+  };
 
   home.username = "jokyv";
   home.homeDirectory = "/home/jokyv";
@@ -191,10 +188,7 @@
   home.stateVersion = "24.05";
   programs.home-manager.enable = true;
   # programs.home-manager.backupFileExtension = "backup"; # error option does not exist
-  # programs.home-manager.useGlobalPkgs = true;
-  # programs.home-manager.useUserPackages = true;
-
-
+  
   # ---------------------------------------------
   # Create specific folders in home directory
   # ---------------------------------------------
