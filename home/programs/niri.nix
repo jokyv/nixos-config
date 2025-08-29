@@ -108,6 +108,14 @@
           "store"
         ];
       }
+      {
+        command = [
+          "foot",
+          "sh",
+          "-c",
+          "cd ${config.home.homeDirectory}/nixos-config && git pull && echo 'Press Enter to close' && read"
+        ];
+      }
     ];
 
     # config-notification-open-close.spring = {
