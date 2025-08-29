@@ -6,6 +6,7 @@
 { config, lib, pkgs, ... }:
 
 {
+  programs.niri.enable = true;
   programs.niri.package = pkgs.niri;
 
   programs.niri.settings = {
@@ -98,8 +99,7 @@
       { command = [ "foot" ]; }
       { command = [ "xdg-desktop-portal" ]; }
       { command = [ "waybar" ]; }
-      # { command = [ "swww" "img" "~/pics/wallpapers/gankar_1.png" ]; }
-      { command = [ "swww img ~/pics/wallpapers/gankar_1.png" ]; }
+      { command = [ "swww" "img" "${config.home.homeDirectory}/pics/wallpapers/gankar_1.png" ]; }
       {
         command = [
           "wl-paste"
@@ -128,8 +128,8 @@
           "Mod+Shift+Slash".action.show-hotkey-overlay = { };
 
           # Terminal apps
-          "Mod+T".action = sh "${pkgs.foot}/bin/foot";
-          "Mod+Shift+T".action = sh "${pkgs.kitty}/bin/kitty";
+          "Mod+T".action.spawn = "foot";
+          "Mod+Shift+T".action.spawn = "kitty";
 
           # Browser apps
           "Mod+B".action.spawn = "firefox";
