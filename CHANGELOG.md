@@ -1,22 +1,51 @@
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-## [0.3.0] - 2025-06-03
+## [0.4.0] - 2025-09-01
 
 ### 🚀 Features
 
-- _(helix.nix)_ Continue to next row if markdown list
-- _(nu)_ Added alias to activate venv for AI
-- _(helix.nix)_ Markdown config updates
+- Migrate wallpaper management from waypaper to swww
+- Add 'talk' alias and update scripts path handling
+- Add gh-create alias for GitHub repo creation
+- *(git)* Add count parameter to log aliases
+- Refactor home-manager configuration
+
+### 🐛 Bug Fixes
+
+- Update stylix module path to homeModules
+- Correct swww init service type and dependencies
+- Correct typo in git.add.interactive config
+- Add git aliases with proper escaping
+- Correct default count handling in git aliases
+- Use -n for count in git log aliases
+
+### 💼 Other
+
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+
+### ⚙️ Miscellaneous Tasks
+
+- Update CHANGELOG.md with new version
+- Disable dprint and adjust niri config
+## [0.3.0] - 2025-05-31
+
+### 🚀 Features
+
+- *(helix.nix)* Continue to next row if markdown list
+- *(nu)* Added alias to activate venv for AI
+- *(helix.nix)* Markdown config updates
 - Add GitHub CLI (gh) to default home packages
 - Add scripts/apps directory, Python packages and mkDefault for fnott
 - Add gh-create alias for creating and pushing to GitHub repo
 
 ### 🐛 Bug Fixes
 
-- _(stylix.nix)_ Commented out kvantum config part
-- _(nu.nix)_ Replaced depreceated config due to update
+- *(stylix.nix)* Commented out kvantum config part
+- *(nu.nix)* Replaced depreceated config due to update
 - Comment out GTK dark theme preference in Stylix
 - Move style properties to window#waybar selector to fix CSS error
 - Use @bg_active for Waybar tooltip background to ensure solidity
@@ -58,47 +87,46 @@ All notable changes to this project will be documented in this file.
 
 - Comment out xdg-desktop-portal configuration
 - Update niri, stylix, waybar configs and jokyv host config
-
 ## [0.2.0] - 2025-02-02
 
 ### 🚀 Features
 
-- _(nu.nix)_ Switched to variable home inetead of username
-- _(jokyv/default.nix)_ Removing python programs that i dn not need
-- _(fnott.nix)_ Specify summary font
-- _(niri.nix)_ Add scripts to niri binds
-- _(home/default.nix)_ Add jq program
-- _(helix.nix)_ Added nufmt and markdown-oxide to languages part
-- _(fnott.nix)_ Decrease the timeout values
-- _(foot.nix)_ Removed a lot of settings for troubleshooting
-- _(niri.nix)_ Clip_hist.py bindings and cliphist spawn at startup
-- _(waybar.nix)_ Added off button functionality
-- _(helix.nix)_ Added inline errors
-- _(starship.nix)_ Enabled sudo and added icons for it
-- _(fd)_ Added fd nix configs
-- _(atuin.nix)_ Enabled nushell integration
-- _(yazi.nix)_ Enable nushell integration
-- _(starship.nix)_ Enable nushell integration
-- _(home/default.nix)_ Added more programs managed by home-manager
-- _(brave.nix)_ Config for brave on wayland
-- _(obsidian.nix)_ Added obsidian and small refactoring
-- _(niri.nix)_ Shortcuts for obsidian and take screenshot script
-- _(typos)_ Add typos-lsp for typos support on markdown files
-- _(niri)_ Added window rules for firefox + URL refs with examples
-- _(home)_ Added aider
-- _(helix)_ Re-organising the languages section
-- _(nu.nix)_ Add path for aider app
-- _(home)_ Add discord but failing to launch
-- _(niri.nix)_ Add key binding for clip_hist.py del
-- _(hosts/jokyv)_ Removed some python packaages i do not need
+- *(nu.nix)* Switched to variable home inetead of username
+- *(jokyv/default.nix)* Removing python programs that i dn not need
+- *(fnott.nix)* Specify summary font
+- *(niri.nix)* Add scripts to niri binds
+- *(home/default.nix)* Add jq program
+- *(helix.nix)* Added nufmt and markdown-oxide to languages part
+- *(fnott.nix)* Decrease the timeout values
+- *(foot.nix)* Removed a lot of settings for troubleshooting
+- *(niri.nix)* Clip_hist.py bindings and cliphist spawn at startup
+- *(waybar.nix)* Added off button functionality
+- *(helix.nix)* Added inline errors
+- *(starship.nix)* Enabled sudo and added icons for it
+- *(fd)* Added fd nix configs
+- *(atuin.nix)* Enabled nushell integration
+- *(yazi.nix)* Enable nushell integration
+- *(starship.nix)* Enable nushell integration
+- *(home/default.nix)* Added more programs managed by home-manager
+- *(brave.nix)* Config for brave on wayland
+- *(obsidian.nix)* Added obsidian and small refactoring
+- *(niri.nix)* Shortcuts for obsidian and take screenshot script
+- *(typos)* Add typos-lsp for typos support on markdown files
+- *(niri)* Added window rules for firefox + URL refs with examples
+- *(home)* Added aider
+- *(helix)* Re-organising the languages section
+- *(nu.nix)* Add path for aider app
+- *(home)* Add discord but failing to launch
+- *(niri.nix)* Add key binding for clip_hist.py del
+- *(hosts/jokyv)* Removed some python packaages i do not need
 
 ### 🐛 Bug Fixes
 
-- _(starship.nix)_ Fix the format
-- _(niri.nix)_ Take screenshot path, script etc
-- _(zsa)_ Added zsa udev rules for my keyboard
-- _(foot)_ Fixed issue with foot and made it the default terminal
-- _(niri)_ Issues with typos and floating commands
+- *(starship.nix)* Fix the format
+- *(niri.nix)* Take screenshot path, script etc
+- *(zsa)* Added zsa udev rules for my keyboard
+- *(foot)* Fixed issue with foot and made it the default terminal
+- *(niri)* Issues with typos and floating commands
 
 ### 💼 Other
 
@@ -117,23 +145,20 @@ All notable changes to this project will be documented in this file.
 
 ### 🚜 Refactor
 
-- _(home/default.nix)_ Small changes
-- _(home/default.nix)_ Refactoring the packages list.
-- _(waybar.nix)_ Small changes
+- *(home/default.nix)* Small changes
+- *(home/default.nix)* Refactoring the packages list.
+- *(waybar.nix)* Small changes
 
 ### 📚 Documentation
 
-- _(CHANGELOG.md)_ Create changelog for my commits/releases
-
+- *(CHANGELOG.md)* Create changelog for my commits/releases
 ## [0.1.0] - 2024-12-28
 
 ### 🚀 Features
 
-- _(dprint.json)_ Added dprint.json config file for markdown format
+- *(dprint.json)* Added dprint.json config file for markdown format
 
 ### 📚 Documentation
 
-- _(README.md)_ Add readme file
-- _(LICENSE)_ Added license
-
-<!-- generated by git-cliff -->
+- *(README.md)* Add readme file
+- *(LICENSE)* Added license
