@@ -98,7 +98,9 @@
     spawn-at-startup = [
       { command = [ "foot" ]; }
       { command = [ "xdg-desktop-portal" ]; }
-      { command = [ "waybar" ]; }
+      { command = [ "xwayland-satellite" ]; }
+      # { command = [ "waybar" ]; }
+      { command = [ "swww-daemon" ]; }
       { command = [ "swww" "img" "${config.home.homeDirectory}/pics/wallpapers/gankar_1.png" ]; }
       {
         command = [
