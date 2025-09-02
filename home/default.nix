@@ -41,7 +41,7 @@
     ./env.nix
 
     # ./programs/obsidian.nix # home-manager does not support it yet
-    
+
     ./programs/nh.nix
 
   ];
@@ -188,7 +188,7 @@
   home.stateVersion = "24.05";
   programs.home-manager.enable = true;
   # programs.home-manager.backupFileExtension = "backup"; # error option does not exist
-  
+
   # ---------------------------------------------
   # Create specific folders in home directory
   # ---------------------------------------------
@@ -197,6 +197,75 @@
   #   "downloads".source = config.lib.file.mkOutOfStoreSymlink "/home/${config.home.username}/downloads";
   #   "projects".source = config.lib.file.mkOutOfStoreSymlink "/home/${config.home.username}/projects";
   #   "pics".source = config.lib.file.mkOutOfStoreSymlink "/home/${config.home.username}/pics";
+  # };
+
+  # ---------------------------------------------
+  # Set systemd
+  # ---------------------------------------------
+
+  # Waybar service
+  systemd.user.services.waybar = {
+    Unit = {
+      Description = "Waybar status bar";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = pkgs.writeShellScript "start-waybar" ''
+        for i in $(seq 1 10); do
+          ${pkgs.waybar}/bin/waybar && exit 0
+          sleep 1
+        done
+        exit 1
+      '';
+      Restart = "always";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
+  # swww daemon
+  # systemd.user.services.swww-daemon = {
+  #   Unit = {
+  #     Description = "swww wallpaper daemon";
+  #     After = [ "graphical-session.target" "niri.service" ];
+  #     PartOf = [ "graphical-session.target" ];
+  #   };
+  #   Service = {
+  #     ExecStart = "${pkgs.swww}/bin/swww-daemon";
+  #     Restart = "always";
+  #   };
+  #   Install = {
+  #     WantedBy = [ "graphical-session.target" ];
+  #   };
+  # };
+
+  # set wallpaper after daemon
+  # systemd.user.services.swww-wallpaper = {
+  #   Unit = {
+  #     Description = "Set wallpaper with swww";
+  #     After = [ "swww-daemon.service" "niri.service" ];
+  #     PartOf = [ "graphical-session.target" ];
+  #   };
+  #   Service = {
+  #     Type = "oneshot";
+  #     ExecStart = pkgs.writeShellScript "set-wallpaper" ''
+  #       for i in $(seq 1 10); do
+  #         ${pkgs.swww}/bin/swww img ${config.home.homeDirectory}/pics/wallpapers/gankar_1.png && exit 0
+  #         sleep 1
+  #       done
+  #       exit 1
+  #     '';
+  #   };
+  #   Install = {
+  #     WantedBy = [
+  #       "niri.service"
+  #       "suspend.target"
+  #       "hibernate.target"
+  #       "hybrid-sleep.target"
+  #     ];
+  #   };
   # };
 
   # ---------------------------------------------
