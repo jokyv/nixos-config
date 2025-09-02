@@ -167,18 +167,16 @@
     sops
   ];
 
-  
+
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  # ---------------------------------------------
   home.stateVersion = "24.05";
   programs.home-manager.enable = true;
-  programs.home-manager.backupFileExtension = "backup";
 
   # ---------------------------------------------
   # Set systemd
   # ---------------------------------------------
 
-  services.waybar.systemd.enable = true;
+  programs.waybar.systemd.enable = true;
 
   # ---------------------------------------------
   # Set XDG user directories
