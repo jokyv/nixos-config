@@ -97,8 +97,8 @@
 
     spawn-at-startup = [
       { command = [ "foot" ]; }
-      { command = [ "xdg-desktop-portal" ]; }
       { command = [ "xwayland-satellite" ]; }
+      { command = [ "xdg-desktop-portal" ]; }
       # { command = [ "waybar" ]; }
       { command = [ "swww-daemon" ]; }
       { command = [ "swww" "img" "${config.home.homeDirectory}/pics/wallpapers/gankar_1.png" ]; }
@@ -110,14 +110,15 @@
           "store"
         ];
       }
-      {
-        command = [
-          "foot",
-          "sh",
-          "-c",
-          "cd ${config.home.homeDirectory}/nixos-config && git pull && echo 'Press Enter to close' && read"
-        ];
-      }
+      # open terminal and run command
+      # {
+      #   command = [
+      #     "foot",
+      #     "sh",
+      #     "-c",
+      #     "cd ${config.home.homeDirectory}/nixos-config && git pull && echo 'Press Enter to close' && read"
+      #   ];
+      # }
     ];
 
     # config-notification-open-close.spring = {
