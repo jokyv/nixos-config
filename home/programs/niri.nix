@@ -14,12 +14,14 @@
       hide-when-typing = true;
       hide-after-inactive-ms = 1000;
     };
-
-    screenshot-path = "${config.home.homeDirectory}/pics/screenshots/screenshot from %Y-%m-%d %H-%M-%S.png";
     hotkey-overlay.skip-at-startup = true;
     prefer-no-csd = true;
+    screenshot-path = "${config.home.homeDirectory}/pics/screenshots/screenshot from %Y-%m-%d %H-%M-%S.png";
 
     input = {
+      warp-mouse-to-focus.enable = true;
+      focus-follows-mouse.enable = true;
+      workspace-auto-back-and-forth = true;
       keyboard = {
         xkb = {
           layout = "us, gr"; # US and Greek layouts
@@ -34,9 +36,6 @@
         # accel-profile = "flat";
         # scroll-method = "no-scroll";
       };
-      warp-mouse-to-focus.enable = true;
-      focus-follows-mouse.enable = true;
-      workspace-auto-back-and-forth = true;
     };
 
     outputs = {
@@ -67,14 +66,12 @@
     layout = {
       gaps = 15;
       center-focused-column = "never";
-      # preset-column-widths = {
-      #   proportion = [ 0.33333 0.5 0.66667 1.0 ];
-      # };
-      # default-column-width.proportion = 0.5;
+      always-center-single-column = true;
+      # shadow.enable = "true";
       preset-column-widths = [
-        { proportion = 1.0 / 3.0; }
+        # { proportion = 1.0 / 3.0; }
         { proportion = 1.0 / 2.0; }
-        { proportion = 2.0 / 3.0; }
+        # { proportion = 2.0 / 3.0; }
         { proportion = 3.0 / 3.0; }
       ];
       default-column-width = { proportion = 1.0 / 2.0; };
@@ -85,25 +82,25 @@
       #   inactive-color = "#805b6d";
       # };
 
-      # border.off = true;
+      # border.enable = true;
 
       struts = {
-        left = 15;
-        right = 15;
         top = 15;
         bottom = 15;
+        left = 15;
+        right = 15;
       };
     };
 
     spawn-at-startup = [
-      { command = [ "foot" ]; }
-      { command = [ "xwayland-satellite" ]; }
-      { command = [ "xdg-desktop-portal" ]; }
-      # { command = [ "waybar" ]; }
-      { command = [ "swww-daemon" ]; }
-      { command = [ "swww" "img" "${config.home.homeDirectory}/pics/wallpapers/gankar_1.png" ]; }
+      { argv = [ "foot" ]; }
+      { argv = [ "xwayland-satellite" ]; }
+      { argv = [ "xdg-desktop-portal" ]; }
+      { argv = [ "swww-daemon" ]; }
+      { argv = [ "swww" "img" "${config.home.homeDirectory}/pics/wallpapers/gankar_1.png" ]; }
+      # my copy and paste setup
       {
-        command = [
+        argv = [
           "wl-paste"
           "--watch"
           "cliphist"
@@ -111,14 +108,14 @@
         ];
       }
       # open terminal and run command
-      # {
-      #   command = [
-      #     "foot",
-      #     "sh",
-      #     "-c",
-      #     "cd ${config.home.homeDirectory}/nixos-config && git pull && echo 'Press Enter to close' && read"
-      #   ];
-      # }
+      {
+        argv = [
+          "foot"
+          "sh"
+          "-c"
+          "cd ${config.home.homeDirectory}/nixos-config && git pull && echo 'Press Enter to close' && read"
+        ];
+      }
     ];
 
     # config-notification-open-close.spring = {
@@ -140,10 +137,12 @@
 
           # Terminal apps
           "Mod+T".action.spawn = "foot";
+          "Mod+T".cooldown-ms = 500;
           "Mod+Shift+T".action.spawn = "kitty";
 
           # Browser apps
           "Mod+B".action.spawn = "firefox";
+          "Mod+B".repeat = false;
           "Mod+Shift+B".action.spawn = "brave";
 
           # Launch app launcher 
@@ -184,7 +183,6 @@
 
           # Window management
           "Mod+R".action = switch-preset-column-width;
-          # "Mod+Shift+R".action = reset-window-width; # seems does not exist
           "Mod+F".action = maximize-column;
           "Mod+Shift+F".action = fullscreen-window;
 
