@@ -196,7 +196,7 @@
         font-family: "Segoe UI", "Ubuntu";
         font-weight: 600;
         font-size: 12.7px;
-        background: @bg_main;
+        background: #000000;
         color: @content_main;
       }
 
