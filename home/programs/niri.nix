@@ -14,7 +14,9 @@
       hide-when-typing = true;
       hide-after-inactive-ms = 1000;
     };
+    overview.zoom = 0.35;
     hotkey-overlay.skip-at-startup = true;
+    # hotkey-overlay.hide-not-bound = true;
     prefer-no-csd = true;
     screenshot-path = "${config.home.homeDirectory}/pics/screenshots/screenshot from %Y-%m-%d %H-%M-%S.png";
 
@@ -280,25 +282,29 @@
               bottom-right = r;
             };
           clip-to-geometry = true;
-          # border.active.color = colors.base0B;
         }
         {
           matches = [{ app-id = "^firefox$"; }];
           open-maximized = true;
+          # making scrolling for firefox little slower
+          scroll-factor = 0.90;
+        }
+        {
+          matches = [{ app-id = "^firefox$"; title = "^Picture-in-Picture$"; }];
+          open-floating = true;
+        }
+        {
+          matches = [{ app-id = "^firefox$"; title = "^Private Browsing$"; }];
+          open-floating = true;
+          # border.active-color = "#7d0d2d";
         }
         {
           matches = [{ app-id = "^obsidian$"; }];
           open-maximized = true;
         }
         {
-          matches = [
-            {
-              app-id = "^firefox$";
-              title = "Private Browsing";
-            }
-          ];
-          border.active.color = "rgb(255 0 153)"; # red
-          # TODO color does not change when colors.base0E is used
+          matches = [{ is-active = false; }];
+          opacity = 0.75;
         }
       ];
   };
