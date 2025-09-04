@@ -19,11 +19,19 @@
     {
       hostName = "nixos";
       networkmanager.enable = true;
-      # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+      firewall.enable = true;
     };
 
   # Set your time zone.
   time.timeZone = "Asia/Singapore";
+
+  # Enable sound with PipeWire.
+  sound.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+  };
 
   services.displayManager.ly.enable = true;
   services.xserver.enable = true;
@@ -50,11 +58,13 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
+  # Enable security hardening
+  security.hardening.enable = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     brightnessctl # Screen brightness
-    btop
     clang
     cmake # Often used with C++ projects
     curl
@@ -69,21 +79,10 @@
     mesa
     openssh
     pciutils # lspci
-    pulseaudio # Audio control
-    (python312.withPackages (ps: with ps; [
-      python-lsp-server
-      rich
-      ruff
-      pyyaml
-      # tk
-      # ttkbootstrap
-      # pygame
-      # yt-dlp
-    ]))
+    python312
     ffmpeg
     smartmontools # disk health
     usbutils # lsusb
-    waybar
     wget
 
     # wayland
@@ -166,7 +165,7 @@
     enable = true;
     dates = "daily";
     allowReboot = false;
-    flake = "github:username/system";
+    flake = "github:jokyv/nixos-config";
     flags = [ "--update-input" "nixpkgs" "--commit-lock-file" ];
   };
 }
