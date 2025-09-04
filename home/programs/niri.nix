@@ -98,6 +98,7 @@
       { argv = [ "foot" ]; }
       { argv = [ "xwayland-satellite" ]; }
       { argv = [ "xdg-desktop-portal" ]; }
+      { argv = [ "waybar" ]; }
       { argv = [ "swww-daemon" ]; }
       { argv = [ "swww" "img" "${config.home.homeDirectory}/pics/wallpapers/gankar_1.png" ]; }
       # my copy and paste setup
