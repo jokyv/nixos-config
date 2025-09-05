@@ -104,12 +104,15 @@
   users.users.jokyv = {
     isNormalUser = true;
     description = "jokyv";
-    shell = pkgs.bash;
-    extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.bashInteractive;
+    extraGroups = [ "networkmanager" "wheel" "video" "input" ];
   };
 
   # Security settings
   security.sudo.execWheelOnly = true;
+  security.protectKernelImage = true;
+  security.allowSimultaneousMultithreading = false;
+  security.virtualisation.flushL1DataCache = "always";
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -139,6 +142,15 @@
     # wayland
     xwayland
     wayland
+    
+    # Additional useful packages
+    vulkan-tools
+    glxinfo
+    htop
+    file
+    which
+    unzip
+    p7zip
   ];
 
   # Select internationalisation properties.
@@ -200,6 +212,15 @@
       ProtectKernelModules = true;
     };
   };
+  
+  # Additional security for other systemd services
+  systemd.services.NetworkManager = {
+    serviceConfig = {
+      ProtectSystem = "strict";
+      ProtectHome = true;
+      PrivateTmp = true;
+    };
+  };
 
   # ---------------------------------------------
   # Automation
@@ -221,7 +242,19 @@
       experimental-features = [ "nix-command" "flakes" ];
       trusted-users = [ "root" "jokyv" ];
       warn-dirty = false;
+      # Enable binary caches for faster builds
+      substituters = [
+        "https://cache.nixos.org/"
+        "https://nix-community.cachix.org"
+      ];
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
     };
+    
+    # Enable nix-direnv for development environments
+    package = pkgs.nixVersions.stable;
   };
 
   # Automatic system updates
