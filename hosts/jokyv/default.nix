@@ -14,6 +14,47 @@
   boot.loader.systemd-boot.configurationLimit = 20;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Kernel security settings
+  boot.kernel.sysctl = {
+    "fs.protected_fifos" = 2;
+    "fs.protected_regular" = 2;
+    "fs.suid_dumpable" = false;
+    "kernel.kptr_restrict" = 2;
+    "kernel.sysrq" = false;
+    "kernel.unprivileged_bpf_disabled" = true;
+
+    "net.core.bpf_jit_harden" = 2;
+
+    "net.ipv4.conf.all.accept_redirects" = false;
+    "net.ipv4.conf.default.accept_redirects" = false;
+
+    "net.ipv6.conf.all.accept_redirects" = false;
+    "net.ipv6.conf.default.accept_redirects" = false;
+
+    "net.ipv4.conf.all.log_martians" = true;
+    "net.ipv4.conf.default.log_martians" = true;
+
+    "net.ipv4.conf.all.rp_filter" = true;
+    "net.ipv4.conf.all.send_redirects" = false;
+  };
+
+  # Blacklist unnecessary kernel modules
+  boot.blacklistedKernelModules = [
+    "dccp"
+    "sctp"
+    "rds"
+    "tipc"
+  ];
+
+  # File systems
+  fileSystems."/proc" = {
+    device = "proc";
+    fsType = "proc";
+    options = ["defaults" "hidepid=2"];
+    # unclear if this is actually needed
+    neededForBoot = true;
+  };
+
   # Enable networking
   networking =
     {
@@ -42,7 +83,10 @@
   services.xserver.enable = true;
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
-  services.dbus.enable = true;
+  services.dbus = {
+    enable = true;
+    implementation = "broker";
+  };
 
   xdg.portal = {
     enable = true;
@@ -63,6 +107,9 @@
     shell = pkgs.bash;
     extraGroups = [ "networkmanager" "wheel" ];
   };
+
+  # Security settings
+  security.sudo.execWheelOnly = true;
 
   # Enable security hardening
   # security.hardening.enable = true; # option does not exist
@@ -124,6 +171,37 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05";
+
+  # Systemd service security hardening
+  systemd.services.systemd-rfkill = {
+    serviceConfig = {
+      ProtectSystem = "strict";
+      ProtectHome = true;
+      ProtectKernelTunables = true;
+      ProtectKernelModules = true;
+      ProtectControlGroups = true;
+      ProtectClock = true;
+      ProtectProc = "invisible";
+      ProcSubset = "pid";
+      PrivateTmp = true;
+      MemoryDenyWriteExecute = true;
+      NoNewPrivileges = true;
+      LockPersonality = true;
+      RestrictRealtime = true;
+      SystemCallArchitectures = "native";
+      UMask = "0077";
+      IPAddressDeny = "any";
+    };
+  };
+
+  systemd.services.systemd-journald = {
+    serviceConfig = {
+      UMask = "0077";
+      PrivateNetwork = true;
+      ProtectHostname = true;
+      ProtectKernelModules = true;
+    };
+  };
 
   # ---------------------------------------------
   # Automation
