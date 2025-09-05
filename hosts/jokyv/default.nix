@@ -142,7 +142,7 @@
     # wayland
     xwayland
     wayland
-    
+
     # Additional useful packages
     vulkan-tools
     glxinfo
@@ -212,15 +212,15 @@
       ProtectKernelModules = true;
     };
   };
-  
+
   # Additional security for other systemd services
-  systemd.services.NetworkManager = {
-    serviceConfig = {
-      ProtectSystem = "strict";
-      ProtectHome = true;
-      PrivateTmp = true;
-    };
-  };
+  # systemd.services.NetworkManager = {
+  #   serviceConfig = {
+  #     ProtectSystem = "strict";
+  #     ProtectHome = true;
+  #     PrivateTmp = true;
+  #   };
+  # };
 
   # ---------------------------------------------
   # Automation
@@ -252,7 +252,7 @@
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
     };
-    
+
     # Enable nix-direnv for development environments
     package = pkgs.nixVersions.stable;
   };
