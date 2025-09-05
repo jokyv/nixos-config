@@ -46,14 +46,6 @@
     "tipc"
   ];
 
-  # File systems
-  fileSystems."/proc" = {
-    device = "proc";
-    fsType = "proc";
-    options = [ "defaults" "hidepid=2" ];
-    # unclear if this is actually needed
-    neededForBoot = true;
-  };
 
   # Enable networking
   networking =
@@ -80,7 +72,8 @@
   };
 
   services.displayManager.ly.enable = true;
-  services.xserver.enable = true;
+  # X server is likely not needed when using niri (Wayland compositor)
+  # services.xserver.enable = true;
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.dbus = {
@@ -109,48 +102,64 @@
   };
 
   # Security settings
-  security.sudo.execWheelOnly = true;
-  security.protectKernelImage = true;
-  security.allowSimultaneousMultithreading = false;
-  security.virtualisation.flushL1DataCache = "always";
+  security = {
+    sudo.execWheelOnly = true;
+    protectKernelImage = true;
+    allowSimultaneousMultithreading = false;
+    virtualisation.flushL1DataCache = "always";
+    apparmor.enable = true;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    brightnessctl # Screen brightness
-    clang
-    cmake # Often used with C++ projects
-    curl
-    gcc
-    gdb # Debugger
-    git
-    helix
+    # System utilities
+    brightnessctl
     killall
-    libnotify
-    libglibutil
-    lshw # Hardware info
+    lshw
     lynis
-    mesa
-    openssh
-    pciutils # lspci
-    python312
-    ffmpeg
-    smartmontools # disk health
-    usbutils # lsusb
-    wget
-
-    # wayland
-    xwayland
-    wayland
-
-    # Additional useful packages
-    vulkan-tools
-    glxinfo
+    smartmontools
+    usbutils
+    pciutils
     htop
     file
     which
+    
+    # Development tools
+    clang
+    cmake
+    gcc
+    gdb
+    git
+    python312
+    
+    # Text editors
+    helix
+    
+    # Network utilities
+    curl
+    wget
+    openssh
+    
+    # Multimedia
+    ffmpeg
+    mesa
+    
+    # Wayland
+    xwayland
+    wayland
+    
+    # Graphics and vulkan
+    vulkan-tools
+    glxinfo
+    
+    # Archive tools
     unzip
     p7zip
+    
+    # Other
+    libnotify
+    libglibutil
   ];
 
   # Select internationalisation properties.
