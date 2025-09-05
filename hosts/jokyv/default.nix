@@ -60,6 +60,8 @@
       # networking.firewall.enable = false;
     };
 
+  # Enable the OpenSSH daemon.
+  services.openssh.enable = true;
 
   # Set your time zone.
   time.timeZone = "Asia/Singapore";
@@ -74,8 +76,7 @@
   services.displayManager.ly.enable = true;
   # X server is likely not needed when using niri (Wayland compositor)
   # services.xserver.enable = true;
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+
   services.dbus = {
     enable = true;
     implementation = "broker";
@@ -124,7 +125,7 @@
     htop
     file
     which
-    
+
     # Development tools
     clang
     cmake
@@ -132,31 +133,31 @@
     gdb
     git
     python312
-    
+
     # Text editors
     helix
-    
+
     # Network utilities
     curl
     wget
     openssh
-    
+
     # Multimedia
     ffmpeg
     mesa
-    
+
     # Wayland
     xwayland
     wayland
-    
+
     # Graphics and vulkan
     vulkan-tools
     glxinfo
-    
+
     # Archive tools
     unzip
     p7zip
-    
+
     # Other
     libnotify
     libglibutil
@@ -166,7 +167,7 @@
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocales = [
-      "en_US.UTF-8/UTF-8"
+      "en_US.UTF-8/UTF-8" # English US locale
       "el_GR.UTF-8/UTF-8" # Greek locale
     ];
   };
