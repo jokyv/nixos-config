@@ -104,11 +104,19 @@
 
   # Security settings
   security = {
+    # sudo hardening: require authentication even if same user
     sudo.execWheelOnly = true;
+    # Protect against kernel exploits
     protectKernelImage = true;
-    allowSimultaneousMultithreading = false;
+    # Enable lockdown for VMs/containers
     virtualisation.flushL1DataCache = "always";
+    # Enable AppArmor for application confinement
     apparmor.enable = true;
+    # Disable the ability for a single physical CPU core to execute two logical threads simultaneously.
+    # High performance cost! Overkill! Good for high secutiry enviroments
+    # allowSimultaneousMultithreading = false;
+    # Prevent non-root users from loading kernel modules
+    # lockKernelModules = true;
   };
 
   # List packages installed in system profile. To search, run:
