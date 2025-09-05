@@ -50,7 +50,7 @@
   fileSystems."/proc" = {
     device = "proc";
     fsType = "proc";
-    options = ["defaults" "hidepid=2"];
+    options = [ "defaults" "hidepid=2" ];
     # unclear if this is actually needed
     neededForBoot = true;
   };
@@ -111,9 +111,6 @@
   # Security settings
   security.sudo.execWheelOnly = true;
 
-  # Enable security hardening
-  # security.hardening.enable = true; # option does not exist
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -129,6 +126,7 @@
     libnotify
     libglibutil
     lshw # Hardware info
+    lynis
     mesa
     openssh
     pciutils # lspci
