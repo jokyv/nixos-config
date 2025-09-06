@@ -1,9 +1,29 @@
 { pkgs, ... }:
 
 {
+
+  # ---------------------------------------------
+  # Security settings
+  # ---------------------------------------------
+
+  security = {
+    # sudo hardening: require authentication even if same user
+    sudo.execWheelOnly = true;
+    # Protect against kernel exploits
+    protectKernelImage = true;
+    # Enable lockdown for VMs/containers
+    virtualisation.flushL1DataCache = "always";
+    # Enable AppArmor for application confinement
+    apparmor.enable = true;
+  };
+
+  # Enable firewall
+  networking.firewall.enable = true;
+
   # ---------------------------------------------
   # Kernel security settings
   # ---------------------------------------------
+
   boot.kernel.sysctl = {
     "fs.protected_fifos" = 2;
     "fs.protected_regular" = 2;
@@ -35,26 +55,10 @@
     "tipc"
   ];
 
-  # Enable firewall
-  networking.firewall.enable = true;
+  # ---------------------------------------------
+  # Systemd security settings
+  # ---------------------------------------------
 
-  # ---------------------------------------------
-  # Security settings
-  # ---------------------------------------------
-  security = {
-    # sudo hardening: require authentication even if same user
-    sudo.execWheelOnly = true;
-    # Protect against kernel exploits
-    protectKernelImage = true;
-    # Enable lockdown for VMs/containers
-    virtualisation.flushL1DataCache = "always";
-    # Enable AppArmor for application confinement
-    apparmor.enable = true;
-  };
-
-  # ---------------------------------------------
-  # Systemd service security hardening
-  # ---------------------------------------------
   systemd.services.systemd-rfkill = {
     serviceConfig = {
       ProtectSystem = "strict";
@@ -85,4 +89,12 @@
     };
   };
 
+  # Additional security for other systemd services
+  # systemd.services.NetworkManager = {
+  #   serviceConfig = {
+  #     ProtectSystem = "strict";
+  #     ProtectHome = true;
+  #     PrivateTmp = true;
+  #   };
+  # };
 }
