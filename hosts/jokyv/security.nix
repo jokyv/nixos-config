@@ -85,4 +85,8 @@
     };
   };
 
+  # Nix security settings
+  nix.settings = {
+    trusted-users = [ "root" "jokyv" ];
+  };
 }
