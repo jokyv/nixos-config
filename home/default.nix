@@ -59,7 +59,9 @@
     # ELECTRON_FALLBACK_TO_X11 = "1";
   };
 
+  # ---------------------------------------------
   # SOPS configuration
+  # ---------------------------------------------
   sops = {
     age.keyFile = "${config.home.homeDirectory}/.config/sops/age/secrets.key";
     defaultSopsFile = ../secrets.enc.yaml;
@@ -84,7 +86,9 @@
       ];
   };
 
-  # install packages with their default configs
+  # ---------------------------------------------
+  # Install packages with their default configs
+  # ---------------------------------------------
   home.packages = with pkgs; [
 
     # Shells & Terminals
@@ -167,21 +171,14 @@
     sops
   ];
 
-
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "24.05";
-  programs.home-manager.enable = true;
-
   # ---------------------------------------------
   # Set systemd
   # ---------------------------------------------
-
   # programs.waybar.systemd.enable = true;
 
   # ---------------------------------------------
   # Set XDG user directories
   # ---------------------------------------------
-
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
@@ -197,4 +194,11 @@
       XDG_PROJECTS_DIR = "${config.home.homeDirectory}/projects";
     };
   };
+
+  # ---------------------------------------------
+  # State Version
+  # ---------------------------------------------
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  home.stateVersion = "24.05";
+  programs.home-manager.enable = true;
 }

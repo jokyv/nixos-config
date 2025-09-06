@@ -37,23 +37,31 @@
   # Set your time zone.
   time.timeZone = "Asia/Singapore";
 
+  # ---------------------------------------------
+  # Enable services
+  # ---------------------------------------------
+
   # Enable sound with PipeWire.
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     pulse.enable = true;
   };
-
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  # services.openssh.enable = true;
   services.displayManager.ly.enable = true;
-  # X server is likely not needed when using niri (Wayland compositor)
-  # services.xserver.enable = true;
-
+  # Antivirus engine
+  services.clamav.daemon.enable = true;
+  services.clamav.updater.enable = true;
   services.dbus = {
     enable = true;
     implementation = "broker";
   };
+  # services.aide = {
+  #   enable = true;
+  #   checkCommand = "${pkgs.aide}/bin/aide --check";
+  #   checkInterval = "daily"; # This handles the timer automatically potentially WRONG
+  # };
 
   xdg.portal = {
     enable = true;
@@ -86,9 +94,11 @@
 
   environment.systemPackages = with pkgs; [
     # System utilities
+    aide
     brightnessctl
     killall
     lshw
+    logrotate
     lynis
     smartmontools
     usbutils
@@ -96,6 +106,8 @@
     htop
     file
     which
+    rng-tools
+    clamav
 
     # Development tools
     clang
@@ -106,7 +118,7 @@
     python312
 
     # Text editors
-    helix
+    # helix
 
     # Network utilities
     curl
