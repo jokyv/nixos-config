@@ -9,10 +9,17 @@
       inputs.niri.nixosModules.niri
     ];
 
+  # ---------------------------------------------
   # Bootloader
+  # ---------------------------------------------
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 20;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # ---------------------------------------------
+  # Kernel
+  # ---------------------------------------------
 
   # Kernel security settings
   boot.kernel.sysctl = {
@@ -46,7 +53,6 @@
     "tipc"
   ];
 
-
   # Enable networking
   networking =
     {
@@ -60,9 +66,6 @@
       # networking.firewall.enable = false;
     };
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
   # Set your time zone.
   time.timeZone = "Asia/Singapore";
 
@@ -73,6 +76,8 @@
     pulse.enable = true;
   };
 
+  # Enable the OpenSSH daemon.
+  services.openssh.enable = true;
   services.displayManager.ly.enable = true;
   # X server is likely not needed when using niri (Wayland compositor)
   # services.xserver.enable = true;
@@ -91,6 +96,7 @@
     ];
     config.common.default = [ "*" ];
   };
+
   programs.niri.enable = true;
   programs.nix-ld.enable = true; # needs this for python uv
 
@@ -102,7 +108,10 @@
     extraGroups = [ "networkmanager" "wheel" "video" "input" ];
   };
 
+  # ---------------------------------------------
   # Security settings
+  # ---------------------------------------------
+
   security = {
     # sudo hardening: require authentication even if same user
     sudo.execWheelOnly = true;
@@ -119,8 +128,8 @@
     # lockKernelModules = true;
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # List packages installed in system profile.
+  # To search, run: 'nix search wget'
   environment.systemPackages = with pkgs; [
     # System utilities
     brightnessctl
@@ -171,7 +180,10 @@
     libglibutil
   ];
 
-  # Select internationalisation properties.
+  # ---------------------------------------------
+  # Internationalisation properties.
+  # ---------------------------------------------
+
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocales = [
@@ -192,13 +204,9 @@
     LC_TIME = "en_SG.UTF-8";
   };
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05";
+  # ---------------------------------------------
+  # Systemd
+  # ---------------------------------------------
 
   # Systemd service security hardening
   systemd.services.systemd-rfkill = {
@@ -283,4 +291,12 @@
     flake = "github:jokyv/nixos-config";
     flags = [ "--update-input" "nixpkgs" "--commit-lock-file" ];
   };
+
+  # This value determines the NixOS release from which the default
+  # settings for stateful data, like file locations and database versions
+  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # this value at the release version of the first install of this system.
+  # Before changing this value read the documentation for this option
+  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  system.stateVersion = "24.05";
 }
