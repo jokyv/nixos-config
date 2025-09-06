@@ -5,6 +5,7 @@
     [
       # hardware configuration
       ./hardware-configuration.nix
+      # zsa keyboard configuration
       ./zsa-udev-rules.nix
       inputs.niri.nixosModules.niri
       # security configuration
@@ -16,12 +17,8 @@
   # ---------------------------------------------
 
   boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 20;
+  boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
-
-  # ---------------------------------------------
-  # Kernel
-  # ---------------------------------------------
 
 
   # Enable networking
@@ -71,7 +68,8 @@
   programs.niri.enable = true;
   programs.nix-ld.enable = true; # needs this for python uv
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account.
+  # Don't forget to set a password with ‘passwd’.
   users.users.jokyv = {
     isNormalUser = true;
     description = "jokyv";
@@ -80,8 +78,12 @@
   };
 
 
-  # List packages installed in system profile.
+  # ---------------------------------------------
+  # List packages installed in system
+  # ---------------------------------------------
+
   # To search, run: 'nix search wget'
+
   environment.systemPackages = with pkgs; [
     # System utilities
     brightnessctl
@@ -133,7 +135,7 @@
   ];
 
   # ---------------------------------------------
-  # Internationalisation properties.
+  # Internationalisation properties
   # ---------------------------------------------
 
   i18n = {
@@ -156,49 +158,6 @@
     LC_TIME = "en_SG.UTF-8";
   };
 
-  # ---------------------------------------------
-  # Systemd
-  # ---------------------------------------------
-
-  # Systemd service security hardening
-  systemd.services.systemd-rfkill = {
-    serviceConfig = {
-      ProtectSystem = "strict";
-      ProtectHome = true;
-      ProtectKernelTunables = true;
-      ProtectKernelModules = true;
-      ProtectControlGroups = true;
-      ProtectClock = true;
-      ProtectProc = "invisible";
-      ProcSubset = "pid";
-      PrivateTmp = true;
-      MemoryDenyWriteExecute = true;
-      NoNewPrivileges = true;
-      LockPersonality = true;
-      RestrictRealtime = true;
-      SystemCallArchitectures = "native";
-      UMask = "0077";
-      IPAddressDeny = "any";
-    };
-  };
-
-  systemd.services.systemd-journald = {
-    serviceConfig = {
-      UMask = "0077";
-      PrivateNetwork = true;
-      ProtectHostname = true;
-      ProtectKernelModules = true;
-    };
-  };
-
-  # Additional security for other systemd services
-  # systemd.services.NetworkManager = {
-  #   serviceConfig = {
-  #     ProtectSystem = "strict";
-  #     ProtectHome = true;
-  #     PrivateTmp = true;
-  #   };
-  # };
 
   # ---------------------------------------------
   # Automation
@@ -243,6 +202,10 @@
     flake = "github:jokyv/nixos-config";
     flags = [ "--update-input" "nixpkgs" "--commit-lock-file" ];
   };
+
+  # ---------------------------------------------
+  # System version
+  # ---------------------------------------------
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

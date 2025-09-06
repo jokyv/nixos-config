@@ -176,7 +176,7 @@
   # Set systemd
   # ---------------------------------------------
 
-  programs.waybar.systemd.enable = true;
+  # programs.waybar.systemd.enable = true;
 
   # ---------------------------------------------
   # Set XDG user directories
