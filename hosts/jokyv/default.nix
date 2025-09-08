@@ -183,6 +183,7 @@
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 7d";
+      persistent = true;
     };
 
     # General nix settings
@@ -213,6 +214,7 @@
     allowReboot = false;
     flake = "github:jokyv/nixos-config";
     flags = [ "--update-input" "nixpkgs" "--commit-lock-file" ];
+    persistent = true;
   };
 
   # ---------------------------------------------
