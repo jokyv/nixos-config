@@ -90,6 +90,12 @@
     openFirewall = false; # Important: Don't open SSH server port!
   };
 
+  # Antivirus engine
+  services.clamav = {
+    daemon.enable = true;
+    updater.enable = true;
+  };
+
 
   # ---------------------------------------------
   # Kernel security settings
