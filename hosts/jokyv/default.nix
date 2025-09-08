@@ -93,14 +93,13 @@
   };
 
 
-  # ---------------------------------------------
-  # List packages installed in system
-  # ---------------------------------------------
-
+  # =============================================
+  # System Packages
+  # =============================================
   # To search, run: 'nix search wget'
 
   environment.systemPackages = with pkgs; [
-    # System utilities
+    # --- System Utilities ---
     aide
     brightnessctl
     killall
@@ -116,7 +115,7 @@
     rng-tools
     clamav
 
-    # Development tools
+    # --- Development Tools ---
     clang
     cmake
     gcc
@@ -124,31 +123,28 @@
     git
     python312
 
-    # Text editors
-    # helix
-
-    # Network utilities
+    # --- Network Utilities ---
     curl
     wget
     openssh
 
-    # Multimedia
+    # --- Multimedia ---
     ffmpeg
     mesa
 
-    # Wayland
+    # --- Wayland ---
     xwayland
     wayland
 
-    # Graphics and vulkan
+    # --- Graphics and Vulkan ---
     vulkan-tools
     glxinfo
 
-    # Archive tools
+    # --- Archive Tools ---
     unzip
     p7zip
 
-    # Other
+    # --- Other ---
     libnotify
     libglibutil
   ];
