@@ -90,6 +90,16 @@
     openFirewall = false; # Important: Don't open SSH server port!
   };
 
+  # SSH configuration (for GitHub)
+  services.openssh = {
+    enable = true; # Enable SSH client (for git push/pull)
+    settings = {
+      PasswordAuthentication = false; # Disable password auth (use keys only)
+      PermitRootLogin = "no"; # Disable root login over SSH
+    };
+    openFirewall = false; # Important: Don't open SSH server port!
+  };
+
   # Antivirus engine
   services.clamav = {
     daemon.enable = true;
