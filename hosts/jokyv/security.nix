@@ -6,8 +6,6 @@
   # General security settings
   # ---------------------------------------------
   security = {
-    # sudo hardening: require authentication even if same user
-    sudo.execWheelOnly = true;
     # Protect against kernel exploits
     protectKernelImage = true;
     # Enable lockdown for VMs/containers

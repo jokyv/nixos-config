@@ -42,17 +42,17 @@
   # =============================================
   # System Services
   # =============================================
-  
+
   # --- Audio ---
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     pulse.enable = true;
   };
-  
+
   # --- Display Management ---
   services.displayManager.ly.enable = true;
-  
+
   # --- Desktop Integration ---
   xdg.portal = {
     enable = true;
@@ -63,18 +63,18 @@
     ];
     config.common.default = [ "*" ];
   };
-  
+
   # --- System Services ---
   services.dbus = {
     enable = true;
     implementation = "broker";
   };
-  
+
   # --- Security Services (moved to security.nix) ---
   # services.openssh.enable = true;  # Now in security.nix
   # services.clamav.daemon.enable = true;  # Now in security.nix
   # services.clamav.updater.enable = true;  # Now in security.nix
-  
+
   # services.aide = {
   #   enable = true;
   #   checkCommand = "${pkgs.aide}/bin/aide --check";
