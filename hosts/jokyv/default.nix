@@ -15,7 +15,6 @@
   # ---------------------------------------------
   # Bootloader
   # ---------------------------------------------
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -48,7 +47,7 @@
     pulse.enable = true;
   };
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
   services.displayManager.ly.enable = true;
   # Antivirus engine
   services.clamav.daemon.enable = true;
@@ -87,7 +86,7 @@
     extraGroups = [ "networkmanager" "wheel" "audio" "video" "input" ];
   };
 
-  # Disable root account entirely (highly recommended)
+  # Disable root account entirely
   users.users.root = {
     hashedPassword = "!"; # Lock root account
     shell = "${pkgs.shadow}/bin/nologin"; # Disable root shell
@@ -228,7 +227,6 @@
   # ---------------------------------------------
   # System version
   # ---------------------------------------------
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
