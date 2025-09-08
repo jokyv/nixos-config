@@ -7,12 +7,16 @@
       ./hardware-configuration.nix
       # zsa keyboard configuration
       ./zsa-udev-rules.nix
-      inputs.niri.nixosModules.niri
       # security configuration
       ./security.nix
       # services configuration
       ./services.nix
+      # umport niri module
+      inputs.niri.nixosModules.niri
     ];
+
+  # Set your time zone.
+  time.timeZone = "Asia/Singapore";
 
   # ---------------------------------------------
   # Bootloader Configuration
@@ -36,21 +40,7 @@
     networkmanager.enable = true;
     nameservers = [ "1.1.1.1" "8.8.8.8" ]; # Reliable DNS
     enableIPv6 = true; # Keep IPv6 enabled
-    # Firewall is now managed in security.nix
-    # Open ports in the firewall.
-    # networking.firewall.allowedTCPPorts = [ ... ];
-    # networking.firewall.allowedUDPPorts = [ ... ];
-    # Or disable the firewall altogether.
-    # networking.firewall.enable = false;
   };
-
-  # Set your time zone.
-  time.timeZone = "Asia/Singapore";
-
-  # ---------------------------------------------
-  # System Services
-  # ---------------------------------------------
-
 
   # ---------------------------------------------
   # System Programs
@@ -161,7 +151,7 @@
   # System Automation
   # ---------------------------------------------
 
-  # check with 'systemctl list-timers'
+  # check by running 'systemctl list-timers'
 
   nix = {
     # Garbage Collection

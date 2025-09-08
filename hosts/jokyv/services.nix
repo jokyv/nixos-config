@@ -11,6 +11,12 @@
   # Display Management
   services.displayManager.ly.enable = true;
 
+  # System Services
+  services.dbus = {
+    enable = true;
+    implementation = "broker";
+  };
+
   # Desktop Integration
   xdg.portal = {
     enable = true;
@@ -21,9 +27,4 @@
     config.common.default = [ "*" ];
   };
 
-  # System Services
-  services.dbus = {
-    enable = true;
-    implementation = "broker";
-  };
 }
