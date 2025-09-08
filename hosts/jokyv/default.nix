@@ -12,9 +12,9 @@
       ./security.nix
     ];
 
-  # ---------------------------------------------
-  # Bootloader
-  # ---------------------------------------------
+  # =============================================
+  # Bootloader Configuration
+  # =============================================
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -74,12 +74,6 @@
   # services.openssh.enable = true;  # Now in security.nix
   # services.clamav.daemon.enable = true;  # Now in security.nix
   # services.clamav.updater.enable = true;  # Now in security.nix
-
-  # services.aide = {
-  #   enable = true;
-  #   checkCommand = "${pkgs.aide}/bin/aide --check";
-  #   checkInterval = "daily";
-  # };
 
   # =============================================
   # System Programs
@@ -185,14 +179,14 @@
   };
 
 
-  # ---------------------------------------------
-  # Automation
-  # ---------------------------------------------
+  # =============================================
+  # System Automation
+  # =============================================
 
   # check with 'systemctl list-timers'
 
   nix = {
-    # Garbage collection settings
+    # ========== Garbage Collection ==========
     gc = {
       automatic = true;
       dates = "weekly";
@@ -200,13 +194,14 @@
       persistent = true;
     };
 
-    # General nix settings
+    # ========== Nix Configuration ==========
     settings = {
       auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
       trusted-users = [ "root" "jokyv" ];
       warn-dirty = false;
-      # Enable binary caches for faster builds
+      
+      # Binary caches for faster builds
       substituters = [
         "https://cache.nixos.org/"
         "https://nix-community.cachix.org"
@@ -231,9 +226,9 @@
     persistent = true;
   };
 
-  # ---------------------------------------------
-  # System version
-  # ---------------------------------------------
+  # =============================================
+  # System Version
+  # =============================================
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
