@@ -105,7 +105,6 @@
   # ---------------------------------------------
   # Systemd security settings
   # ---------------------------------------------
-
   systemd.services.systemd-rfkill = {
     serviceConfig = {
       ProtectSystem = "strict";
