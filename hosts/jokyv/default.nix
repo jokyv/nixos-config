@@ -17,9 +17,16 @@
   # ---------------------------------------------
   # Bootloader Configuration
   # ---------------------------------------------
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 10;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    # Use systemd-boot as the bootloader
+    systemd-boot = {
+      enable = true;
+      # Limit the number of previous generations to keep
+      configurationLimit = 10;
+    };
+    # Allow systemd-boot to manage EFI variables
+    efi.canTouchEfiVariables = true;
+  };
 
   # ---------------------------------------------
   # Networking Configuration
