@@ -50,6 +50,38 @@
     checkReversePath = false; # Better compatibility with VPNs and complex networks
   };
 
+  # sudo configuration
+  security.sudo = {
+    enable = true;
+    execWheelOnly = true; # Only wheel group can use sudo
+    extraConfig = ''
+      # Security settings
+      Defaults        timestamp_timeout=15      # Sudo timeout after 15 minutes
+      Defaults        passwd_timeout=1          # Password prompt timeout
+      Defaults        lecture=once              # Show security warning one time
+      Defaults        logfile=/var/log/sudo.log # Log all sudo commands
+      Defaults        log_input,log_output      # Log input/output of commands
+      Defaults        requiretty                # Require TTY for sudo
+      Defaults        use_pty                   # Always use pseudo-terminal
+    
+      # Security restrictions
+      Defaults        secure_path="/run/wrappers/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin"
+      Defaults        env_reset
+      Defaults        mail_badpass
+      Defaults        always_set_home
+    
+      # User specifications
+      %wheel ALL=(ALL:ALL) ALL
+    '';
+  };
+
+  # Session management
+  security.pam.loginLimits = [
+    # Limit user resources
+    { domain = "*"; type = "hard"; item = "nofile"; value = "1024"; }
+    { domain = "*"; type = "soft"; item = "nofile"; value = "512"; }
+  ];
+
   # SSH configuration (for GitHub)
   services.openssh = {
     enable = true; # Enable SSH client (for git push/pull)
@@ -60,11 +92,6 @@
     openFirewall = false; # Important: Don't open SSH server port!
   };
 
-  # Additional network settings
-  networking = {
-    nameservers = [ "1.1.1.1" "8.8.8.8" ]; # Reliable DNS
-    enableIPv6 = true; # Keep IPv6 enabled
-  };
 
   # ---------------------------------------------
   # Kernel security settings
