@@ -3,9 +3,8 @@
 {
 
   # ---------------------------------------------
-  # Security settings
+  # General security settings
   # ---------------------------------------------
-
   security = {
     # sudo hardening: require authentication even if same user
     sudo.execWheelOnly = true;
@@ -28,18 +27,53 @@
     };
   };
 
-  # Enable firewall
-  networking.firewall.enable = true;
+  # ---------------------------------------------
+  # Network security settings
+  # ---------------------------------------------
+  networking.firewall = {
+    enable = true;
+
+    # Basic settings
+    allowPing = false; # Block ping requests (stealth mode)
+    rejectPackets = false; # false = DROP (silent), true = REJECT (respond)
+
+    # Essential desktop ports
+    allowedTCPPorts = [
+      5353 # mDNS/Bonjour - for network discovery (printers, file sharing)
+    ];
+
+    allowedUDPPorts = [
+      5353 # mDNS/Bonjour
+    ];
+
+    # Important for desktop functionality
+    checkReversePath = false; # Better compatibility with VPNs and complex networks
+  };
+
+  # SSH configuration (for GitHub)
+  services.openssh = {
+    enable = true; # Enable SSH client (for git push/pull)
+    settings = {
+      PasswordAuthentication = false; # Disable password auth (use keys only)
+      PermitRootLogin = "no"; # Disable root login over SSH
+    };
+    openFirewall = false; # Important: Don't open SSH server port!
+  };
+
+  # Additional network settings
+  networking = {
+    nameservers = [ "1.1.1.1" "8.8.8.8" ]; # Reliable DNS
+    enableIPv6 = true; # Keep IPv6 enabled
+  };
 
   # ---------------------------------------------
   # Kernel security settings
   # ---------------------------------------------
-
   boot.kernel.sysctl = {
     "dev.tty.ldisc_autoload" = 0;
-    "fs.protected_fifos" = 2;
-    "fs.protected_regular" = 2;
-    "fs.suid_dumpable" = false;
+    "fs.suid_dumpable" = 0; # Restrict core dumps (0 = false)
+    "fs.protected_fifos" = 2; # Protect FIFOs
+    "fs.protected_regular" = 2; # Protect regular files
     "fs.protected_hardlinks" = 1;
     "fs.protected_symlinks" = 1;
     "kernel.kptr_restrict" = 2;
@@ -57,6 +91,7 @@
     "net.ipv4.conf.default.log_martians" = true;
     "net.ipv4.conf.all.rp_filter" = true;
     "net.ipv4.conf.all.send_redirects" = false;
+    # "vm.swappiness" = 10; # Prefer RAM memory over swap memory (defined in hardware-configuration.nix)
   };
 
   # Blacklist unnecessary kernel modules
