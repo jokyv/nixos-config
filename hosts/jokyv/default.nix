@@ -12,17 +12,16 @@
       ./security.nix
     ];
 
-  # =============================================
+  # ---------------------------------------------
   # Bootloader Configuration
-  # =============================================
+  # ---------------------------------------------
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
 
-
-  # =============================================
+  # ---------------------------------------------
   # Networking Configuration
-  # =============================================
+  # ---------------------------------------------
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
@@ -39,21 +38,21 @@
   # Set your time zone.
   time.timeZone = "Asia/Singapore";
 
-  # =============================================
+  # ---------------------------------------------
   # System Services
-  # =============================================
+  # ---------------------------------------------
 
-  # --- Audio ---
+  # Audio
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     pulse.enable = true;
   };
 
-  # --- Display Management ---
+  # Display Management
   services.displayManager.ly.enable = true;
 
-  # --- Desktop Integration ---
+  # Desktop Integration
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
@@ -64,26 +63,22 @@
     config.common.default = [ "*" ];
   };
 
-  # --- System Services ---
+  # System Services
   services.dbus = {
     enable = true;
     implementation = "broker";
   };
 
-  # --- Security Services (moved to security.nix) ---
-  # services.openssh.enable = true;  # Now in security.nix
-  # services.clamav.daemon.enable = true;  # Now in security.nix
-  # services.clamav.updater.enable = true;  # Now in security.nix
 
-  # =============================================
+  # ---------------------------------------------
   # System Programs
-  # =============================================
+  # ---------------------------------------------
   programs.niri.enable = true;
   programs.nix-ld.enable = true; # needs this for python uv
 
-  # =============================================
+  # ---------------------------------------------
   # User Configuration
-  # =============================================
+  # ---------------------------------------------
   # Don't forget to set a password with ‘passwd’.
   users.users.jokyv = {
     isNormalUser = true;
@@ -99,13 +94,14 @@
   };
 
 
-  # =============================================
+  # ---------------------------------------------
   # System Packages
-  # =============================================
+  # ---------------------------------------------
+
   # To search, run: 'nix search wget'
 
   environment.systemPackages = with pkgs; [
-    # --- System Utilities ---
+    # System Utilities
     aide
     brightnessctl
     killall
@@ -121,7 +117,7 @@
     rng-tools
     clamav
 
-    # --- Development Tools ---
+    # Development Tools
     clang
     cmake
     gcc
@@ -129,35 +125,35 @@
     git
     python312
 
-    # --- Network Utilities ---
+    # Network Utilities
     curl
     wget
     openssh
 
-    # --- Multimedia ---
+    # Multimedia
     ffmpeg
     mesa
 
-    # --- Wayland ---
+    # Wayland
     xwayland
     wayland
 
-    # --- Graphics and Vulkan ---
+    # Graphics and Vulkan
     vulkan-tools
     glxinfo
 
-    # --- Archive Tools ---
+    # Archive Tools
     unzip
     p7zip
 
-    # --- Other ---
+    # Other
     libnotify
     libglibutil
   ];
 
-  # =============================================
+  # ---------------------------------------------
   # Internationalization Settings
-  # =============================================
+  # ---------------------------------------------
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocales = [
@@ -179,14 +175,14 @@
   };
 
 
-  # =============================================
+  # ---------------------------------------------
   # System Automation
-  # =============================================
+  # ---------------------------------------------
 
   # check with 'systemctl list-timers'
 
   nix = {
-    # ========== Garbage Collection ==========
+    # Garbage Collection
     gc = {
       automatic = true;
       dates = "weekly";
@@ -194,13 +190,13 @@
       persistent = true;
     };
 
-    # ========== Nix Configuration ==========
+    # Nix Configuration
     settings = {
       auto-optimise-store = true;
       experimental-features = [ "nix-command" "flakes" ];
       trusted-users = [ "root" "jokyv" ];
       warn-dirty = false;
-      
+
       # Binary caches for faster builds
       substituters = [
         "https://cache.nixos.org/"
@@ -226,9 +222,9 @@
     persistent = true;
   };
 
-  # =============================================
+  # ---------------------------------------------
   # System Version
-  # =============================================
+  # ---------------------------------------------
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
