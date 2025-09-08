@@ -20,48 +20,40 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
 
-  # Enable networking
-  networking =
-    {
-      hostName = "nixos";
-      networkmanager.enable = true;
-      # Firewall is now managed in security.nix
-      # Open ports in the firewall.
-      # networking.firewall.allowedTCPPorts = [ ... ];
-      # networking.firewall.allowedUDPPorts = [ ... ];
-      # Or disable the firewall altogether.
-      # networking.firewall.enable = false;
-    };
+  # =============================================
+  # Networking Configuration
+  # =============================================
+  networking = {
+    hostName = "nixos";
+    networkmanager.enable = true;
+    nameservers = [ "1.1.1.1" "8.8.8.8" ]; # Reliable DNS
+    enableIPv6 = true; # Keep IPv6 enabled
+    # Firewall is now managed in security.nix
+    # Open ports in the firewall.
+    # networking.firewall.allowedTCPPorts = [ ... ];
+    # networking.firewall.allowedUDPPorts = [ ... ];
+    # Or disable the firewall altogether.
+    # networking.firewall.enable = false;
+  };
 
   # Set your time zone.
   time.timeZone = "Asia/Singapore";
 
-  # ---------------------------------------------
-  # Enable services
-  # ---------------------------------------------
-
-  # Enable sound with PipeWire.
+  # =============================================
+  # System Services
+  # =============================================
+  
+  # --- Audio ---
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     pulse.enable = true;
   };
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  
+  # --- Display Management ---
   services.displayManager.ly.enable = true;
-  # Antivirus engine
-  services.clamav.daemon.enable = true;
-  services.clamav.updater.enable = true;
-  services.dbus = {
-    enable = true;
-    implementation = "broker";
-  };
-  # services.aide = {
-  #   enable = true;
-  #   checkCommand = "${pkgs.aide}/bin/aide --check";
-  #   checkInterval = "daily"; # This handles the timer automatically potentially WRONG
-  # };
-
+  
+  # --- Desktop Integration ---
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
@@ -71,13 +63,33 @@
     ];
     config.common.default = [ "*" ];
   };
+  
+  # --- System Services ---
+  services.dbus = {
+    enable = true;
+    implementation = "broker";
+  };
+  
+  # --- Security Services (moved to security.nix) ---
+  # services.openssh.enable = true;  # Now in security.nix
+  # services.clamav.daemon.enable = true;  # Now in security.nix
+  # services.clamav.updater.enable = true;  # Now in security.nix
+  
+  # services.aide = {
+  #   enable = true;
+  #   checkCommand = "${pkgs.aide}/bin/aide --check";
+  #   checkInterval = "daily";
+  # };
 
+  # =============================================
+  # System Programs
+  # =============================================
   programs.niri.enable = true;
   programs.nix-ld.enable = true; # needs this for python uv
 
-  # ---------------------------------------------
-  # Define a user account settings
-  # ---------------------------------------------
+  # =============================================
+  # User Configuration
+  # =============================================
   # Don't forget to set a password with ‘passwd’.
   users.users.jokyv = {
     isNormalUser = true;
@@ -86,10 +98,10 @@
     extraGroups = [ "networkmanager" "wheel" "audio" "video" "input" ];
   };
 
-  # Disable root account entirely
+  # Disable root account entirely for security
   users.users.root = {
-    hashedPassword = "!"; # Lock root account
-    shell = "${pkgs.shadow}/bin/nologin"; # Disable root shell
+    hashedPassword = "!"; # Lock root account (exclamation mark prevents login)
+    shell = "${pkgs.shadow}/bin/nologin"; # Disable root shell access
   };
 
 
@@ -149,10 +161,9 @@
     libglibutil
   ];
 
-  # ---------------------------------------------
-  # Internationalisation properties
-  # ---------------------------------------------
-
+  # =============================================
+  # Internationalization Settings
+  # =============================================
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocales = [
