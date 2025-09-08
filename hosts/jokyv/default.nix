@@ -10,6 +10,8 @@
       inputs.niri.nixosModules.niri
       # security configuration
       ./security.nix
+      # services configuration
+      ./services.nix
     ];
 
   # ---------------------------------------------
