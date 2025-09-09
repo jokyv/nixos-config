@@ -31,6 +31,7 @@
     # Allow systemd-boot to manage EFI variables
     efi.canTouchEfiVariables = true;
   };
+  # boot.kernelPackages = pkgs.LinuxPackages_hardened;
 
   # ---------------------------------------------
   # Networking Configuration

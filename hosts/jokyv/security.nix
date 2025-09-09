@@ -115,13 +115,17 @@
     "kernel.ctrl-alt-del" = 0;
     "net.core.bpf_jit_harden" = 2;
     "net.ipv4.conf.all.accept_redirects" = false;
-    "net.ipv4.conf.default.accept_redirects" = false;
     "net.ipv6.conf.all.accept_redirects" = false;
+    "net.ipv4.conf.default.accept_redirects" = false;
     "net.ipv6.conf.default.accept_redirects" = false;
     "net.ipv4.conf.all.log_martians" = true;
+    "net.ipv6.conf.all.log_martians" = true;
     "net.ipv4.conf.default.log_martians" = true;
+    "net.ipv6.conf.default.log_martians" = true;
     "net.ipv4.conf.all.rp_filter" = true;
+    "net.ipv6.conf.all.rp_filter" = true;
     "net.ipv4.conf.all.send_redirects" = false;
+    "net.ipv6.conf.all.send_redirects" = false;
     # "vm.swappiness" = 10; # Prefer RAM memory over swap memory (defined in hardware-configuration.nix)
   };
 
