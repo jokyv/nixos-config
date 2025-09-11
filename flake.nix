@@ -28,8 +28,14 @@
       url = "github:viperML/nh";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # disko = {
+    #   url = "github:nix-community/disko";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
+  # outputs = { self, nixpkgs, home-manager, stylix, sops-nix, niri, disko, ... }@inputs:
   outputs = { self, nixpkgs, home-manager, stylix, sops-nix, niri, ... }@inputs:
     let
       system = "x86_64-linux";
