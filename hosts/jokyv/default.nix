@@ -3,14 +3,17 @@
 {
   imports =
     [
-      # hardware configuration
-      ./hardware-configuration.nix
+      # disko configuration
+      # inputs.disko.nixosModules.disko
+      # ./disk-config.nix
       # zsa keyboard configuration
       ./zsa-udev-rules.nix
       # security configuration
       ./security.nix
       # services configuration
       ./services.nix
+      # btrfs configuration
+      # ./btrfs.nix
       # umport niri module
       inputs.niri.nixosModules.niri
     ];
