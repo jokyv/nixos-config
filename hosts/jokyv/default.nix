@@ -199,6 +199,13 @@
   };
 
   # ---------------------------------------------
+  # Performance Settings
+  # ---------------------------------------------
+  # Use ZRAM for compressed RAM-based swap. It's much faster than disk-based swap.
+  # The system will use this first and only fall back to the disk swap partition if ZRAM fills up.
+  zramSwap.enable = true;
+
+  # ---------------------------------------------
   # System Version
   # ---------------------------------------------
   # This value determines the NixOS release from which the default
