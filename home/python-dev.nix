@@ -2,9 +2,9 @@
 
 pkgs.mkShell {
   buildInputs = with pkgs; [
-    python312
-    python312Packages.polars
-    python312Packages.pandas
+    python313
+    python313Packages.polars
+    python313Packages.pandas
     xonsh
   ];
 

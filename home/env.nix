@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 
 {
   home.sessionVariables = {
@@ -6,7 +6,7 @@
     EDITOR = "hx";
     VISUAL = "hx";
     BROWSER = "firefox";
-    TERMINAL = "kitty";
+    TERMINAL = "foot";
     WM = "niri";
     TERM = "xterm-256color";
     COLORTERM = "truecolor";

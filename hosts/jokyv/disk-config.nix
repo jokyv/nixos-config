@@ -4,7 +4,6 @@
   disko.devices = {
     disk = {
       main = {
-        # IMPORTANT: Change this to your actual disk device.
         # Use `lsblk` in the installer to find the correct path.
         device = "/dev/nvme0n1";
         type = "disk";
