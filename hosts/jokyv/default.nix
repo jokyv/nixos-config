@@ -14,7 +14,7 @@
       ./services.nix
       # btrfs configuration
       # ./btrfs.nix
-      # umport niri module
+      # import niri module
       inputs.niri.nixosModules.niri
     ];
 

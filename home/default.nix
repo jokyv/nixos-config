@@ -28,6 +28,8 @@
     ./programs/git.nix
     ./programs/helix.nix
     ./programs/niri.nix
+    ./programs/nh.nix
+    ./programs/obsidian.nix
     ./programs/ripgrep.nix
     ./programs/starship.nix
     ./programs/stylix.nix
@@ -40,10 +42,6 @@
 
     ./env.nix
 
-    # ./programs/obsidian.nix # home-manager does not support it yet
-
-    ./programs/nh.nix
-
   ];
 
   home.username = "jokyv";
@@ -52,11 +50,9 @@
     NIXOS_OZONE_WL = "1";
     OBSIDIAN_USE_WAYLAND = "1";
     DISCORD_USE_WAYLAND = "1";
-    # ELECTRON_OZONE_PLATFORM = "wayland";
-    # OZONE_PLATFORM = "wayland";
+    ELECTRON_OZONE_PLATFORM = "wayland";
+    OZONE_PLATFORM = "wayland";
     MOZ_ENABLE_WAYLAND = "1";
-    # MOZ_DBUS_REMOTE = "1";
-    # ELECTRON_FALLBACK_TO_X11 = "1";
   };
 
   # ---------------------------------------------
@@ -93,9 +89,9 @@
 
     # Shells & Terminals
     alacritty
-    xonsh
 
     # Development Tools
+    neovim
     git-cliff
     gh
     jq
@@ -108,7 +104,6 @@
     keymapp
     libreoffice-qt-fresh
     nautilus
-    obsidian
     psst # A spotify client
 
     # System Utilities
@@ -119,14 +114,11 @@
     ddgr # duckduckgo on the terminal
     delta
     eza
-    fzf
     newsraft
-    nh
     pwvucontrol
     tabiew
     trashy
     unimatrix
-    zathura
 
     # AI & Automation
     # aider-chat
