@@ -100,6 +100,7 @@
     virtualenv # need this for python virtual env
 
     # GUI Applications
+    blueman
     discord
     keymapp
     libreoffice-qt-fresh

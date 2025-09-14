@@ -46,6 +46,16 @@
     enableIPv6 = true; # Keep IPv6 enabled
   };
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true; # Turn on Bluetooth at boot
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+      };
+    };
+  };
+
   # ---------------------------------------------
   # System Programs
   # ---------------------------------------------
