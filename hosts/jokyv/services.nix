@@ -1,6 +1,9 @@
 { pkgs, ... }:
 
 {
+  # Bluetooth
+  services.blueman.enable = true;
+
   # Audio
   services.pipewire = {
     enable = true;
