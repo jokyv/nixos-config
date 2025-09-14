@@ -52,6 +52,46 @@
     settings = {
       General = {
         Enable = "Source,Sink,Media,Socket";
+        # Security settings
+        JustWorksRepairing = "always"; # Allow pairing without PIN for devices that support it
+        Privacy = "device"; # Use device mode for privacy
+        ControllerMode = "dual"; # Support both BR/EDR and LE
+        # Auto-enable on start-up (already handled by powerOnBoot)
+      };
+      Policy = {
+        # Auto-enable connected devices
+        AutoEnable = true;
+        # Reconnect devices on start-up
+        ReconnectAttempts = 7;
+        ReconnectIntervals = "1, 2, 3";
+        # Security policies
+        # Require authentication for incoming connections
+        # Class = 0x200414 limits to audio devices
+      };
+    };
+  };
+
+  # Bluetooth settings for security
+  services.bluetooth = {
+    enable = true;
+    # Security settings
+    settings = {
+      General = {
+        # Disable discoverable mode after 180 seconds (3 minutes)
+        DiscoverableTimeout = 180;
+        # Always enable pairing even when not discoverable
+        PairableTimeout = 0;
+        # Use random MAC address for privacy (if supported)
+        Privacy = "device";
+        # Controller mode
+        ControllerMode = "bredr";
+      };
+      Policy = {
+        # Auto-enable connected devices
+        AutoEnable = true;
+        # Reconnect attempts
+        ReconnectAttempts = 7;
+        ReconnectIntervals = "1, 2, 3";
       };
     };
   };
