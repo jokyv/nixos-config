@@ -46,52 +46,30 @@
     enableIPv6 = true; # Keep IPv6 enabled
   };
 
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true; # Turn on Bluetooth at boot
-    settings = {
-      General = {
-        Enable = "Source,Sink,Media,Socket";
-        # Security settings
-        JustWorksRepairing = "always"; # Allow pairing without PIN for devices that support it
-        Privacy = "device"; # Use device mode for privacy
-        ControllerMode = "dual"; # Support both BR/EDR and LE
-        # Auto-enable on start-up (already handled by powerOnBoot)
-      };
-      Policy = {
-        # Auto-enable connected devices
-        AutoEnable = true;
-        # Reconnect devices on start-up
-        ReconnectAttempts = 7;
-        ReconnectIntervals = "1, 2, 3";
-        # Security policies
-        # Require authentication for incoming connections
-        # Class = 0x200414 limits to audio devices
-      };
-    };
-  };
+  # Enable Bluetooth hardware support
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
 
-  # Bluetooth settings for security
+  # Configure Bluetooth service with security settings
   services.bluetooth = {
     enable = true;
-    # Security settings
     settings = {
       General = {
-        # Disable discoverable mode after 180 seconds (3 minutes)
-        DiscoverableTimeout = 180;
-        # Always enable pairing even when not discoverable
-        PairableTimeout = 0;
-        # Use random MAC address for privacy (if supported)
-        Privacy = "device";
-        # Controller mode
-        ControllerMode = "bredr";
+        # Enable profiles
+        Enable = "Source,Sink,Media,Socket";
+        # Security and privacy
+        DiscoverableTimeout = 180; # Stop being discoverable after 3 minutes
+        PairableTimeout = 0; # Stay pairable indefinitely
+        Privacy = "device"; # Use device mode for better privacy
+        ControllerMode = "dual"; # Support both BR/EDR and LE
+        # Experimental features
+        Experimental = true; # Enable experimental features if needed
       };
       Policy = {
-        # Auto-enable connected devices
-        AutoEnable = true;
-        # Reconnect attempts
-        ReconnectAttempts = 7;
-        ReconnectIntervals = "1, 2, 3";
+        AutoEnable = true; # Auto-enable when devices are connected
+        ReconnectAttempts = 7; # Number of reconnect attempts
+        ReconnectIntervals = "1, 2, 3"; # Intervals between attempts in seconds
+        # Class = "0x200414"; # Restrict to specific device class if desired
       };
     };
   };
