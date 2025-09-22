@@ -142,7 +142,7 @@
     # Language Servers
     bash-completion
     bash-language-server
-    # dprint
+    dprint
     # ltex-ls-plus # more strict than typos
     markdown-oxide # https://oxide.md/v0/Articles/Markdown-Oxide+v0
     # marksman # using markdown-oxide currently
