@@ -1,5 +1,8 @@
 { inputs, pkgs, ... }:
 
+let
+  userHome = builtins.getEnv "HOME";
+in
 {
   imports =
     [
@@ -218,7 +221,8 @@
     enable = true;
     dates = "daily";
     allowReboot = false;
-    flake = "github:jokyv/nixos-config";
+    # flake = "github:jokyv/nixos-config";
+    flake = "${userHome}/nixos-config";
     flags = [ "--update-input" "nixpkgs" "--commit-lock-file" ];
     persistent = true;
   };
