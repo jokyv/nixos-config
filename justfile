@@ -113,3 +113,41 @@ decode:
 age:
   check-age
 
+# -----------------------------------------------
+# Experiments
+# -----------------------------------------------
+
+# Show the current changes
+diff:
+  @echo "Showing changes to Nix configuration..."
+  cd $HOME/nixos-config && git diff --color=always .
+
+# Format the configuration files using the standard Nix formatter
+format:
+  @echo "Formatting Nix files with nix fmt..."
+  cd $HOME/nixos-config && nixpkgs-fmt .
+
+# Buffed nixos-rebuild switch
+# Apply the configuration: format, rebuild, and commit
+# The @ at the beginning of a line tells just to not print the command itself before running it.
+buffedswitch: format # run the format command first
+  @cd $HOME/nixos-config
+  @echo "NixOS Rebuilding..."
+  # The '@' before 'if' will silence the command echo, but not the output
+  @if sudo nixos-rebuild switch &> /tmp/nixos-switch.log; then \
+     echo "NixOS rebuild successful."; \
+  else \
+     echo "--- NixOS Rebuild Failed ---" >&2; \
+     grep --color=always -C 5 "error:" /tmp/nixos-switch.log || tail -n 20 /tmp/nixos-switch.log; \
+     exit 1; \
+  fi
+  # Create a descriptive commit message and commit
+  @gen_number=$(nixos-rebuild list-generations | grep current | sed 's/ \+/ /g' | cut -d' ' -f2); \
+  commit_msg="chore(nixos): apply generation $$gen_number"; \
+  echo "Committing changes with message: '$$commit_msg'"; \
+  git commit -am "$$commit_msg"
+  @echo "Done."
+    
+# -----------------------------------------------
+# Old commands
+# -----------------------------------------------
