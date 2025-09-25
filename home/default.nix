@@ -5,7 +5,7 @@
 
     # SHELL
     ./programs/bash.nix
-    ./programs/nu.nix
+    # ./programs/nu.nix
     # ./programs/xonsh.nix
 
     # TERMINAL

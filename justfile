@@ -120,7 +120,7 @@ age:
 # Show the current changes
 diff:
   @echo "Showing changes to Nix configuration..."
-  cd $HOME/nixos-config && git diff --color=always .
+  cd $HOME/nixos-config && git diff -U0 --color=always .
 
 # Format the configuration files using the standard Nix formatter
 format:
