@@ -1,4 +1,5 @@
 set shell := ["bash", "-euo", "pipefail", "-c"]
+
 [no-cd]
 set positional-arguments
 
