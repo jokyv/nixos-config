@@ -132,7 +132,6 @@ format:
 # The @ at the beginning of a line tells just to not print the command itself before running it.
 buffedswitch: format # run the format command first
   @echo "NixOS Rebuilding..."
-  # The '@' before 'if' will silence the command echo, but not the output
   @if sudo nixos-rebuild switch --impure --flake .#nixos --show-trace &> /tmp/nixos-switch.log; then \
      echo "NixOS rebuild successful."; \
   else \
