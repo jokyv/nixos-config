@@ -1,5 +1,5 @@
 set shell := ["bash", "-euo", "pipefail", "-c"]
-[no-cd]
+# [no-cd]
 set positional-arguments
 
 default:
@@ -129,12 +129,15 @@ diff:
 # Format the configuration files using the standard Nix formatter
 format:
   @echo "Formatting Nix files with nix fmt..."
-  nix fmt
+  nixpkgs-fmt .
 
 # Create a commit with generation number
 commit:
-  @gen_number=$(nixos-rebuild list-generations | awk '/True/ {print $1}')
-  git commit -am "chore(nixos): apply generation $gen_number"
+  # Create a descriptive commit message and commit
+  @gen_number=$(nixos-rebuild list-generations | awk '/True/ {print $1}'); \
+  commit_msg="chore(nixos): apply generation $gen_number"; \
+  echo "Committing changes with message: '$commit_msg'"; \
+  git commit -am "$commit_msg"
 
 # Buffed nixos-rebuild switch - depends on format, switch, and commit
 buffedswitch: format switch commit
