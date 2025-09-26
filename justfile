@@ -1,4 +1,6 @@
 set shell := ["bash", "-euo", "pipefail", "-c"]
+[no-cd]
+set positional-arguments
 
 default:
   @just --list
@@ -129,23 +131,13 @@ format:
   @echo "Formatting Nix files with nix fmt..."
   cd $HOME/nixos-config && nixpkgs-fmt .
 
-# Buffed nixos-rebuild switch
-# Apply the configuration: format, rebuild, and commit
-# The @ at the beginning of a line tells just to not print the command itself before running it.
-buffedswitch: format # run the format command first
-  @echo "NixOS Rebuilding..."
-  @if sudo nixos-rebuild switch --impure --flake .#nixos --show-trace &> /tmp/nixos-switch.log; then \
-     echo "NixOS rebuild successful."; \
-  else \
-     echo "--- NixOS Rebuild Failed ---" >&2; \
-     grep --color=always -C 5 "error:" /tmp/nixos-switch.log || tail -n 20 /tmp/nixos-switch.log; \
-     exit 1; \
-  fi
-  # Create a descriptive commit message and commit
-  @gen_number=$(nixos-rebuild list-generations | awk '/True/ {print $1}'); \
-  commit_msg="chore(nixos): apply generation $gen_number"; \
-  echo "Committing changes with message: '$commit_msg'"; \
-  git commit -am "$commit_msg"
+# Create a commit with generation number
+commit:
+  @gen_number=$(nixos-rebuild list-generations | awk '/True/ {print $1}')
+  git commit -am "chore(nixos): apply generation $gen_number"
+
+# Buffed nixos-rebuild switch - depends on format, switch, and commit
+buffedswitch: format switch commit
   @echo "Done."
     
 # -----------------------------------------------
