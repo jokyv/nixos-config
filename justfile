@@ -44,7 +44,7 @@ nhh:
 
 # Rebuild the system
 switch:
-  sudo nixos-rebuild switch --fast --impure --flake .#nixos --show-trace
+  sudo nixos-rebuild switch --impure --flake .#nixos --show-trace
 
 # Rebuild the system using nh
 nhs:
@@ -131,10 +131,9 @@ format:
 # Apply the configuration: format, rebuild, and commit
 # The @ at the beginning of a line tells just to not print the command itself before running it.
 buffedswitch: format # run the format command first
-  @cd $HOME/nixos-config
   @echo "NixOS Rebuilding..."
   # The '@' before 'if' will silence the command echo, but not the output
-  @if sudo nixos-rebuild switch &> /tmp/nixos-switch.log; then \
+  @if sudo nixos-rebuild switch --impure --flake .#nixos --show-trace &> /tmp/nixos-switch.log; then \
      echo "NixOS rebuild successful."; \
   else \
      echo "--- NixOS Rebuild Failed ---" >&2; \
