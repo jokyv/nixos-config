@@ -1,3 +1,5 @@
+set shell := ["bash", "-euo", "pipefail", "-c"]
+
 default:
   @just --list
 
@@ -32,10 +34,7 @@ clean:
 
 # Rebuild the home config
 home:
-  home-manager switch -b backup --flake .#jokyv --show-trace || {
-    echo "Home Manager switch failed"
-    exit 1
-  }
+  home-manager switch -b backup --flake .#jokyv --show-trace || { echo "Home Manager switch failed"; exit 1; }
 
 # Rebuild the home config using nh
 nhh:
