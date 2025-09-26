@@ -1,5 +1,4 @@
 set shell := ["bash", "-euo", "pipefail", "-c"]
-
 [no-cd]
 set positional-arguments
 
@@ -125,12 +124,12 @@ age:
 # Show the current changes
 diff:
   @echo "Showing changes to Nix configuration..."
-  cd $HOME/nixos-config && git diff -U0 --color=always .
+  git diff -U0 --color=always .
 
 # Format the configuration files using the standard Nix formatter
 format:
   @echo "Formatting Nix files with nix fmt..."
-  cd $HOME/nixos-config && nixpkgs-fmt .
+  nix fmt
 
 # Create a commit with generation number
 commit:
