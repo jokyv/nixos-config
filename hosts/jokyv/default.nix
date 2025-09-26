@@ -127,7 +127,7 @@ in
     gcc
     gdb
     git
-    python312
+    python313
 
     # Network Utilities
     curl

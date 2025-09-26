@@ -141,10 +141,10 @@ buffedswitch: format # run the format command first
      exit 1; \
   fi
   # Create a descriptive commit message and commit
-  @gen_number=$(nixos-rebuild list-generations | grep current | sed 's/ \+/ /g' | cut -d' ' -f2); \
-  commit_msg="chore(nixos): apply generation $$gen_number"; \
-  echo "Committing changes with message: '$$commit_msg'"; \
-  git commit -am "$$commit_msg"
+  @gen_number=$(nixos-rebuild list-generations | awk '/True/ {print $1}'); \
+  commit_msg="chore(nixos): apply generation $gen_number"; \
+  echo "Committing changes with message: '$commit_msg'"; \
+  git commit -am "$commit_msg"
   @echo "Done."
     
 # -----------------------------------------------
