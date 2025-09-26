@@ -32,7 +32,10 @@ clean:
 
 # Rebuild the home config
 home:
-  home-manager switch -b backup --flake .#jokyv switch --show-trace
+  home-manager switch -b backup --flake .#jokyv --show-trace || {
+    echo "Home Manager switch failed"
+    exit 1
+  }
 
 # Rebuild the home config using nh
 nhh:
