@@ -76,7 +76,7 @@ dry:
 # Format code
 fmt:
   @echo "[INFO] Formatting code..."
-  nix fmt
+  nixpkgs-fmt .
   @echo "[SUCCESS] Formatting completed"
 
 # Run tests
@@ -193,11 +193,11 @@ validate-secrets:
 rotate-secrets:
   sops --rotate secrets.yaml
 
-# Check the integrity of the Nix store and run Nix doctor for system health
+# Check the integrity of the Nix store and run 'nix config check' for system health
 health:
   @echo "[INFO] Running system health checks..."
   sudo nix-store --verify --check-contents
-  nix doctor
+  nix config check
   @echo "[SUCCESS] Health checks completed"
 
 # Calculate the total disk space used by the current system configuration
