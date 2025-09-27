@@ -1,6 +1,13 @@
 set shell := ["bash", "-euo", "pipefail", "-c"]
 set positional-arguments
 
+# Color definitions for better output
+GREEN := "\033[32m"
+RED := "\033[31m"
+YELLOW := "\033[33m"
+BLUE := "\033[34m"
+RESET := "\033[0m"
+
 default:
   @just --list
 
@@ -39,7 +46,9 @@ clean:
 
 # Rebuild the home config
 home:
-  home-manager switch -b backup --flake .#jokyv --show-trace || { echo "Home Manager switch failed"; exit 1; }
+  @echo "${BLUE}Rebuilding Home Manager configuration...${RESET}"
+  home-manager switch -b backup --flake .#jokyv --show-trace || { echo "${RED}Home Manager switch failed${RESET}"; exit 1; }
+  @echo "${GREEN}Home Manager rebuild successful${RESET}"
 
 # Rebuild the home config using nh
 nhh:
@@ -51,7 +60,9 @@ nhh:
 
 # Rebuild the system
 switch:
-  sudo nixos-rebuild switch --impure --flake .#nixos --show-trace || { echo "System rebuild failed"; exit 1; }
+  @echo "${BLUE}Rebuilding system configuration...${RESET}"
+  sudo nixos-rebuild switch --impure --flake .#nixos --show-trace || { echo "${RED}System rebuild failed${RESET}"; exit 1; }
+  @echo "${GREEN}System rebuild successful${RESET}"
 
 # Rebuild the system using nh
 nhs:
@@ -59,23 +70,33 @@ nhs:
 
 # Build a new configuration
 boot:
-  sudo nixos-rebuild boot --fast --impure --flake .#nixos --show-trace || { echo "Boot configuration failed"; exit 1; }
+  @echo "${YELLOW}Building boot configuration...${RESET}"
+  sudo nixos-rebuild boot --fast --impure --flake .#nixos --show-trace || { echo "${RED}Boot configuration failed${RESET}"; exit 1; }
+  @echo "${GREEN}Boot configuration built successfully${RESET}"
 
 # Dry-build a new configuration
 dry:
-  sudo nixos-rebuild dry-activate --fast --flake .#nixos --show-trace || { echo "Dry-run failed"; exit 1; }
+  @echo "${YELLOW}Running dry-build...${RESET}"
+  sudo nixos-rebuild dry-activate --fast --flake .#nixos --show-trace || { echo "${RED}Dry-run failed${RESET}"; exit 1; }
+  @echo "${GREEN}Dry-build completed successfully${RESET}"
 
 # Format code
 fmt:
+  @echo "${BLUE}Formatting code...${RESET}"
   nix fmt
+  @echo "${GREEN}Formatting completed${RESET}"
 
 # Run tests
 test:
+  @echo "${BLUE}Running tests...${RESET}"
   nix flake check --show-trace --print-build-logs --verbose
+  @echo "${GREEN}Tests completed${RESET}"
 
 # Update all inputs
 up:
+  @echo "${YELLOW}Updating flake inputs...${RESET}"
   nix flake update --refresh --commit-lock-file
+  @echo "${GREEN}Flake inputs updated${RESET}"
 
 # Update specific input. Usage: just upp nixpkgs
 upp input:
@@ -172,7 +193,8 @@ edit-secrets:
 
 # Validate that the encrypted secrets file can be decrypted successfully
 validate-secrets:
-  sops -d secrets.enc.yaml > /dev/null && echo "Secrets are valid"
+  @echo "${BLUE}Validating secrets...${RESET}"
+  sops -d secrets.enc.yaml > /dev/null && echo "${GREEN}Secrets are valid${RESET}" || { echo "${RED}Secrets validation failed${RESET}"; exit 1; }
 
 # Rotate the encryption key for secrets (use if keys are compromised)
 rotate-secrets:
@@ -180,8 +202,10 @@ rotate-secrets:
 
 # Check the integrity of the Nix store and run Nix doctor for system health
 health:
+  @echo "${BLUE}Running system health checks...${RESET}"
   sudo nix-store --verify --check-contents
   nix doctor
+  @echo "${GREEN}Health checks completed${RESET}"
 
 # Calculate the total disk space used by the current system configuration
 disk-usage:
