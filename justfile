@@ -146,10 +146,10 @@ diff:
   @echo "Showing changes to Nix configuration..."
   git diff -U0 --color=always .
 
-# Format the configuration files using the standard Nix formatter
+# Legacy format alias (redirects to fmt)
 format:
-  @echo "Formatting Nix files with nixpkgs-fmt..."
-  nixpkgs-fmt .
+  @echo "[INFO] Running legacy format command (redirecting to fmt)..."
+  just fmt
 
 # Create a commit with generation number
 commit:
@@ -210,4 +210,7 @@ disk-usage:
 # Legacy aliases for backward compatibility
 smart-clean: cleanup-smart
 deep-clean: cleanup-deep
+nhclean: cleanup-quick
+nhcleandry: cleanup-dry
+gc: cleanup-deep
 
