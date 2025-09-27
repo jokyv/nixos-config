@@ -1,12 +1,12 @@
 set shell := ["bash", "-euo", "pipefail", "-c"]
 set positional-arguments
 
-# Color definitions for better output
-GREEN := "\033[32m"
-RED := "\033[31m"
-YELLOW := "\033[33m"
-BLUE := "\033[34m"
-RESET := "\033[0m"
+# Color definitions using tput (more portable)
+GREEN := $(shell tput setaf 2)
+RED := $(shell tput setaf 1)
+YELLOW := $(shell tput setaf 3)
+BLUE := $(shell tput setaf 4)
+RESET := $(shell tput sgr0)
 
 default:
   @just --list
