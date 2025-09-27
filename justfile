@@ -128,14 +128,14 @@ diff:
 
 # Format the configuration files using the standard Nix formatter
 format:
-  @echo "Formatting Nix files with nix fmt..."
+  @echo "Formatting Nix files with nixpkgs-fmt..."
   nixpkgs-fmt .
 
 # Create a commit with generation number
 commit:
   # Create a descriptive commit message and commit
   @gen_number=$(nixos-rebuild list-generations | awk '/True/ {print $1}'); \
-  commit_msg="chore(nixos): apply generation $gen_number"; \
+  @commit_msg="chore(nixos): apply generation $gen_number"; \
   echo "Committing changes with message: '$commit_msg'"; \
   git commit -am "$commit_msg"
 
