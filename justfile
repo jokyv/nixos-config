@@ -1,12 +1,6 @@
 set shell := ["bash", "-euo", "pipefail", "-c"]
 set positional-arguments
 
-# Simple text indicators (no colors for compatibility)
-INFO_PREFIX := "[INFO]"
-SUCCESS_PREFIX := "[SUCCESS]"
-WARNING_PREFIX := "[WARNING]"
-ERROR_PREFIX := "[ERROR]"
-
 default:
   @just --list
 
@@ -45,9 +39,9 @@ clean:
 
 # Rebuild the home config
 home:
-  @echo "${INFO_PREFIX} Rebuilding Home Manager configuration..."
-  home-manager switch -b backup --flake .#jokyv --show-trace || { echo "${ERROR_PREFIX} Home Manager switch failed"; exit 1; }
-  @echo "${SUCCESS_PREFIX} Home Manager rebuild successful"
+  @echo "[INFO] Rebuilding Home Manager configuration..."
+  home-manager switch -b backup --flake .#jokyv --show-trace || { echo "[ERROR] Home Manager switch failed"; exit 1; }
+  @echo "[SUCCESS] Home Manager rebuild successful"
 
 # Rebuild the home config using nh
 nhh:
@@ -59,9 +53,9 @@ nhh:
 
 # Rebuild the system
 switch:
-  @echo "${INFO_PREFIX} Rebuilding system configuration..."
-  sudo nixos-rebuild switch --impure --flake .#nixos --show-trace || { echo "${ERROR_PREFIX} System rebuild failed"; exit 1; }
-  @echo "${SUCCESS_PREFIX} System rebuild successful"
+  @echo "[INFO] Rebuilding system configuration..."
+  sudo nixos-rebuild switch --impure --flake .#nixos --show-trace || { echo "[ERROR] System rebuild failed"; exit 1; }
+  @echo "[SUCCESS] System rebuild successful"
 
 # Rebuild the system using nh
 nhs:
@@ -69,33 +63,33 @@ nhs:
 
 # Build a new configuration
 boot:
-  @echo "${WARNING_PREFIX} Building boot configuration..."
-  sudo nixos-rebuild boot --fast --impure --flake .#nixos --show-trace || { echo "${ERROR_PREFIX} Boot configuration failed"; exit 1; }
-  @echo "${SUCCESS_PREFIX} Boot configuration built successfully"
+  @echo "[WARNING] Building boot configuration..."
+  sudo nixos-rebuild boot --fast --impure --flake .#nixos --show-trace || { echo "[ERROR] Boot configuration failed"; exit 1; }
+  @echo "[SUCCESS] Boot configuration built successfully"
 
 # Dry-build a new configuration
 dry:
-  @echo "${WARNING_PREFIX} Running dry-build..."
-  sudo nixos-rebuild dry-activate --fast --flake .#nixos --show-trace || { echo "${ERROR_PREFIX} Dry-run failed"; exit 1; }
-  @echo "${SUCCESS_PREFIX} Dry-build completed successfully"
+  @echo "[WARNING] Running dry-build..."
+  sudo nixos-rebuild dry-activate --fast --flake .#nixos --show-trace || { echo "[ERROR] Dry-run failed"; exit 1; }
+  @echo "[SUCCESS] Dry-build completed successfully"
 
 # Format code
 fmt:
-  @echo "${INFO_PREFIX} Formatting code..."
+  @echo "[INFO] Formatting code..."
   nix fmt
-  @echo "${SUCCESS_PREFIX} Formatting completed"
+  @echo "[SUCCESS] Formatting completed"
 
 # Run tests
 test:
-  @echo "${INFO_PREFIX} Running tests..."
+  @echo "[INFO] Running tests..."
   nix flake check --show-trace --print-build-logs --verbose
-  @echo "${SUCCESS_PREFIX} Tests completed"
+  @echo "[SUCCESS] Tests completed"
 
 # Update all inputs
 up:
-  @echo "${WARNING_PREFIX} Updating flake inputs..."
+  @echo "[WARNING] Updating flake inputs..."
   nix flake update --refresh --commit-lock-file
-  @echo "${SUCCESS_PREFIX} Flake inputs updated"
+  @echo "[SUCCESS] Flake inputs updated"
 
 # Update specific input. Usage: just upp nixpkgs
 upp input:
@@ -192,8 +186,8 @@ edit-secrets:
 
 # Validate that the encrypted secrets file can be decrypted successfully
 validate-secrets:
-  @echo "${INFO_PREFIX} Validating secrets..."
-  sops -d secrets.enc.yaml > /dev/null && echo "${SUCCESS_PREFIX} Secrets are valid" || { echo "${ERROR_PREFIX} Secrets validation failed"; exit 1; }
+  @echo "[INFO] Validating secrets..."
+  sops -d secrets.enc.yaml > /dev/null && echo "[SUCCESS] Secrets are valid" || { echo "[ERROR] Secrets validation failed"; exit 1; }
 
 # Rotate the encryption key for secrets (use if keys are compromised)
 rotate-secrets:
@@ -201,10 +195,10 @@ rotate-secrets:
 
 # Check the integrity of the Nix store and run Nix doctor for system health
 health:
-  @echo "${INFO_PREFIX} Running system health checks..."
+  @echo "[INFO] Running system health checks..."
   sudo nix-store --verify --check-contents
   nix doctor
-  @echo "${SUCCESS_PREFIX} Health checks completed"
+  @echo "[SUCCESS] Health checks completed"
 
 # Calculate the total disk space used by the current system configuration
 disk-usage:
@@ -212,13 +206,13 @@ disk-usage:
 
 # Smart cleanup that preserves recent generations while removing older ones
 smart-clean:
-  nh clean all --keep 3 || { echo "${ERROR_PREFIX} Smart clean failed"; exit 1; }
-  sudo nix store optimise || { echo "${ERROR_PREFIX} Store optimization failed"; exit 1; }
+  nh clean all --keep 3 || { echo "[ERROR] Smart clean failed"; exit 1; }
+  sudo nix store optimise || { echo "[ERROR] Store optimization failed"; exit 1; }
 
 # Remove only very old generations (more aggressive cleanup)
 deep-clean:
-  nh clean all --keep 1 || { echo "${ERROR_PREFIX} Deep clean failed"; exit 1; }
-  sudo nix-collect-garbage --delete-older-than 30d || { echo "${ERROR_PREFIX} Garbage collection failed"; exit 1; }
+  nh clean all --keep 1 || { echo "[ERROR] Deep clean failed"; exit 1; }
+  sudo nix-collect-garbage --delete-older-than 30d || { echo "[ERROR] Garbage collection failed"; exit 1; }
 
 # Generate documentation from the flake (if available)
 docs:
