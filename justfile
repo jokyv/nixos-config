@@ -158,10 +158,10 @@ format:
 # Create a commit with generation number
 commit:
   # Create a descriptive commit message and commit
-  @gen_number=$$(sudo nixos-rebuild list-generations 2>/dev/null | awk '/True/ {print $$1}' | tail -1) || gen_number="unknown"; \
-  commit_msg="chore(nixos): apply generation $$gen_number"; \
-  echo "Committing changes with message: '$$commit_msg'"; \
-  git commit -am "$$commit_msg" || { echo "[WARNING] Commit failed or no changes to commit"; exit 0; }
+  @gen_number=$(sudo nixos-rebuild list-generations | awk '/True/ {print $1}'); \
+  @commit_msg="chore(nixos): apply generation $gen_number"; \
+  echo "Committing changes with message: '$commit_msg'"; \
+  git commit -am "$commit_msg"
 
 # Buffed nixos-rebuild switch - depends on format, switch, and commit
 buffedswitch: format switch commit
