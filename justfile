@@ -158,10 +158,10 @@ format:
 # Create a commit with generation number
 commit:
   # Create a descriptive commit message and commit
-  @gen_number=$(sudo nixos-rebuild list-generations 2>/dev/null | awk '/True/ {print $1}' | tail -1) || gen_number="unknown"; \
-  @commit_msg="chore(nixos): apply generation $gen_number"; \
-  echo "Committing changes with message: '$commit_msg'"; \
-  git commit -am "$commit_msg" || { echo "[WARNING] Commit failed or no changes to commit"; exit 0; }
+  @gen_number=$$(sudo nixos-rebuild list-generations 2>/dev/null | awk '/True/ {print $$1}' | tail -1) || gen_number="unknown"; \
+  commit_msg="chore(nixos): apply generation $$gen_number"; \
+  echo "Committing changes with message: '$$commit_msg'"; \
+  git commit -am "$$commit_msg" || { echo "[WARNING] Commit failed or no changes to commit"; exit 0; }
 
 # Buffed nixos-rebuild switch - depends on format, switch, and commit
 buffedswitch: format switch commit
@@ -176,7 +176,11 @@ status:
   @echo "[INFO] System Status Summary"
   sudo nixos-rebuild list-generations | tail -3
   @echo "---"
-  @sudo nix-store --verify --check-contents --dry-run 2>/dev/null && echo "[SUCCESS] Nix store integrity: OK" || echo "[WARNING] Nix store verification failed or requires repair"
+  @if sudo nix-store --verify --check-contents --dry-run 2>/dev/null; then \
+    echo "[SUCCESS] Nix store integrity: OK"; \
+  else \
+    echo "[WARNING] Nix store verification requires repair or has issues"; \
+  fi
   @echo "[SUCCESS] Status check completed"
 
 # Run a complete development workflow: format code, run tests, and dry-run the build
