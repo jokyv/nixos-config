@@ -1,5 +1,5 @@
 set shell := ["bash", "-euo", "pipefail", "-c"]
-# [no-cd]
+[no-cd]
 set positional-arguments
 
 default:
@@ -52,7 +52,7 @@ nhh:
 
 # Rebuild the system
 switch:
-  sudo nixos-rebuild switch --impure --flake .#nixos --show-trace
+  sudo nixos-rebuild switch --impure --flake .#nixos --show-trace || { echo "System rebuild failed"; exit 1; }
 
 # Rebuild the system using nh
 nhs:
@@ -60,11 +60,11 @@ nhs:
 
 # Build a new configuration
 boot:
-  sudo nixos-rebuild boot --fast --impure --flake .#nixos --show-trace
+  sudo nixos-rebuild boot --fast --impure --flake .#nixos --show-trace || { echo "Boot configuration failed"; exit 1; }
 
 # Dry-build a new configuration
 dry:
-  sudo nixos-rebuild dry-activate --fast --flake .#nixos --show-trace
+  sudo nixos-rebuild dry-activate --fast --flake .#nixos --show-trace || { echo "Dry-run failed"; exit 1; }
 
 # Format code
 fmt:
@@ -179,24 +179,24 @@ validate-secrets:
 rotate-secrets:
   sops --rotate secrets.yaml
 
-# Check the integrity of the Nix store and run 'nix config check' for system health
+# Check the integrity of the Nix store and run Nix doctor for system health
 health:
-  nix-store --verify --check-contents
-  nix config check
+  sudo nix-store --verify --check-contents
+  nix doctor
 
 # Calculate the total disk space used by the current system configuration
 disk-usage:
-  nix-store --query --disk-usage $(nix-store -q --requisites /run/current-system)
+  sudo nix-store --query --disk-usage $(sudo nix-store -q --requisites /run/current-system)
 
 # Smart cleanup that preserves recent generations while removing older ones
 smart-clean:
-  nh clean all --keep 3
-  sudo nix store optimise
+  nh clean all --keep 3 || { echo "Smart clean failed"; exit 1; }
+  sudo nix store optimise || { echo "Store optimization failed"; exit 1; }
 
 # Remove only very old generations (more aggressive cleanup)
 deep-clean:
-  nh clean all --keep 1
-  sudo nix-collect-garbage --delete-older-than 30d
+  nh clean all --keep 1 || { echo "Deep clean failed"; exit 1; }
+  sudo nix-collect-garbage --delete-older-than 30d || { echo "Garbage collection failed"; exit 1; }
 
 # Generate documentation from the flake (if available)
 docs:
