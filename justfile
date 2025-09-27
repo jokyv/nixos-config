@@ -32,10 +32,10 @@ apply:
 # all: install update apply
 #     echo "Home Manager setup complete!"
 
-# Define a task to clean up old generations
+# Legacy cleanup alias (backward compatibility)
 clean:
-  echo "Cleaning up old generations..."
-  nix-collect-garbage --delete-older-than 7d
+  @echo "[INFO] Running legacy cleanup command (redirecting to cleanup-smart)..."
+  just cleanup-smart
 
 # Rebuild the home config
 home:
