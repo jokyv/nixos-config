@@ -12,25 +12,14 @@ help:
 # home-manager specific
 # -----------------------------------------------
 
-# Define a task to install Home Manager
-install:
-  echo "Installing Home Manager..."
-  nix-shell '<home-manager>' -p home-manager --run "home-manager switch"
+# Legacy Home Manager commands (commented out as they use old patterns)
+# install:
+#   echo "Installing Home Manager..."
+#   nix-shell '<home-manager>' -p home-manager --run "home-manager switch"
 
-# Define a task to update Home Manager
-# update:
-#     echo "Updating Home Manager..."
-#     nix-channel --update
-#     nix-shell '<home-manager>' -p home-manager --run "home-manager switch"
-
-# Define a task to apply Home Manager configuration
-apply:
-  echo "Applying Home Manager configuration..."
-  nix-shell '<home-manager>' -p home-manager --run "home-manager switch"
-
-# Define a task that runs install, update, and apply
-# all: install update apply
-#     echo "Home Manager setup complete!"
+# apply:
+#   echo "Applying Home Manager configuration..."
+#   nix-shell '<home-manager>' -p home-manager --run "home-manager switch"
 
 # Legacy cleanup alias (backward compatibility)
 clean:
@@ -46,6 +35,9 @@ home:
 # Rebuild the home config using nh
 nhh:
   nh home switch -c jokyv .
+
+# Alias for nhh
+home-nh: nhh
 
 # -----------------------------------------------
 # NixOS specific
