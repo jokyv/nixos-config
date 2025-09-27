@@ -214,7 +214,3 @@ deep-clean:
   nh clean all --keep 1 || { echo "[ERROR] Deep clean failed"; exit 1; }
   sudo nix-collect-garbage --delete-older-than 30d || { echo "[ERROR] Garbage collection failed"; exit 1; }
 
-# Generate documentation from the flake (if available)
-docs:
-  nix build .#docs
-  find result/share/doc -name "*.html" | head -5
