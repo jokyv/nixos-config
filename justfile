@@ -5,6 +5,10 @@ set positional-arguments
 default:
   @just --list
 
+# Display help for all available just commands
+help:
+  just --list --unsorted
+
 # -----------------------------------------------
 # home-manager specific
 # -----------------------------------------------
@@ -175,10 +179,10 @@ validate-secrets:
 rotate-secrets:
   sops --rotate secrets.yaml
 
-# Check the integrity of the Nix store and run Nix doctor for system health
+# Check the integrity of the Nix store and run 'nix config check' for system health
 health:
   nix-store --verify --check-contents
-  nix doctor
+  nix config check
 
 # Calculate the total disk space used by the current system configuration
 disk-usage:
@@ -198,11 +202,3 @@ deep-clean:
 docs:
   nix build .#docs
   find result/share/doc -name "*.html" | head -5
-
-# Display help for all available just commands
-help:
-  just --list --unsorted
-    
-# -----------------------------------------------
-# Old commands
-# -----------------------------------------------
