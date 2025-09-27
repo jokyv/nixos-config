@@ -134,7 +134,7 @@ format:
 # Create a commit with generation number
 commit:
   # Create a descriptive commit message and commit
-  @gen_number=$(nixos-rebuild list-generations | awk '/True/ {print $1}'); \
+  @gen_number=$(sudo nixos-rebuild list-generations | awk '/True/ {print $1}'); \
   @commit_msg="chore(nixos): apply generation $gen_number"; \
   echo "Committing changes with message: '$commit_msg'"; \
   git commit -am "$commit_msg"
@@ -142,6 +142,66 @@ commit:
 # Buffed nixos-rebuild switch - depends on format, switch, and commit
 buffedswitch: format switch commit
   @echo "Done."
+
+# -----------------------------------------------
+# Utility Scripts
+# -----------------------------------------------
+
+# Run a complete development workflow: format code, run tests, and dry-run the build
+dev: fmt test dry
+
+# Perform a quick security audit of the flake without building anything
+audit:
+  nix flake check --no-build --no-eval-cache
+
+# Display detailed system information including Nix version and platform details
+info:
+  nix-shell -p nix-info --run "nix-info -m"
+
+# Build the system configuration without applying it, then show differences from current system
+backup:
+  sudo nixos-rebuild build --flake .#nixos
+  sudo nix store diff-closures /run/current-system ./result
+
+# Safely edit encrypted secrets using SOPS (Secrets OPerationS)
+edit-secrets:
+  sops secrets.yaml
+
+# Validate that the encrypted secrets file can be decrypted successfully
+validate-secrets:
+  sops -d secrets.enc.yaml > /dev/null && echo "Secrets are valid"
+
+# Rotate the encryption key for secrets (use if keys are compromised)
+rotate-secrets:
+  sops --rotate secrets.yaml
+
+# Check the integrity of the Nix store and run Nix doctor for system health
+health:
+  nix-store --verify --check-contents
+  nix doctor
+
+# Calculate the total disk space used by the current system configuration
+disk-usage:
+  nix-store --query --disk-usage $(nix-store -q --requisites /run/current-system)
+
+# Smart cleanup that preserves recent generations while removing older ones
+smart-clean:
+  nh clean all --keep 3
+  sudo nix store optimise
+
+# Remove only very old generations (more aggressive cleanup)
+deep-clean:
+  nh clean all --keep 1
+  sudo nix-collect-garbage --delete-older-than 30d
+
+# Generate documentation from the flake (if available)
+docs:
+  nix build .#docs
+  find result/share/doc -name "*.html" | head -5
+
+# Display help for all available just commands
+help:
+  just --list --unsorted
     
 # -----------------------------------------------
 # Old commands
