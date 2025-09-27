@@ -95,24 +95,35 @@ ephemeral dir="$HOME":
 repl:
   nix repl
 
-# Clean up with the help of nh
-nhclean:
+# Cleanup commands (organized by aggressiveness)
+
+# Quick cleanup - keep 5 generations (safe)
+cleanup-quick:
+  @echo "[INFO] Running quick cleanup (keeping 5 generations)..."
   nh clean all --keep 5
+  @echo "[SUCCESS] Quick cleanup completed"
 
-# Clean up with the help of nh but dry run
-nhcleandry:
-  nh clean all --keep 5 --dry
+# Smart cleanup - keep 3 generations (recommended for regular use)
+cleanup-smart:
+  @echo "[INFO] Running smart cleanup (keeping 3 generations)..."
+  nh clean all --keep 3 || { echo "[ERROR] Smart clean failed"; exit 1; }
+  sudo nix store optimise || { echo "[ERROR] Store optimization failed"; exit 1; }
+  @echo "[SUCCESS] Smart cleanup completed"
 
-# Remove all generations older than 7 days
-cleanup:
-  sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 7d
+# Deep cleanup - aggressive (use with caution)
+cleanup-deep:
+  @echo "[WARNING] Running deep cleanup (keeping only current generation)..."
+  nh clean all --keep 1 || { echo "[ERROR] Deep clean failed"; exit 1; }
+  sudo nix-collect-garbage --delete-older-than 30d || { echo "[ERROR] Garbage collection failed"; exit 1; }
+  @echo "[SUCCESS] Deep cleanup completed"
 
-# Garbage collect all unused nix store entries
-gc:
-  # sudo nix store gc --debug
-  sudo nix store gc
-  nix-collect-garbage --delete-old
-  sudo nix-collect-garbage --delete-old
+# Dry run to see what would be cleaned
+cleanup-dry:
+  @echo "[INFO] Dry run - showing what would be cleaned..."
+  nh clean all --keep 3 --dry
+
+# Legacy cleanup alias (points to smart cleanup as default)
+cleanup: cleanup-smart
 
 # Encode secrets
 encode:
@@ -196,13 +207,7 @@ health:
 disk-usage:
   sudo nix-store --query --disk-usage $(sudo nix-store -q --requisites /run/current-system)
 
-# Smart cleanup that preserves recent generations while removing older ones
-smart-clean:
-  nh clean all --keep 3 || { echo "[ERROR] Smart clean failed"; exit 1; }
-  sudo nix store optimise || { echo "[ERROR] Store optimization failed"; exit 1; }
-
-# Remove only very old generations (more aggressive cleanup)
-deep-clean:
-  nh clean all --keep 1 || { echo "[ERROR] Deep clean failed"; exit 1; }
-  sudo nix-collect-garbage --delete-older-than 30d || { echo "[ERROR] Garbage collection failed"; exit 1; }
+# Legacy aliases for backward compatibility
+smart-clean: cleanup-smart
+deep-clean: cleanup-deep
 
