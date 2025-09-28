@@ -41,7 +41,7 @@
       "mv" = "mv -iv";
       "cp" = "cp -iv";
       "ln" = "ln -i";
-      "cat" = "bat --paging=never";
+      # "cat" = "bat --paging=never";
       "b" = "bash";
       "e" = "exit";
       "ep" = "echo $PATH | tr : \"\\n\"";
