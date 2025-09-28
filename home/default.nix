@@ -94,8 +94,9 @@
     neovim
     git-cliff
     gh
-    jq
+    jaq
     just
+    gum
     uv
     virtualenv # need this for python virtual env
 
@@ -155,6 +156,7 @@
     typos-lsp
     vscode-langservers-extracted
     yaml-language-server
+    just-lsp
 
     # Security Tools
     age
