@@ -49,6 +49,13 @@ in
     enableIPv6 = true; # Keep IPv6 enabled
   };
 
+  # ---------------------------------------------
+  # Hardware Configuration
+  # ---------------------------------------------
+
+  # update the CPU microcode for AMD processors
+  hardware.cpu.amd.updateMicrocode = true;
+
   # Enable Bluetooth hardware support with security settings
   hardware.bluetooth = {
     enable = true;
@@ -186,6 +193,13 @@ in
   # check by running 'systemctl list-timers'
 
   nix = {
+    # auto optimisation
+    optimise = {
+      automatic = true;
+      dates = "weekly";
+      persistent = true;
+    };
+
     # Garbage Collection
     gc = {
       automatic = true;
