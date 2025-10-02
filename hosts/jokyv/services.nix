@@ -1,6 +1,12 @@
 { pkgs, ... }:
 
 {
+  # Enable DBUS service that allows applications to update firmware
+  services.fwupd.enable = true;
+
+  # Enable SSD TRIM of mounted partitions in background
+  services.fstrim.enable = true;
+  
   # Bluetooth
   services.blueman.enable = true;
 
