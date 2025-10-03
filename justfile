@@ -167,11 +167,8 @@ fmt:
 
 # Create a commit with generation number
 commit:
-    # Create a descriptive commit message and commit
-    @gen_number=$(sudo nixos-rebuild list-generations | awk '/True/ {print $1}'); \
-    @commit_msg="chore(nixos): apply generation $gen_number"; \
-    echo "Committing changes with message: '$commit_msg'"; \
-    git commit -am "$commit_msg"
+    @echo "Committing generation {{ `sudo nixos-rebuild list-generations | awk '/True/ {print $1}'` }}"
+    git commit -am "chore(nixos): apply generation {{ `sudo nixos-rebuild list-generations | awk '/True/ {print $1}'` }}"
 
 # Buffed nixos-rebuild switch - depends on fmt, switch, and commit
 buffedswitch: fmt switch commit
