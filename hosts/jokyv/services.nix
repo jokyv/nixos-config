@@ -6,7 +6,7 @@
 
   # Enable SSD TRIM of mounted partitions in background
   services.fstrim.enable = true;
-  
+
   # Bluetooth
   services.blueman.enable = true;
 
