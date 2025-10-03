@@ -2,6 +2,9 @@
 {
   # import the home manager module is already done in flake.nix
   # configure options
+  # Ensure the wallpaper file is available in the home directory
+  home.file.".wallpaper.png".source = ./wallpaper.png;
+  
   programs.noctalia-shell = {
     enable = true;
     settings = {
@@ -11,6 +14,7 @@
         density = "compact";
         position = "right";
         showCapsule = false;
+        enabled = true; # Explicitly enable the bar
         widgets = {
           left = [
             {
@@ -55,6 +59,11 @@
       location = {
         monthBeforeDay = true;
         name = "Marseille, France";
+      };
+      # Add wallpaper configuration
+      wallpaper = {
+        image = "${config.home.homeDirectory}/.wallpaper.png";
+        mode = "fill";
       };
     };
     # this may also be a string or a path to a JSON file,
