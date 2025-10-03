@@ -42,6 +42,7 @@
 
     ./env.nix
 
+    # ./programs/noctalia.nix
   ];
 
   home.username = "jokyv";
@@ -163,6 +164,8 @@
     gitleaks
     git-crypt
     sops
+
+    # quickshell
   ];
 
   # ---------------------------------------------
