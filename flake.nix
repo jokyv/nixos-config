@@ -12,7 +12,21 @@
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    stylix.url = "github:danth/stylix";
+    # quickshell = {
+    #   url = "github:outfoxxed/quickshell";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
+
+    # noctalia = {
+    #   url = "github:noctalia-dev/noctalia-shell";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    #   inputs.quickshell.follows = "quickshell";
+    # };
+
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -35,7 +49,6 @@
     # };
   };
 
-  # outputs = { self, nixpkgs, home-manager, stylix, sops-nix, niri, disko, ... }@inputs:
   outputs = { self, nixpkgs, home-manager, stylix, sops-nix, niri, ... }@inputs:
     let
       system = "x86_64-linux";

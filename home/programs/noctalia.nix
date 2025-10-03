@@ -2,9 +2,6 @@
 {
   # import the home manager module is already done in flake.nix
   # configure options
-  # Ensure the wallpaper file is available in the home directory
-  home.file.".wallpaper.png".source = ./wallpaper.png;
-  
   programs.noctalia-shell = {
     enable = true;
     settings = {
@@ -58,11 +55,11 @@
       };
       location = {
         monthBeforeDay = true;
-        name = "Marseille, France";
+        name = "Singapore, Singapore";
       };
       # Add wallpaper configuration
       wallpaper = {
-        image = "${config.home.homeDirectory}/.wallpaper.png";
+        image = "${config.home.homeDirectory}/pics/wallpapers/gankar_1.png";
         mode = "fill";
       };
     };
