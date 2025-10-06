@@ -8,7 +8,7 @@
     settings = {
       # Global prompt configuration
       format = ''
-        $username$hostname$directory$sudo$git_branch$git_commit$git_state$git_status$git_metrics$gcloud$fill$jobs$python$rust$cmd_duration$time$line_break$status$character
+        $username$hostname$directory$sudo$git_branch$git_commit$git_state$git_status$git_metrics$gcloud$fill$jobs$python$nix_shell$rust$cmd_duration$time$line_break$status$character
       '';
 
       # Timeouts and general settings

@@ -23,6 +23,11 @@
     #   inputs.quickshell.follows = "quickshell";
     # };
 
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,11 +35,6 @@
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    niri = {
-      url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -49,6 +49,7 @@
     # };
   };
 
+  # outputs = { self, nixpkgs, home-manager, stylix, sops-nix, niri, quickshell, noctalia, ... }@inputs:
   outputs = { self, nixpkgs, home-manager, stylix, sops-nix, niri, ... }@inputs:
     let
       system = "x86_64-linux";
@@ -56,6 +57,7 @@
     in
     {
       # NixOS system configuration
+      # --------------------------
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs; };
@@ -73,6 +75,7 @@
       };
 
       # Home Manager configuration (standalone)
+      # ---------------------------------------
       homeConfigurations.jokyv = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
@@ -80,7 +83,7 @@
           stylix.homeModules.stylix
           sops-nix.homeManagerModules.sops
           niri.homeModules.niri
-          # nh.homeModules.default
+          # noctalia.homeModules.default
         ];
       };
     };
