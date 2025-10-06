@@ -216,3 +216,27 @@ health:
 # Calculate the total disk space used by the current system configuration
 disk-usage:
     sudo nix-store --query --disk-usage $(sudo nix-store -q --requisites /run/current-system)
+
+# -----------------------------------------------
+# Useful nix commands
+# -----------------------------------------------
+
+useful-commands:
+    @echo "sudo nixos-rebuild switch - apply configuration right now"
+    @echo "sudo nixos-rebuild boot - apply configuration on next boot"
+    @echo "sudo nixos-rebuild test - test without making permanent"
+    @echo "sudo nixos-rebuild switch --flake .#flakename - use flake"
+    @echo "nix store gc - garbage collection"
+    @echo "nix store optimise - optimise store"
+
+    @echo "home-manager switch - apply home config"
+    @echo "home-manager switch --flake .#user - use flake"
+
+    @echo "sudo nixos-rebuild list-generations - list generation" 
+    @echo "sudo nixos-rebuild switch --rollback - swith to previous generation" 
+    @echo "sudo nixos-rebuild boot --option number <id> - boot into generataion id"
+
+    @echo "home-manager generations - list home generations"
+    @echo "home-manager switch --rollback - rollback to previous generation"
+    @echo "home-manager generation <id> - switch to generation id"
+    @echo "home-manager remove-generations <id> - remove generation id"
