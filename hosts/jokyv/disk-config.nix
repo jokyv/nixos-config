@@ -57,6 +57,11 @@
                       mountpoint = "/home";
                       mountOptions = [ "compress=zstd" "noatime" ];
                     };
+                    # Create a subvolume for the Nix store
+                    "/@nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                    };
                   };
                 };
               };
@@ -82,11 +87,33 @@
                     mountpoint = "/home";
                     mountOptions = [ "compress=zstd" "noatime" ];
                   };
+                  # Create a subvolume for the Nix store
+                  "/@nix" = {
+                    mountpoint = "/nix";
+                    mountOptions = [ "compress=zstd" "noatime" ];
+                  };
+                  # Isolate variable data to prevent logs or containers
+                  # from filling up the root filesystem.
+                  # "/@var" = {
+                  #   mountpoint = "/var";
+                  #   mountOptions = [ "compress=zstd" "noattime" ];
+                  #   btrfs.quota.size = "20G"; # max limit for subvolume
+                  # };
                 };
               };
             };
           };
         };
+      };
+    };
+    # Define filesystems that are not directly on a disk partition.
+    filesystems = {
+      # Mount /tmp in RAM for performance and to reduce SSD writes.
+      "/tmp" = {
+        type = "tmpfs";
+        # Options: "defaults" is standard, "size" sets a max limit (it doesn't
+        # reserve the space), and "mode=1777" sets the correct permissions.
+        options = [ "defaults" "size=4G" "mode=1777" ];
       };
     };
   };
