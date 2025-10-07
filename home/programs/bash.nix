@@ -7,8 +7,8 @@
   };
 
   home.sessionPath = [
-    "$HOME/.local/share/cargo/bin"
-    "$HOME/scripts/bin"
+    "${config.home.homeDirectory}/.local/share/cargo/bin"
+    "${config.home.homeDirectory}/scripts/bin"
   ];
 
   programs.bash = {
