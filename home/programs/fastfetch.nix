@@ -15,7 +15,7 @@
       # General display settings
       display = {
         # Use SI prefixes (kB, MB, GB) instead of binary (KiB, MiB, GiB)
-        binaryPrefix = "si";
+        # binaryPrefix = "si";
         # A custom separator between the key and value.
         separator = " > ";
       };
@@ -55,11 +55,13 @@
           format = "{1} ({5}%)";
         }
         "gpu" # Shows GPU name, driver, temperature, etc.
-        {
-          type = "memory";
-          # Format: <used> / <total> (<percentage_used>)
-          format = "{/1} / {/2} ({/3}%)";
-        }
+        "memory"
+        # {
+        #   type = "memory";
+        #   key = "Memory";
+        #   # Format: <used> / <total> (<percentage_used>)
+        #   format = "{/1} / {/2} ({/3}%)";
+        # }
         "disk"
         "separator"
         "network"
