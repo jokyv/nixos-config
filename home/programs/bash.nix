@@ -3,7 +3,7 @@
 {
   home.sessionVariables = {
     # NIX_PATH = "nixpkgs=https://github.com/nixos/nixpkgs/archive/refs/heads/master.tar.gz";
-    SOPS_AGE_KEY_FILE = "~/.config/sops/age/secrets.key";
+    SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops/age/secrets.key";
   };
 
   home.sessionPath = [
