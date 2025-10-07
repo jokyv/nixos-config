@@ -1,25 +1,21 @@
 { config, pkgs, ... }:
 
 {
+  home.sessionVariables = {
+    # NIX_PATH = "nixpkgs=https://github.com/nixos/nixpkgs/archive/refs/heads/master.tar.gz";
+    SOPS_AGE_KEY_FILE = "~/.config/sops/age/secrets.key";
+  };
+
+  home.sessionPath = [
+    "$HOME/.local/share/cargo/bin"
+    "$HOME/scripts/bin"
+  ];
+
   programs.bash = {
     enable = true;
     enableCompletion = true;
 
-    profileExtra = ''
 
-      # function that will source a file if it exists
-      function source_if_exists {
-          if test -r "$1"; then source "$1"
-          fi
-      }
-
-      # source bashrc if exist
-      source_if_exists $HOME/.bashrc
-
-      # Print if the file is sourced
-      echo "-- .bash_profile file sourced"
-
-    '';
 
     shellAliases = {
 
@@ -150,25 +146,11 @@
         rm -f -- "$tmp"
       }
 
-      # Function to add directories to $PATH if they aren't already included
-      function add_to_path {
-        case ":$PATH:" in
-          *":$1:"*) :;; # already there
-          *) PATH="$1:$PATH";; # or PATH="$PATH:$1"
-        esac
-      }
-
       # Function to source files if they exist
       function source_if_exists {
         if test -r "$1"; then source "$1"; fi
       }
 
-      # Uncomment if you're using Cargo (Rust) binaries
-      # add_to_path $HOME/.local/share/cargo/bin
-
-      # Source personal scripts
-      add_to_path $HOME/scripts/bin/
-      
       # Source additional scripts, aliases, and exports
       source_if_exists $HOME/nixos-config/bin/linux_scripts.sh
 
@@ -178,15 +160,6 @@
       eval "$(atuin init bash)"
       eval "$(uv generate-shell-completion bash)"
       eval "$(zoxide init bash)"
-
-      # Set NIX_PATH environment variable
-      export NIX_PATH=nixpkgs=https://github.com/nixos/nixpkgs/archive/refs/heads/master.tar.gz
-
-      # SOPS
-      export SOPS_AGE_KEY_FILE=~/.config/sops/age/secrets.key
-
-      # Print sourced confirmation
-      echo "-- aliases loaded"
 
     '';
 
