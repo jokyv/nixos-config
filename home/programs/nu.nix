@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   programs.nushell = {
@@ -91,7 +96,6 @@
       # SOPS
       SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops/age/secrets.key";
 
-
     };
 
     shellAliases = {
@@ -178,31 +182,3 @@
     };
   };
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -2,8 +2,12 @@
 # Niri flake wiki: https://github.com/sodiboo/niri-flake/blob/main/docs.md
 # Niri flake example: https://github.com/sodiboo/system/blob/main/niri.mod.nix
 
-
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   programs.niri.enable = true;
@@ -76,7 +80,9 @@
         # { proportion = 2.0 / 3.0; }
         { proportion = 3.0 / 3.0; }
       ];
-      default-column-width = { proportion = 1.0 / 2.0; };
+      default-column-width = {
+        proportion = 1.0 / 2.0;
+      };
 
       # focus-ring = {
       #   width = 6;
@@ -101,7 +107,13 @@
       # { argv = [ "qs" "-c" "noctalia-shell" ]; }
       { argv = [ "waybar" ]; }
       { argv = [ "swww-daemon" ]; }
-      { argv = [ "swww" "img" "${config.home.homeDirectory}/pics/wallpapers/gankar_1.png" ]; }
+      {
+        argv = [
+          "swww"
+          "img"
+          "${config.home.homeDirectory}/pics/wallpapers/gankar_1.png"
+        ];
+      }
       # my copy and paste setup
       {
         argv = [
@@ -128,8 +140,8 @@
     #   epsilon = 0.001;
     # };
 
-
-    binds = with config.lib.niri.actions;
+    binds =
+      with config.lib.niri.actions;
       let
         sh = spawn "sh" "-c";
         # term = args: "foot sh -c '${lib.escape [ "'" ] args}'";
@@ -149,7 +161,7 @@
           "Mod+B".repeat = false;
           "Mod+Shift+B".action.spawn = "brave";
 
-          # Launch app launcher 
+          # Launch app launcher
           "Mod+D".action.spawn = "fuzzel";
 
           # Launch file manager
@@ -287,29 +299,38 @@
           clip-to-geometry = true;
         }
         {
-          matches = [{ app-id = "^firefox$"; }];
+          matches = [ { app-id = "^firefox$"; } ];
           open-maximized = true;
           # making scrolling for firefox little slower
           scroll-factor = 0.90;
         }
         {
-          matches = [{ app-id = "^firefox$"; title = "^Picture-in-Picture$"; }];
+          matches = [
+            {
+              app-id = "^firefox$";
+              title = "^Picture-in-Picture$";
+            }
+          ];
           open-floating = true;
         }
         {
-          matches = [{ app-id = "^firefox$"; title = "^Private Browsing$"; }];
+          matches = [
+            {
+              app-id = "^firefox$";
+              title = "^Private Browsing$";
+            }
+          ];
           open-floating = true;
           # border.active-color = "#7d0d2d";
         }
         {
-          matches = [{ app-id = "^obsidian$"; }];
+          matches = [ { app-id = "^obsidian$"; } ];
           open-maximized = true;
         }
         {
-          matches = [{ is-active = false; }];
+          matches = [ { is-active = false; } ];
           opacity = 0.75;
         }
       ];
   };
 }
-

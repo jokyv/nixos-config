@@ -21,8 +21,16 @@
         inline-diagnostics.cursor-line = "warning";
 
         statusline = {
-          left = [ "mode" "spinner" "diagnostics" ];
-          center = [ "file-name" "read-only-indicator" "file-modification-indicator" ];
+          left = [
+            "mode"
+            "spinner"
+            "diagnostics"
+          ];
+          center = [
+            "file-name"
+            "read-only-indicator"
+            "file-modification-indicator"
+          ];
           right = [
             "version-control"
             "position"
@@ -69,7 +77,11 @@
         insert = { };
 
         normal = {
-          "esc" = [ "normal_mode" ":format" ":write" ];
+          "esc" = [
+            "normal_mode"
+            ":format"
+            ":write"
+          ];
           "H" = "extend_char_left";
           "J" = "extend_line_down";
           "K" = "extend_line_up";
@@ -95,10 +107,17 @@
           "{" = "goto_prev_paragraph";
           "}" = "goto_next_paragraph";
           "C-o" = ":config-open";
-          "C-r" = [ ":w" ":config-reload" ];
+          "C-r" = [
+            ":w"
+            ":config-reload"
+          ];
           "C-v" = "paste_clipboard_before";
           "C-c" = "yank_to_clipboard";
-          "C-j" = [ "extend_to_line_bounds" "delete_selection" "paste_after" ];
+          "C-j" = [
+            "extend_to_line_bounds"
+            "delete_selection"
+            "paste_after"
+          ];
           "C-k" = [
             "extend_to_line_bounds"
             "delete_selection"
@@ -116,7 +135,10 @@
           "z" = ":toggle gutters.line-numbers.min-width 25 3";
           # toggle soft warp
           "s" = ":toggle soft-wrap.enable";
-          "r" = [ ":w" ":config-reload" ];
+          "r" = [
+            ":w"
+            ":config-reload"
+          ];
           "o" = ":config-open";
           "w" = ":wq";
           "q" = ":q";
@@ -150,7 +172,10 @@
         };
         ruff = {
           command = "ruff";
-          args = [ "server" "--preview" ];
+          args = [
+            "server"
+            "--preview"
+          ];
         };
         pylsp = {
           command = "pylsp";
@@ -190,22 +215,39 @@
           language-servers = [ "bash-language-server" ];
           formatter = {
             command = "shfmt";
-            args = [ "-l" "-w" ];
+            args = [
+              "-l"
+              "-w"
+            ];
           };
         }
         {
           name = "json";
           auto-format = true;
-          file-types = [ "json" "kdl" ];
+          file-types = [
+            "json"
+            "kdl"
+          ];
           language-servers = [ "json-server" ];
           formatter = {
             command = "dprint";
-            args = [ "fmt" "--stdin" "json" ];
+            args = [
+              "fmt"
+              "--stdin"
+              "json"
+            ];
           };
         }
         {
           name = "markdown";
-          comment-tokens = [ "-" "+" "*" "1." ">" "- [ ]" ];
+          comment-tokens = [
+            "-"
+            "+"
+            "*"
+            "1."
+            ">"
+            "- [ ]"
+          ];
           soft-wrap.enable = true;
           text-width = 80;
           soft-wrap.wrap-at-text-width = true;
@@ -213,10 +255,17 @@
           # file-types = [ "md" ];
           # ltex-ls-plus uses https://languagetool.org/ under the hood.
           # language-servers = [ "marksman" "ltex-ls-plus"];
-          language-servers = [ "markdown-oxide" "typos" ];
+          language-servers = [
+            "markdown-oxide"
+            "typos"
+          ];
           formatter = {
             command = "dprint";
-            args = [ "fmt" "--stdin" "md" ];
+            args = [
+              "fmt"
+              "--stdin"
+              "md"
+            ];
           };
         }
         {
@@ -224,22 +273,35 @@
           language-servers = [ "nixd" ];
           auto-format = true;
           formatter = {
-            command = "nixpkgs-fmt";
+            command = "nixfmt";
           };
         }
         {
           name = "nu";
           auto-format = true;
           # language-servers = [ "nu-lsp" ]; # TODO: can not find it in nixos packages...
-          formatter = { command = "nufmt"; args = [ "format" "--stdin" ]; };
+          formatter = {
+            command = "nufmt";
+            args = [
+              "format"
+              "--stdin"
+            ];
+          };
         }
         {
           name = "python";
           auto-format = true;
-          language-servers = [ "ruff" "pylsp" ];
+          language-servers = [
+            "ruff"
+            "pylsp"
+          ];
           formatter = {
             command = "ruff";
-            args = [ "format" "--quiet" "-" ];
+            args = [
+              "format"
+              "--quiet"
+              "-"
+            ];
           };
         }
         {
@@ -250,21 +312,34 @@
         {
           name = "toml";
           auto-format = true;
-          file-types = [ "toml" "ini" "pycodestyle" ];
+          file-types = [
+            "toml"
+            "ini"
+            "pycodestyle"
+          ];
           language-servers = [ "taplo" ];
           formatter = {
             command = "taplo";
-            args = [ "fmt" "-" ];
+            args = [
+              "fmt"
+              "-"
+            ];
           };
         }
         {
           name = "yaml";
           auto-format = true;
-          file-types = [ "yaml" "yml" ];
+          file-types = [
+            "yaml"
+            "yml"
+          ];
           language-servers = [ "yaml-language-server" ];
           formatter = {
             command = "prettier";
-            args = [ "--parser" "yaml" ];
+            args = [
+              "--parser"
+              "yaml"
+            ];
           };
         }
       ];

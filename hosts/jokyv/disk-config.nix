@@ -37,35 +37,35 @@
             # and add them around the unencrypted section below.
             # --------------------------------------------------------------------
             /*
-            root = {
-              size = "100%"; # disko will assign the rest of the space to this partition
-              content = {
-                type = "luks";
-                name = "crypted"; # This will be the name of the unlocked device
-                # You will be prompted for a password during installation and on every boot.
+              root = {
+                size = "100%"; # disko will assign the rest of the space to this partition
                 content = {
-                  type = "btrfs";
-                  extraArgs = [ "-L" "nixos" ]; # Label the filesystem
-                  subvolumes = {
-                    # Create a subvolume for the root filesystem
-                    "/@" = {
-                      mountpoint = "/";
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
-                    # Create a subvolume for the home directory
-                    "/@home" = {
-                      mountpoint = "/home";
-                      mountOptions = [ "compress=zstd" "noatime" ];
-                    };
-                    # Create a subvolume for the Nix store
-                    "/@nix" = {
-                      mountpoint = "/nix";
-                      mountOptions = [ "compress=zstd" "noatime" ];
+                  type = "luks";
+                  name = "crypted"; # This will be the name of the unlocked device
+                  # You will be prompted for a password during installation and on every boot.
+                  content = {
+                    type = "btrfs";
+                    extraArgs = [ "-L" "nixos" ]; # Label the filesystem
+                    subvolumes = {
+                      # Create a subvolume for the root filesystem
+                      "/@" = {
+                        mountpoint = "/";
+                        mountOptions = [ "compress=zstd" "noatime" ];
+                      };
+                      # Create a subvolume for the home directory
+                      "/@home" = {
+                        mountpoint = "/home";
+                        mountOptions = [ "compress=zstd" "noatime" ];
+                      };
+                      # Create a subvolume for the Nix store
+                      "/@nix" = {
+                        mountpoint = "/nix";
+                        mountOptions = [ "compress=zstd" "noatime" ];
+                      };
                     };
                   };
                 };
               };
-            };
             */
 
             # ----------------------------------------------------------------------
@@ -75,22 +75,34 @@
               size = "100%"; # disko will assign the rest of the space to this partition
               content = {
                 type = "btrfs";
-                extraArgs = [ "-L" "nixos" ]; # Label the filesystem
+                extraArgs = [
+                  "-L"
+                  "nixos"
+                ]; # Label the filesystem
                 subvolumes = {
                   # Create a subvolume for the root filesystem
                   "/@" = {
                     mountpoint = "/";
-                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
                   };
                   # Create a subvolume for the home directory
                   "/@home" = {
                     mountpoint = "/home";
-                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
                   };
                   # Create a subvolume for the Nix store
                   "/@nix" = {
                     mountpoint = "/nix";
-                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
                   };
                   # Isolate variable data to prevent logs or containers
                   # from filling up the root filesystem.
@@ -113,7 +125,11 @@
         type = "tmpfs";
         # Options: "defaults" is standard, "size" sets a max limit (it doesn't
         # reserve the space), and "mode=1777" sets the correct permissions.
-        options = [ "defaults" "size=4G" "mode=1777" ];
+        options = [
+          "defaults"
+          "size=4G"
+          "mode=1777"
+        ];
       };
     };
   };

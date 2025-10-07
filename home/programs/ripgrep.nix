@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
 
   programs.ripgrep = {
     enable = true;
@@ -15,5 +16,3 @@
     ];
   };
 }
-
-

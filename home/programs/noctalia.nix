@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   # import the home manager module is already done in flake.nix
   home-manager.users.jokyv = {
@@ -73,4 +78,3 @@
     };
   };
 }
-

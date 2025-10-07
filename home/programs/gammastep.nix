@@ -8,6 +8,8 @@
       day = 5000;
       night = 4000;
     };
-    settings = { general.adjustment-method = "wayland"; };
+    settings = {
+      general.adjustment-method = "wayland";
+    };
   };
 }
