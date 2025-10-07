@@ -1,24 +1,25 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
+  # Add jaq for the weather module dependency.
+  home.packages = [ pkgs.jaq ];
 
-  # Enable fastfetch and configure its options
   programs.fastfetch = {
     enable = true;
     settings = {
       logo = {
-        source = "arch_large";
-        padding = {
-          right = 1;
-        };
+        source = "nixos";
+        padding.right = 1;
       };
-      # display = {
-      #   size = {
-      #     binaryPrefix = "si";
-      #   };
-      #   color = "blue";
-      #   separator = "  ";
-      # };
+
+      # General display settings
+      display = {
+        # Use SI prefixes (kB, MB, GB) instead of binary (KiB, MiB, GiB)
+        binaryPrefix = "si";
+        # A custom separator between the key and value.
+        separator = " > ";
+      };
+
       modules = [
         {
           type = "datetime";
@@ -47,8 +48,18 @@
         "terminal"
         "terminalfont"
         "separator"
-        "cpu"
-        "memory"
+        {
+          type = "cpu";
+          key = "CPU";
+          # Format: <name> (<usage>)
+          format = "{1} ({5}%)";
+        }
+        "gpu" # Shows GPU name, driver, temperature, etc.
+        {
+          type = "memory";
+          # Format: <used> / <total> (<percentage_used>)
+          format = "{/1} / {/2} ({/3}%)";
+        }
         "disk"
         "separator"
         "network"
@@ -59,6 +70,5 @@
       ];
     };
   };
-
 }
 
