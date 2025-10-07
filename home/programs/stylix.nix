@@ -18,31 +18,30 @@
       size = 28;
     };
 
-    fonts =
-      {
-        monospace = {
-          package = pkgs.nerd-fonts.martian-mono;
-          name = "Martian Mono Nerd Font Mono";
-        };
-        serif = {
-          package = pkgs.dejavu_fonts;
-          name = "DejaVu Serif";
-        };
-        sansSerif = {
-          package = pkgs.noto-fonts;
-          name = "Noto Sans";
-        };
-        emoji = {
-          package = pkgs.noto-fonts-monochrome-emoji;
-          name = "Noto Emoji";
-        };
-        sizes = {
-          terminal = 15;
-          applications = 12;
-          popups = 15;
-          desktop = 12;
-        };
+    fonts = {
+      monospace = {
+        package = pkgs.nerd-fonts.martian-mono;
+        name = "Martian Mono Nerd Font Mono";
       };
+      serif = {
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Serif";
+      };
+      sansSerif = {
+        package = pkgs.noto-fonts;
+        name = "Noto Sans";
+      };
+      emoji = {
+        package = pkgs.noto-fonts-monochrome-emoji;
+        name = "Noto Emoji";
+      };
+      sizes = {
+        terminal = 15;
+        applications = 12;
+        popups = 15;
+        desktop = 12;
+      };
+    };
 
     opacity = {
       terminal = 0.9;
@@ -63,20 +62,20 @@
       # Configure the Fnott target
       fnott.enable = false;
 
-      # Configure the Firefox target  
+      # Configure the Firefox target
       firefox = {
         enable = true;
         profileNames = [ "default" ];
       };
 
-      # Configure the qt target  
+      # Configure the qt target
       qt = {
         enable = true;
         # platformTheme.name = "qtct";
         # style.name = lib.mkForce "kvantum";
       };
 
-      # Configure the gtk target  
+      # Configure the gtk target
       gtk = {
         enable = true;
         # iconTheme = {
@@ -105,4 +104,3 @@
     # ];
   };
 }
-

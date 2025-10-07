@@ -4,22 +4,21 @@ let
   userHome = builtins.getEnv "HOME";
 in
 {
-  imports =
-    [
-      # disko configuration
-      # inputs.disko.nixosModules.disko
-      # ./disk-config.nix
-      # zsa keyboard configuration
-      ./zsa-udev-rules.nix
-      # security configuration
-      ./security.nix
-      # services configuration
-      ./services.nix
-      # btrfs configuration
-      # ./btrfs.nix
-      # import niri module
-      inputs.niri.nixosModules.niri
-    ];
+  imports = [
+    # disko configuration
+    # inputs.disko.nixosModules.disko
+    # ./disk-config.nix
+    # zsa keyboard configuration
+    ./zsa-udev-rules.nix
+    # security configuration
+    ./security.nix
+    # services configuration
+    ./services.nix
+    # btrfs configuration
+    # ./btrfs.nix
+    # import niri module
+    inputs.niri.nixosModules.niri
+  ];
 
   # Set your time zone.
   time.timeZone = "Asia/Singapore";
@@ -45,7 +44,10 @@ in
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
-    nameservers = [ "1.1.1.1" "8.8.8.8" ]; # Reliable DNS
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ]; # Reliable DNS
     enableIPv6 = true; # Keep IPv6 enabled
   };
 
@@ -95,7 +97,13 @@ in
     isNormalUser = true;
     description = "jokyv";
     shell = pkgs.bashInteractive;
-    extraGroups = [ "networkmanager" "wheel" "audio" "video" "input" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "audio"
+      "video"
+      "input"
+    ];
   };
 
   # Disable root account entirely for security
@@ -103,7 +111,6 @@ in
     hashedPassword = "!"; # Lock root account (exclamation mark prevents login)
     shell = "${pkgs.shadow}/bin/nologin"; # Disable root shell access
   };
-
 
   # ---------------------------------------------
   # System Packages
@@ -185,7 +192,6 @@ in
     LC_TIME = "en_SG.UTF-8";
   };
 
-
   # ---------------------------------------------
   # System Automation
   # ---------------------------------------------
@@ -211,8 +217,14 @@ in
     # Nix Configuration
     settings = {
       auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
-      trusted-users = [ "root" "jokyv" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      trusted-users = [
+        "root"
+        "jokyv"
+      ];
       warn-dirty = false;
 
       # Binary caches for faster builds
@@ -237,7 +249,11 @@ in
     allowReboot = false;
     # flake = "github:jokyv/nixos-config";
     flake = "${userHome}/nixos-config";
-    flags = [ "--update-input" "nixpkgs" "--commit-lock-file" ];
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "--commit-lock-file"
+    ];
     persistent = true;
   };
 

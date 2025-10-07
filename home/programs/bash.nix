@@ -15,8 +15,6 @@
     enable = true;
     enableCompletion = true;
 
-
-
     shellAliases = {
 
       # Easier Navigation
@@ -79,9 +77,11 @@
       "cl" = "cargo install-update -l";
 
       # eza
-      "l" = "eza --color=always --icons=always --long --all --group-directories-first --git --no-permissions --no-filesize --no-time --no-user";
+      "l" =
+        "eza --color=always --icons=always --long --all --group-directories-first --git --no-permissions --no-filesize --no-time --no-user";
       "ll" = "eza --color=always --icons=always --long --all --group-directories-first --git";
-      "lls" = "eza --color=always --icons=always --long --all --group-directories-first --total-size --sort=size --reverse";
+      "lls" =
+        "eza --color=always --icons=always --long --all --group-directories-first --total-size --sort=size --reverse";
       "lll" = "eza --color=always --icons=always --long -all";
 
       # Trash

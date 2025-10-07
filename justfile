@@ -162,7 +162,7 @@ diff:
 # Format code
 fmt:
     @echo "[INFO] Formatting code..."
-    nixpkgs-fmt .
+    treefmt .
     @echo "[SUCCESS] Formatting completed"
 
 # Create a commit with generation number

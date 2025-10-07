@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   imports = [
@@ -74,7 +79,8 @@
   };
 
   nixpkgs.config = {
-    allowUnfreePredicate = pkg:
+    allowUnfreePredicate =
+      pkg:
       builtins.elem (lib.getName pkg) [
         # Add unfree package names here
         "obsidian"
@@ -149,7 +155,8 @@
     markdown-oxide # https://oxide.md/v0/Articles/Markdown-Oxide+v0
     # marksman # using markdown-oxide currently
     nixd
-    nixpkgs-fmt
+    nixfmt # official nix formatter, formats one file at a time.
+    nixfmt-tree # official nix formatter, formats whole project.
     nufmt
     shfmt
     taplo

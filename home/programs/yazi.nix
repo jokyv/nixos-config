@@ -4,7 +4,11 @@
     enableNushellIntegration = true;
     settings = {
       manager = {
-        ratio = [ 2 4 3 ];
+        ratio = [
+          2
+          4
+          3
+        ];
         sort_by = "alphabetical";
         sort_sensitive = false;
         sort_reverse = false;

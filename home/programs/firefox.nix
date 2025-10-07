@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   programs.firefox = {
@@ -110,4 +115,3 @@
 #   {
 #     title = "chatgpt";
 #     url = "https://chatgpt.com/";
-

@@ -19,7 +19,7 @@
         "-a always,exit -F arch=b64 -S execve"
         # Rule 2: Watch /etc/passwd for write changes and attribute changes
         "-w /etc/passwd -p wa"
-        # Rule 3: Watch /etc/shadow for write changes and attribute changes  
+        # Rule 3: Watch /etc/shadow for write changes and attribute changes
         "-w /etc/shadow -p wa"
       ];
     };
@@ -61,13 +61,13 @@
       Defaults        log_input,log_output      # Log input/output of commands
       Defaults        requiretty                # Require TTY for sudo
       Defaults        use_pty                   # Always use pseudo-terminal
-    
+
       # Security restrictions
       Defaults        secure_path="/run/wrappers/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin"
       Defaults        env_reset
       Defaults        mail_badpass
       Defaults        always_set_home
-    
+
       # User specifications
       %wheel ALL=(ALL:ALL) ALL
     '';
@@ -76,8 +76,18 @@
   # Session management
   security.pam.loginLimits = [
     # Limit user resources
-    { domain = "*"; type = "hard"; item = "nofile"; value = "1024"; }
-    { domain = "*"; type = "soft"; item = "nofile"; value = "512"; }
+    {
+      domain = "*";
+      type = "hard";
+      item = "nofile";
+      value = "1024";
+    }
+    {
+      domain = "*";
+      type = "soft";
+      item = "nofile";
+      value = "512";
+    }
   ];
 
   # SSH configuration (for GitHub)
@@ -95,7 +105,6 @@
     daemon.enable = true;
     updater.enable = true;
   };
-
 
   # ---------------------------------------------
   # Kernel security settings

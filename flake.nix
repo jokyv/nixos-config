@@ -50,7 +50,16 @@
   };
 
   # outputs = { self, nixpkgs, home-manager, stylix, sops-nix, niri, quickshell, noctalia, ... }@inputs:
-  outputs = { self, nixpkgs, home-manager, stylix, sops-nix, niri, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      stylix,
+      sops-nix,
+      niri,
+      ...
+    }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};

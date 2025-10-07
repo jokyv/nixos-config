@@ -18,7 +18,7 @@
       paging = "auto";
 
       # Set the width of tab stops.
-      tabs = 4;
+      tabs = "4";
 
       # Map specific file extensions or names to a syntax.
       # Example:

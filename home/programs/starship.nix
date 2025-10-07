@@ -71,7 +71,10 @@
         format = "(\\[$symbol$branch\\]($style)) ";
         symbol = " ";
         truncation_symbol = "…";
-        ignore_branches = [ "main" "master" ];
+        ignore_branches = [
+          "main"
+          "master"
+        ];
       };
 
       git_commit = {

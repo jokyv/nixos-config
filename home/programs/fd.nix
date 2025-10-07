@@ -11,7 +11,6 @@
       "**/*.parquet"
     ];
 
-
     # Set additional options for fd
     extraOptions = [
       "--hidden" # Include hidden files in searches (useful with ignore rules)
@@ -23,8 +22,3 @@
     # inherit (pkgs) fd;
   };
 }
-
-
-
-
-

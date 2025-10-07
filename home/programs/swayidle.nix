@@ -13,13 +13,28 @@
       swayidle = {
         enable = true;
         events = [
-          { event = "before-sleep"; command = cmd; }
-          { event = "lock"; command = cmd; }
+          {
+            event = "before-sleep";
+            command = cmd;
+          }
+          {
+            event = "lock";
+            command = cmd;
+          }
         ];
         timeouts = [
-          { timeout = 180; command = "${pkgs.niri}/bin/niri msg action power-off-monitors"; }
-          { timeout = 200; command = cmd; }
-          { timeout = 600; command = "${pkgs.systemd}/bin/systemctl sleep"; }
+          {
+            timeout = 180;
+            command = "${pkgs.niri}/bin/niri msg action power-off-monitors";
+          }
+          {
+            timeout = 200;
+            command = cmd;
+          }
+          {
+            timeout = 600;
+            command = "${pkgs.systemd}/bin/systemctl sleep";
+          }
         ];
       };
     };
