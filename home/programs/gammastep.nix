@@ -19,9 +19,6 @@
     # Enable a system tray icon for easy control.
     tray = true;
 
-    # Send a desktop notification when the temperature changes.
-    notify = true;
-
     # Advanced configuration options.
     settings = {
       general = {
