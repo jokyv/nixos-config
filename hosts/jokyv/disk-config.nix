@@ -106,11 +106,11 @@
                   };
                   # Isolate variable data to prevent logs or containers
                   # from filling up the root filesystem.
-                  # "/@var" = {
-                  #   mountpoint = "/var";
-                  #   mountOptions = [ "compress=zstd" "noattime" ];
-                  #   btrfs.quota.size = "20G"; # max limit for subvolume
-                  # };
+                  "/@var" = {
+                    mountpoint = "/var";
+                    mountOptions = [ "compress=zstd" "noattime" ];
+                    btrfs.quota.size = "20G"; # max limit for subvolume
+                  };
                 };
               };
             };
