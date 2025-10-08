@@ -13,21 +13,21 @@
       main = {
         # Position and layout
         anchor = "top-right";
-        # spacing = 10;
-        # max-visible = 5;
+        spacing = 10;
+        max-visible = 5;
 
-        # Timing
-        default-timeout = 20;
-        max-timeout = 30;
+        # Timing (in milliseconds)
+        default-timeout = 10000; # 10 seconds
+        max-timeout = 30000; # 30 seconds
 
         # Display settings
-        # title = true;
-        # body = true;
+        title = true;
+        body = true;
         min-width = 300;
         max-width = 500;
 
         # Icon settings
-        # icon = true;
+        icon = true;
 
         # Font settings
         title-font = "monospace:size=12";
@@ -35,9 +35,17 @@
         body-font = "monospace:size=10";
       };
 
+      # Keyboard shortcuts for interaction
+      keyboard = {
+        # Dismiss the notification with the Enter key
+        dismiss-key = "Return";
+        # Dismiss all visible notifications with Shift+Enter
+        dismiss-all-key = "S-Return";
+      };
+
       # Styling for different urgency levels
       low = {
-        background = "2e3440ff";
+        background = "2e3440cc";
         title-color = "eceff4ff";
         body-color = "d8dee9ff";
         border-color = "81a1c1ff";
@@ -45,7 +53,7 @@
       };
 
       normal = {
-        background = "2e3440ff";
+        background = "2e3440cc";
         title-color = "eceff4ff";
         body-color = "d8dee9ff";
         border-color = "88c0d0ff";
@@ -53,12 +61,16 @@
       };
 
       critical = {
-        background = "2e3440ff";
+        background = "2e3440cc";
         title-color = "eceff4ff";
         body-color = "d8dee9ff";
         border-color = "bf616aff";
         border-size = 8;
       };
+
+      # Example of per-application settings
+      # [app-name="spotify"]
+      # default-timeout = 0 # Never timeout song change notifications
     };
   };
 }
