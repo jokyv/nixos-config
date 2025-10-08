@@ -12,7 +12,6 @@
         pad = "5x5 center";
         resize-by-cells = "no";
         login-shell = "no";
-        dpi-aware = "yes";
       };
       mouse = {
         hide-when-typing = "yes";
