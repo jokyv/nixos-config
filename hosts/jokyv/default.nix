@@ -264,9 +264,6 @@ in
   # The system will use this first and only fall back to the disk swap partition if ZRAM fills up.
   zramSwap.enable = true;
 
-  # Only reload system units when changing configs [EXPERIMENT]
-  systemd.user.startServices = "sd-switch";
-
   # ---------------------------------------------
   # System Version
   # ---------------------------------------------

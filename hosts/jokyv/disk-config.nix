@@ -108,7 +108,10 @@
                   # from filling up the root filesystem.
                   "/@var" = {
                     mountpoint = "/var";
-                    mountOptions = [ "compress=zstd" "noattime" ];
+                    mountOptions = [
+                      "compress=zstd"
+                      "noattime"
+                    ];
                     btrfs.quota.size = "20G"; # max limit for subvolume
                   };
                 };

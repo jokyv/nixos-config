@@ -176,9 +176,11 @@
   ];
 
   # ---------------------------------------------
-  # Set systemd
+  # systemd
   # ---------------------------------------------
-  # programs.waybar.systemd.enable = true;
+
+  # Only reload system units when changing configs [EXPERIMENT]
+  systemd.user.startServices = "sd-switch";
 
   # ---------------------------------------------
   # Set XDG user directories
