@@ -373,7 +373,7 @@ let
     in
     # Combine all categories using foldl
     # This recursively merges all the keybinding category maps into one combined map
-    lib.foldl lib.recursiveUpdate {} [
+    lib.foldl lib.recursiveUpdate { } [
       apps
       system
       windows
