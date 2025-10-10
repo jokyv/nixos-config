@@ -401,6 +401,60 @@ in
     prefer-no-csd = true;
     screenshot-path = "${screenshots_dir}/screenshot from %Y-%m-%d %H-%M-%S.png";
 
+    # Animation configurations for smoother visuals
+    animations = {
+      # Window open/close animations
+      window-open-close = {
+        spring = {
+          damping-ratio = 0.6;
+          stiffness = 1000.0;
+          epsilon = 0.001;
+        };
+      };
+      
+      # Workspace switch animations  
+      workspace-switch = {
+        spring = {
+          damping-ratio = 0.6;
+          stiffness = 800.0;
+          epsilon = 0.001;
+        };
+      };
+      
+      # Column resize animations
+      column-resize = {
+        spring = {
+          damping-ratio = 0.7;
+          stiffness = 600.0;
+          epsilon = 0.001;
+        };
+      };
+    };
+
+    # Visual enhancements
+    focus-ring = {
+      enable = true;
+      width = 4;
+      active-color = "rgb(100, 150, 255)";  # Blue focus ring
+      inactive-color = "rgb(80, 80, 80)";   # Gray inactive ring
+    };
+
+    # Border settings for tiled windows
+    border = {
+      enable = true;
+      width = 2;
+      active-color = "rgb(200, 200, 200)";  # Light gray
+      inactive-color = "rgb(100, 100, 100)"; # Dark gray
+    };
+
+    # Shadow effects for windows
+    shadow = {
+      enable = true;
+      radius = 20;
+      color = "rgba(0, 0, 0, 0.3)";  # Semi-transparent black
+      offset = { x = 0; y = 5; };
+    };
+
     input = {
       warp-mouse-to-focus.enable = true;
       focus-follows-mouse.enable = true;
