@@ -13,34 +13,24 @@
       main = {
         # Position and layout
         anchor = "top-right";
-        spacing = 10;
-        max-visible = 5;
+        # spacing = 10;
 
         # Timing (in milliseconds)
         default-timeout = 10000; # 10 seconds
         max-timeout = 30000; # 30 seconds
 
         # Display settings
-        title = true;
-        body = true;
+        # title = true;
         min-width = 300;
         max-width = 500;
 
         # Icon settings
-        icon = true;
+        # icon = true;
 
         # Font settings
         title-font = "monospace:size=12";
         summary-font = "monospace:size=12";
         body-font = "monospace:size=10";
-      };
-
-      # Keyboard shortcuts for interaction
-      keyboard = {
-        # Dismiss the notification with the Enter key
-        dismiss-key = "Return";
-        # Dismiss all visible notifications with Shift+Enter
-        dismiss-all-key = "S-Return";
       };
 
       # Styling for different urgency levels
