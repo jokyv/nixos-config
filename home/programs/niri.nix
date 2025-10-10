@@ -216,6 +216,7 @@ in {
       };
     };
 
+    # Use 'inherit' when variable name matches setting name exactly
     inherit outputs;
 
     layout = {
@@ -291,6 +292,7 @@ in {
 
     binds = keybinds;
 
+    # Use explicit assignment when variable name differs from setting name
     window-rules = window_rules;
   };
 }
