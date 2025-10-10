@@ -103,6 +103,7 @@ in
       "audio"
       "video"
       "input"
+      "bluetooth"
     ];
   };
 
