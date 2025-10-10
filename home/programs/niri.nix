@@ -411,8 +411,8 @@ in
           epsilon = 0.001;
         };
       };
-      
-      # Workspace switch animations  
+
+      # Workspace switch animations
       workspace-switch = {
         spring = {
           damping-ratio = 0.6;
@@ -420,7 +420,7 @@ in
           epsilon = 0.001;
         };
       };
-      
+
       # Column resize animations
       column-resize = {
         spring = {
@@ -435,15 +435,15 @@ in
     focus-ring = {
       enable = true;
       width = 4;
-      active-color = "rgb(100, 150, 255)";  # Blue focus ring
-      inactive-color = "rgb(80, 80, 80)";   # Gray inactive ring
+      active-color = "rgb(100, 150, 255)"; # Blue focus ring
+      inactive-color = "rgb(80, 80, 80)"; # Gray inactive ring
     };
 
     # Border settings for tiled windows
     border = {
       enable = true;
       width = 2;
-      active-color = "rgb(200, 200, 200)";  # Light gray
+      active-color = "rgb(200, 200, 200)"; # Light gray
       inactive-color = "rgb(100, 100, 100)"; # Dark gray
     };
 
@@ -451,8 +451,11 @@ in
     shadow = {
       enable = true;
       radius = 20;
-      color = "rgba(0, 0, 0, 0.3)";  # Semi-transparent black
-      offset = { x = 0; y = 5; };
+      color = "rgba(0, 0, 0, 0.3)"; # Semi-transparent black
+      offset = {
+        x = 0;
+        y = 5;
+      };
     };
 
     input = {
@@ -482,14 +485,14 @@ in
     workspaces = {
       # Enable workspace wrapping (when you go past the last workspace, wrap to first)
       wrap-around = true;
-      
+
       # Number of workspaces (default is 10, but you can customize)
       # count = 10;
-      
+
       # Workspace names (optional but nice for organization)
       # names = [
       #   "1: Web"
-      #   "2: Code" 
+      #   "2: Code"
       #   "3: Term"
       #   "4: Chat"
       #   "5: Media"
@@ -505,15 +508,27 @@ in
       gaps = 15;
       center-focused-column = "never";
       always-center-single-column = true;
-      
+
       # NEW: Improved column width presets with better naming
       preset-column-widths = [
-        { proportion = 1.0 / 3.0; name = "1/3"; }
-        { proportion = 1.0 / 2.0; name = "1/2"; }
-        { proportion = 2.0 / 3.0; name = "2/3"; }
-        { proportion = 3.0 / 3.0; name = "Full"; }
+        {
+          proportion = 1.0 / 3.0;
+          name = "1/3";
+        }
+        {
+          proportion = 1.0 / 2.0;
+          name = "1/2";
+        }
+        {
+          proportion = 2.0 / 3.0;
+          name = "2/3";
+        }
+        {
+          proportion = 3.0 / 3.0;
+          name = "Full";
+        }
       ];
-      
+
       default-column-width = {
         proportion = 1.0 / 2.0;
       };
