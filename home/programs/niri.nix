@@ -9,6 +9,13 @@
   ...
 }:
 
+let
+  # Constants and reusable values
+  home_dir = config.home.homeDirectory;
+  screenshots_dir = "${home_dir}/pics/screenshots";
+  wallpaper_dir = "${home_dir}/pics/wallpapers";
+  scripts_dir = "${home_dir}/scripts/bin";
+in
 {
   programs.niri.enable = true;
   programs.niri.package = pkgs.niri;
@@ -22,7 +29,7 @@
     hotkey-overlay.skip-at-startup = true;
     # hotkey-overlay.hide-not-bound = true;
     prefer-no-csd = true;
-    screenshot-path = "${config.home.homeDirectory}/pics/screenshots/screenshot from %Y-%m-%d %H-%M-%S.png";
+    screenshot-path = "${screenshots_dir}/screenshot from %Y-%m-%d %H-%M-%S.png";
 
     input = {
       warp-mouse-to-focus.enable = true;
@@ -111,7 +118,7 @@
         argv = [
           "swww"
           "img"
-          "${config.home.homeDirectory}/pics/wallpapers/gankar_1.png"
+          "${wallpaper_dir}/gankar_1.png"
         ];
       }
       # my copy and paste setup
@@ -129,7 +136,7 @@
           "foot"
           "sh"
           "-c"
-          "cd ${config.home.homeDirectory}/nixos-config && git pull && echo 'Press Enter to close' && read"
+          "cd ${home_dir}/nixos-config && git pull && echo 'Press Enter to close' && read"
         ];
       }
     ];
@@ -166,10 +173,10 @@
 
           # Launch file manager
           "Mod+E".action.spawn = "nautilus";
-          # "Mod+Shift+E".action = term "yy ${config.home.homeDirectory}/downloads/";
+          # "Mod+Shift+E".action = term "yy ${home_dir}/downloads/";
 
           # Change wallpaper
-          "Mod+W".action = sh "${config.home.homeDirectory}/scripts/bin/update_wall.sh";
+          "Mod+W".action = sh "${scripts_dir}/update_wall.sh";
 
           # Launch obsidian
           "Mod+O".action = sh "obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland";
@@ -178,13 +185,13 @@
           "Mod+N".action = sh "foot -e newsraft";
 
           # Scripts
-          "Mod+Shift+W".action = sh "${config.home.homeDirectory}/scripts/bin/define_word.sh";
-          "Mod+Shift+M".action = sh "${config.home.homeDirectory}/scripts/bin/my_logout.sh";
+          "Mod+Shift+W".action = sh "${scripts_dir}/define_word.sh";
+          "Mod+Shift+M".action = sh "${scripts_dir}/my_logout.sh";
           # Clipboard history custom script
-          "Mod+Shift+C".action = sh "${config.home.homeDirectory}/scripts/bin/clip_hist.py add";
-          "Mod+Shift+V".action = sh "${config.home.homeDirectory}/scripts/bin/clip_hist.py paste";
-          "Mod+Shift+S".action = sh "${config.home.homeDirectory}/scripts/bin/clip_hist.py sel";
-          "Mod+Shift+D".action = sh "${config.home.homeDirectory}/scripts/bin/clip_hist.py del";
+          "Mod+Shift+C".action = sh "${scripts_dir}/clip_hist.py add";
+          "Mod+Shift+V".action = sh "${scripts_dir}/clip_hist.py paste";
+          "Mod+Shift+S".action = sh "${scripts_dir}/clip_hist.py sel";
+          "Mod+Shift+D".action = sh "${scripts_dir}/clip_hist.py del";
 
           # System actions
           # "Mod+Z".action = toggle-overview;
@@ -274,7 +281,7 @@
           "Mod+Shift+Equal".action = set-window-height "+10%";
 
           # Screenshots
-          "Mod+Y".action = sh "${config.home.homeDirectory}/scripts/bin/take_screenshot.sh";
+          "Mod+Y".action = sh "${scripts_dir}/take_screenshot.sh";
           # "Mod+Shift+Y".action = screenshot-screen;
           # "Mod+Ctrl+Y".action = screenshot-window;
         }
