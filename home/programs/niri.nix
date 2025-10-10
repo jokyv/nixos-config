@@ -15,6 +15,10 @@ let
   screenshots_dir = "${home_dir}/pics/screenshots";
   wallpaper_dir = "${home_dir}/pics/wallpapers";
   scripts_dir = "${home_dir}/scripts/bin";
+
+  # Reusable spawn commands
+  spawn_script = script: spawn "sh" "-c" "${scripts_dir}/${script}";
+  spawn_cmd = cmd: spawn "sh" "-c" cmd;
 in
 {
   programs.niri.enable = true;
@@ -150,9 +154,7 @@ in
     binds =
       with config.lib.niri.actions;
       let
-        sh = spawn "sh" "-c";
         # term = args: "foot sh -c '${lib.escape [ "'" ] args}'";
-
       in
       lib.attrsets.mergeAttrsList [
         {
@@ -176,22 +178,22 @@ in
           # "Mod+Shift+E".action = term "yy ${home_dir}/downloads/";
 
           # Change wallpaper
-          "Mod+W".action = sh "${scripts_dir}/update_wall.sh";
+          "Mod+W".action = spawn_script "update_wall.sh";
 
           # Launch obsidian
-          "Mod+O".action = sh "obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland";
+          "Mod+O".action = spawn_cmd "obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland";
 
           # Launrch newsraft
-          "Mod+N".action = sh "foot -e newsraft";
+          "Mod+N".action = spawn_cmd "foot -e newsraft";
 
           # Scripts
-          "Mod+Shift+W".action = sh "${scripts_dir}/define_word.sh";
-          "Mod+Shift+M".action = sh "${scripts_dir}/my_logout.sh";
+          "Mod+Shift+W".action = spawn_script "define_word.sh";
+          "Mod+Shift+M".action = spawn_script "my_logout.sh";
           # Clipboard history custom script
-          "Mod+Shift+C".action = sh "${scripts_dir}/clip_hist.py add";
-          "Mod+Shift+V".action = sh "${scripts_dir}/clip_hist.py paste";
-          "Mod+Shift+S".action = sh "${scripts_dir}/clip_hist.py sel";
-          "Mod+Shift+D".action = sh "${scripts_dir}/clip_hist.py del";
+          "Mod+Shift+C".action = spawn_script "clip_hist.py add";
+          "Mod+Shift+V".action = spawn_script "clip_hist.py paste";
+          "Mod+Shift+S".action = spawn_script "clip_hist.py sel";
+          "Mod+Shift+D".action = spawn_script "clip_hist.py del";
 
           # System actions
           # "Mod+Z".action = toggle-overview;
@@ -200,7 +202,7 @@ in
           "Mod+Shift+P".action = power-off-monitors;
 
           # Alt commands
-          "Mod+Alt+L".action = sh "swaylock";
+          "Mod+Alt+L".action = spawn_cmd "swaylock";
           "Mod+Alt+F".action = toggle-window-floating;
           "Mod+Shift+Alt+F".action = switch-focus-between-floating-and-tiling;
 
@@ -210,9 +212,9 @@ in
           "Mod+Shift+F".action = fullscreen-window;
 
           # Audio controls
-          "Mod+F7".action = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
-          "Mod+F8".action = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+";
-          "Mod+F9".action = sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+          "Mod+F7".action = spawn_cmd "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
+          "Mod+F8".action = spawn_cmd "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+";
+          "Mod+F9".action = spawn_cmd "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
 
           # Focus movement
           "Mod+H".action = focus-column-left;
@@ -281,7 +283,7 @@ in
           "Mod+Shift+Equal".action = set-window-height "+10%";
 
           # Screenshots
-          "Mod+Y".action = sh "${scripts_dir}/take_screenshot.sh";
+          "Mod+Y".action = spawn_script "take_screenshot.sh";
           # "Mod+Shift+Y".action = screenshot-screen;
           # "Mod+Ctrl+Y".action = screenshot-window;
         }
