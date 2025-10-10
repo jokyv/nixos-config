@@ -20,6 +20,49 @@ let
   spawn_script = script: spawn "sh" "-c" "${scripts_dir}/${script}";
   spawn_cmd = cmd: spawn "sh" "-c" cmd;
 
+  # Output configuration
+  outputs = {
+    "HDMI-A-1" = {
+      mode = { width = 1920; height = 1080; refresh = 60.0; };
+      scale = 1;
+      position = { x = 0; y = 0; };
+    };
+    "DP-1" = {
+      mode = { width = 1920; height = 1080; refresh = 60.0; };
+      scale = 1;
+      position = { x = 1920; y = 0; };
+    };
+  };
+
+  # Window rules with better organization
+  window_rules = [
+    {
+      geometry-corner-radius = 8.0;
+      clip-to-geometry = true;
+    }
+    {
+      matches = [ { app-id = "^firefox$"; } ];
+      open-maximized = true;
+      scroll-factor = 0.90;
+    }
+    {
+      matches = [ { app-id = "^firefox$"; title = "^Picture-in-Picture$"; } ];
+      open-floating = true;
+    }
+    {
+      matches = [ { app-id = "^firefox$"; title = "^Private Browsing$"; } ];
+      open-floating = true;
+    }
+    {
+      matches = [ { app-id = "^obsidian$"; } ];
+      open-maximized = true;
+    }
+    {
+      matches = [ { is-active = false; } ];
+      opacity = 0.75;
+    }
+  ];
+
   # Keybindings organized by category
   keybinds = with config.lib.niri.actions; let
     mod = "Mod";
@@ -173,30 +216,7 @@ in {
       };
     };
 
-    outputs = {
-      "HDMI-A-1" = {
-        mode.width = 1920;
-        mode.height = 1080;
-        mode.refresh = 60.0;
-        scale = 1;
-        # transform = "normal";
-        position = {
-          x = 0;
-          y = 0;
-        };
-      };
-      "DP-1" = {
-        mode.width = 1920;
-        mode.height = 1080;
-        mode.refresh = 60.0;
-        scale = 1;
-        # transform = "normal";
-        position = {
-          x = 1920;
-          y = 0;
-        };
-      };
-    };
+    inherit outputs;
 
     layout = {
       gaps = 15;
@@ -271,57 +291,6 @@ in {
 
     binds = keybinds;
 
-    window-rules =
-      let
-        colors = config.lib.stylix.colors.withHashtag;
-      in
-      [
-        {
-          geometry-corner-radius =
-            let
-              r = 8.0;
-            in
-            {
-              top-left = r;
-              top-right = r;
-              bottom-left = r;
-              bottom-right = r;
-            };
-          clip-to-geometry = true;
-        }
-        {
-          matches = [ { app-id = "^firefox$"; } ];
-          open-maximized = true;
-          # making scrolling for firefox little slower
-          scroll-factor = 0.90;
-        }
-        {
-          matches = [
-            {
-              app-id = "^firefox$";
-              title = "^Picture-in-Picture$";
-            }
-          ];
-          open-floating = true;
-        }
-        {
-          matches = [
-            {
-              app-id = "^firefox$";
-              title = "^Private Browsing$";
-            }
-          ];
-          open-floating = true;
-          # border.active-color = "#7d0d2d";
-        }
-        {
-          matches = [ { app-id = "^obsidian$"; } ];
-          open-maximized = true;
-        }
-        {
-          matches = [ { is-active = false; } ];
-          opacity = 0.75;
-        }
-      ];
+    window-rules = window_rules;
   };
 }
