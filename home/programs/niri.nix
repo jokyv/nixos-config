@@ -371,21 +371,19 @@ let
       };
 
     in
-    lib.recursiveUpdate apps (
-      lib.recursiveUpdate system (
-        lib.recursiveUpdate windows (
-          lib.recursiveUpdate focus (
-            lib.recursiveUpdate workspaces (
-              lib.recursiveUpdate scripts (
-                lib.recursiveUpdate audio (
-                  lib.recursiveUpdate sizing (lib.recursiveUpdate workspace_numbers monitor_movement)
-                )
-              )
-            )
-          )
-        )
-      )
-    );
+    # Combine all categories in a readable way
+    let
+      combined = lib.recursiveUpdate apps system;
+      combined = lib.recursiveUpdate combined windows;
+      combined = lib.recursiveUpdate combined focus;
+      combined = lib.recursiveUpdate combined workspaces;
+      combined = lib.recursiveUpdate combined scripts;
+      combined = lib.recursiveUpdate combined audio;
+      combined = lib.recursiveUpdate combined sizing;
+      combined = lib.recursiveUpdate combined workspace_numbers;
+      combined = lib.recursiveUpdate combined monitor_movement;
+    in
+    combined;
 
 in
 {
