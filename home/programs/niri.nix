@@ -19,8 +19,126 @@ let
   # Reusable spawn commands
   spawn_script = script: spawn "sh" "-c" "${scripts_dir}/${script}";
   spawn_cmd = cmd: spawn "sh" "-c" cmd;
-in
-{
+
+  # Keybindings organized by category
+  keybinds = with config.lib.niri.actions; let
+    mod = "Mod";
+    shift = "Shift";
+    ctrl = "Ctrl";
+    alt = "Alt";
+    
+    # Application launchers
+    apps = {
+      "${mod}+T" = { action = spawn "foot"; cooldown-ms = 500; };
+      "${mod}+${shift}+T" = { action = spawn "kitty"; };
+      "${mod}+B" = { action = spawn "firefox"; repeat = false; };
+      "${mod}+${shift}+B" = { action = spawn "brave"; };
+      "${mod}+D" = { action = spawn "fuzzel"; };
+      "${mod}+E" = { action = spawn "nautilus"; };
+      "${mod}+O" = { action = spawn_cmd "obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland"; };
+      "${mod}+N" = { action = spawn_cmd "foot -e newsraft"; };
+    };
+
+    # System actions
+    system = {
+      "${mod}+${shift}+Slash" = { action = show-hotkey-overlay; };
+      "${mod}+Q" = { action = close-window; };
+      "${mod}+${shift}+Q" = { action = quit; };
+      "${mod}+${shift}+P" = { action = power-off-monitors; };
+      "${mod}+${alt}+L" = { action = spawn_cmd "swaylock"; };
+      "${mod}+${alt}+F" = { action = toggle-window-floating; };
+      "${mod}+${shift}+${alt}+F" = { action = switch-focus-between-floating-and-tiling; };
+    };
+
+    # Window management
+    windows = {
+      "${mod}+R" = { action = switch-preset-column-width; };
+      "${mod}+F" = { action = maximize-column; };
+      "${mod}+${shift}+F" = { action = fullscreen-window; };
+      "${mod}+Comma" = { action = consume-window-into-column; };
+      "${mod}+Period" = { action = expel-window-from-column; };
+    };
+
+    # Focus and movement
+    focus = {
+      "${mod}+H" = { action = focus-column-left; };
+      "${mod}+J" = { action = focus-window-down; };
+      "${mod}+K" = { action = focus-window-up; };
+      "${mod}+L" = { action = focus-column-right; };
+      
+      "${mod}+${ctrl}+H" = { action = move-column-left; };
+      "${mod}+${ctrl}+J" = { action = move-window-down; };
+      "${mod}+${ctrl}+K" = { action = move-window-up; };
+      "${mod}+${ctrl}+L" = { action = move-column-right; };
+      
+      "${mod}+${shift}+H" = { action = focus-monitor-left; };
+      "${mod}+${shift}+L" = { action = focus-monitor-right; };
+    };
+
+    # Workspace management
+    workspaces = {
+      "${mod}+U" = { action = focus-workspace-down; };
+      "${mod}+I" = { action = focus-workspace-up; };
+      "${mod}+${ctrl}+U" = { action = move-column-to-workspace-down; };
+      "${mod}+${ctrl}+I" = { action = move-column-to-workspace-up; };
+      "${mod}+${shift}+U" = { action = move-workspace-down; };
+      "${mod}+${shift}+I" = { action = move-workspace-up; };
+    };
+
+    # Scripts and custom commands
+    scripts = {
+      "${mod}+W" = { action = spawn_script "update_wall.sh"; };
+      "${mod}+${shift}+W" = { action = spawn_script "define_word.sh"; };
+      "${mod}+${shift}+M" = { action = spawn_script "my_logout.sh"; };
+      "${mod}+Y" = { action = spawn_script "take_screenshot.sh"; };
+      
+      # Clipboard management
+      "${mod}+${shift}+C" = { action = spawn_script "clip_hist.py add"; };
+      "${mod}+${shift}+V" = { action = spawn_script "clip_hist.py paste"; };
+      "${mod}+${shift}+S" = { action = spawn_script "clip_hist.py sel"; };
+      "${mod}+${shift}+D" = { action = spawn_script "clip_hist.py del"; };
+    };
+
+    # Audio controls
+    audio = {
+      "${mod}+F7" = { action = spawn_cmd "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; };
+      "${mod}+F8" = { action = spawn_cmd "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+"; };
+      "${mod}+F9" = { action = spawn_cmd "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; };
+    };
+
+    # Window sizing
+    sizing = {
+      "${mod}+Minus" = { action = set-column-width "-10%"; };
+      "${mod}+Equal" = { action = set-column-width "+10%"; };
+      "${mod}+${shift}+Minus" = { action = set-window-height "-10%"; };
+      "${mod}+${shift}+Equal" = { action = set-window-height "+10%"; };
+    };
+
+    # Workspace number bindings (generated programmatically)
+    workspace_numbers = lib.listToAttrs (map (num: {
+      name = "${mod}+${toString num}";
+      value = { action.focus-workspace = num; };
+    }) (lib.range 1 9)) // lib.listToAttrs (map (num: {
+      name = "${mod}+${ctrl}+${toString num}";
+      value = { action.move-column-to-workspace = num; };
+    }) (lib.range 1 9));
+
+    # Monitor movement
+    monitor_movement = {
+      "${mod}+${shift}+${ctrl}+H" = { action = move-column-to-monitor-left; };
+      "${mod}+${shift}+${ctrl}+J" = { action = move-column-to-monitor-down; };
+      "${mod}+${shift}+${ctrl}+K" = { action = move-column-to-monitor-up; };
+      "${mod}+${shift}+${ctrl}+L" = { action = move-column-to-monitor-right; };
+      
+      "${mod}+${shift}+${ctrl}+Left" = { action = move-column-to-monitor-left; };
+      "${mod}+${shift}+${ctrl}+Down" = { action = move-column-to-monitor-down; };
+      "${mod}+${shift}+${ctrl}+Up" = { action = move-column-to-monitor-up; };
+      "${mod}+${shift}+${ctrl}+Right" = { action = move-column-to-monitor-right; };
+    };
+
+  in lib.recursiveUpdate apps (lib.recursiveUpdate system (lib.recursiveUpdate windows (lib.recursiveUpdate focus (lib.recursiveUpdate workspaces (lib.recursiveUpdate scripts (lib.recursiveUpdate audio (lib.recursiveUpdate sizing (lib.recursiveUpdate workspace_numbers monitor_movement))))))));
+
+in {
   programs.niri.enable = true;
   programs.niri.package = pkgs.niri;
 
@@ -151,143 +269,7 @@ in
     #   epsilon = 0.001;
     # };
 
-    binds =
-      with config.lib.niri.actions;
-      let
-        # term = args: "foot sh -c '${lib.escape [ "'" ] args}'";
-      in
-      lib.attrsets.mergeAttrsList [
-        {
-          "Mod+Shift+Slash".action.show-hotkey-overlay = { };
-
-          # Terminal apps
-          "Mod+T".action.spawn = "foot";
-          "Mod+T".cooldown-ms = 500;
-          "Mod+Shift+T".action.spawn = "kitty";
-
-          # Browser apps
-          "Mod+B".action.spawn = "firefox";
-          "Mod+B".repeat = false;
-          "Mod+Shift+B".action.spawn = "brave";
-
-          # Launch app launcher
-          "Mod+D".action.spawn = "fuzzel";
-
-          # Launch file manager
-          "Mod+E".action.spawn = "nautilus";
-          # "Mod+Shift+E".action = term "yy ${home_dir}/downloads/";
-
-          # Change wallpaper
-          "Mod+W".action = spawn_script "update_wall.sh";
-
-          # Launch obsidian
-          "Mod+O".action = spawn_cmd "obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland";
-
-          # Launrch newsraft
-          "Mod+N".action = spawn_cmd "foot -e newsraft";
-
-          # Scripts
-          "Mod+Shift+W".action = spawn_script "define_word.sh";
-          "Mod+Shift+M".action = spawn_script "my_logout.sh";
-          # Clipboard history custom script
-          "Mod+Shift+C".action = spawn_script "clip_hist.py add";
-          "Mod+Shift+V".action = spawn_script "clip_hist.py paste";
-          "Mod+Shift+S".action = spawn_script "clip_hist.py sel";
-          "Mod+Shift+D".action = spawn_script "clip_hist.py del";
-
-          # System actions
-          # "Mod+Z".action = toggle-overview;
-          "Mod+Q".action = close-window;
-          "Mod+Shift+Q".action = quit;
-          "Mod+Shift+P".action = power-off-monitors;
-
-          # Alt commands
-          "Mod+Alt+L".action = spawn_cmd "swaylock";
-          "Mod+Alt+F".action = toggle-window-floating;
-          "Mod+Shift+Alt+F".action = switch-focus-between-floating-and-tiling;
-
-          # Window management
-          "Mod+R".action = switch-preset-column-width;
-          "Mod+F".action = maximize-column;
-          "Mod+Shift+F".action = fullscreen-window;
-
-          # Audio controls
-          "Mod+F7".action = spawn_cmd "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
-          "Mod+F8".action = spawn_cmd "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+";
-          "Mod+F9".action = spawn_cmd "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-
-          # Focus movement
-          "Mod+H".action = focus-column-left;
-          "Mod+J".action = focus-window-down;
-          "Mod+K".action = focus-window-up;
-          "Mod+L".action = focus-column-right;
-
-          # Window movement
-          "Mod+Ctrl+H".action = move-column-left;
-          "Mod+Ctrl+J".action = move-window-down;
-          "Mod+Ctrl+K".action = move-window-up;
-          "Mod+Ctrl+L".action = move-column-right;
-
-          # Monitor focus
-          "Mod+Shift+H".action = focus-monitor-left;
-          "Mod+Shift+L".action = focus-monitor-right;
-
-          # Monitor movement
-          "Mod+Shift+Ctrl+H".action = move-column-to-monitor-left;
-          "Mod+Shift+Ctrl+J".action = move-column-to-monitor-down;
-          "Mod+Shift+Ctrl+K".action = move-column-to-monitor-up;
-          "Mod+Shift+Ctrl+L".action = move-column-to-monitor-right;
-
-          "Mod+Shift+Ctrl+Left".action = move-column-to-monitor-left;
-          "Mod+Shift+Ctrl+Down".action = move-column-to-monitor-down;
-          "Mod+Shift+Ctrl+Up".action = move-column-to-monitor-up;
-          "Mod+Shift+Ctrl+Right".action = move-column-to-monitor-right;
-
-          # Workspace movement
-          "Mod+U".action = focus-workspace-down;
-          "Mod+I".action = focus-workspace-up;
-          "Mod+Ctrl+U".action = move-column-to-workspace-down;
-          "Mod+Ctrl+I".action = move-column-to-workspace-up;
-          "Mod+Shift+U".action = move-workspace-down;
-          "Mod+Shift+I".action = move-workspace-up;
-
-          # Workspace number bindings
-          "Mod+1".action.focus-workspace = 1;
-          "Mod+2".action.focus-workspace = 2;
-          "Mod+3".action.focus-workspace = 3;
-          "Mod+4".action.focus-workspace = 4;
-          "Mod+5".action.focus-workspace = 5;
-          "Mod+6".action.focus-workspace = 6;
-          "Mod+7".action.focus-workspace = 7;
-          "Mod+8".action.focus-workspace = 8;
-          "Mod+9".action.focus-workspace = 9;
-
-          "Mod+Ctrl+1".action.move-column-to-workspace = 1;
-          "Mod+Ctrl+2".action.move-column-to-workspace = 2;
-          "Mod+Ctrl+3".action.move-column-to-workspace = 3;
-          "Mod+Ctrl+4".action.move-column-to-workspace = 4;
-          "Mod+Ctrl+5".action.move-column-to-workspace = 5;
-          "Mod+Ctrl+6".action.move-column-to-workspace = 6;
-          "Mod+Ctrl+7".action.move-column-to-workspace = 7;
-          "Mod+Ctrl+8".action.move-column-to-workspace = 8;
-          "Mod+Ctrl+9".action.move-column-to-workspace = 9;
-
-          # Window manipulation
-          "Mod+Comma".action = consume-window-into-column;
-          "Mod+Period".action = expel-window-from-column;
-
-          # Window sizing
-          "Mod+Minus".action = set-column-width "-10%";
-          "Mod+Equal".action = set-column-width "+10%";
-          "Mod+Shift+Minus".action = set-window-height "-10%";
-          "Mod+Shift+Equal".action = set-window-height "+10%";
-
-          # Screenshots
-          "Mod+Y".action = spawn_script "take_screenshot.sh";
-          # "Mod+Shift+Y".action = screenshot-screen;
-          # "Mod+Ctrl+Y".action = screenshot-window;
-        }
-      ];
+    binds = keybinds;
 
     window-rules =
       let
