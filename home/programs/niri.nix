@@ -87,6 +87,41 @@ let
     }
   ];
 
+  # Startup applications
+  startup_apps = [
+    { argv = [ "swww-daemon" ]; }
+    { argv = [ "foot" ]; }
+    { argv = [ "xwayland-satellite" ]; }
+    { argv = [ "xdg-desktop-portal" ]; }
+    # { argv = [ "qs" "-c" "noctalia-shell" ]; }
+    { argv = [ "waybar" ]; }
+    {
+      argv = [
+        "swww"
+        "img"
+        "${wallpaper_dir}/gankar_1.png"
+      ];
+    }
+    # my copy and paste setup
+    {
+      argv = [
+        "wl-paste"
+        "--watch"
+        "cliphist"
+        "store"
+      ];
+    }
+    # open terminal and run command
+    {
+      argv = [
+        "foot"
+        "sh"
+        "-c"
+        "cd ${home_dir}/nixos-config && git pull && echo 'Press Enter to close' && read"
+      ];
+    }
+  ];
+
   # Keybindings organized by category
   keybinds =
     with config.lib.niri.actions;
@@ -422,39 +457,7 @@ in
       };
     };
 
-    spawn-at-startup = [
-      { argv = [ "swww-daemon" ]; }
-      { argv = [ "foot" ]; }
-      { argv = [ "xwayland-satellite" ]; }
-      { argv = [ "xdg-desktop-portal" ]; }
-      # { argv = [ "qs" "-c" "noctalia-shell" ]; }
-      { argv = [ "waybar" ]; }
-      {
-        argv = [
-          "swww"
-          "img"
-          "${wallpaper_dir}/gankar_1.png"
-        ];
-      }
-      # my copy and paste setup
-      {
-        argv = [
-          "wl-paste"
-          "--watch"
-          "cliphist"
-          "store"
-        ];
-      }
-      # open terminal and run command
-      {
-        argv = [
-          "foot"
-          "sh"
-          "-c"
-          "cd ${home_dir}/nixos-config && git pull && echo 'Press Enter to close' && read"
-        ];
-      }
-    ];
+    spawn-at-startup = startup_apps;
 
     # config-notification-open-close.spring = {
     #   damping-ratio = 0.6;
