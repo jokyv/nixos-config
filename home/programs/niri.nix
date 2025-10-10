@@ -440,25 +440,6 @@ in
       inactive-color = "rgb(80, 80, 80)"; # Gray inactive ring
     };
 
-    # Border settings for tiled windows
-    border = {
-      enable = true;
-      width = 2;
-      active-color = "rgb(200, 200, 200)"; # Light gray
-      inactive-color = "rgb(100, 100, 100)"; # Dark gray
-    };
-
-    # Shadow effects for windows
-    shadow = {
-      enable = true;
-      radius = 20;
-      color = "rgba(0, 0, 0, 0.3)"; # Semi-transparent black
-      offset = {
-        x = 0;
-        y = 5;
-      };
-    };
-
     input = {
       warp-mouse-to-focus.enable = true;
       focus-follows-mouse.enable = true;
