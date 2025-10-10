@@ -432,14 +432,6 @@ in
       };
     };
 
-    # Visual enhancements
-    focus-ring = {
-      enable = true;
-      width = 4;
-      active-color = "rgb(100, 150, 255)"; # Blue focus ring
-      inactive-color = "rgb(80, 80, 80)"; # Gray inactive ring
-    };
-
     input = {
       warp-mouse-to-focus.enable = true;
       focus-follows-mouse.enable = true;
