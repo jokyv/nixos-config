@@ -371,19 +371,20 @@ let
       };
 
     in
-    # Combine all categories in a readable way
-    let
-      combined = lib.recursiveUpdate apps system;
-      combined = lib.recursiveUpdate combined windows;
-      combined = lib.recursiveUpdate combined focus;
-      combined = lib.recursiveUpdate combined workspaces;
-      combined = lib.recursiveUpdate combined scripts;
-      combined = lib.recursiveUpdate combined audio;
-      combined = lib.recursiveUpdate combined sizing;
-      combined = lib.recursiveUpdate combined workspace_numbers;
-      combined = lib.recursiveUpdate combined monitor_movement;
-    in
-    combined;
+    # Combine all categories using foldl
+    # This recursively merges all the keybinding category maps into one combined map
+    lib.foldl lib.recursiveUpdate {} [
+      apps
+      system
+      windows
+      focus
+      workspaces
+      scripts
+      audio
+      sizing
+      workspace_numbers
+      monitor_movement
+    ];
 
 in
 {
