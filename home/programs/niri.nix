@@ -51,7 +51,16 @@ let
   # Window rules with better organization
   window_rules = [
     {
-      geometry-corner-radius = 8.0;
+      geometry-corner-radius =
+        let
+          r = 8.0;
+        in
+        {
+          top-left = r;
+          top-right = r;
+          bottom-left = r;
+          bottom-right = r;
+        };
       clip-to-geometry = true;
     }
     {
@@ -405,10 +414,17 @@ in
     # Animation configurations for smoother visuals
     animations = {
       # Window open/close animations
-      window-open-close = {
+      window-open = {
         spring = {
           damping-ratio = 0.6;
-          stiffness = 1000.0;
+          stiffness = 1000;
+          epsilon = 0.001;
+        };
+      };
+      window-close = {
+        spring = {
+          damping-ratio = 0.6;
+          stiffness = 1000;
           epsilon = 0.001;
         };
       };
@@ -417,16 +433,16 @@ in
       workspace-switch = {
         spring = {
           damping-ratio = 0.6;
-          stiffness = 800.0;
+          stiffness = 800;
           epsilon = 0.001;
         };
       };
 
-      # Column resize animations
-      column-resize = {
+      # window resize animations
+      window-resize = {
         spring = {
           damping-ratio = 0.7;
-          stiffness = 600.0;
+          stiffness = 600;
           epsilon = 0.001;
         };
       };
@@ -458,7 +474,7 @@ in
     # Workspace configuration
     workspaces = {
       # Enable workspace wrapping (when you go past the last workspace, wrap to first)
-      wrap-around = true;
+      # wrap-around = true;
 
       # Number of workspaces (default is 10, but you can customize)
       # count = 10;
@@ -485,21 +501,19 @@ in
 
       # NEW: Improved column width presets with better naming
       preset-column-widths = [
-        {
-          proportion = 1.0 / 3.0;
-          name = "1/3";
-        }
+        # {
+        #   proportion = 1.0 / 3.0;
+        #   name = "1/3";
+        # }
         {
           proportion = 1.0 / 2.0;
-          name = "1/2";
         }
-        {
-          proportion = 2.0 / 3.0;
-          name = "2/3";
-        }
+        # {
+        #   proportion = 2.0 / 3.0;
+        #   name = "2/3";
+        # }
         {
           proportion = 3.0 / 3.0;
-          name = "Full";
         }
       ];
 
@@ -508,12 +522,12 @@ in
       };
 
       # NEW: Smart window placement
-      new-column-window-placement = "focused-column";
-      new-window-placement = "end";
+      # new-column-window-placement = "focused-column";
+      # new-window-placement = "end";
 
       # NEW: Column behavior
-      column-width-behavior = "respect-new-windows";
-      smart-column-splitting = true;
+      # column-width-behavior = "respect-new-windows";
+      # smart-column-splitting = true;
 
       struts = {
         top = 15;
