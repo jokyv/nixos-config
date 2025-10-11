@@ -23,6 +23,8 @@
                 ];
               };
             };
+            # Swap has a dedicated partition outside btrfs
+            # Better performace, reliability, security and btrfs swap have files are not recommended
             swap = {
               size = "16G"; # Adjust size as needed, e.g. to match RAM size for hibernation
               content = {
@@ -103,8 +105,12 @@
                   "/@nix" = {
                     mountpoint = "/nix";
                     mountOptions = [
-                      "compress=zstd"
                       "noatime"
+                      # "compress=zstd"
+                      # No compression at all
+                      # "compress=none"
+                      # faster compression but less opti
+                      "compress=zstd:1"
                     ];
                   };
                   # Isolate variable data to prevent logs or containers
