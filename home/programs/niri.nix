@@ -415,35 +415,43 @@ in
     animations = {
       # Window open/close animations
       window-open = {
-        spring = {
-          damping-ratio = 0.6;
-          stiffness = 1000;
-          epsilon = 0.001;
+        kind = {
+          spring = {
+            damping-ratio = 0.6;
+            stiffness = 1000;
+            epsilon = 0.001;
+          };
         };
       };
       window-close = {
-        spring = {
-          damping-ratio = 0.6;
-          stiffness = 1000;
-          epsilon = 0.001;
+        kind = {
+          spring = {
+            damping-ratio = 0.6;
+            stiffness = 1000;
+            epsilon = 0.001;
+          };
         };
       };
 
       # Workspace switch animations
       workspace-switch = {
-        spring = {
-          damping-ratio = 0.6;
-          stiffness = 800;
-          epsilon = 0.001;
+        kind = {
+          spring = {
+            damping-ratio = 0.6;
+            stiffness = 800;
+            epsilon = 0.001;
+          };
         };
       };
 
       # window resize animations
       window-resize = {
-        spring = {
-          damping-ratio = 0.7;
-          stiffness = 600;
-          epsilon = 0.001;
+        kind = {
+          spring = {
+            damping-ratio = 0.7;
+            stiffness = 600;
+            epsilon = 0.001;
+          };
         };
       };
     };
