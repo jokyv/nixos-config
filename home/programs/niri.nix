@@ -406,36 +406,6 @@ let
         };
       };
 
-      # Workspace quick access
-      workspace_quick_access = {
-        "${mod}+1" = {
-          action.focus-workspace = 1;
-        };
-        "${mod}+2" = {
-          action.focus-workspace = 2;
-        };
-        "${mod}+3" = {
-          action.focus-workspace = 3;
-        };
-        "${mod}+4" = {
-          action.focus-workspace = 4;
-        };
-
-        # Move current window to specific workspace
-        "${mod}+${shift}+1" = {
-          action.move-column-to-workspace = 1;
-        };
-        "${mod}+${shift}+2" = {
-          action.move-column-to-workspace = 2;
-        };
-        "${mod}+${shift}+3" = {
-          action.move-column-to-workspace = 3;
-        };
-        "${mod}+${shift}+4" = {
-          action.move-column-to-workspace = 4;
-        };
-      };
-
     in
     # Combine all categories using foldl
     # This recursively merges all the keybinding category maps into one combined map
@@ -450,7 +420,6 @@ let
       sizing
       workspace_numbers
       monitor_movement
-      workspace_quick_access
     ];
 
 in
