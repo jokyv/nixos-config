@@ -63,11 +63,41 @@ let
         };
       clip-to-geometry = true;
     }
+    
+    # Workspace 1: Web Browsing (Firefox)
     {
       matches = [ { app-id = "^firefox$"; } ];
+      open-on-workspace = 1;
       open-maximized = true;
       scroll-factor = 0.90;
     }
+    
+    # Workspace 2: Development (Helix)
+    {
+      matches = [ { app-id = "^helix$"; } ];
+      open-on-workspace = 2;
+      open-maximized = true;
+    }
+    
+    # Workspace 3: Notes & Documentation (Obsidian)
+    {
+      matches = [ { app-id = "^obsidian$"; } ];
+      open-on-workspace = 3;
+      open-maximized = true;
+    }
+    
+    # Workspace 4: Communication (Discord)
+    {
+      matches = [ { app-id = "^discord$"; } ];
+      open-on-workspace = 4;
+      open-floating = true;
+      geometry = {
+        width = 400;
+        height = 600;
+      };
+    }
+    
+    # Firefox special windows
     {
       matches = [
         {
@@ -86,10 +116,8 @@ let
       ];
       open-floating = true;
     }
-    {
-      matches = [ { app-id = "^obsidian$"; } ];
-      open-maximized = true;
-    }
+    
+    # Inactive window opacity
     {
       matches = [ { is-active = false; } ];
       opacity = 0.75;
@@ -379,6 +407,36 @@ let
         };
       };
 
+      # Workspace quick access
+      workspace_quick_access = {
+        "${mod}+1" = {
+          action.focus-workspace = 1; # Firefox
+        };
+        "${mod}+2" = {
+          action.focus-workspace = 2; # Helix
+        };
+        "${mod}+3" = {
+          action.focus-workspace = 3; # Obsidian
+        };
+        "${mod}+4" = {
+          action.focus-workspace = 4; # Discord
+        };
+        
+        # Move current window to specific workspace
+        "${mod}+${shift}+1" = {
+          action.move-column-to-workspace = 1;
+        };
+        "${mod}+${shift}+2" = {
+          action.move-column-to-workspace = 2;
+        };
+        "${mod}+${shift}+3" = {
+          action.move-column-to-workspace = 3;
+        };
+        "${mod}+${shift}+4" = {
+          action.move-column-to-workspace = 4;
+        };
+      };
+
     in
     # Combine all categories using foldl
     # This recursively merges all the keybinding category maps into one combined map
@@ -393,6 +451,7 @@ let
       sizing
       workspace_numbers
       monitor_movement
+      workspace_quick_access  # Add this line
     ];
 
 in
@@ -488,17 +547,13 @@ in
       # count = 10;
 
       # Workspace names (optional but nice for organization)
-      # names = [
-      #   "1: Web"
-      #   "2: Code"
-      #   "3: Term"
-      #   "4: Chat"
-      #   "5: Media"
-      #   "6: Files"
-      #   "7: Tools"
-      #   "8: Game"
-      #   "9: Misc"
-      # ];
+      names = [
+        "1: Web"      # Firefox
+        "2: Code"     # Helix  
+        "3: Notes"    # Obsidian
+        "4: Chat"     # Discord
+        "5" "6" "7" "8" "9" # Keep others numeric for now
+      ];
     };
 
     # Enhanced layout settings
