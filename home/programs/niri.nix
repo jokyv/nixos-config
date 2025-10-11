@@ -547,13 +547,13 @@ in
       # count = 10;
 
       # Workspace names (optional but nice for organization)
-      names = {
-        "1" = "Web";      # Firefox
-        "2" = "Code";     # Helix  
-        "3" = "Notes";    # Obsidian
-        "4" = "Chat";     # Discord
-        # Keep others numeric for now
-      };
+      names = [
+        "Web"      # Workspace 1: Firefox
+        "Code"     # Workspace 2: Helix  
+        "Notes"    # Workspace 3: Obsidian
+        "Chat"     # Workspace 4: Discord
+        "5" "6" "7" "8" "9" # Keep others numeric for now
+      ];
     };
 
     # Enhanced layout settings
