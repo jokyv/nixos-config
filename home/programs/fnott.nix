@@ -16,8 +16,8 @@
         # spacing = 10;
 
         # Timing (in milliseconds)
-        default-timeout = 10000; # 10 seconds
-        max-timeout = 30000; # 30 seconds
+        default-timeout = 10; # 10 seconds
+        max-timeout = 30; # 30 seconds
 
         # Display settings
         # title = true;
