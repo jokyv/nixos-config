@@ -63,40 +63,35 @@ let
         };
       clip-to-geometry = true;
     }
-    
-    # Workspace 1: Web Browsing (Firefox)
+
+    # Workspace 1: Development (Helix)
+    {
+      matches = [ { app-id = "^helix$"; } ];
+      # open-on-workspace = 1;
+      open-maximized = true;
+    }
+    # Workspace 2: Web Browsing (Firefox)
     {
       matches = [ { app-id = "^firefox$"; } ];
-      open-on-workspace = 1;
+      # open-on-workspace = 2;
       open-maximized = true;
       scroll-factor = 0.90;
     }
-    
-    # Workspace 2: Development (Helix)
-    {
-      matches = [ { app-id = "^helix$"; } ];
-      open-on-workspace = 2;
-      open-maximized = true;
-    }
-    
+
     # Workspace 3: Notes & Documentation (Obsidian)
     {
       matches = [ { app-id = "^obsidian$"; } ];
-      open-on-workspace = 3;
+      # open-on-workspace = 3;
       open-maximized = true;
     }
-    
+
     # Workspace 4: Communication (Discord)
     {
       matches = [ { app-id = "^discord$"; } ];
-      open-on-workspace = 4;
+      # open-on-workspace = 4;
       open-floating = true;
-      geometry = {
-        width = 400;
-        height = 600;
-      };
     }
-    
+
     # Firefox special windows
     {
       matches = [
@@ -116,7 +111,7 @@ let
       ];
       open-floating = true;
     }
-    
+
     # Inactive window opacity
     {
       matches = [ { is-active = false; } ];
@@ -176,6 +171,7 @@ let
         };
         "${mod}+${shift}+T" = {
           action = spawn "kitty";
+          cooldown-ms = 500;
         };
         "${mod}+B" = {
           action = spawn "firefox";
@@ -183,6 +179,7 @@ let
         };
         "${mod}+${shift}+B" = {
           action = spawn "brave";
+          repeat = false;
         };
         "${mod}+D" = {
           action = spawn "fuzzel";
@@ -257,6 +254,13 @@ let
           action = focus-column-right;
         };
 
+        "${mod}+${shift}+H" = {
+          action = focus-monitor-left;
+        };
+        "${mod}+${shift}+L" = {
+          action = focus-monitor-right;
+        };
+
         "${mod}+${ctrl}+H" = {
           action = move-column-left;
         };
@@ -268,13 +272,6 @@ let
         };
         "${mod}+${ctrl}+L" = {
           action = move-column-right;
-        };
-
-        "${mod}+${shift}+H" = {
-          action = focus-monitor-left;
-        };
-        "${mod}+${shift}+L" = {
-          action = focus-monitor-right;
         };
       };
 
@@ -361,6 +358,7 @@ let
 
       # Workspace number bindings (generated programmatically)
       workspace_numbers =
+        # mod+number focus on workspace
         lib.listToAttrs (
           map (num: {
             name = "${mod}+${toString num}";
@@ -369,6 +367,7 @@ let
             };
           }) (lib.range 1 9)
         )
+        # mod+ctrl+number move window to workspace
         // lib.listToAttrs (
           map (num: {
             name = "${mod}+${ctrl}+${toString num}";
@@ -410,18 +409,18 @@ let
       # Workspace quick access
       workspace_quick_access = {
         "${mod}+1" = {
-          action.focus-workspace = 1; # Firefox
+          action.focus-workspace = 1;
         };
         "${mod}+2" = {
-          action.focus-workspace = 2; # Helix
+          action.focus-workspace = 2;
         };
         "${mod}+3" = {
-          action.focus-workspace = 3; # Obsidian
+          action.focus-workspace = 3;
         };
         "${mod}+4" = {
-          action.focus-workspace = 4; # Discord
+          action.focus-workspace = 4;
         };
-        
+
         # Move current window to specific workspace
         "${mod}+${shift}+1" = {
           action.move-column-to-workspace = 1;
@@ -451,7 +450,7 @@ let
       sizing
       workspace_numbers
       monitor_movement
-      workspace_quick_access  # Add this line
+      workspace_quick_access
     ];
 
 in
@@ -472,7 +471,6 @@ in
 
     # Animation configurations for smoother visuals
     animations = {
-      # Window open/close animations
       window-open = {
         kind = {
           spring = {
@@ -513,6 +511,17 @@ in
           };
         };
       };
+
+      config-notification-open-close = {
+        kind = {
+          spring = {
+            damping-ratio = 0.6;
+            stiffness = 1000;
+            epsilon = 0.001;
+          };
+        };
+      };
+
     };
 
     input = {
@@ -556,35 +565,14 @@ in
       center-focused-column = "never";
       always-center-single-column = true;
 
-      # NEW: Improved column width presets with better naming
       preset-column-widths = [
-        # {
-        #   proportion = 1.0 / 3.0;
-        #   name = "1/3";
-        # }
-        {
-          proportion = 1.0 / 2.0;
-        }
-        # {
-        #   proportion = 2.0 / 3.0;
-        #   name = "2/3";
-        # }
-        {
-          proportion = 3.0 / 3.0;
-        }
+        { proportion = 1.0 / 2.0; }
+        { proportion = 3.0 / 3.0; }
       ];
 
       default-column-width = {
         proportion = 1.0 / 2.0;
       };
-
-      # NEW: Smart window placement
-      # new-column-window-placement = "focused-column";
-      # new-window-placement = "end";
-
-      # NEW: Column behavior
-      # column-width-behavior = "respect-new-windows";
-      # smart-column-splitting = true;
 
       struts = {
         top = 15;
@@ -595,12 +583,6 @@ in
     };
 
     spawn-at-startup = startup_apps;
-
-    # config-notification-open-close.spring = {
-    #   damping-ratio = 0.6;
-    #   stiffness = 1000;
-    #   epsilon = 0.001;
-    # };
 
     binds = keybinds;
 
