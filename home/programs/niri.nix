@@ -546,14 +546,8 @@ in
       # Number of workspaces (default is 10, but you can customize)
       # count = 10;
 
-      # Workspace names (optional but nice for organization)
-      names = [
-        "Web"      # Workspace 1: Firefox
-        "Code"     # Workspace 2: Helix  
-        "Notes"    # Workspace 3: Obsidian
-        "Chat"     # Workspace 4: Discord
-        "5" "6" "7" "8" "9" # Keep others numeric for now
-      ];
+      # Remove the names section entirely - it's causing configuration errors
+      # The workspace-specific functionality will work without names
     };
 
     # Enhanced layout settings
