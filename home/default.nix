@@ -121,6 +121,7 @@
     dconf
     ddgr # duckduckgo on the terminal
     delta
+    dysk
     eza
     newsraft
     pwvucontrol
