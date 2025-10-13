@@ -4,11 +4,15 @@
   inputs = {
     # stable
     # nixpkgs.url = "nixpkgs/nixos-24.05";
-    # home-manager.url = "github:nix-community/home-manager/release-24.05";
-    # home-manager.inputs.nixpkgs.follows = "nixpkgs-stable";
+    # home-manager = {
+    #   url = "github:nix-community/home-manager/release-24.05";
+    #   inputs.nixpkgs.follows = "nixpkgs-stable";
+    # };
 
     # nixpkgs unstable
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/nixos-unstable";
+    };
 
     # home manager
     home-manager = {
@@ -53,7 +57,6 @@
     # };
   };
 
-  # outputs = { self, nixpkgs, home-manager, stylix, sops-nix, niri, quickshell, noctalia, ... }@inputs:
   outputs =
     {
       self,
@@ -72,7 +75,7 @@
       # NixOS system configuration
       # --------------------------
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        inherit system;
+        inherit system; # this is equal to system = system;
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/jokyv/default.nix
@@ -90,7 +93,7 @@
       # Home Manager configuration (standalone)
       # ---------------------------------------
       homeConfigurations.jokyv = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+        inherit pkgs; # this is equal to pkgs = pkgs;
         modules = [
           ./home/default.nix
           stylix.homeModules.stylix
