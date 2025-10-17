@@ -71,8 +71,6 @@
                     "/@var" = {
                       mountpoint = "/var";
                       mountOptions = [ "compress=zstd" "noatime" ];
-                      # Set quota for this subvolume
-                      quota.size = "20G"; # max limit for subvolume
                     };
                   };
                 };
