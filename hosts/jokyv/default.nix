@@ -6,8 +6,8 @@ in
 {
   imports = [
     # disko configuration
-    # inputs.disko.nixosModules.disko
-    # ./disk-config.nix
+    inputs.disko.nixosModules.disko
+    ./disk-config.nix
     # zsa keyboard configuration
     ./zsa-udev-rules.nix
     # security configuration

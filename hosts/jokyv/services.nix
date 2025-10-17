@@ -20,7 +20,8 @@
   };
 
   # Display Management
-  services.displayManager.ly.enable = true;
+  # services.displayManager.ly.enable = true;
+  services.getty.autologinUser = "jokyv";
 
   # System Services
   services.dbus = {

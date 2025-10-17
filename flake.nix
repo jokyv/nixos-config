@@ -51,10 +51,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # disko = {
-    #   url = "github:nix-community/disko";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -65,6 +65,7 @@
       stylix,
       sops-nix,
       niri,
+      disko,
       ...
     }@inputs:
     let
@@ -81,6 +82,8 @@
         modules = [
           ./hosts/jokyv/default.nix # aka configuration.nix file
           ./hosts/jokyv/hardware-configuration.nix
+          disko.nixosModules.disko
+          ./hosts/jokyv/disk-config.nix
           # stylix.nixosModules.stylix
           # home-manager.nixosModules.home-manager
           # {
