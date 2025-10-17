@@ -88,19 +88,13 @@
         };
       };
     };
-    # # Define filesystems that are not directly on a disk partition.
-    # filesystems = {
-    #   # Mount /tmp in RAM for performance and to reduce SSD writes.
-    #   "/tmp" = {
-    #     type = "tmpfs";
-    #     # Options: "defaults" is standard, "size" sets a max limit (it doesn't
-    #     # reserve the space), and "mode=1777" sets the correct permissions.
-    #     options = [
-    #       "defaults"
-    #       "size=4G"
-    #       "mode=1777"
-    #     ];
-    #   };
-    # };
+    nodev = {
+      "/tmp" = {
+        fsType = "tmpfs";
+        mountOptions = [
+          "size=4G"
+        ];
+      };
+    };
   };
 }
