@@ -26,11 +26,11 @@
             # Swap has a dedicated partition outside btrfs
             # Better performace, reliability, security and btrfs swap have files are not recommended
             swap = {
-              size = "16G"; # Adjust size as needed, e.g. to match RAM size for hibernation
+              size = "32G"; # Adjust size as needed, e.g. to match RAM size for hibernation
               content = {
                 type = "swap";
-                # Recommended for security, creates an encrypted swap space
-                randomisedEncryption = true;
+                # Recommended for security, creates an encrypted swap space - Does not work
+                randomEncryption = true;
               };
             };
 
@@ -130,19 +130,19 @@
         };
       };
     };
-    # Define filesystems that are not directly on a disk partition.
-    filesystems = {
-      # Mount /tmp in RAM for performance and to reduce SSD writes.
-      "/tmp" = {
-        type = "tmpfs";
-        # Options: "defaults" is standard, "size" sets a max limit (it doesn't
-        # reserve the space), and "mode=1777" sets the correct permissions.
-        options = [
-          "defaults"
-          "size=4G"
-          "mode=1777"
-        ];
-      };
-    };
+    # # Define filesystems that are not directly on a disk partition.
+    # filesystems = {
+    #   # Mount /tmp in RAM for performance and to reduce SSD writes.
+    #   "/tmp" = {
+    #     type = "tmpfs";
+    #     # Options: "defaults" is standard, "size" sets a max limit (it doesn't
+    #     # reserve the space), and "mode=1777" sets the correct permissions.
+    #     options = [
+    #       "defaults"
+    #       "size=4G"
+    #       "mode=1777"
+    #     ];
+    #   };
+    # };
   };
 }
