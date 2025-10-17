@@ -66,6 +66,14 @@
                       mountpoint = "/nix";
                       mountOptions = [ "compress=zstd" "noatime" ];
                     };
+                    # Isolate variable data to prevent logs or containers
+                    # from filling up the root filesystem.
+                    "/@var" = {
+                      mountpoint = "/var";
+                      mountOptions = [ "compress=zstd" "noatime" ];
+                      # Set quota for this subvolume
+                      quota.size = "20G"; # max limit for subvolume
+                    };
                   };
                 };
               };
