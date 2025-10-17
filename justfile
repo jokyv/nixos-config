@@ -238,5 +238,5 @@ useful-commands:
 
     @echo "home-manager generations - list home generations"
     @echo "home-manager switch --rollback - rollback to previous generation"
-    @echo "home-manager generation <id> - switch to generation id"
-    @echo "home-manager remove-generations <id> - remove generation id"
+    @echo "nix-env --profile ~/.nix-profile --switch-generation <id> - switch to generation id"
+    @echo "nix-env --profile ~/.nix-profile --delete-generations <id> - delete generation id"

@@ -1,5 +1,5 @@
 {
-  description = "My Home Manager configuration";
+  description = "One Flake to Rule Them All";
 
   inputs = {
     # stable
@@ -73,12 +73,13 @@
     in
     {
       # NixOS system configuration
-      # --------------------------
+      # here you can create different configurations with different host names for different machines
+      # -----------------------------------------------------
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         inherit system; # this is equal to system = system;
         specialArgs = { inherit inputs; };
         modules = [
-          ./hosts/jokyv/default.nix
+          ./hosts/jokyv/default.nix # aka configuration.nix file
           ./hosts/jokyv/hardware-configuration.nix
           # stylix.nixosModules.stylix
           # home-manager.nixosModules.home-manager
