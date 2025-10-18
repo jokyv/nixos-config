@@ -15,9 +15,9 @@ in
     # services configuration
     ./services.nix
     # btrfs configuration
-    # ./btrfs.nix
+    ./btrfs.nix
     # import niri module
-    inputs.niri.nixosModules.niri
+    # inputs.niri.nixosModules.niri
   ];
 
   # Set your time zone.
@@ -96,6 +96,7 @@ in
   users.users.jokyv = {
     isNormalUser = true;
     description = "jokyv";
+    initialPassword = "";
     shell = pkgs.bashInteractive;
     extraGroups = [
       "networkmanager"
@@ -137,6 +138,7 @@ in
     clamav
 
     # Development Tools
+    stdenv.cc.cc.lib
     clang
     cmake
     gcc
