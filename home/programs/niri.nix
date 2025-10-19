@@ -17,8 +17,8 @@ let
   scripts_dir = "${home_dir}/scripts/bin";
 
   # Reusable spawn commands
-  spawn_script = script: config.niri.actions.spawn "sh" "-c" "${scripts_dir}/${script}";
-  spawn_cmd = cmd: config.niri.actions.spawn "sh" "-c" cmd;
+  spawn_script = script: config.lib.niri.actions.spawn "sh" "-c" "${scripts_dir}/${script}";
+  spawn_cmd = cmd: config.lib.niri.actions.spawn "sh" "-c" cmd;
 
   # Output configuration
   outputs = {
@@ -156,7 +156,7 @@ let
 
   # Keybindings organized by category
   keybinds =
-    with config.niri.actions;
+    with config.lib.niri.actions;
     let
       mod = "Mod";
       shift = "Shift";

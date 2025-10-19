@@ -80,7 +80,8 @@
       domain = "*";
       type = "hard";
       item = "nofile";
-      value = "1024";
+      # value = "4096";
+      value = "2048";
     }
     {
       domain = "*";
