@@ -17,7 +17,7 @@ in
     # btrfs configuration
     ./btrfs.nix
     # import niri module
-    # inputs.niri.nixosModules.niri
+    inputs.niri.nixosModules.niri
   ];
 
   # Set your time zone.
@@ -87,6 +87,8 @@ in
   # System Programs
   # ---------------------------------------------
   programs.niri.enable = true;
+  programs.niri.package = pkgs.niri;
+
   programs.nix-ld.enable = true; # needs this for python uv
 
   # ---------------------------------------------
@@ -96,7 +98,7 @@ in
   users.users.jokyv = {
     isNormalUser = true;
     description = "jokyv";
-    initialPassword = "";
+    # initialPassword = "";
     shell = pkgs.bashInteractive;
     extraGroups = [
       "networkmanager"
@@ -138,13 +140,13 @@ in
     clamav
 
     # Development Tools
-    stdenv.cc.cc.lib
     clang
     cmake
     gcc
     gdb
     git
     python313
+    aider-chat-full
 
     # Network Utilities
     curl
@@ -266,6 +268,7 @@ in
   # Use ZRAM for compressed RAM-based swap. It's much faster than disk-based swap.
   # The system will use this first and only fall back to the disk swap partition if ZRAM fills up.
   zramSwap.enable = true;
+  zramSwap.memoryPercent = 50; # Default is 50% already
 
   # ---------------------------------------------
   # System Version
