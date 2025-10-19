@@ -31,10 +31,10 @@
     #   inputs.quickshell.follows = "quickshell";
     # };
 
-    # niri = {
-    #   url = "github:sodiboo/niri-flake";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     stylix = {
       url = "github:danth/stylix";
@@ -64,7 +64,7 @@
       home-manager,
       stylix,
       sops-nix,
-      # niri,
+      niri,
       disko,
       ...
     }@inputs:
@@ -102,7 +102,7 @@
           ./home/default.nix
           stylix.homeModules.stylix
           sops-nix.homeManagerModules.sops
-          # niri.homeModules.niri
+          niri.homeModules.niri
           # noctalia.homeModules.default
         ];
       };
