@@ -6,11 +6,20 @@
     autoEnable = true;
     image = ../wallpaper.png;
     polarity = "dark";
+
+    # https://tinted-theming.github.io/tinted-gallery/
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest-dark-hard.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
+
+    # Black metal themes
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/black-metal.yaml";
+    # base16Scheme = "${pkgs.base16-schemes}/share/themes/black-metal-gorgoroth.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/black-metal-bathory.yaml";
 
     cursor = {
       package = pkgs.bibata-cursors;
