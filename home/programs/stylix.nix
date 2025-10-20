@@ -20,6 +20,9 @@
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/black-metal.yaml";
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/black-metal-gorgoroth.yaml";
     base16Scheme = "${pkgs.base16-schemes}/share/themes/black-metal-bathory.yaml";
+    override = {
+      base03 = "#556677";
+    };
 
     cursor = {
       package = pkgs.bibata-cursors;
