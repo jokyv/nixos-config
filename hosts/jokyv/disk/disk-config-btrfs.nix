@@ -24,12 +24,12 @@
               };
             };
             # Swap has a dedicated partition outside btrfs
-            # Better performace, reliability, security and btrfs swap have files are not recommended
+            # Better performace, reliability, security and btrfs swap files are not recommended
             swap = {
               size = "32G"; # Adjust size as needed, e.g. to match RAM size for hibernation
               content = {
                 type = "swap";
-                # Recommended for security, creates an encrypted swap space - Does not work
+                # Recommended for security, creates an encrypted swap space
                 randomEncryption = true;
               };
             };

@@ -7,7 +7,7 @@ in
   imports = [
     # disko configuration
     inputs.disko.nixosModules.disko
-    ./disk-config.nix
+    ./disk/disk-config-btrfs.nix
     # zsa keyboard configuration
     ./zsa-udev-rules.nix
     # security configuration

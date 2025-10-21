@@ -23,6 +23,9 @@
   ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 10;
+  };
   boot.extraModulePackages = [ ];
 
   # fileSystems."/" = {
@@ -52,7 +55,4 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  boot.kernel.sysctl = {
-    "vm.swappiness" = 10;
-  };
 }

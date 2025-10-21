@@ -83,7 +83,7 @@
           ./hosts/jokyv/default.nix # aka configuration.nix file
           ./hosts/jokyv/hardware-configuration.nix
           disko.nixosModules.disko
-          ./hosts/jokyv/disk-config.nix
+          ./hosts/jokyv/disk/disk-config-btrfs.nix
           # stylix.nixosModules.stylix
           # home-manager.nixosModules.home-manager
           # {
