@@ -1,5 +1,8 @@
 { pkgs, ... }:
 
+let
+  base16SchemesPath = "${pkgs.base16-schemes}/share/themes/";
+in
 {
   stylix = {
     enable = true;
@@ -8,20 +11,21 @@
     polarity = "dark";
 
     # https://tinted-theming.github.io/tinted-gallery/
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest.yaml";
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/everforest-dark-hard.yaml";
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-macchiato.yaml";
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
+    # base16Scheme = "${base16SchemesPath}/rose-pine.yaml";
+    # base16Scheme = "${base16SchemesPath}/everforest.yaml";
+    # base16Scheme = "${base16SchemesPath}/everforest-dark-hard.yaml";
+    # base16Scheme = "${base16SchemesPath}/gruvbox-dark-hard.yaml";
+    # base16Scheme = "${base16SchemesPath}/catppuccin-mocha.yaml";
+    # base16Scheme = "${base16SchemesPath}/catppuccin-macchiato.yaml";
 
     # Black metal themes
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/black-metal.yaml";
-    # base16Scheme = "${pkgs.base16-schemes}/share/themes/black-metal-gorgoroth.yaml";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/black-metal-bathory.yaml";
+    # base16Scheme = "${base16SchemesPath}/black-metal.yaml";
+    # base16Scheme = "${base16SchemesPath}/black-metal-gorgoroth.yaml";
+    base16Scheme = "${base16SchemesPath}/black-metal-bathory.yaml";
+
     override = {
-      base03 = "#556677";
+      base0A = "#854a55"; # a bit of dark rose-pine
+      base03 = "#2e3a47"; # usual color comments
     };
 
     cursor = {
@@ -80,32 +84,26 @@
         profileNames = [ "default" ];
       };
 
-      # Configure the qt target
-      qt = {
-        enable = true;
-        # platformTheme.name = "qtct";
-        # style.name = lib.mkForce "kvantum";
-      };
-
-      # Configure the gtk target
-      gtk = {
-        enable = true;
-        # iconTheme = {
-        #   name = "Papirus-Dark";
-        #   package = pkgs.papirus-icon-theme;
-        #   name = "Tela";
-        #   package = pkgs.tela-icon-theme;
-        #   name = "everforest";
-        #   package = pkgs.everforest-gtk-theme;
-        #   name = "candy";
-        #   package = pkgs.candy-icons;
-        #   name = "sweet";
-        #   package = pkgs.sweet-folders;
-        # };
-      };
+      # apply specific theme to GTK based apps
+      # gtk = {
+      #   enable = true;
+      #   iconTheme = {
+      #     # name = "Papirus-Dark";
+      #     # package = pkgs.papirus-icon-theme;
+      #     # name = "Tela";
+      #     # package = pkgs.tela-icon-theme;
+      #     # name = "everforest";
+      #     # package = pkgs.everforest-gtk-theme;
+      #     # name = "candy";
+      #     # package = pkgs.candy-icons;
+      #     name = "sweet";
+      #     package = pkgs.sweet-folders;
+      #   };
+      # };
 
     };
 
+    # apply specific theme to Qt based apps
     # home.packages = [
     #   pkgs.libsForQt5.qtstyleplugin-kvantum
     #   pkgs.catppuccin-qt5ct
