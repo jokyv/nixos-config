@@ -69,7 +69,7 @@ def get_cache_dir() -> Path:
     Path
         Path to cache directory in user's home
     """
-    return Path.home() / ".cache" / "flake-freshness"
+    return Path.home() / ".cache" / "nix-flake-health"
 
 
 def get_default_package_paths() -> List[Path]:
@@ -80,10 +80,11 @@ def get_default_package_paths() -> List[Path]:
     List[Path]
         List of potential config file locations
     """
+    script_dir = Path(__file__).parent
     return [
-        Path("freshness.toml"),
-        Path.home() / ".config" / "flake-freshness" / "freshness.toml",
-        Path("scripts") / "flake-freshness" / "freshness.toml",
+        script_dir / "apps.toml",  # Bundled config
+        Path("apps.toml"),  # Override in current directory
+        Path.home() / ".config" / "nix-flake-health" / "apps.toml",  # User-level config
     ]
 
 
@@ -164,7 +165,7 @@ def find_packages_config(override: Optional[str] = None) -> Path:
             return path
 
     raise FileNotFoundError(
-        "No config found. Create freshness.toml in your project root or ~/.config/flake-freshness/freshness.toml"
+        "No config found. Create apps.toml in the script directory, your project root, or ~/.config/nix-flake-health/apps.toml"
     )
 
 
@@ -196,8 +197,8 @@ def extract_branch_from_url(url: str) -> str:
     return "unknown"
 
 
-def extract_nixpkgs_info(flake_path: Path) -> Dict[str, str]:
-    """Extract main nixpkgs branch and locked revision.
+def extract_nixpkgs_info(flake_path: Path) -> Dict:
+    """Extract main nixpkgs branch, locked revision, and last modified date.
 
     Parameters
     ----------
@@ -206,8 +207,8 @@ def extract_nixpkgs_info(flake_path: Path) -> Dict[str, str]:
 
     Returns
     -------
-    Dict[str, str]
-        Dictionary with 'branch' and 'locked_rev' keys
+    Dict
+        Dictionary with 'branch', 'locked_rev', and 'last_modified' keys
     """
     # Get flake metadata
     exit_code, stdout, stderr = run_command(
@@ -218,21 +219,28 @@ def extract_nixpkgs_info(flake_path: Path) -> Dict[str, str]:
         print(
             f"{CONFIG.colors['error']}Error getting flake metadata: {stderr}{CONFIG.colors['reset']}"
         )
-        return {"branch": "nixos-unstable", "locked_rev": None}
+        return {"branch": "nixos-unstable", "locked_rev": None, "last_modified": None}
 
     try:
         metadata = json.loads(stdout)
         nixpkgs_lock = metadata.get("locks", {}).get("nodes", {}).get("nixpkgs", {})
         locked_rev = nixpkgs_lock.get("locked", {}).get("rev")
-        
+
         # Extract branch from URL
         url = nixpkgs_lock.get("locked", {}).get("url", "")
         branch = extract_branch_from_url(url) if url else "nixos-unstable"
-        
-        return {"branch": branch, "locked_rev": locked_rev}
-        
+
+        # Extract last modified timestamp
+        last_modified = nixpkgs_lock.get("locked", {}).get("lastModified")
+
+        return {
+            "branch": branch,
+            "locked_rev": locked_rev,
+            "last_modified": last_modified,
+        }
+
     except (json.JSONDecodeError, KeyError):
-        return {"branch": "nixos-unstable", "locked_rev": None}
+        return {"branch": "nixos-unstable", "locked_rev": None, "last_modified": None}
 
 
 def load_packages(config_path: Path) -> List[str]:
@@ -257,7 +265,7 @@ def load_packages(config_path: Path) -> List[str]:
         config = tomllib.load(f)
 
     if "packages" not in config:
-        raise ValueError("freshness.toml must contain a [packages] section")
+        raise ValueError("apps.toml must contain a [packages] section")
 
     return config["packages"].get("packages", [])
 
@@ -432,13 +440,15 @@ def format_version(version: str, status: str) -> str:
             return version
 
 
-def print_table(results: List[Dict]) -> None:
+def print_table(results: List[Dict], revision_age: str) -> None:
     """Print results as a simplified formatted table.
 
     Parameters
     ----------
     results : List[Dict]
         List of result dictionaries to display
+    revision_age : str
+        The age of the current nixpkgs revision
     """
     if not results:
         return
@@ -466,11 +476,16 @@ def print_table(results: List[Dict]) -> None:
     # Create polars DataFrame
     df = pl.DataFrame(table_data)
 
+    # Add revision age and reorder columns
+    df = df.with_columns(pl.lit(revision_age).alias("Revision Age")).select(
+        "Package", "Current", "Revision Age", "Latest", "Status"
+    )
+
     # Configure display for better terminal output
     pl.Config.set_tbl_rows(len(results))
     pl.Config.set_tbl_cols(len(df.columns))
     pl.Config.set_fmt_str_lengths(30)
-    pl.Config.set_tbl_width_chars(100)
+    pl.Config.set_tbl_width_chars(120)
     pl.Config.set_tbl_hide_column_data_types(True)
     pl.Config.set_tbl_hide_dataframe_shape(True)
 
@@ -553,6 +568,20 @@ def main(
     )
     nixpkgs_info = extract_nixpkgs_info(flake_path)
 
+    # Calculate revision age
+    revision_age_str = "N/A"
+    last_modified_timestamp = nixpkgs_info.get("last_modified")
+    if last_modified_timestamp:
+        modified_date = datetime.fromtimestamp(last_modified_timestamp)
+        age_delta = datetime.now() - modified_date
+        age_days = age_delta.days
+        if age_days == 0:
+            revision_age_str = "today"
+        elif age_days == 1:
+            revision_age_str = "1 day ago"
+        else:
+            revision_age_str = f"{age_days} days ago"
+
     if not nixpkgs_info.get("locked_rev"):
         print(
             f"{CONFIG.colors['warning']}Warning: Could not determine locked revision{CONFIG.colors['reset']}"
@@ -603,11 +632,16 @@ def main(
 
     # Output results
     if json_output:
-        print(json.dumps(display_results, indent=2))
+        # Add revision age to JSON output as well
+        output_data = {
+            "revision_age": revision_age_str,
+            "packages": display_results,
+        }
+        print(json.dumps(output_data, indent=2))
         return
 
     # Display simplified table
-    print_table(display_results)
+    print_table(display_results, revision_age_str)
 
     # Summary
     outdated = [r for r in results if r["status"] == "outdated"]
@@ -617,6 +651,7 @@ def main(
         print(f"\n{CONFIG.colors['accent']}Summary:{CONFIG.colors['reset']}")
         print(f"  • {outdated_count} packages with updates available")
         print(f"  • Branch: {nixpkgs_info['branch']}")
+        print(f"  • Current Revision Age: {revision_age_str}")
 
         print(f"\n{CONFIG.colors['info']}Next steps:{CONFIG.colors['reset']}")
         print(f"  nix flake lock --update-input nixpkgs")
@@ -624,7 +659,6 @@ def main(
         print(
             f"\n{CONFIG.colors['equal']}✓ All packages are up to date!{CONFIG.colors['reset']}"
         )
-
 
 if __name__ == "__main__":
     import argparse

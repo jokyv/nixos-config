@@ -146,9 +146,6 @@ validate-secrets:
 rotate-secrets:
     sops --rotate secrets.yaml
 
-# Check when inputs were last updated
-age:
-    check-age.sh
 
 # -----------------------------------------------
 # Experiments & Development
@@ -216,6 +213,11 @@ health:
 # Calculate the total disk space used by the current system configuration
 disk-usage:
     sudo nix-store --query --disk-usage $(sudo nix-store -q --requisites /run/current-system)
+
+# Check the health of the Nix flake (package freshness and input age).
+# Accepts args like --updates-only, --no-cache, --json
+flake-health *ARGS:
+    python3 nix_flake_health/main.py {{ARGS}}
 
 # -----------------------------------------------
 # Useful nix commands
