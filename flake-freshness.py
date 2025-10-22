@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-flake-freshness.py: Monitor package versions across nixpkgs inputs
+flake-freshness.py: Monitor package versions in main nixpkgs input
 
 A Python script for tracking package versions in your flake's main nixpkgs
 input. Compares installed versions against latest available versions.
@@ -196,8 +196,8 @@ def extract_branch_from_url(url: str) -> str:
     return "unknown"
 
 
-def extract_all_inputs(flake_path: Path) -> Dict[str, Dict[str, str]]:
-    """Extract all flake inputs with their branches and locked revisions.
+def extract_nixpkgs_info(flake_path: Path) -> Dict[str, str]:
+    """Extract main nixpkgs branch and locked revision.
 
     Parameters
     ----------
@@ -206,8 +206,8 @@ def extract_all_inputs(flake_path: Path) -> Dict[str, Dict[str, str]]:
 
     Returns
     -------
-    Dict[str, Dict[str, str]]
-        Dictionary mapping input names to their branch and locked revision
+    Dict[str, str]
+        Dictionary with 'branch' and 'locked_rev' keys
     """
     # Get flake metadata
     exit_code, stdout, stderr = run_command(
@@ -218,30 +218,25 @@ def extract_all_inputs(flake_path: Path) -> Dict[str, Dict[str, str]]:
         print(
             f"{CONFIG.colors['error']}Error getting flake metadata: {stderr}{CONFIG.colors['reset']}"
         )
-        return {}
+        return {"branch": "nixos-unstable", "locked_rev": None}
 
     try:
         metadata = json.loads(stdout)
-        locks = metadata.get("locks", {}).get("nodes", {})
+        nixpkgs_lock = metadata.get("locks", {}).get("nodes", {}).get("nixpkgs", {})
+        locked_rev = nixpkgs_lock.get("locked", {}).get("rev")
         
-        inputs_info = {}
-        for input_name, lock_info in locks.items():
-            locked = lock_info.get("locked", {})
-            inputs_info[input_name] = {
-                "locked_rev": locked.get("rev"),
-                "url": locked.get("url", ""),
-                "branch": extract_branch_from_url(locked.get("url", "")),
-            }
+        # Extract branch from URL
+        url = nixpkgs_lock.get("locked", {}).get("url", "")
+        branch = extract_branch_from_url(url) if url else "nixos-unstable"
         
-        return inputs_info
+        return {"branch": branch, "locked_rev": locked_rev}
         
-    except (json.JSONDecodeError, KeyError) as e:
-        print(f"{CONFIG.colors['error']}Error parsing flake metadata: {e}{CONFIG.colors['reset']}")
-        return {}
+    except (json.JSONDecodeError, KeyError):
+        return {"branch": "nixos-unstable", "locked_rev": None}
 
 
-def load_packages(config_path: Path) -> Dict[str, List[str]]:
-    """Load packages organized by input from TOML.
+def load_packages(config_path: Path) -> List[str]:
+    """Load simple package list from TOML.
 
     Parameters
     ----------
@@ -250,33 +245,21 @@ def load_packages(config_path: Path) -> Dict[str, List[str]]:
 
     Returns
     -------
-    Dict[str, List[str]]
-        Dictionary mapping input names to package lists
+    List[str]
+        List of package names
 
     Raises
     ------
     ValueError
-        If config file doesn't contain valid package sections
+        If config file doesn't contain [packages] section
     """
     with open(config_path, "rb") as f:
         config = tomllib.load(f)
 
-    packages_by_input = {}
-    
-    # Support both formats: simple list and input-specific
-    if "packages" in config and "packages" in config["packages"]:
-        # Simple format - assign all packages to nixpkgs
-        packages_by_input["nixpkgs"] = config["packages"].get("packages", [])
-    else:
-        # Input-specific format
-        for input_name, packages in config.items():
-            if isinstance(packages, dict) and "packages" in packages:
-                packages_by_input[input_name] = packages.get("packages", [])
+    if "packages" not in config:
+        raise ValueError("freshness.toml must contain a [packages] section")
 
-    if not packages_by_input:
-        raise ValueError("freshness.toml must contain package definitions")
-
-    return packages_by_input
+    return config["packages"].get("packages", [])
 
 
 def get_cache_path(key: str) -> Path:
@@ -450,7 +433,7 @@ def format_version(version: str, status: str) -> str:
 
 
 def print_table(results: List[Dict]) -> None:
-    """Print results as a formatted table showing inputs.
+    """Print results as a simplified formatted table.
 
     Parameters
     ----------
@@ -473,7 +456,6 @@ def print_table(results: List[Dict]) -> None:
 
         table_data.append(
             {
-                "Input": row["input"],
                 "Package": row["package"],
                 "Current": row["current"],
                 "Latest": row["latest"],
@@ -488,7 +470,7 @@ def print_table(results: List[Dict]) -> None:
     pl.Config.set_tbl_rows(len(results))
     pl.Config.set_tbl_cols(len(df.columns))
     pl.Config.set_fmt_str_lengths(30)
-    pl.Config.set_tbl_width_chars(120)
+    pl.Config.set_tbl_width_chars(100)
     pl.Config.set_tbl_hide_column_data_types(True)
     pl.Config.set_tbl_hide_dataframe_shape(True)
 
@@ -500,9 +482,9 @@ def print_table(results: List[Dict]) -> None:
     print(f"\n{CONFIG.colors['info']}Color Legend:{CONFIG.colors['reset']}")
     for row in results:
         if row["status"] == "outdated":
-            print(f"  {row['input']}.{row['package']}: {CONFIG.colors['outdated_bg']}{row['current']}{CONFIG.colors['reset']} → {CONFIG.colors['latest_bg']}{row['latest']}{CONFIG.colors['reset']}")
+            print(f"  {row['package']}: {CONFIG.colors['outdated_bg']}{row['current']}{CONFIG.colors['reset']} → {CONFIG.colors['latest_bg']}{row['latest']}{CONFIG.colors['reset']}")
         elif row["status"] == "equal":
-            print(f"  {row['input']}.{row['package']}: {CONFIG.colors['equal']}{row['current']}{CONFIG.colors['reset']} (up to date)")
+            print(f"  {row['package']}: {CONFIG.colors['equal']}{row['current']}{CONFIG.colors['reset']} (up to date)")
 
 
 # ============================================================================
@@ -517,7 +499,7 @@ def main(
     no_cache: bool = False,
     json_output: bool = False,
 ) -> None:
-    """Monitor package versions across ALL flake inputs.
+    """Monitor package versions in main nixpkgs input.
 
     Parameters
     ----------
@@ -547,82 +529,72 @@ def main(
         print(
             f"{CONFIG.colors['info']}Loading packages from: {pkgs_config}{CONFIG.colors['reset']}"
         )
-        packages_by_input = load_packages(pkgs_config)
+        packages = load_packages(pkgs_config)
     except (FileNotFoundError, ValueError) as e:
         print(f"{CONFIG.colors['error']}Error: {e}{CONFIG.colors['reset']}")
         return
 
-    if not packages_by_input:
+    if not packages:
         print(
             f"{CONFIG.colors['warning']}No packages found to check{CONFIG.colors['reset']}"
         )
         return
 
-    # Extract ALL inputs info
     print(
-        f"{CONFIG.colors['info']}Extracting all inputs from: {flake}{CONFIG.colors['reset']}"
+        f"{CONFIG.colors['info']}Checking {len(packages)} packages from nixpkgs...{CONFIG.colors['reset']}\n"
     )
-    inputs_info = extract_all_inputs(flake_path)
 
-    if not inputs_info:
+    # Extract nixpkgs info
+    print(
+        f"{CONFIG.colors['info']}Extracting nixpkgs info from: {flake}{CONFIG.colors['reset']}"
+    )
+    nixpkgs_info = extract_nixpkgs_info(flake_path)
+
+    if not nixpkgs_info.get("locked_rev"):
         print(
-            f"{CONFIG.colors['error']}Error: Could not extract input information{CONFIG.colors['reset']}"
+            f"{CONFIG.colors['warning']}Warning: Could not determine locked revision{CONFIG.colors['reset']}"
         )
-        return
 
     # Detect current system architecture
     system = get_current_system()
 
-    # Check each package against its respective input
+    # Check each package against nixpkgs
     use_cache = not no_cache
     results = []
-    total_packages = sum(len(pkgs) for pkgs in packages_by_input.values())
 
-    print(
-        f"{CONFIG.colors['info']}Checking {total_packages} packages across {len(packages_by_input)} inputs...{CONFIG.colors['reset']}\n"
-    )
+    for package in packages:
+        print(f"  Checking {package}...")
 
-    for input_name, packages in packages_by_input.items():
-        if input_name not in inputs_info:
-            print(f"{CONFIG.colors['warning']}Warning: Input '{input_name}' not found in flake{CONFIG.colors['reset']}")
-            continue
-
-        input_info = inputs_info[input_name]
-        
-        for package in packages:
-            print(f"  Checking {package} from {input_name}...")
-
-            # Get current version from locked revision
-            if input_info.get("locked_rev"):
-                current = get_package_version(
-                    f"{input_info['url']}/{input_info['locked_rev']}",
-                    f"legacyPackages.{system}",
-                    package,
-                    use_cache,
-                )
-            else:
-                current = "no lock"
-
-            # Get latest version from upstream
-            latest = get_package_version(
-                input_info['url'],
+        # Get current version from locked revision
+        if nixpkgs_info.get("locked_rev"):
+            current = get_package_version(
+                f"github:nixos/nixpkgs/{nixpkgs_info['locked_rev']}",
                 f"legacyPackages.{system}",
                 package,
                 use_cache,
             )
+        else:
+            current = "no lock"
 
-            status = compare_versions(current, latest)
+        # Get latest version from upstream branch
+        latest = get_package_version(
+            f"github:nixos/nixpkgs/{nixpkgs_info['branch']}",
+            f"legacyPackages.{system}",
+            package,
+            use_cache,
+        )
 
-            results.append(
-                {
-                    "package": package,
-                    "input": input_name,
-                    "branch": input_info.get("branch", "unknown"),
-                    "current": current,
-                    "latest": latest,
-                    "status": status,
-                }
-            )
+        status = compare_versions(current, latest)
+
+        results.append(
+            {
+                "package": package,
+                "branch": nixpkgs_info["branch"],
+                "current": current,
+                "latest": latest,
+                "status": status,
+            }
+        )
 
     # Filter results if updates-only
     display_results = (
@@ -634,29 +606,20 @@ def main(
         print(json.dumps(display_results, indent=2))
         return
 
-    # Display table
+    # Display simplified table
     print_table(display_results)
 
-    # Summary with input breakdown
-    outdated_by_input = {}
-    for result in results:
-        if result["status"] == "outdated":
-            input_name = result["input"]
-            outdated_by_input[input_name] = outdated_by_input.get(input_name, 0) + 1
-
-    outdated_count = len([r for r in results if r["status"] == "outdated"])
+    # Summary
+    outdated = [r for r in results if r["status"] == "outdated"]
+    outdated_count = len(outdated)
 
     if outdated_count > 0:
         print(f"\n{CONFIG.colors['accent']}Summary:{CONFIG.colors['reset']}")
         print(f"  • {outdated_count} packages with updates available")
-        
-        for input_name, count in outdated_by_input.items():
-            print(f"  • {input_name}: {count} packages need updates")
+        print(f"  • Branch: {nixpkgs_info['branch']}")
 
         print(f"\n{CONFIG.colors['info']}Next steps:{CONFIG.colors['reset']}")
-        for input_name in outdated_by_input.keys():
-            print(f"  nix flake lock --update-input {input_name}")
-        print(f"  nix flake update --refresh --commit-lock-file  # Update all inputs")
+        print(f"  nix flake lock --update-input nixpkgs")
     else:
         print(
             f"\n{CONFIG.colors['equal']}✓ All packages are up to date!{CONFIG.colors['reset']}"
@@ -667,7 +630,7 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Monitor package versions across ALL flake inputs"
+        description="Monitor package versions in main nixpkgs input"
     )
     parser.add_argument("--flake", default="flake.nix", help="Path to flake.nix")
     parser.add_argument("--pkgs", help="Path to freshness.toml config")
