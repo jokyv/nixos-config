@@ -1,0 +1,14 @@
+[packages]
+
+# Example: AI Tools
+pkgs-ai = ["claude-code", "gemini-cli", "aider-chat"]
+
+# Example: Development Tools
+pkgs-dev-tools = ["helix", "python3"]
+
+# Add your other inputs here following the same pattern:
+# pkgs-dev-flutter = ["flutter", "dart"]
+# pkgs-dev-rust = ["rustc", "cargo"]
+# pkgs-desktop = ["cosmic"]
+# pkgs-apps = []
+# pkgs-stable = []
