@@ -262,6 +262,85 @@ def load_packages(config_path: Path) -> List[str]:
     return config["packages"].get("packages", [])
 
 
+def extract_packages_from_flake(flake_path: Path, system: str) -> List[str]:
+    """Extract packages used in flake outputs.
+    
+    Parameters
+    ----------
+    flake_path : Path
+        Path to flake.nix file
+    system : str
+        System architecture
+        
+    Returns
+    -------
+    List[str]
+        List of package names used in flake outputs
+    """
+    packages = set()
+    flake_ref = f"{flake_path.parent.absolute()}"
+    
+    print(f"{CONFIG.colors['info']}Analyzing flake outputs...{CONFIG.colors['reset']}")
+    
+    # Extract from home-manager configuration
+    try:
+        print("  Checking home-manager packages...")
+        cmd = [
+            "nix", "eval", 
+            f"{flake_ref}#homeConfigurations.jokyv.config.home.packages",
+            "--apply", "pkgs: builtins.attrNames pkgs",
+            "--json"
+        ]
+        exit_code, stdout, stderr = run_command(cmd)
+        
+        if exit_code == 0:
+            home_packages = json.loads(stdout)
+            packages.update(home_packages)
+            print(f"    Found {len(home_packages)} packages in home-manager")
+        else:
+            print(f"    {CONFIG.colors['warning']}No home-manager packages found{CONFIG.colors['reset']}")
+    except Exception as e:
+        print(f"    {CONFIG.colors['warning']}Error reading home-manager: {e}{CONFIG.colors['reset']}")
+    
+    # Extract from system configuration
+    try:
+        print("  Checking system packages...")
+        cmd = [
+            "nix", "eval",
+            f"{flake_ref}#nixosConfigurations.nixos.config.environment.systemPackages", 
+            "--apply", "pkgs: builtins.attrNames pkgs",
+            "--json"
+        ]
+        exit_code, stdout, stderr = run_command(cmd)
+        
+        if exit_code == 0:
+            system_packages = json.loads(stdout)
+            packages.update(system_packages)
+            print(f"    Found {len(system_packages)} packages in system configuration")
+        else:
+            print(f"    {CONFIG.colors['warning']}No system packages found{CONFIG.colors['reset']}")
+    except Exception as e:
+        print(f"    {CONFIG.colors['warning']}Error reading system packages: {e}{CONFIG.colors['reset']}")
+    
+    # Filter out non-existent packages in nixpkgs
+    valid_packages = []
+    for package in sorted(packages):
+        # Quick check if package exists in nixpkgs
+        cmd = [
+            "nix", "eval",
+            f"github:nixos/nixpkgs/nixos-unstable#legacyPackages.{system}.{package}",
+            "--raw"
+        ]
+        exit_code, _, _ = run_command(cmd)
+        if exit_code == 0:
+            valid_packages.append(package)
+        else:
+            print(f"    {CONFIG.colors['warning']}Skipping {package} (not found in nixpkgs){CONFIG.colors['reset']}")
+    
+    print(f"{CONFIG.colors['info']}Auto-detected {len(valid_packages)} valid packages{CONFIG.colors['reset']}")
+    return valid_packages
+
+
 def get_cache_path(key: str) -> Path:
     """Get cache file path for a specific key.
 
@@ -498,6 +577,7 @@ def main(
     updates_only: bool = False,
     no_cache: bool = False,
     json_output: bool = False,
+    auto_detect: bool = False,
 ) -> None:
     """Monitor package versions in main nixpkgs input.
 
@@ -513,6 +593,8 @@ def main(
         Skip cache and force fresh lookups, by default False
     json_output : bool, optional
         Output results as JSON, by default False
+    auto_detect : bool, optional
+        Auto-detect packages from flake outputs instead of using config file, by default False
     """
 
     # Validate flake exists
@@ -523,16 +605,27 @@ def main(
         )
         return
 
-    # Find and load packages config
-    try:
-        pkgs_config = find_packages_config(pkgs)
-        print(
-            f"{CONFIG.colors['info']}Loading packages from: {pkgs_config}{CONFIG.colors['reset']}"
-        )
-        packages = load_packages(pkgs_config)
-    except (FileNotFoundError, ValueError) as e:
-        print(f"{CONFIG.colors['error']}Error: {e}{CONFIG.colors['reset']}")
-        return
+    # Detect current system architecture
+    system = get_current_system()
+
+    # Auto-detect packages if requested
+    if auto_detect:
+        print(f"{CONFIG.colors['info']}Auto-detecting packages from flake outputs...{CONFIG.colors['reset']}")
+        packages = extract_packages_from_flake(flake_path, system)
+        if not packages:
+            print(f"{CONFIG.colors['warning']}No packages auto-detected{CONFIG.colors['reset']}")
+            return
+    else:
+        # Find and load packages config
+        try:
+            pkgs_config = find_packages_config(pkgs)
+            print(
+                f"{CONFIG.colors['info']}Loading packages from: {pkgs_config}{CONFIG.colors['reset']}"
+            )
+            packages = load_packages(pkgs_config)
+        except (FileNotFoundError, ValueError) as e:
+            print(f"{CONFIG.colors['error']}Error: {e}{CONFIG.colors['reset']}")
+            return
 
     if not packages:
         print(
@@ -554,9 +647,6 @@ def main(
         print(
             f"{CONFIG.colors['warning']}Warning: Could not determine locked revision{CONFIG.colors['reset']}"
         )
-
-    # Detect current system architecture
-    system = get_current_system()
 
     # Check each package against nixpkgs
     use_cache = not no_cache
@@ -617,6 +707,11 @@ def main(
         print(f"\n{CONFIG.colors['accent']}Summary:{CONFIG.colors['reset']}")
         print(f"  • {outdated_count} packages with updates available")
         print(f"  • Branch: {nixpkgs_info['branch']}")
+        
+        if auto_detect:
+            print(f"  • Mode: Auto-detected packages")
+        else:
+            print(f"  • Mode: Manual specification")
 
         print(f"\n{CONFIG.colors['info']}Next steps:{CONFIG.colors['reset']}")
         print(f"  nix flake lock --update-input nixpkgs")
@@ -643,6 +738,11 @@ if __name__ == "__main__":
         "--no-cache", action="store_true", help="Skip cache, force fresh lookups"
     )
     parser.add_argument("--json", action="store_true", help="Output as JSON")
+    parser.add_argument(
+        "--auto-detect",
+        action="store_true",
+        help="Auto-detect packages from flake outputs instead of using config file",
+    )
 
     args = parser.parse_args()
 
@@ -652,4 +752,5 @@ if __name__ == "__main__":
         updates_only=args.updates_only,
         no_cache=args.no_cache,
         json_output=args.json,
+        auto_detect=args.auto_detect,
     )
