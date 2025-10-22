@@ -423,37 +423,48 @@ def print_table(results: List[Dict]) -> None:
     if not results:
         return
 
-    # Prepare data for polars DataFrame
+    # Prepare clean data for polars DataFrame (no ANSI codes)
     table_data = []
     for row in results:
         match row["status"]:
             case "equal":
                 status_text = "✓ up to date"
-                status_color = CONFIG.colors["equal"]
             case "outdated":
                 status_text = "⚠ update available"
-                status_color = CONFIG.colors["warning"]
             case _:
                 status_text = "?"
-                status_color = ""
 
         table_data.append(
             {
-                "package": row["package"],
-                "current": format_version(row["current"], row["status"]),
-                "latest": f"{CONFIG.colors['latest_bg']}{row['latest']}{CONFIG.colors['reset']}"
-                if row["status"] == "outdated"
-                else row["latest"],
-                "status": f"{status_color}{status_text}{CONFIG.colors['reset']}",
+                "Package": row["package"],
+                "Current": row["current"],
+                "Latest": row["latest"],
+                "Status": status_text,
             }
         )
 
     # Create polars DataFrame
     df = pl.DataFrame(table_data)
 
-    # Print the table with proper formatting
+    # Configure display for better terminal output
+    pl.Config.set_tbl_rows(len(results))  # Show all rows
+    pl.Config.set_tbl_cols(len(df.columns))  # Show all columns
+    pl.Config.set_fmt_str_lengths(50)  # Reasonable string length
+    pl.Config.set_tbl_width_chars(120)  # Wider table for terminal
+    pl.Config.set_tbl_hide_column_data_types(True)  # Cleaner output
+    pl.Config.set_tbl_hide_dataframe_shape(True)  # Remove shape info
+
+    # Print the table
     print("\n")
     print(df)
+
+    # Add color legend below the table
+    print(f"\n{CONFIG.colors['info']}Color Legend:{CONFIG.colors['reset']}")
+    for row in results:
+        if row["status"] == "outdated":
+            print(f"  {row['package']}: {CONFIG.colors['outdated_bg']}{row['current']}{CONFIG.colors['reset']} → {CONFIG.colors['latest_bg']}{row['latest']}{CONFIG.colors['reset']}")
+        elif row["status"] == "equal":
+            print(f"  {row['package']}: {CONFIG.colors['equal']}{row['current']}{CONFIG.colors['reset']} (up to date)")
 
 
 # ============================================================================
