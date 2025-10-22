@@ -1,2 +1,14 @@
 [packages]
-packages = ["helix", "python3"]
+
+packages = [
+  "aider-chat",
+  "firefox",
+  "niri",
+  "helix",
+  "python313",
+  "foot",
+  "stylix",
+  "home-manager",
+  "yazi",
+  "zoxide",
+]
