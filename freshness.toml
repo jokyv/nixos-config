@@ -1,14 +1,25 @@
-[packages]
-
+[nixpkgs]
 packages = [
   "aider-chat",
   "firefox",
-  "niri",
   "helix",
   "python313",
   "foot",
-  "stylix",
-  "home-manager",
   "yazi",
   "zoxide",
+]
+
+[home-manager]
+packages = [
+  "home-manager",
+]
+
+[stylix]
+packages = [
+  "stylix",
+]
+
+[niri]
+packages = [
+  "niri",
 ]
