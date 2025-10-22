@@ -1,4 +1,4 @@
-[nixpkgs]
+[packages]
 packages = [
   "aider-chat",
   "firefox",
@@ -7,19 +7,4 @@ packages = [
   "foot",
   "yazi",
   "zoxide",
-]
-
-[home-manager]
-packages = [
-  "home-manager",
-]
-
-[stylix]
-packages = [
-  "stylix",
-]
-
-[niri]
-packages = [
-  "niri",
 ]
