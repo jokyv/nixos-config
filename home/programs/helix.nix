@@ -1,14 +1,16 @@
 { pkgs, ... }:
-
 {
   programs.helix = {
     enable = true;
 
     settings = {
       editor = {
-        auto-save = true;
+        # auto-save = true;
+        auto-save.focus-lost = true;
+        auto-save.after-delay.enable = true;
+        auto-save.after-delay.timeout = 30000;
+
         bufferline = "multiple";
-        color-modes = true;
         cursorline = true;
         idle-timeout = 25;
         mouse = false;
@@ -16,6 +18,9 @@
         rulers = [ 120 ];
         scrolloff = 10;
         true-color = true;
+        color-modes = true;
+        # rainbow-brackets = true; # it seems it does not work yet, check on next release
+
         end-of-line-diagnostics = "hint";
         # inline-diagnostics.cursor-line = "error";
         inline-diagnostics.cursor-line = "warning";

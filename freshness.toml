@@ -7,4 +7,5 @@ packages = [
   "foot",
   "yazi",
   "zoxide",
+  "niri",
 ]

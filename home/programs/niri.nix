@@ -127,6 +127,7 @@ let
     { argv = [ "xdg-desktop-portal" ]; }
     # { argv = [ "qs" "-c" "noctalia-shell" ]; }
     { argv = [ "waybar" ]; }
+    { argv = [ "gammastep-indicator" ]; }
     {
       argv = [
         "swww"
