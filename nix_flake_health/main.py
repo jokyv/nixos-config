@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
+
 """
-flake-freshness.py: Monitor package versions in main nixpkgs input
+Monitor package versions in main nixpkgs input
 
 A Python script for tracking package versions in your flake's main nixpkgs
 input. Compares installed versions against latest available versions.
@@ -171,12 +172,12 @@ def find_packages_config(override: Optional[str] = None) -> Path:
 
 def extract_branch_from_url(url: str) -> str:
     """Extract branch name from flake URL.
-    
+
     Parameters
     ----------
     url : str
         Flake URL string
-        
+
     Returns
     -------
     str
@@ -184,7 +185,7 @@ def extract_branch_from_url(url: str) -> str:
     """
     if not url:
         return "unknown"
-    
+
     # Handle GitHub URLs with branches
     if "github:" in url and "/" in url:
         parts = url.split("/")
@@ -193,7 +194,7 @@ def extract_branch_from_url(url: str) -> str:
             branch_part = parts[-1]
             # Remove any query parameters or fragments
             return branch_part.split("?")[0].split("#")[0]
-    
+
     return "unknown"
 
 
@@ -497,9 +498,13 @@ def print_table(results: List[Dict], revision_age: str) -> None:
     print(f"\n{CONFIG.colors['info']}Color Legend:{CONFIG.colors['reset']}")
     for row in results:
         if row["status"] == "outdated":
-            print(f"  {row['package']}: {CONFIG.colors['outdated_bg']}{row['current']}{CONFIG.colors['reset']} → {CONFIG.colors['latest_bg']}{row['latest']}{CONFIG.colors['reset']}")
+            print(
+                f"  {row['package']}: {CONFIG.colors['outdated_bg']}{row['current']}{CONFIG.colors['reset']} → {CONFIG.colors['latest_bg']}{row['latest']}{CONFIG.colors['reset']}"
+            )
         elif row["status"] == "equal":
-            print(f"  {row['package']}: {CONFIG.colors['equal']}{row['current']}{CONFIG.colors['reset']} (up to date)")
+            print(
+                f"  {row['package']}: {CONFIG.colors['equal']}{row['current']}{CONFIG.colors['reset']} (up to date)"
+            )
 
 
 # ============================================================================
@@ -508,7 +513,7 @@ def print_table(results: List[Dict], revision_age: str) -> None:
 
 
 def main(
-    flake: str = "flake.nix",
+    flake: str = "../flake.nix",
     pkgs: Optional[str] = None,
     updates_only: bool = False,
     no_cache: bool = False,
@@ -660,13 +665,14 @@ def main(
             f"\n{CONFIG.colors['equal']}✓ All packages are up to date!{CONFIG.colors['reset']}"
         )
 
+
 if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(
         description="Monitor package versions in main nixpkgs input"
     )
-    parser.add_argument("--flake", default="flake.nix", help="Path to flake.nix")
+    parser.add_argument("--flake", default="../flake.nix", help="Path to flake.nix")
     parser.add_argument("--pkgs", help="Path to freshness.toml config")
     parser.add_argument(
         "--updates-only",
