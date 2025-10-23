@@ -94,7 +94,7 @@ in
   # ---------------------------------------------
   # User Configuration
   # ---------------------------------------------
-  # Don't forget to set a password with ‘passwd’.
+  # Don't forget to set a password with 'passwd'.
   users.users.jokyv = {
     isNormalUser = true;
     description = "jokyv";
@@ -146,9 +146,11 @@ in
     gcc
     gdb
     git
-    python313
-    python313Packages.pyyaml
-    python313Packages.rich
+    (python313.withPackages (ps: with ps; [
+        pyyaml
+        rich
+        # add other python packages you need here
+    ]))
 
     # Network Utilities
     curl
