@@ -9,6 +9,7 @@ input. Compares installed versions against latest available versions.
 
 import argparse
 import json
+import os
 import subprocess
 from dataclasses import dataclass
 from datetime import datetime
@@ -223,7 +224,7 @@ def extract_nixpkgs_info(flake_path: Path) -> Dict:
     Parameters
     ----------
     flake_path : Path
-        Path to flake.nix file
+        Absolute path to flake.nix file
 
     Returns
     -------
@@ -231,29 +232,41 @@ def extract_nixpkgs_info(flake_path: Path) -> Dict:
         Dictionary with 'branch', 'locked_rev', and 'last_modified' keys
 
     """
-    # Get flake metadata
-    exit_code, stdout, stderr = run_command(["nix", "flake", "metadata", "--json"], capture_output=True)
-
-    if exit_code != 0:
-        print(f"{CONFIG.colors['error']}Error getting flake metadata: {stderr}{CONFIG.colors['reset']}")
-        return {"branch": "nixos-unstable", "locked_rev": None, "last_modified": None}
-
+    # Change to the directory containing the flake.nix file
+    original_cwd = Path.cwd()
+    flake_dir = flake_path.parent
+    
     try:
-        metadata = json.loads(stdout)
-        nixpkgs_lock = metadata.get("locks", {}).get("nodes", {}).get("nixpkgs", {})
-        locked_rev = nixpkgs_lock.get("locked", {}).get("rev")
+        # Change to flake directory so nix commands work correctly
+        os.chdir(flake_dir)
+        
+        # Get flake metadata
+        exit_code, stdout, stderr = run_command(["nix", "flake", "metadata", "--json"], capture_output=True)
 
-        # Extract branch from URL
-        url = nixpkgs_lock.get("locked", {}).get("url", "")
-        branch = extract_branch_from_url(url) if url else "nixos-unstable"
+        if exit_code != 0:
+            print(f"{CONFIG.colors['error']}Error getting flake metadata: {stderr}{CONFIG.colors['reset']}")
+            return {"branch": "nixos-unstable", "locked_rev": None, "last_modified": None}
 
-        # Extract last modified timestamp
-        last_modified = nixpkgs_lock.get("locked", {}).get("lastModified")
+        try:
+            metadata = json.loads(stdout)
+            nixpkgs_lock = metadata.get("locks", {}).get("nodes", {}).get("nixpkgs", {})
+            locked_rev = nixpkgs_lock.get("locked", {}).get("rev")
 
-        return {"branch": branch, "locked_rev": locked_rev, "last_modified": last_modified}
+            # Extract branch from URL
+            url = nixpkgs_lock.get("locked", {}).get("url", "")
+            branch = extract_branch_from_url(url) if url else "nixos-unstable"
 
-    except (json.JSONDecodeError, KeyError):
-        return {"branch": "nixos-unstable", "locked_rev": None, "last_modified": None}
+            # Extract last modified timestamp
+            last_modified = nixpkgs_lock.get("locked", {}).get("lastModified")
+
+            return {"branch": branch, "locked_rev": locked_rev, "last_modified": last_modified}
+
+        except (json.JSONDecodeError, KeyError):
+            return {"branch": "nixos-unstable", "locked_rev": None, "last_modified": None}
+    
+    finally:
+        # Always return to original directory
+        os.chdir(original_cwd)
 
 
 def load_packages(config_path: Path) -> List[str]:
@@ -545,10 +558,22 @@ def main(
         Output results as JSON, by default False
 
     """
-    # Validate flake exists
+    # Resolve flake path to absolute path
     flake_path = Path(flake)
+    if not flake_path.is_absolute():
+        # If relative path, try to resolve it relative to the script location first
+        script_dir = Path(__file__).parent.parent  # Go up to project root from script location
+        potential_path = script_dir / flake_path
+        if potential_path.exists():
+            flake_path = potential_path
+        else:
+            # Fall back to current working directory
+            flake_path = Path.cwd() / flake_path
+    
+    # Validate flake exists
     if not flake_path.exists():
-        print(f"{CONFIG.colors['error']}Error: flake.nix not found at {flake}{CONFIG.colors['reset']}")
+        print(f"{CONFIG.colors['error']}Error: flake.nix not found at {flake_path}{CONFIG.colors['reset']}")
+        print(f"{CONFIG.colors['info']}Tried: {flake_path}{CONFIG.colors['reset']}")
         return
 
     # Find and load packages config
@@ -570,7 +595,7 @@ def main(
     print(f"{CONFIG.colors['info']}Checking {len(packages)} packages from nixpkgs...{CONFIG.colors['reset']}\n")
 
     # Extract nixpkgs info
-    print(f"{CONFIG.colors['info']}Extracting nixpkgs info from: {flake}{CONFIG.colors['reset']}")
+    print(f"{CONFIG.colors['info']}Extracting nixpkgs info from: {flake_path}{CONFIG.colors['reset']}")
     nixpkgs_info = extract_nixpkgs_info(flake_path)
 
     # Calculate revision age
