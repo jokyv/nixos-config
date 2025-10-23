@@ -1,31 +1,39 @@
 #!/usr/bin/env python3
 
 """
-Monitor package versions in main nixpkgs input
+Monitor package versions in main nixpkgs input.
 
 A Python script for tracking package versions in your flake's main nixpkgs
 input. Compares installed versions against latest available versions.
 """
 
+import argparse
 import json
 import subprocess
-import sys
-from pathlib import Path
 from dataclasses import dataclass
-from typing import List, Dict, Optional, Tuple
+from datetime import datetime
+from pathlib import Path
+from typing import Dict, List, Optional, Tuple
+
 import tomllib
-from datetime import datetime, timedelta
-import os
 from rich.console import Console
 from rich.table import Table
 
+# ===============================================
+# Variables
+# ===============================================
 
-# ============================================================================
+DEFAULT_FLAKE_PATH = "flake.nix"
+
+# ===============================================
 # Configuration & Constants
-# ============================================================================
+# ===============================================
+
+
 @dataclass
 class Config:
-    """Configuration for flake-freshness script.
+    """
+    Configuration for flake-freshness script.
 
     Attributes
     ----------
@@ -35,6 +43,7 @@ class Config:
         Cache configuration including TTL
     defaults : Dict[str, str]
         Default values for script parameters
+
     """
 
     colors: Dict[str, str] = None
@@ -64,23 +73,27 @@ CONFIG = Config()
 
 # Runtime paths that depend on environment
 def get_cache_dir() -> Path:
-    """Get cache directory path.
+    """
+    Get cache directory path.
 
     Returns
     -------
     Path
         Path to cache directory in user's home
+
     """
     return Path.home() / ".cache" / "nix-flake-health"
 
 
 def get_default_package_paths() -> List[Path]:
-    """Get default package config file paths.
+    """
+    Get default package config file paths.
 
     Returns
     -------
     List[Path]
         List of potential config file locations
+
     """
     script_dir = Path(__file__).parent
     return [
@@ -90,13 +103,14 @@ def get_default_package_paths() -> List[Path]:
     ]
 
 
-# ============================================================================
+# ===============================================
 # Helper Functions
-# ============================================================================
+# ===============================================
 
 
 def run_command(cmd: List[str], capture_output: bool = True) -> Tuple[int, str, str]:
-    """Run a command and return exit code, stdout, stderr.
+    """
+    Run a command and return exit code, stdout, stderr.
 
     Parameters
     ----------
@@ -109,6 +123,7 @@ def run_command(cmd: List[str], capture_output: bool = True) -> Tuple[int, str, 
     -------
     Tuple[int, str, str]
         Exit code, stdout, and stderr from command execution
+
     """
     try:
         result = subprocess.run(cmd, capture_output=capture_output, text=True)
@@ -118,27 +133,26 @@ def run_command(cmd: List[str], capture_output: bool = True) -> Tuple[int, str, 
 
 
 def get_current_system() -> str:
-    """Detect current system architecture.
+    """
+    Detect current system architecture.
 
     Returns
     -------
     str
         System architecture string (e.g., 'x86_64-linux')
+
     """
-    exit_code, stdout, stderr = run_command(
-        ["nix", "eval", "--impure", "--expr", "builtins.currentSystem", "--raw"]
-    )
+    exit_code, stdout, stderr = run_command(["nix", "eval", "--impure", "--expr", "builtins.currentSystem", "--raw"])
     if exit_code == 0:
         return stdout.strip()
     else:
-        print(
-            f"{CONFIG.colors['error']}Error getting current system: {stderr}{CONFIG.colors['reset']}"
-        )
+        print(f"{CONFIG.colors['error']}Error getting current system: {stderr}{CONFIG.colors['reset']}")
         return "x86_64-linux"  # fallback
 
 
 def find_packages_config(override: Optional[str] = None) -> Path:
-    """Find packages config file.
+    """
+    Find packages config file.
 
     Parameters
     ----------
@@ -154,6 +168,7 @@ def find_packages_config(override: Optional[str] = None) -> Path:
     ------
     FileNotFoundError
         If no config file is found
+
     """
     if override and override != "":
         config_path = Path(override)
@@ -172,7 +187,8 @@ def find_packages_config(override: Optional[str] = None) -> Path:
 
 
 def extract_branch_from_url(url: str) -> str:
-    """Extract branch name from flake URL.
+    """
+    Extract branch name from flake URL.
 
     Parameters
     ----------
@@ -183,6 +199,7 @@ def extract_branch_from_url(url: str) -> str:
     -------
     str
         Branch name or 'unknown'
+
     """
     if not url:
         return "unknown"
@@ -200,7 +217,8 @@ def extract_branch_from_url(url: str) -> str:
 
 
 def extract_nixpkgs_info(flake_path: Path) -> Dict:
-    """Extract main nixpkgs branch, locked revision, and last modified date.
+    """
+    Extract main nixpkgs branch, locked revision, and last modified date.
 
     Parameters
     ----------
@@ -211,16 +229,13 @@ def extract_nixpkgs_info(flake_path: Path) -> Dict:
     -------
     Dict
         Dictionary with 'branch', 'locked_rev', and 'last_modified' keys
+
     """
     # Get flake metadata
-    exit_code, stdout, stderr = run_command(
-        ["nix", "flake", "metadata", "--json"], capture_output=True
-    )
+    exit_code, stdout, stderr = run_command(["nix", "flake", "metadata", "--json"], capture_output=True)
 
     if exit_code != 0:
-        print(
-            f"{CONFIG.colors['error']}Error getting flake metadata: {stderr}{CONFIG.colors['reset']}"
-        )
+        print(f"{CONFIG.colors['error']}Error getting flake metadata: {stderr}{CONFIG.colors['reset']}")
         return {"branch": "nixos-unstable", "locked_rev": None, "last_modified": None}
 
     try:
@@ -235,18 +250,15 @@ def extract_nixpkgs_info(flake_path: Path) -> Dict:
         # Extract last modified timestamp
         last_modified = nixpkgs_lock.get("locked", {}).get("lastModified")
 
-        return {
-            "branch": branch,
-            "locked_rev": locked_rev,
-            "last_modified": last_modified,
-        }
+        return {"branch": branch, "locked_rev": locked_rev, "last_modified": last_modified}
 
     except (json.JSONDecodeError, KeyError):
         return {"branch": "nixos-unstable", "locked_rev": None, "last_modified": None}
 
 
 def load_packages(config_path: Path) -> List[str]:
-    """Load simple package list from TOML.
+    """
+    Load simple package list from TOML.
 
     Parameters
     ----------
@@ -262,6 +274,7 @@ def load_packages(config_path: Path) -> List[str]:
     ------
     ValueError
         If config file doesn't contain [packages] section
+
     """
     with open(config_path, "rb") as f:
         config = tomllib.load(f)
@@ -273,7 +286,8 @@ def load_packages(config_path: Path) -> List[str]:
 
 
 def get_cache_path(key: str) -> Path:
-    """Get cache file path for a specific key.
+    """
+    Get cache file path for a specific key.
 
     Parameters
     ----------
@@ -284,13 +298,15 @@ def get_cache_path(key: str) -> Path:
     -------
     Path
         Path to cache file
+
     """
     safe_key = key.replace("/", "_").replace(":", "_")
     return get_cache_dir() / f"{safe_key}.json"
 
 
 def is_cache_valid(cache_path: Path) -> bool:
-    """Check if cache is valid.
+    """
+    Check if cache is valid.
 
     Parameters
     ----------
@@ -301,6 +317,7 @@ def is_cache_valid(cache_path: Path) -> bool:
     -------
     bool
         True if cache exists and is not expired
+
     """
     if not cache_path.exists():
         return False
@@ -313,7 +330,8 @@ def is_cache_valid(cache_path: Path) -> bool:
 
 
 def read_cache(key: str) -> Optional[str]:
-    """Read from cache.
+    """
+    Read from cache.
 
     Parameters
     ----------
@@ -324,6 +342,7 @@ def read_cache(key: str) -> Optional[str]:
     -------
     Optional[str]
         Cached value or None if not found or expired
+
     """
     cache_path = get_cache_path(key)
 
@@ -337,7 +356,8 @@ def read_cache(key: str) -> Optional[str]:
 
 
 def write_cache(key: str, value: str) -> None:
-    """Write to cache.
+    """
+    Write to cache.
 
     Parameters
     ----------
@@ -345,6 +365,7 @@ def write_cache(key: str, value: str) -> None:
         Cache key to write
     value : str
         Value to cache
+
     """
     cache_dir = get_cache_dir()
     cache_dir.mkdir(parents=True, exist_ok=True)
@@ -354,10 +375,9 @@ def write_cache(key: str, value: str) -> None:
         json.dump(value, f)
 
 
-def get_package_version(
-    flake_ref: str, input_name: str, package: str, use_cache: bool
-) -> str:
-    """Get package version from nix eval.
+def get_package_version(flake_ref: str, input_name: str, package: str, use_cache: bool) -> str:
+    """
+    Get package version from nix eval.
 
     Parameters
     ----------
@@ -374,6 +394,7 @@ def get_package_version(
     -------
     str
         Package version or 'not found' if unavailable
+
     """
     cache_key = f"{flake_ref}-{input_name}-{package}"
 
@@ -395,7 +416,8 @@ def get_package_version(
 
 
 def compare_versions(current: str, latest: str) -> str:
-    """Compare two version strings.
+    """
+    Compare two version strings.
 
     Parameters
     ----------
@@ -408,6 +430,7 @@ def compare_versions(current: str, latest: str) -> str:
     -------
     str
         Comparison result: 'equal', 'outdated', or 'unknown'
+
     """
     if current == "not found" or latest == "not found":
         return "unknown"
@@ -419,7 +442,8 @@ def compare_versions(current: str, latest: str) -> str:
 
 
 def format_version(version: str, status: str) -> str:
-    """Format version with color.
+    """
+    Format version with color.
 
     Parameters
     ----------
@@ -432,6 +456,7 @@ def format_version(version: str, status: str) -> str:
     -------
     str
         Formatted version string with ANSI color codes
+
     """
     match status:
         case "outdated":
@@ -443,7 +468,8 @@ def format_version(version: str, status: str) -> str:
 
 
 def print_table(results: List[Dict], revision_age: str) -> None:
-    """Print results as a formatted table using Rich.
+    """
+    Print results as a formatted table using Rich.
 
     Parameters
     ----------
@@ -451,13 +477,14 @@ def print_table(results: List[Dict], revision_age: str) -> None:
         List of result dictionaries to display
     revision_age : str
         The age of the current nixpkgs revision
+
     """
     if not results:
         return
 
     console = Console()
     table = Table(show_header=True, header_style="bold cyan")
-    
+
     # Add columns
     table.add_column("Package", style="dim", width=20)
     table.add_column("Current", justify="right")
@@ -481,33 +508,28 @@ def print_table(results: List[Dict], revision_age: str) -> None:
 
         # Format current version with appropriate color
         current_version = f"[{current_style}]{row['current']}[/{current_style}]"
-        
-        table.add_row(
-            row["package"],
-            current_version,
-            revision_age,
-            row["latest"],
-            status_text
-        )
+
+        table.add_row(row["package"], current_version, revision_age, row["latest"], status_text)
 
     # Print the table
     print("\n")
     console.print(table)
 
 
-# ============================================================================
+# ===============================================
 # Main Logic
-# ============================================================================
+# ===============================================
 
 
 def main(
-    flake: str = "../flake.nix",
+    flake: str = DEFAULT_FLAKE_PATH,
     pkgs: Optional[str] = None,
     updates_only: bool = False,
     no_cache: bool = False,
     json_output: bool = False,
 ) -> None:
-    """Monitor package versions in main nixpkgs input.
+    """
+    Monitor package versions in main nixpkgs input.
 
     Parameters
     ----------
@@ -521,44 +543,34 @@ def main(
         Skip cache and force fresh lookups, by default False
     json_output : bool, optional
         Output results as JSON, by default False
-    """
 
+    """
     # Validate flake exists
     flake_path = Path(flake)
     if not flake_path.exists():
-        print(
-            f"{CONFIG.colors['error']}Error: flake.nix not found at {flake}{CONFIG.colors['reset']}"
-        )
+        print(f"{CONFIG.colors['error']}Error: flake.nix not found at {flake}{CONFIG.colors['reset']}")
         return
 
     # Find and load packages config
     try:
         pkgs_config = find_packages_config(pkgs)
-        print(
-            f"{CONFIG.colors['info']}Loading packages from: {pkgs_config}{CONFIG.colors['reset']}"
-        )
+        print(f"{CONFIG.colors['info']}Loading packages from: {pkgs_config}{CONFIG.colors['reset']}")
         packages = load_packages(pkgs_config)
     except (FileNotFoundError, ValueError) as e:
         print(f"{CONFIG.colors['error']}Error: {e}{CONFIG.colors['reset']}")
         return
 
     if not packages:
-        print(
-            f"{CONFIG.colors['warning']}No packages found to check{CONFIG.colors['reset']}"
-        )
+        print(f"{CONFIG.colors['warning']}No packages found to check{CONFIG.colors['reset']}")
         return
 
     # Detect current system architecture
     system = get_current_system()
 
-    print(
-        f"{CONFIG.colors['info']}Checking {len(packages)} packages from nixpkgs...{CONFIG.colors['reset']}\n"
-    )
+    print(f"{CONFIG.colors['info']}Checking {len(packages)} packages from nixpkgs...{CONFIG.colors['reset']}\n")
 
     # Extract nixpkgs info
-    print(
-        f"{CONFIG.colors['info']}Extracting nixpkgs info from: {flake}{CONFIG.colors['reset']}"
-    )
+    print(f"{CONFIG.colors['info']}Extracting nixpkgs info from: {flake}{CONFIG.colors['reset']}")
     nixpkgs_info = extract_nixpkgs_info(flake_path)
 
     # Calculate revision age
@@ -576,9 +588,7 @@ def main(
             revision_age_str = f"{age_days} days ago"
 
     if not nixpkgs_info.get("locked_rev"):
-        print(
-            f"{CONFIG.colors['warning']}Warning: Could not determine locked revision{CONFIG.colors['reset']}"
-        )
+        print(f"{CONFIG.colors['warning']}Warning: Could not determine locked revision{CONFIG.colors['reset']}")
 
     # Check each package against nixpkgs
     use_cache = not no_cache
@@ -590,20 +600,14 @@ def main(
         # Get current version from locked revision
         if nixpkgs_info.get("locked_rev"):
             current = get_package_version(
-                f"github:nixos/nixpkgs/{nixpkgs_info['locked_rev']}",
-                f"legacyPackages.{system}",
-                package,
-                use_cache,
+                f"github:nixos/nixpkgs/{nixpkgs_info['locked_rev']}", f"legacyPackages.{system}", package, use_cache
             )
         else:
             current = "no lock"
 
         # Get latest version from upstream branch
         latest = get_package_version(
-            f"github:nixos/nixpkgs/{nixpkgs_info['branch']}",
-            f"legacyPackages.{system}",
-            package,
-            use_cache,
+            f"github:nixos/nixpkgs/{nixpkgs_info['branch']}", f"legacyPackages.{system}", package, use_cache
         )
 
         status = compare_versions(current, latest)
@@ -619,17 +623,12 @@ def main(
         )
 
     # Filter results if updates-only
-    display_results = (
-        [r for r in results if r["status"] == "outdated"] if updates_only else results
-    )
+    display_results = [r for r in results if r["status"] == "outdated"] if updates_only else results
 
     # Output results
     if json_output:
         # Add revision age to JSON output as well
-        output_data = {
-            "revision_age": revision_age_str,
-            "packages": display_results,
-        }
+        output_data = {"revision_age": revision_age_str, "packages": display_results}
         print(json.dumps(output_data, indent=2))
         return
 
@@ -649,35 +648,19 @@ def main(
         print(f"\n{CONFIG.colors['info']}Next steps:{CONFIG.colors['reset']}")
         print(f"  nix flake lock --update-input nixpkgs")
     else:
-        print(
-            f"\n{CONFIG.colors['equal']}✓ All packages are up to date!{CONFIG.colors['reset']}"
-        )
+        print(f"\n{CONFIG.colors['equal']}✓ All packages are up to date!{CONFIG.colors['reset']}")
 
 
 if __name__ == "__main__":
-    import argparse
-
-    parser = argparse.ArgumentParser(
-        description="Monitor package versions in main nixpkgs input"
-    )
-    parser.add_argument("--flake", default="../flake.nix", help="Path to flake.nix")
+    parser = argparse.ArgumentParser(description="Monitor package versions in main nixpkgs input")
+    parser.add_argument("--flake", default=DEFAULT_FLAKE_PATH, help="Path to flake.nix")
     parser.add_argument("--pkgs", help="Path to freshness.toml config")
-    parser.add_argument(
-        "--updates-only",
-        action="store_true",
-        help="Only show packages with updates available",
-    )
-    parser.add_argument(
-        "--no-cache", action="store_true", help="Skip cache, force fresh lookups"
-    )
+    parser.add_argument("--updates-only", action="store_true", help="Only show packages with updates available")
+    parser.add_argument("--no-cache", action="store_true", help="Skip cache, force fresh lookups")
     parser.add_argument("--json", action="store_true", help="Output as JSON")
 
     args = parser.parse_args()
 
     main(
-        flake=args.flake,
-        pkgs=args.pkgs,
-        updates_only=args.updates_only,
-        no_cache=args.no_cache,
-        json_output=args.json,
+        flake=args.flake, pkgs=args.pkgs, updates_only=args.updates_only, no_cache=args.no_cache, json_output=args.json
     )
