@@ -140,13 +140,15 @@ in
     clamav
 
     # Development Tools
+    aider-chat-full
     clang
     cmake
     gcc
     gdb
     git
     python313
-    aider-chat-full
+    python313Packages.pyyaml
+    python313Packages.rich
 
     # Network Utilities
     curl
