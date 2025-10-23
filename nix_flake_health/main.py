@@ -14,9 +14,10 @@ from pathlib import Path
 from dataclasses import dataclass
 from typing import List, Dict, Optional, Tuple
 import tomllib
-import polars as pl
 from datetime import datetime, timedelta
 import os
+from rich.console import Console
+from rich.table import Table
 
 
 # ============================================================================
@@ -442,7 +443,7 @@ def format_version(version: str, status: str) -> str:
 
 
 def print_table(results: List[Dict], revision_age: str) -> None:
-    """Print results as a simplified formatted table.
+    """Print results as a formatted table using Rich.
 
     Parameters
     ----------
@@ -454,57 +455,44 @@ def print_table(results: List[Dict], revision_age: str) -> None:
     if not results:
         return
 
-    # Prepare clean data for polars DataFrame
-    table_data = []
+    console = Console()
+    table = Table(show_header=True, header_style="bold cyan")
+    
+    # Add columns
+    table.add_column("Package", style="dim", width=20)
+    table.add_column("Current", justify="right")
+    table.add_column("Revision Age", justify="center")
+    table.add_column("Latest", justify="right")
+    table.add_column("Status", justify="center")
+
+    # Add rows
     for row in results:
+        # Determine status styling
         match row["status"]:
             case "equal":
-                status_text = "✓ up to date"
+                status_text = "[green]✓ up to date[/green]"
+                current_style = "green"
             case "outdated":
-                status_text = "⚠ update available"
+                status_text = "[yellow]⚠ update available[/yellow]"
+                current_style = "yellow"
             case _:
-                status_text = "?"
+                status_text = "[red]?[/red]"
+                current_style = "red"
 
-        table_data.append(
-            {
-                "Package": row["package"],
-                "Current": row["current"],
-                "Latest": row["latest"],
-                "Status": status_text,
-            }
+        # Format current version with appropriate color
+        current_version = f"[{current_style}]{row['current']}[/{current_style}]"
+        
+        table.add_row(
+            row["package"],
+            current_version,
+            revision_age,
+            row["latest"],
+            status_text
         )
-
-    # Create polars DataFrame
-    df = pl.DataFrame(table_data)
-
-    # Add revision age and reorder columns
-    df = df.with_columns(pl.lit(revision_age).alias("Revision Age")).select(
-        "Package", "Current", "Revision Age", "Latest", "Status"
-    )
-
-    # Configure display for better terminal output
-    pl.Config.set_tbl_rows(len(results))
-    pl.Config.set_tbl_cols(len(df.columns))
-    pl.Config.set_fmt_str_lengths(30)
-    pl.Config.set_tbl_width_chars(120)
-    pl.Config.set_tbl_hide_column_data_types(True)
-    pl.Config.set_tbl_hide_dataframe_shape(True)
 
     # Print the table
     print("\n")
-    print(df)
-
-    # Add color legend below the table
-    print(f"\n{CONFIG.colors['info']}Color Legend:{CONFIG.colors['reset']}")
-    for row in results:
-        if row["status"] == "outdated":
-            print(
-                f"  {row['package']}: {CONFIG.colors['outdated_bg']}{row['current']}{CONFIG.colors['reset']} → {CONFIG.colors['latest_bg']}{row['latest']}{CONFIG.colors['reset']}"
-            )
-        elif row["status"] == "equal":
-            print(
-                f"  {row['package']}: {CONFIG.colors['equal']}{row['current']}{CONFIG.colors['reset']} (up to date)"
-            )
+    console.print(table)
 
 
 # ============================================================================
@@ -645,7 +633,7 @@ def main(
         print(json.dumps(output_data, indent=2))
         return
 
-    # Display simplified table
+    # Display table using Rich
     print_table(display_results, revision_age_str)
 
     # Summary
