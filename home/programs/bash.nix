@@ -42,8 +42,8 @@
       "cleanup" = "find . -type f -name '*.DS_Store' -ls -delete";
 
       # Linux Scripts
-      "sb" = "source_files";
-      "cdd" = "cd_with_eza";
+      "sb" = "linux_util.py --source_bash_profile";
+      "cdd" = "linix_util.py --cd_with_eza";
 
       # FZF Scripts
       "vv" = "fzf_util.py --open_file";
