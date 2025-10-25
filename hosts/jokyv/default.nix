@@ -146,11 +146,13 @@ in
     gcc
     gdb
     git
-    (python313.withPackages (ps: with ps; [
+    (python313.withPackages (
+      wpkgs: with wpkgs; [
         pyyaml
         rich
-        # add other python packages you need here
-    ]))
+        rendercv
+      ]
+    ))
 
     # Network Utilities
     curl
