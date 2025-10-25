@@ -61,6 +61,7 @@
     {
       self,
       nixpkgs,
+      nixpkgs-stable,
       home-manager,
       stylix,
       sops-nix,
@@ -71,6 +72,7 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      pkgs-stable = nixpkgs-stable.legacyPackages.${system};
     in
     {
       # NixOS system configuration
@@ -105,6 +107,9 @@
           niri.homeModules.niri
           # noctalia.homeModules.default
         ];
+        extraSpecialArgs = {
+          inherit pkgs-stable;
+        };
       };
     };
 }
