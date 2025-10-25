@@ -495,6 +495,9 @@ def print_table(results: List[Dict], revision_age: str) -> None:
     if not results:
         return
 
+    # sort results: outdated first
+    sorted_results = sorted(results, key=lambda x: x["status"] != "outdated")
+
     console = Console()
     table = Table(show_header=True, header_style="bold cyan")
 
@@ -506,7 +509,7 @@ def print_table(results: List[Dict], revision_age: str) -> None:
     table.add_column("Status", justify="center")
 
     # Add rows
-    for row in results:
+    for row in sorted_results:
         # Determine status styling
         match row["status"]:
             case "equal":
