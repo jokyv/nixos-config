@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  pkgs-stable,
   lib,
   ...
 }:
@@ -110,7 +111,7 @@
     # GUI Applications
     discord
     keymapp
-    libreoffice-qt-fresh
+    pkgs-stable.libreoffice-qt-fresh
     nautilus
     psst # A spotify client
 
