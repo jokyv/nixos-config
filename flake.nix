@@ -101,7 +101,8 @@
       # Home Manager configuration (standalone)
       # ---------------------------------------
       homeConfigurations.jokyv = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs pkgs-stable; # this is equal to pkgs = pkgs;
+        inherit pkgs;
+        extraSpecialArgs = { inherit pkgs-stable; };
         modules = [
           ./home/default.nix
           stylix.homeModules.stylix
