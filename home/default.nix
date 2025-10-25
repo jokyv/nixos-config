@@ -131,7 +131,7 @@
     unimatrix
 
     # AI & Automation
-    # aider-chat
+    # aider-chat[full]
     # playwright-driver
 
     # Screen Capture & Clipboard
