@@ -123,7 +123,7 @@ let
   startup_apps = [
     { argv = [ "swww-daemon" ]; }
     { argv = [ "foot" ]; }
-    { argv = [ "xwayland-satellite" ]; }
+    # { argv = [ "xwayland-satellite" ]; }
     { argv = [ "xdg-desktop-portal" ]; }
     # { argv = [ "qs" "-c" "noctalia-shell" ]; }
     { argv = [ "waybar" ]; }
