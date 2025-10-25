@@ -215,7 +215,7 @@ disk-usage:
 
 # Check the health of the Nix flake (package freshness and input age).
 flake-health:
-    python3 nix_flake_health/main.py --flake ~/nixos-config/flake.nix
+    python3 ~/scripts/nix_flake_health/main.py --flake ~/nixos-config/flake.nix
 
 # -----------------------------------------------
 # Useful nix commands
