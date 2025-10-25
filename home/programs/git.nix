@@ -5,8 +5,12 @@
   programs.git = {
     enable = true;
 
-    userName = "John Kyvetos";
-    userEmail = "johnkyvetos@gmail.com";
+    settings = {
+      user = {
+        name = "John Kyvetos";
+        email = "johnkyvetos@gmail.com";
+      };
+    };
 
     ignores = [
       # macOS
@@ -78,7 +82,7 @@
     ];
 
     # Core settings
-    extraConfig = {
+    settings = {
       alias = {
         ignore = "!gi() { local IFS=','; curl -sL \"https://www.toptal.com/developers/gitignore/api/\\$*\"; }; gi";
         l = "!f() { count=$1; if [ -z \"$count\" ]; then count=5; fi; git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -n \"$count\"; }; f";
