@@ -109,9 +109,6 @@
           niri.homeModules.niri
           # noctalia.homeModules.default
         ];
-        extraSpecialArgs = {
-          inherit pkgs-stable;
-        };
       };
     };
 }
