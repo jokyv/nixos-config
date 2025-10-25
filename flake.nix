@@ -2,21 +2,24 @@
   description = "One Flake to Rule Them All";
 
   inputs = {
-    # stable
+
+    # nixpkgs stable
     nixpkgs-stable = {
       url = "github:NixOS/nixpkgs/nixos-25.05";
     };
-    # home-manager = {
-    #   url = "github:nix-community/home-manager/release-24.05";
-    #   inputs.nixpkgs.follows = "nixpkgs-stable";
-    # };
 
     # nixpkgs unstable
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
 
-    # home manager
+    # home manager stable
+    # home-manager = {
+    #   url = "github:nix-community/home-manager/release-25.05";
+    #   inputs.nixpkgs.follows = "nixpkgs-stable";
+    # };
+
+    # home manager unstable
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
