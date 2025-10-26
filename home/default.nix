@@ -94,7 +94,10 @@
   # Install packages with their default configs
   # ---------------------------------------------
   home.packages = with pkgs; [
-
+    # ---------------------------------------------
+    # Unstable Packages (from pkgs)
+    # ---------------------------------------------
+    
     # Shells & Terminals
     alacritty
 
@@ -111,7 +114,6 @@
     # GUI Applications
     discord
     keymapp
-    pkgs-stable.libreoffice-qt-fresh
     nautilus
     psst # A spotify client
 
@@ -175,7 +177,14 @@
     sops
 
     # quickshell
-  ];
+  ] ++ (with pkgs-stable; [
+    # ---------------------------------------------
+    # Stable Packages (from pkgs-stable)
+    # ---------------------------------------------
+    
+    # GUI Applications
+    libreoffice-qt-fresh
+  ]);
 
   # ---------------------------------------------
   # systemd
