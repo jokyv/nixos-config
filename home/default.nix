@@ -93,98 +93,101 @@
   # ---------------------------------------------
   # Install packages with their default configs
   # ---------------------------------------------
-  home.packages = with pkgs; [
-    # ---------------------------------------------
-    # Unstable Packages (from pkgs)
-    # ---------------------------------------------
-    
-    # Shells & Terminals
-    alacritty
+  home.packages =
+    with pkgs;
+    [
+      # ---------------------------------------------
+      # Unstable Packages (from pkgs)
+      # ---------------------------------------------
 
-    # Development Tools
-    neovim
-    git-cliff
-    gh
-    jaq
-    just
-    gum
-    uv
-    virtualenv # need this for python virtual env
+      # Shells & Terminals
+      alacritty
 
-    # GUI Applications
-    discord
-    keymapp
-    nautilus
-    psst # A spotify client
+      # Development Tools
+      neovim
+      git-cliff
+      gh
+      jaq
+      just
+      gum
+      uv
+      virtualenv # need this for python virtual env
 
-    # System Utilities
-    base16-schemes
-    btop
-    cowsay
-    dconf
-    ddgr # duckduckgo on the terminal
-    delta
-    dysk
-    eza
-    newsraft
-    pwvucontrol
-    tabiew
-    trashy
-    unimatrix
+      # GUI Applications
+      discord
+      keymapp
+      nautilus
+      psst # A spotify client
 
-    # AI & Automation
-    # aider-chat[full]
-    # playwright-driver
+      # System Utilities
+      base16-schemes
+      btop
+      cowsay
+      dconf
+      ddgr # duckduckgo on the terminal
+      delta
+      dysk
+      eza
+      newsraft
+      pwvucontrol
+      tabiew
+      trashy
+      unimatrix
 
-    # Screen Capture & Clipboard
-    grim
-    slurp
-    swappy
-    cliphist
-    wl-clipboard
-    wtype # need this for my script clip_hist.py
+      # AI & Automation
+      # aider-chat[full]
+      # playwright-driver
 
-    # Fonts
-    font-awesome
-    liberation_ttf
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-emoji
+      # Screen Capture & Clipboard
+      grim
+      slurp
+      swappy
+      cliphist
+      wl-clipboard
+      wtype # need this for my script clip_hist.py
 
-    # Language Servers
-    bash-completion
-    bash-language-server
-    dprint
-    # ltex-ls-plus # more strict than typos
-    markdown-oxide # https://oxide.md/v0/Articles/Markdown-Oxide+v0
-    # marksman # using markdown-oxide currently
-    nixd
-    nixfmt # official nix formatter, formats one file at a time.
-    nixfmt-tree # official nix formatter, formats whole project.
-    nufmt
-    shfmt
-    taplo
-    typos
-    typos-lsp
-    vscode-langservers-extracted
-    yaml-language-server
-    just-lsp
+      # Fonts
+      font-awesome
+      liberation_ttf
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-emoji
 
-    # Security Tools
-    age
-    gitleaks
-    git-crypt
-    sops
+      # Language Servers
+      bash-completion
+      bash-language-server
+      dprint
+      # ltex-ls-plus # more strict than typos
+      markdown-oxide # https://oxide.md/v0/Articles/Markdown-Oxide+v0
+      # marksman # using markdown-oxide currently
+      nixd
+      nixfmt # official nix formatter, formats one file at a time.
+      nixfmt-tree # official nix formatter, formats whole project.
+      nufmt
+      shfmt
+      taplo
+      typos
+      typos-lsp
+      vscode-langservers-extracted
+      yaml-language-server
+      just-lsp
 
-    # quickshell
-  ] ++ (with pkgs-stable; [
+      # Security Tools
+      age
+      gitleaks
+      git-crypt
+      sops
+
+    ]
+
     # ---------------------------------------------
     # Stable Packages (from pkgs-stable)
     # ---------------------------------------------
-    
-    # GUI Applications
-    libreoffice-qt-fresh
-  ]);
+    ++ (with pkgs-stable; [
+
+      # GUI Applications
+      libreoffice-qt-fresh
+    ]);
 
   # ---------------------------------------------
   # systemd
