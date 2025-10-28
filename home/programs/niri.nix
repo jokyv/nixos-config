@@ -439,6 +439,22 @@ in
     prefer-no-csd = true;
     screenshot-path = "${screenshots_dir}/screenshot from %Y-%m-%d %H-%M-%S.png";
 
+    layer-rules = [
+      {
+        matches = [
+          { namespace = "swww-daemon"; }
+        ];
+      place-within-backdrop = true;
+      }
+    ];
+
+   #  layer-rules = {
+   #   swww-wallpaper = {
+   #     match.namespace = "swww-daemon";
+   #     place-within-backdrop = true;
+   #   };
+   # };
+
     # Animation configurations for smoother visuals
     animations = {
       window-open = {
