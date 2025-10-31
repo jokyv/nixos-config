@@ -39,19 +39,18 @@
     config.common.default = [ "*" ];
   };
 
-  # ZRAM Configuration - handled by systemd-zram-generator
-  # This creates /dev/zram0 with swap automatically
-  systemd.services."systemd-zram-setup@zram0" = {
+  # ZRAM Configuration - use zram-generator instead of manual service
+  zram-generator = {
     enable = true;
-    description = "Create swap on /dev/zram0";
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${pkgs.zram-generator}/bin/zram-generator --setup-device zram0";
-      ExecStop = "${pkgs.zram-generator}/bin/zram-generator --reset-device zram0";
+    settings = {
+      "zram0" = {
+        zram-size = "ram / 2"; # Use 50% of RAM
+        compression-algorithm = "zstd";
+        swap = {
+          priority = 100; # Higher priority than disk swap
+        };
+      };
     };
-    wantedBy = [ "swap.target" ];
-    before = [ "swap.target" ];
   };
 
 }
