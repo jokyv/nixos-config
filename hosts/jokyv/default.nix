@@ -169,7 +169,7 @@ in
 
     # Graphics and Vulkan
     vulkan-tools
-    glxinfo
+    mesa-demos
 
     # Archive Tools
     unzip
