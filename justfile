@@ -217,6 +217,11 @@ disk-usage:
 flake-health:
     python3 ~/scripts/nix_flake_health/main.py --flake ~/nixos-config/flake.nix
 
+
+# home-manager news
+news:
+    home-manager news --flake .#jokyv
+
 # -----------------------------------------------
 # Useful nix commands
 # -----------------------------------------------
