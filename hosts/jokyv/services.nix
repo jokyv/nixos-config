@@ -39,12 +39,4 @@
     config.common.default = [ "*" ];
   };
 
-  # ZRAM Configuration - using standard NixOS zramSwap
-  zramSwap = {
-    enable = true;
-    memoryPercent = 50; # Use 50% of RAM
-    algorithm = "zstd"; # Use zstd compression
-    priority = 100; # Higher priority than disk swap
-  };
-
 }
