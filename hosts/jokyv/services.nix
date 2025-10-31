@@ -41,7 +41,7 @@
 
   # ZRAM Configuration - handled by systemd-zram-generator
   # This creates /dev/zram0 with swap automatically
-  systemd.services.systemd-zram-setup@zram0 = {
+  systemd.services."systemd-zram-setup@zram0" = {
     enable = true;
     description = "Create swap on /dev/zram0";
     serviceConfig = {
