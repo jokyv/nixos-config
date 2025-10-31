@@ -39,18 +39,12 @@
     config.common.default = [ "*" ];
   };
 
-  # ZRAM Configuration - use zram-generator instead of manual service
-  zram-generator = {
+  # ZRAM Configuration - using standard NixOS zramSwap
+  zramSwap = {
     enable = true;
-    settings = {
-      "zram0" = {
-        zram-size = "ram / 2"; # Use 50% of RAM
-        compression-algorithm = "zstd";
-        swap = {
-          priority = 100; # Higher priority than disk swap
-        };
-      };
-    };
+    memoryPercent = 50; # Use 50% of RAM
+    algorithm = "zstd"; # Use zstd compression
+    priority = 100; # Higher priority than disk swap
   };
 
 }

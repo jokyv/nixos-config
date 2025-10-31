@@ -271,7 +271,12 @@ in
   # ---------------------------------------------
   # Performance Settings
   # ---------------------------------------------
-  # ZRAM is handled by systemd-zram-generator service instead of NixOS zramSwap
+  # Use ZRAM for compressed RAM-based swap. It's much faster than disk-based swap.
+  # The system will use this first and only fall back to the disk swap partition if ZRAM fills up.
+  zramSwap.enable = true;
+  zramSwap.memoryPercent = 50; # Default is 50% already
+  zramSwap.algorithm = "zstd"; # Use zstd compression
+  zramSwap.priority = 100; # Higher priority than disk swap
 
   # ---------------------------------------------
   # System Version
