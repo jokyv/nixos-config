@@ -112,7 +112,9 @@
       };
 
       interactive = {
-        diffFilter = "diffastic | delta --color-only";
+        diffFilter = "${pkgs.writeShellScriptBin "git-diff-filter" ''
+          exec ${pkgs.diffastic}/bin/diffastic | ${pkgs.delta}/bin/delta --color-only
+        ''}/bin/git-diff-filter";
       };
 
       add.interactive = {
@@ -145,7 +147,6 @@
       };
 
       diff = {
-        external = "difft";
         colorMoved = "default";
       };
 
