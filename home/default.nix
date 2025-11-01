@@ -129,6 +129,7 @@
       dconf
       ddgr # duckduckgo on the terminal
       delta
+      diffastic
       dysk
       eza
       newsraft
