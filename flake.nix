@@ -62,7 +62,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Add devenv
     devenv = {
       url = "github:cachix/devenv/latest";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -120,7 +119,7 @@
           sops-nix.homeManagerModules.sops
           niri.homeModules.niri
           # noctalia.homeModules.default
-          
+
           # Add devenv and direnv configuration
           {
             home.packages = with pkgs; [
