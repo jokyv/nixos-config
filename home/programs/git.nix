@@ -105,12 +105,14 @@
         ui = "auto";
       };
 
+      pager = "diffastic | delta";
+
       credential = {
         helper = "store";
       };
 
       interactive = {
-        diffFilter = "delta --color-only";
+        diffFilter = "diffastic | delta --color-only";
       };
 
       add.interactive = {
