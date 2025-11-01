@@ -98,7 +98,9 @@
 
       core = {
         editor = "hx";
-        pager = "cat";
+        pager = "${pkgs.writeShellScriptBin "git-pager" ''
+          ${pkgs.diffastic}/bin/diffastic | ${pkgs.delta}/bin/delta
+        ''}/bin/git-pager";
       };
 
       color = {
