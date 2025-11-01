@@ -61,6 +61,12 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Add devenv
+    devenv = {
+      url = "github:cachix/devenv/latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -73,6 +79,7 @@
       sops-nix,
       niri,
       disko,
+      devenv,
       ...
     }@inputs:
     let
@@ -113,6 +120,18 @@
           sops-nix.homeManagerModules.sops
           niri.homeModules.niri
           # noctalia.homeModules.default
+          
+          # Add devenv and direnv configuration
+          {
+            home.packages = with pkgs; [
+              devenv.packages.${system}.default
+              direnv
+            ];
+            programs.direnv = {
+              enable = true;
+              nix-direnv.enable = true;
+            };
+          }
         ];
       };
     };
