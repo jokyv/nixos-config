@@ -105,8 +105,6 @@
         ui = "auto";
       };
 
-      pager = "diffastic | delta";
-
       credential = {
         helper = "store";
       };
