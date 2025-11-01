@@ -125,6 +125,7 @@
             home.packages = with pkgs; [
               devenv
               direnv
+              diffastic
             ];
             programs.direnv = {
               enable = true;
