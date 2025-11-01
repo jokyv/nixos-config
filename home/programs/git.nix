@@ -99,7 +99,7 @@
       core = {
         editor = "hx";
         pager = "${pkgs.writeShellScriptBin "git-pager" ''
-          exec ${pkgs.difftastic}/bin/difft | ${pkgs.delta}/bin/delta --side-by-side
+          exec ${pkgs.delta}/bin/delta --side-by-side
         ''}/bin/git-pager";
       };
 
@@ -113,7 +113,7 @@
 
       interactive = {
         diffFilter = "${pkgs.writeShellScriptBin "git-diff-filter" ''
-          exec ${pkgs.difftastic}/bin/difft | ${pkgs.delta}/bin/delta --color-only --side-by-side
+          exec ${pkgs.delta}/bin/delta --color-only --side-by-side
         ''}/bin/git-diff-filter";
       };
 
@@ -147,6 +147,7 @@
       };
 
       diff = {
+        external = false;          # disable any external diff driver
         colorMoved = "default";
       };
 
