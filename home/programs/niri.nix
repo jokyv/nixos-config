@@ -448,12 +448,12 @@ in
     #   }
     # ];
 
-   #  layer-rules = {
-   #   swww-wallpaper = {
-   #     match.namespace = "swww-daemon";
-   #     place-within-backdrop = true;
-   #   };
-   # };
+    #  layer-rules = {
+    #   swww-wallpaper = {
+    #     match.namespace = "swww-daemon";
+    #     place-within-backdrop = true;
+    #   };
+    # };
 
     # Animation configurations for smoother visuals
     animations = {
@@ -512,7 +512,7 @@ in
 
     input = {
       warp-mouse-to-focus.enable = true;
-      focus-follows-mouse.enable = true;
+      # focus-follows-mouse.enable = true;
       workspace-auto-back-and-forth = true;
       keyboard = {
         xkb = {
