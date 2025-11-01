@@ -147,7 +147,6 @@
       };
 
       diff = {
-        external = false;          # disable any external diff driver
         colorMoved = "default";
       };
 
