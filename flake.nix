@@ -124,7 +124,7 @@
           # Add devenv and direnv configuration
           {
             home.packages = with pkgs; [
-              inputs.devenv.packages.${system}.default
+              inputs.devenv.packages.${system}.devenv
               direnv
             ];
             programs.direnv = {
