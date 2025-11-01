@@ -124,7 +124,9 @@
           # Add devenv and direnv configuration
           {
             home.packages = with pkgs; [
-              inputs.devenv.packages.${system}.devenv
+              (pkgs.writeShellScriptBin "devenv" ''
+                exec ${inputs.devenv.apps.${system}.default.program} "$@"
+              '')
               direnv
             ];
             programs.direnv = {
