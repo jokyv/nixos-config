@@ -99,7 +99,7 @@
       core = {
         editor = "hx";
         pager = "${pkgs.writeShellScriptBin "git-pager" ''
-          exec ${pkgs.diffastic}/bin/diffastic | ${pkgs.delta}/bin/delta
+          exec ${pkgs.difftastic}/bin/difft | ${pkgs.delta}/bin/delta --side-by-side
         ''}/bin/git-pager";
       };
 
@@ -113,7 +113,7 @@
 
       interactive = {
         diffFilter = "${pkgs.writeShellScriptBin "git-diff-filter" ''
-          exec ${pkgs.diffastic}/bin/diffastic | ${pkgs.delta}/bin/delta --color-only
+          exec ${pkgs.difftastic}/bin/difft | ${pkgs.delta}/bin/delta --color-only --side-by-side
         ''}/bin/git-diff-filter";
       };
 
