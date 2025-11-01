@@ -99,7 +99,7 @@
       core = {
         editor = "hx";
         pager = "${pkgs.writeShellScriptBin "git-pager" ''
-          ${pkgs.diffastic}/bin/diffastic | ${pkgs.delta}/bin/delta
+          exec ${pkgs.diffastic}/bin/diffastic | ${pkgs.delta}/bin/delta
         ''}/bin/git-pager";
       };
 
