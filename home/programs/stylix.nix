@@ -24,8 +24,8 @@ in
     base16Scheme = "${base16SchemesPath}/black-metal-bathory.yaml";
 
     override = {
-      base0A = "#854a55"; # a bit of dark rose-pine
-      base03 = "#2e3a47"; # usual color comments
+      base0A = "#854a55"; # Dark rose-pine accent for better contrast
+      base03 = "#2e3a47"; # Muted comment color for reduced eye strain
     };
 
     cursor = {
@@ -38,6 +38,8 @@ in
       monospace = {
         package = pkgs.nerd-fonts.martian-mono;
         name = "Martian Mono Nerd Font Mono";
+        # package = pkgs.maple-mono.Normal-NF;
+        # name = "MapleMonoNormal-NF";
       };
       serif = {
         package = pkgs.dejavu_fonts;

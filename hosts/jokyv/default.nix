@@ -27,7 +27,7 @@ in
   # Bootloader Configuration
   # ---------------------------------------------
   boot.loader = {
-    # Use systemd-boot as the bootloader
+    # Use systemd-boot as the bootloader, alternatively use GRUB
     systemd-boot = {
       enable = true;
       # Limit the number of previous generations to keep
@@ -140,7 +140,6 @@ in
     clamav
 
     # Development Tools
-    aider-chat-full
     clang
     cmake
     gcc
@@ -213,16 +212,20 @@ in
     # auto optimisation
     optimise = {
       automatic = true;
-      dates = "weekly";
+      # dates = "weekly";
+      dates = "Sun 11:00";
       persistent = true;
+      randomizedDelaySec = "45min";
     };
 
     # Garbage Collection
     gc = {
       automatic = true;
-      dates = "weekly";
+      # dates = "weekly";
+      dates = "Sun 11:00";
       options = "--delete-older-than 7d";
       persistent = true;
+      randomizedDelaySec = "45min";
     };
 
     # Nix Configuration
@@ -256,15 +259,19 @@ in
   # Automatic system updates
   system.autoUpgrade = {
     enable = true;
-    dates = "daily";
+    dates = "Sat 11:00";
     allowReboot = false;
     # flake = "github:jokyv/nixos-config";
-    flake = "${userHome}/nixos-config";
+    # flake = "${userHome}/nixos-config";
+    flake = inputs.self.outPath;
     flags = [
-      "--update-input"
+      # "--update-input"
+      "update"
       "nixpkgs"
+      "-L"
       "--commit-lock-file"
     ];
+    randomizedDelaySec = "45min";
     persistent = true;
   };
 

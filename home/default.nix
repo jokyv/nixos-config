@@ -90,6 +90,7 @@
         "obsidian"
         "discord"
         "keymapp"
+        "claude-code"
       ];
   };
 
@@ -140,6 +141,9 @@
       # AI & Automation
       # aider-chat[full]
       # playwright-driver
+      claude-code
+      claude-code-router
+      aider-chat-full
 
       # Screen Capture & Clipboard
       grim
@@ -150,6 +154,7 @@
       wtype # need this for my script clip_hist.py
 
       # Fonts
+      # maple-mono.Normal-NF
       font-awesome
       liberation_ttf
       noto-fonts
