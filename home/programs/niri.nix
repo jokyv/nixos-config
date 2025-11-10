@@ -304,8 +304,11 @@ let
           action = spawn_script "update_wall.sh";
         };
         "${mod}+${shift}+W" = {
-          action = spawn_script "define_word.sh";
+          action = spawn_script "update_wall.sh --toggle-loop";
         };
+        # "${mod}+${shift}+W" = {
+        #   action = spawn_script "define_word.sh";
+        # };
         "${mod}+${shift}+M" = {
           action = spawn_script "my_logout.sh";
         };
