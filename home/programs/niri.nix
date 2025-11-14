@@ -21,12 +21,13 @@ let
   spawn_cmd = cmd: config.lib.niri.actions.spawn "sh" "-c" cmd;
 
   # Output configuration
+  # run `niri msg outputs` to get your monitor details
   outputs = {
     "HDMI-A-1" = {
       mode = {
         width = 1920;
         height = 1080;
-        refresh = 60.0;
+        refresh = 120.0;
       };
       scale = 1;
       position = {
@@ -38,7 +39,7 @@ let
       mode = {
         width = 1920;
         height = 1080;
-        refresh = 60.0;
+        refresh = 120.0;
       };
       scale = 1;
       position = {
@@ -123,11 +124,12 @@ let
   startup_apps = [
     { argv = [ "swww-daemon" ]; }
     { argv = [ "foot" ]; }
-    # { argv = [ "xwayland-satellite" ]; }
+    { argv = [ "xwayland-satellite" ]; }
     { argv = [ "xdg-desktop-portal" ]; }
     # { argv = [ "qs" "-c" "noctalia-shell" ]; }
     { argv = [ "waybar" ]; }
     { argv = [ "gammastep-indicator" ]; }
+    { argv = [ "fnott" ]; }
     {
       argv = [
         "swww"
@@ -198,6 +200,9 @@ let
 
       # System actions
       system = {
+        "${mod}+Escape" = {
+          action = toggle-overview;
+        };
         "${mod}+${shift}+Slash" = {
           action = show-hotkey-overlay;
         };
@@ -441,15 +446,11 @@ in
     # hotkey-overlay.hide-not-bound = true;
     prefer-no-csd = true;
     screenshot-path = "${screenshots_dir}/screenshot from %Y-%m-%d %H-%M-%S.png";
-
-    # layer-rules = [
-    #   {
-    #     matches = [
-    #       { namespace = "swww-daemon"; }
-    #     ];
-    #   place-within-backdrop = true;
-    #   }
-    # ];
+    layer-rules = {
+      # matches.namespace = "^wallpaper$";
+      matches.namespace = "^swww-daemon$";
+      place-within-backdrop = true;
+    };
 
     #  layer-rules = {
     #   swww-wallpaper = {
@@ -576,6 +577,7 @@ in
     binds = keybinds;
 
     # Use explicit assignment when variable name differs from setting name
+    # for this save check `-` vs `_`
     window-rules = window_rules;
   };
 }
