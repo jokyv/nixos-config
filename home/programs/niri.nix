@@ -446,11 +446,13 @@ in
     # hotkey-overlay.hide-not-bound = true;
     prefer-no-csd = true;
     screenshot-path = "${screenshots_dir}/screenshot from %Y-%m-%d %H-%M-%S.png";
-    layer-rules = {
-      # matches.namespace = "^wallpaper$";
-      matches.namespace = "^swww-daemon$";
-      place-within-backdrop = true;
-    };
+    layer-rules = [
+      {
+        # matches.namespace = "^wallpaper$";
+        matches.namespace = "^swww-daemon$";
+        place-within-backdrop = true;
+      }
+    ];
 
     #  layer-rules = {
     #   swww-wallpaper = {
