@@ -123,6 +123,12 @@ let
   # Startup applications
   startup_apps = [
     { argv = [ "swww-daemon" ]; }
+    {
+      argv = [
+        "vicinae"
+        "server"
+      ];
+    }
     { argv = [ "foot" ]; }
     { argv = [ "xwayland-satellite" ]; }
     { argv = [ "xdg-desktop-portal" ]; }
@@ -184,8 +190,14 @@ let
           action = spawn "brave";
           repeat = false;
         };
+        # "${mod}+D" = {
+        #   action = spawn "fuzzel";
+        # };
+        "${mod}+Space" = {
+          action = spawn "vicinae" "toggle";
+        };
         "${mod}+D" = {
-          action = spawn "fuzzel";
+          action = spawn "discord";
         };
         "${mod}+E" = {
           action = spawn "nautilus";
@@ -309,7 +321,7 @@ let
           action = spawn_script "update_wall.sh";
         };
         "${mod}+${shift}+W" = {
-          action = spawn_script "update_wall.sh --toggle-loop";
+          action = spawn_script "update_wall.sh --auto-rotate"; # auto rotate wallpapers default 15 minutes
         };
         # "${mod}+${shift}+W" = {
         #   action = spawn_script "define_word.sh";
@@ -441,14 +453,23 @@ in
       hide-when-typing = true;
       hide-after-inactive-ms = 1000;
     };
-    overview.zoom = 0.35;
     hotkey-overlay.skip-at-startup = true;
     # hotkey-overlay.hide-not-bound = true;
     prefer-no-csd = true;
     screenshot-path = "${screenshots_dir}/screenshot from %Y-%m-%d %H-%M-%S.png";
+
+    # overview settings
+    overview = {
+      backdrop-color = "#777777";
+      zoom = 0.40;
+    };
     layer-rules = [
       {
-        matches = [ { namespace = "^swww-daemon$"; } ];
+        # needs swww for overview wallpaper
+        # matches = [ { namespace = "^swww-daemon$"; } ];
+
+        # needs swaybg for overview wallpaper
+        matches = [ { namespace = "^wallpaper$"; } ];
         place-within-backdrop = true;
       }
     ];

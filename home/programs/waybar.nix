@@ -46,7 +46,7 @@
 
         "custom/os_button" = {
           format = "";
-          on-click = "fuzzel";
+          on-click = "vicinae toggle";
           tooltip = false;
         };
 

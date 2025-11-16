@@ -22,13 +22,16 @@
     ./programs/brave.nix
     ./programs/firefox.nix
 
+    # APP LAUNCHERS
+    ./programs/vicinae.nix
+    ./programs/fuzzel.nix # need it for my personal scripts
+
     # OTHER
     ./programs/atuin.nix
     ./programs/bat.nix
     ./programs/fastfetch.nix
     ./programs/fd.nix
     ./programs/fnott.nix
-    ./programs/fuzzel.nix
     ./programs/fzf.nix
     ./programs/gammastep.nix
     ./programs/git.nix
