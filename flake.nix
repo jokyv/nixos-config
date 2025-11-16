@@ -66,6 +66,8 @@
       url = "github:cachix/devenv/latest";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    vicinae.url = "github:vicinaehq/vicinae"; # tell Nixos where to get Vicinae
   };
 
   outputs =
@@ -79,6 +81,7 @@
       niri,
       disko,
       devenv,
+      vicinae,
       ...
     }@inputs:
     let
@@ -119,6 +122,7 @@
           sops-nix.homeManagerModules.sops
           niri.homeModules.niri
           # noctalia.homeModules.default
+          vicinae.homeManagerModules.default
 
           # Add devenv and direnv configuration
           {
