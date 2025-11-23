@@ -182,15 +182,21 @@
             "--preview"
           ];
         };
-        pylsp = {
-          command = "pylsp";
-          config.pylsp.plugins = {
-            pyls_mypy = {
-              enabled = true;
-              live_mode = true;
-            };
-          };
+        ty = {
+          command = "ty";
+          args = [
+            "server"
+          ];
         };
+        # pylsp = {
+        #   command = "pylsp";
+        #   config.pylsp.plugins = {
+        #     pyls_mypy = {
+        #       enabled = true;
+        #       live_mode = true;
+        #     };
+        #   };
+        # };
         yaml-language-server = {
           command = "yaml-language-server";
           args = [ "--stdio" ];
@@ -298,7 +304,8 @@
           auto-format = true;
           language-servers = [
             "ruff"
-            "pylsp"
+            # "pylsp"
+            "ty"
           ];
           formatter = {
             command = "ruff";
