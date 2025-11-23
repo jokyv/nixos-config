@@ -175,6 +175,9 @@
       nixfmt # official nix formatter, formats one file at a time.
       nixfmt-tree # official nix formatter, formats whole project.
       nufmt
+      # python313Packages.python-lsp-server
+      ty
+      ruff
       shfmt
       taplo
       typos

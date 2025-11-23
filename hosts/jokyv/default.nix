@@ -26,16 +26,13 @@ in
   # ---------------------------------------------
   # Bootloader Configuration
   # ---------------------------------------------
-  boot.loader = {
-    # Use systemd-boot as the bootloader, alternatively use GRUB
-    systemd-boot = {
-      enable = true;
-      # Limit the number of previous generations to keep
-      configurationLimit = 10;
-    };
-    # Allow systemd-boot to manage EFI variables
-    efi.canTouchEfiVariables = true;
-  };
+  # Use systemd-boot as the bootloader, alternatively use GRUB
+  boot.loader.systemd-boot.enable = true;
+  # Limit the number of previous generations to keep
+  boot.loader.systemd-boot.configurationLimit = 10;
+  # Allow systemd-boot to manage EFI variables
+  boot.loader.efi.canTouchEfiVariables = true;
+
   # boot.kernelPackages = pkgs.LinuxPackages_hardened;
 
   # ---------------------------------------------
@@ -90,6 +87,10 @@ in
   programs.niri.package = pkgs.niri;
 
   programs.nix-ld.enable = true; # needs this for python uv
+  # programs.nix-ld.libraries = with pkgs; [
+  #   stdenv.cc.cc.lib # Required for most Rust/Python binaries
+  #   zlib # Common dependency
+  # ];
 
   # ---------------------------------------------
   # User Configuration

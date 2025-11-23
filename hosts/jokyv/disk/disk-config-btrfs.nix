@@ -26,7 +26,7 @@
             # Swap has a dedicated partition outside btrfs
             # Better performace, reliability, security and btrfs swap files are not recommended
             swap = {
-              size = "32G"; # Adjust size as needed, e.g. to match RAM size for hibernation
+              size = "32G"; # Adjust size as needed, match RAM size for hibernation
               content = {
                 type = "swap";
                 # Recommended for security, creates an encrypted swap space
@@ -68,7 +68,7 @@
                       # "compress=zstd"
                       # No compression at all
                       # "compress=none"
-                      # faster compression but less opti
+                      # faster compression but less optimization
                       "compress=zstd:1"
                     ];
                   };

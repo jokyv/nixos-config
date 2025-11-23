@@ -22,10 +22,10 @@
       font.size = 11;
       popToRootOnClose = false;
       rootSearch.searchFiles = false;
-      theme.name = "vicinae-dark";
+      # theme.name = "vicinae-dark"; # managed by stylix
       window = {
         csd = true;
-        opacity = 0.95;
+        # opacity = 0.95;
         rounding = 10;
       };
     };

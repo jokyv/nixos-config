@@ -8,7 +8,8 @@
 
   home.sessionPath = [
     "${config.home.homeDirectory}/.local/share/cargo/bin"
-    "${config.home.homeDirectory}/scripts/bin"
+    "${config.home.homeDirectory}/scripts/bin" # need this for my personal scripts
+    # "${config.home.homeDirectory}/.local/bin" # need this for `uv tools`
   ];
 
   programs.bash = {
