@@ -13,7 +13,12 @@
     };
 
     ignores = [
-      # macOS
+      # AI directorys
+      ".claude"
+      ".gemini"
+      "**/.gemini"
+
+      # MacOS specific
       ".DS_Store"
       "**/.DS_Store"
 
