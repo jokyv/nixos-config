@@ -43,17 +43,22 @@
       "cleanup" = "find . -type f -name '*.DS_Store' -ls -delete";
 
       # Linux Scripts
-      "sb" = "linux_util.py --source_bash_profile";
-      "cdd" = "linix_util.py --cd_with_eza";
+      "sb" = "python3 ~/scripts/bin/linux_util.py --source_bash_profile";
+      "cdd" = "python3 ~/scripts/bin/linux_util.py --cd_with_eza";
+
+      # Weather aliases
+      "weather" = "python3 ~/scripts/bin/linux_util.py --weather";
+      "weatherd" = "python3 ~/scripts/bin/linux_util.py --weather_detailed";
+      "weatherc" = "python3 ~/scripts/bin/linux_util.py --weather_cities";
 
       # FZF Scripts
-      "vv" = "fzf_util.py --open_file";
-      "fe" = "fzf_util.py --empty_files";
-      "fb" = "fzf_util.py --big_files";
-      "fs" = "fzf_util.py --find_scripts";
-      "fm" = "fzf_util.py --move_file";
-      "fc" = "fzf_util.py --copy_file";
-      "ff" = "fzf_util.py --file_phrase";
+      "vv" = "python3 ~/scripts/bin/fzf_util.py --open_file";
+      "fe" = "python3 ~/scripts/bin/fzf_util.py --empty_files";
+      "fb" = "python3 ~/scripts/bin/fzf_util.py --big_files";
+      "fs" = "python3 ~/scripts/bin/fzf_util.py --find_scripts";
+      "fm" = "python3 ~/scripts/bin/fzf_util.py --move_file";
+      "fc" = "python3 ~/scripts/bin/fzf_util.py --copy_file";
+      "ff" = "python3 ~/scripts/bin/fzf_util.py --file_phrase";
 
       # Python
       "p3" = "python3";
@@ -89,31 +94,31 @@
       "rmd" = "trash";
       "trl" = "trash list";
       "tra" = "trash empty --all";
-      "trr" = "fzf_util.py --restore_file";
-      "tre" = "fzf_util.py --empty_trash";
+      "trr" = "python3 ~/scripts/bin/fzf_util.py --restore_file";
+      "tre" = "python3 ~/scripts/bin/fzf_util.py --empty_trash";
 
       # Git
-      "ginit" = "git_util.py --init_template";
+      "ginit" = "python3 ~/scripts/bin/git_util.py --init_template";
       "gpu" = "git push";
       "gpl" = "git pull";
       "ga" = "git add";
       "gall" = "git add -A";
       "gc" = "git commit";
       "gcm" = "git commit -m";
-      "gcw" = "git_util.py --commit_workflow";
+      "gcw" = "python3 ~/scripts/bin/git_util.py --commit_workflow";
       "gl" = "git log";
       "glo" = "git log --oneline";
-      "glg" = "git_util.py --log_graph";
-      "gpulla" = "git_util.py --pull_all_dirs";
-      "gpusha" = "git_util.py --push_all_dirs";
-      "gac" = "git_util.py --auto_commit";
+      "glg" = "python3 ~/scripts/bin/git_util.py --log_graph";
+      "gpulla" = "python3 ~/scripts/bin/git_util.py --pull_all_dirs";
+      "gpusha" = "python3 ~/scripts/bin/git_util.py --push_all_dirs";
+      "gac" = "python3 ~/scripts/bin/git_util.py --auto_commit";
       "gcame" = "git commit --amend --no-edit";
       "gcheck" = "git checkout .";
       "gs" = "git status -sb";
-      "gsa" = "git_util.py --status_all_dirs";
-      "gclean" = "git_util.py --clean_up";
+      "gsa" = "python3 ~/scripts/bin/git_util.py --status_all_dirs";
+      "gclean" = "python3 ~/scripts/bin/git_util.py --clean_up";
       "gd" = "git diff -w";
-      "gh-create" = "git_util.py --create_push_gh_repo";
+      "gh-create" = "python3 ~/scripts/bin/git_util.py --create_push_gh_repo";
 
     };
 
