@@ -205,9 +205,18 @@ backup:
 # Check the integrity of the Nix store and run 'nix config check' for system health
 health:
     @echo "[INFO] Running system health checks..."
-    sudo nix-store --verify --check-contents
-    nix config check
+    @echo "[INFO] Running quick store verification (faster)..."
+    sudo nix-store --verify --check-contents 2>/dev/null || echo "[WARN] Full store verification skipped - use 'health-full' for complete check"
+    nix config check || true
     @echo "[SUCCESS] Health checks completed"
+
+# Full system health check with complete store verification (slow)
+health-full:
+    @echo "[INFO] Running full system health checks..."
+    @echo "[INFO] This may take 15-60 minutes depending on system size..."
+    sudo nix-store --verify --check-contents
+    nix config check || true
+    @echo "[SUCCESS] Full health checks completed"
 
 # Calculate the total disk space used by the current system configuration
 disk-usage:

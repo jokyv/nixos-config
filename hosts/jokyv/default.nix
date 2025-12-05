@@ -146,14 +146,6 @@ in
     gcc
     gdb
     git
-    (python313.withPackages (
-      wpkgs: with wpkgs; [
-        pyyaml
-        rich
-        rendercv
-        requests
-      ]
-    ))
 
     # Network Utilities
     curl
