@@ -151,6 +151,7 @@ in
         pyyaml
         rich
         rendercv
+        requests
       ]
     ))
 
@@ -270,7 +271,7 @@ in
     flake = inputs.self.outPath;
     flags = [
       # "--update-input"
-      "update"
+      "--update"
       "nixpkgs"
       "-L"
       "--commit-lock-file"
