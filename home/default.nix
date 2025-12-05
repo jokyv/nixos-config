@@ -120,6 +120,12 @@
       uv
       virtualenv # need this for python virtual env
 
+      # Python packages
+      python313
+      python313Packages.requests
+      python313Packages.pyyaml
+      python313Packages.rich
+
       # GUI Applications
       discord
       keymapp
