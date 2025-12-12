@@ -3,7 +3,7 @@
     enable = true;
     enableNushellIntegration = true;
     settings = {
-      manager = {
+      mgr = {
         ratio = [
           2
           4
