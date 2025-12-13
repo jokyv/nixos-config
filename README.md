@@ -58,6 +58,17 @@ nixos-config/
 - **Unified Theming:** Consistent appearance across all applications
 - **Modern Workflow:** Wayland-based desktop with tiling window management
 
+## Documentation 📚
+
+Complete documentation is available in the [`docs/`](docs/) directory:
+
+- **[Installation Guide](docs/installation.md)** - Step-by-step setup instructions
+- **[Configuration Reference](docs/reference.md)** - Detailed configuration guide
+- **[Program Configurations](docs/programs.md)** - Configured programs and settings
+- **[Secrets Management](docs/secrets_management.md)** - Managing encrypted secrets
+
+> **GitHub Pages**: Documentation is also available as a hosted website at https://jokyv.github.io/nixos-config/
+
 ## Getting Started
 1. **Prerequisites:**
    - NixOS installation
@@ -65,6 +76,7 @@ nixos-config/
    - Age encryption keys configured
 
 2. **Installation:**
+   - See the [Installation Guide](docs/installation.md) for detailed steps
    ```bash
    nixos-rebuild switch --flake .#nixos
    ```
