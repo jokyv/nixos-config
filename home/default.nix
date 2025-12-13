@@ -116,6 +116,7 @@
       gh
       jaq
       just
+      jq
       gum
       uv
       virtualenv # need this for python virtual env
