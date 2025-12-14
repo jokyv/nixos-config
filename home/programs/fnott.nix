@@ -15,9 +15,9 @@
         anchor = "top-right";
         # spacing = 10;
 
-        # Timing (in milliseconds)
-        default-timeout = 10; # 10 seconds
-        max-timeout = 30; # 30 seconds
+        # Monitor output (uncomment and change as needed)
+        # Available outputs can be listed with: swaymsg -t get_outputs
+        # output = "DP-1";  # Example: force notifications to appear on DP-1
 
         # Display settings
         # title = true;
@@ -25,7 +25,11 @@
         max-width = 500;
 
         # Icon settings
-        # icon = true;
+        max-icon-size = 32;
+
+        # Action selection helper
+        selection-helper = "fuzzel --dmenu";
+        selection-helper-uses-null-separator = false;
 
         # Font settings
         title-font = "monospace:size=12";
@@ -40,6 +44,7 @@
         body-color = "d8dee9ff";
         border-color = "81a1c1ff";
         border-size = 5;
+        default-timeout = 5; # 5 seconds for low urgency
       };
 
       normal = {
@@ -48,6 +53,7 @@
         body-color = "d8dee9ff";
         border-color = "88c0d0ff";
         border-size = 5;
+        default-timeout = 10; # 10 seconds for normal urgency
       };
 
       critical = {
@@ -56,11 +62,20 @@
         body-color = "d8dee9ff";
         border-color = "bf616aff";
         border-size = 8;
+        default-timeout = 30; # 30 seconds for critical urgency
       };
 
-      # Example of per-application settings
+      # Application-specific configurations
+      # Example: Never timeout song change notifications
       # [app-name="spotify"]
-      # default-timeout = 0 # Never timeout song change notifications
+      # default-timeout = 0
+
+      # Click behavior:
+      # - Left click: dismiss single notification (built-in)
+      # - Right click: dismiss all notifications (fnottctl dismiss-all)
+      #   Bind right-click to your script in scripts/bin/fnott-dismiss-all.sh
+      #   Note: This may require compositor-specific configuration
+      # - URLs: Handled by xdg-open when applications include URL metadata
     };
   };
 }

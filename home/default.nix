@@ -202,6 +202,9 @@
       git-crypt
       sops
 
+      # XDG utilities
+      xdg-utils
+
     ]
 
     # -------------------------------------------
