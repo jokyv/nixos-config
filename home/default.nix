@@ -33,6 +33,7 @@
     ./programs/fd.nix
     ./programs/fnott.nix
     ./programs/fzf.nix
+    ./programs/ruff.nix
     ./programs/gammastep.nix
     ./programs/git.nix
     ./programs/helix.nix
@@ -187,7 +188,6 @@
       nufmt
       # python313Packages.python-lsp-server
       ty
-      ruff
       shfmt
       taplo
       typos
