@@ -57,6 +57,11 @@ let
           device;
 
 in {
+  # Pass the hostname to the host configuration
+  config = {
+    networking.hostName = cfg.hostname;
+  };
+
   disko.devices = {
     disk = {
       main = {

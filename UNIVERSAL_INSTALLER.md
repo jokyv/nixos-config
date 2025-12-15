@@ -98,6 +98,9 @@ Common configurations:
 - For no encryption: `useLuks = false;`
 - For ext4 filesystem: `filesystem = "ext4";`
 - For different swap size: `swapSize = "16G";`
+- For different hostname: `hostname = "my-server";`
+
+**Note**: The hostname in `install-config.nix` will be automatically used. You can also override it later in `hosts/jokyv/default.nix` if needed.
 
 ### 4. Run the Installer
 

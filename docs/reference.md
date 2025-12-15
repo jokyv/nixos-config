@@ -23,6 +23,11 @@ nixos-config/
 │   └── jokyv/          # Host-specific files
 │       ├── default.nix           # Main host configuration
 │       ├── hardware-configuration.nix  # Hardware settings
+├── disks/              # Disk configurations (shared across hosts)
+│   ├── universal-config.nix    # Auto-detecting installer
+│   ├── disk-config-btrfs-luks.nix  # Legacy Btrfs+LUKS config
+│   └── disk-config-btrfs.nix       # Legacy Btrfs config
+├── install-config.nix  # Universal installer settings
 │       └── zsa-udev-rules.nix    # Custom udev rules
 ├── flake.nix          # Main flake configuration
 ├── flake.lock         # Locked dependency versions

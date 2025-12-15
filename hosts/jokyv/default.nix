@@ -39,7 +39,7 @@ in
   # Networking Configuration
   # ---------------------------------------------
   networking = {
-    hostName = "nixos";
+    # Hostname is now configured in install-config.nix and applied via universal-config.nix
     networkmanager.enable = true;
     nameservers = [
       "1.1.1.1"

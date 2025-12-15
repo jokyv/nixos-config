@@ -28,29 +28,19 @@ A complete NixOS ecosystem featuring modern Linux desktop capabilities with decl
 - **Productivity:** Obsidian, Zathura (PDF viewer)
 - **System Utilities:** Waybar, Fuzzel (App launcher), Cliphist (Clipboard manager)
 
-## Configuration Structure
-```
-nixos-config/
-├── CHANGELOG.md
-├── LICENSE
-├── README.md
-├── dprint.json
-├── flake.lock
-├── flake.nix
-├── home/               # Home Manager configurations
-│   ├── default.nix
-│   ├── env.nix
-│   └── programs/       # Individual program configurations
-├── hosts/              # Host-specific configurations
-│   └── jokyv/
-│       ├── default.nix
-│       ├── hardware-configuration.nix
-│       └── zsa-udev-rules.nix
-├── justfile            # Task automation
-└── secrets.enc.yaml    # Encrypted secrets
-```
+## Project Structure
+
+For a complete overview of the project structure and configuration files, see the **[Configuration Reference](docs/reference.md)**.
+
+This documentation provides detailed explanations of:
+- Directory structure and file organization
+- Configuration hierarchy
+- Centralized disk configurations
+- Host-specific settings
+- Home Manager modules
 
 ## Key Features
+- **Universal Installer:** Auto-detects first disk with configurable filesystems (Btrfs/Ext4) and LUKS encryption
 - **Declarative Configuration:** Entire system state defined in Nix expressions
 - **Reproducible Builds:** Deterministic package management
 - **Atomic Upgrades:** Rollback support for system changes

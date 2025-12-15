@@ -2,6 +2,14 @@
 
 This document describes the configured programs and their customizations in this NixOS configuration.
 
+## Installation
+
+For installing the NixOS system, see the [Installation Guide](installation.md). The system includes a universal installer that:
+- Auto-detects the first available disk
+- Configures filesystems (Btrfs/Ext4) with optional LUKS encryption
+- Sets up partition layouts automatically
+- Requires no manual disk identification
+
 ## Development Tools
 
 ### Helix Editor
