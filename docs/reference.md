@@ -23,12 +23,12 @@ nixos-config/
 │   └── jokyv/          # Host-specific files
 │       ├── default.nix           # Main host configuration
 │       ├── hardware-configuration.nix  # Hardware settings
+│       └── zsa-udev-rules.nix    # Custom udev rules
 ├── disks/              # Disk configurations (shared across hosts)
 │   ├── universal-config.nix    # Auto-detecting installer
 │   ├── disk-config-btrfs-luks.nix  # Legacy Btrfs+LUKS config
 │   └── disk-config-btrfs.nix       # Legacy Btrfs config
 ├── install-config.nix  # Universal installer settings
-│       └── zsa-udev-rules.nix    # Custom udev rules
 ├── flake.nix          # Main flake configuration
 ├── flake.lock         # Locked dependency versions
 ├── justfile          # Task automation commands
@@ -40,6 +40,7 @@ nixos-config/
 ### flake.nix
 
 The main flake configuration defines:
+
 - Nixpkgs inputs and dependencies
 - System configurations
 - Home Manager configurations
@@ -47,12 +48,14 @@ The main flake configuration defines:
 - Custom packages
 
 Key sections:
+
 - `inputs`: Define external dependencies (nixpkgs, home-manager, etc.)
 - `outputs`: Define system configurations, packages, and development tools
 
 ### Host Configuration (`hosts/*/default.nix`)
 
 Each host configuration includes:
+
 - System-level settings
 - Hardware configurations
 - Service definitions
@@ -62,6 +65,7 @@ Each host configuration includes:
 ### Home Manager (`home/`)
 
 Home configurations manage:
+
 - User-level packages
 - Dotfiles and configurations
 - Program settings
