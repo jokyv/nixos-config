@@ -1,10 +1,35 @@
 # Installation Guide
 
+## Option 1: Universal Installer (Recommended)
+
 - Plug in USB stick with minimal NixOS ISO
 - Enable internet!
-- Next run `git clone https://github.com/jokyv/nixos-config.git /tmp/nixos-config`
-- Use `lsblk` to identify the name of the disk of the target computer, you might need to modify the file `hosts/jokyv/disk/disk-config-xxx-xxx.nix`
-- nix run `nix run --experimental-features "nix-command flakes" github:nix-community/disko -- --mode disko --flake .#nixos` to format and partition the disk.
+- Clone this repository: `git clone https://github.com/jokyv/nixos-config.git /tmp/nixos-config`
+- Edit `install-config.nix` at the root to configure your system:
+  ```nix
+  {
+    hostname = "nixos";
+    disk = {
+      filesystem = "btrfs";  # or "ext4"
+      useLuks = true;        # encryption
+      swapSize = "32G";
+      efiSize = "512M";
+    };
+  }
+  ```
+- Run the universal installer (auto-detects first disk):
+  ```bash
+  sudo nix run --experimental-features "nix-command flakes" github:nix-community/disko -- --mode disko --flake .#nixos
+  ```
+- The installer will automatically format and partition the first available disk
+
+## Option 2: Legacy Manual Configuration
+
+- Use `lsblk` to identify the disk name
+- Modify the appropriate disk config file in `disks/` directory
+- Run the same disko command above
+
+The universal installer eliminates the need to manually identify disk names!
 - Add user's password in the system config (then delete it, do not push it to git)
   - Edit `hosts/jokyv/default.nix` and add:\
     `users.users.jokyv.initialPassword = "changeme";`
