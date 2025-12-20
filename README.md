@@ -1,13 +1,15 @@
 # NixOS Configuration Framework
 
-**Next-gen Declarative System Configuration**  
+**Next-gen Declarative System Configuration**\
 ![NixOS](https://img.shields.io/badge/NixOS-24.05-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
 A complete NixOS ecosystem featuring modern Linux desktop capabilities with declarative configuration management.
 
 ## Featured Stack
+
 ### Core Components
+
 - **Display Protocol:** Wayland
 - **Compositor:** [Niri](https://github.com/YaLTeR/niri) (Scrollable-tiling Wayland compositor)
 - **Security:** sops-nix with AGE encryption
@@ -15,12 +17,14 @@ A complete NixOS ecosystem featuring modern Linux desktop capabilities with decl
 - **Package Management:** Nix Flakes + Home Manager
 
 ### Development Ecosystem
+
 - **Language Servers:** Nixd, Rust-analyzer, Python-LSP, Markdown Oxide
 - **Version Control:** Git with Delta diff viewer
 - **Shell Environments:** Nushell, Bash, Xonsh
 - **Package Management:** UV (Python), Cargo (Rust)
 
 ### Desktop Environment
+
 - **Terminals:** Kitty, Foot
 - **Editors:** Helix (Modern Vim alternative)
 - **Browsers:** Firefox, Brave
@@ -33,6 +37,7 @@ A complete NixOS ecosystem featuring modern Linux desktop capabilities with decl
 For a complete overview of the project structure and configuration files, see the **[Configuration Reference](docs/reference.md)**.
 
 This documentation provides detailed explanations of:
+
 - Directory structure and file organization
 - Configuration hierarchy
 - Centralized disk configurations
@@ -40,6 +45,7 @@ This documentation provides detailed explanations of:
 - Home Manager modules
 
 ## Key Features
+
 - **Universal Installer:** Auto-detects first disk with configurable filesystems (Btrfs/Ext4) and LUKS encryption
 - **Declarative Configuration:** Entire system state defined in Nix expressions
 - **Reproducible Builds:** Deterministic package management
@@ -60,6 +66,7 @@ Complete documentation is available in the [`docs/`](docs/) directory:
 > **GitHub Pages**: Documentation is also available as a hosted website at https://jokyv.github.io/nixos-config/
 
 ## Getting Started
+
 1. **Prerequisites:**
    - NixOS installation
    - Flakes support enabled
@@ -82,4 +89,5 @@ Complete documentation is available in the [`docs/`](docs/) directory:
    - Manage secrets: `just encode` / `just decode`
 
 ## License
+
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
