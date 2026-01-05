@@ -58,7 +58,7 @@ body {
 
 .main-content pre code {
   background-color: transparent;
-  color: inherit;
+  color: #e0e0e0;
 }
 
 .main-content blockquote {
@@ -103,6 +103,10 @@ body {
 /* Syntax highlighting for dark theme */
 .highlight {
   background-color: #2d2d2d;
+}
+
+.highlight code {
+  color: #e0e0e0;
 }
 
 .highlight .c { color: #6a9955; } /* Comment */
