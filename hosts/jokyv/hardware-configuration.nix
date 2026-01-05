@@ -28,21 +28,47 @@
   };
   boot.extraModulePackages = [ ];
 
-  # fileSystems."/" = {
-  #   device = "/dev/disk/by-uuid/07b085ad-1ad6-48eb-8c1c-c1b46b250761";
-  #   fsType = "ext4";
-  # };
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/80fb4361-f167-4ef1-8701-56aa4a0d5e36";
+    fsType = "btrfs";
+    options = [ "subvol=@" "noatime" "compress-force=zstd:3" "ssd" "discard=async" ];
+  };
 
-  # fileSystems."/boot" = {
-  #   device = "/dev/disk/by-uuid/2A46-E0DA";
-  #   fsType = "vfat";
-  #   options = [
-  #     "fmask=0077"
-  #     "dmask=0077"
-  #   ];
-  # };
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/80fb4361-f167-4ef1-8701-56aa4a0d5e36";
+    fsType = "btrfs";
+    options = [ "subvol=@home" "noatime" "compress=zstd" ];
+  };
 
-  # swapDevices = [ { device = "/dev/disk/by-uuid/f7413d84-414b-4d9a-8fb9-30d40bc39033"; } ];
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-uuid/80fb4361-f167-4ef1-8701-56aa4a0d5e36";
+    fsType = "btrfs";
+    options = [ "subvol=@nix" "noatime" "compress-force=zstd:1" "nodatacow" ];
+  };
+
+  fileSystems."/var" = {
+    device = "/dev/disk/by-uuid/80fb4361-f167-4ef1-8701-56aa4a0d5e36";
+    fsType = "btrfs";
+    options = [ "subvol=@var" "noatime" "compress=zstd" ];
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/8EC2-84E6";
+    fsType = "vfat";
+    options = [ "fmask=0077" "dmask=0077" ];
+  };
+
+  # Add tmpfs for /tmp
+  fileSystems."/tmp" = {
+    fsType = "tmpfs";
+    options = [ "defaults" "size=4G" "mode=1777" ];
+  };
+
+  swapDevices = [
+    {
+      device = "/dev/disk/by-uuid/1f123baf-812e-4b34-8caf-9c1734bf26d6";
+    }
+  ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

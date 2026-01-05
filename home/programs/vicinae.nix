@@ -16,7 +16,7 @@
 
   services.vicinae = {
     enable = true;
-    autoStart = true;
+    systemd.autoStart = true;
     settings = {
       faviconService = "twenty"; # twenty | google | none
       font.size = 11;
