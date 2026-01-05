@@ -5,9 +5,9 @@ let
 in
 {
   imports = [
-    # disko configuration
-    inputs.disko.nixosModules.disko
-    ../../disks/universal-config.nix
+    # NOTE: disko and universal-config are NOT imported here
+    # They are ONLY used during fresh installation
+    # After installation, filesystems are managed by hardware-configuration.nix
     # zsa keyboard configuration
     ./zsa-udev-rules.nix
     # security configuration
@@ -39,7 +39,7 @@ in
   # Networking Configuration
   # ---------------------------------------------
   networking = {
-    # Hostname is now configured in install-config.nix and applied via universal-config.nix
+    hostname = "nixos";
     networkmanager.enable = true;
     nameservers = [
       "1.1.1.1"
