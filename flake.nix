@@ -99,7 +99,6 @@
         modules = [
           ./hosts/jokyv/default.nix # aka configuration.nix file
           ./hosts/jokyv/hardware-configuration.nix
-          disko.nixosModules.disko
           # stylix.nixosModules.stylix
           # home-manager.nixosModules.home-manager
           # {
