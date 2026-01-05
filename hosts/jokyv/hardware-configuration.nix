@@ -28,43 +28,43 @@
   };
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" = {
+  fileSystems."/" = lib.mkForce {
     device = "/dev/disk/by-uuid/80fb4361-f167-4ef1-8701-56aa4a0d5e36";
     fsType = "btrfs";
     options = [ "subvol=@" "noatime" "compress-force=zstd:3" "ssd" "discard=async" ];
   };
 
-  fileSystems."/home" = {
+  fileSystems."/home" = lib.mkForce {
     device = "/dev/disk/by-uuid/80fb4361-f167-4ef1-8701-56aa4a0d5e36";
     fsType = "btrfs";
     options = [ "subvol=@home" "noatime" "compress=zstd" ];
   };
 
-  fileSystems."/nix" = {
+  fileSystems."/nix" = lib.mkForce {
     device = "/dev/disk/by-uuid/80fb4361-f167-4ef1-8701-56aa4a0d5e36";
     fsType = "btrfs";
     options = [ "subvol=@nix" "noatime" "compress-force=zstd:1" "nodatacow" ];
   };
 
-  fileSystems."/var" = {
+  fileSystems."/var" = lib.mkForce {
     device = "/dev/disk/by-uuid/80fb4361-f167-4ef1-8701-56aa4a0d5e36";
     fsType = "btrfs";
     options = [ "subvol=@var" "noatime" "compress=zstd" ];
   };
 
-  fileSystems."/boot" = {
+  fileSystems."/boot" = lib.mkForce {
     device = "/dev/disk/by-uuid/8EC2-84E6";
     fsType = "vfat";
     options = [ "fmask=0077" "dmask=0077" ];
   };
 
   # Add tmpfs for /tmp
-  fileSystems."/tmp" = {
+  fileSystems."/tmp" = lib.mkForce {
     fsType = "tmpfs";
     options = [ "defaults" "size=4G" "mode=1777" ];
   };
 
-  swapDevices = [
+  swapDevices = lib.mkForce [
     {
       device = "/dev/disk/by-uuid/1f123baf-812e-4b34-8caf-9c1734bf26d6";
     }
