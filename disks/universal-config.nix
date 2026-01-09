@@ -44,7 +44,7 @@ in
               size = cfg.disk.swapSize;
               content = {
                 type = "swap";
-                randomEncryption = cfg.disk.useLuks;
+                randomEncryption = cfg.disk.encryptSwap or false;
               };
             };
 
