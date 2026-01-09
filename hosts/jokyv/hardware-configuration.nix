@@ -64,11 +64,8 @@
     options = [ "defaults" "size=4G" "mode=1777" ];
   };
 
-  swapDevices = lib.mkForce [
-    {
-      device = "/dev/disk/by-uuid/1f123baf-812e-4b34-8caf-9c1734bf26d6";
-    }
-  ];
+  # Swap is managed by disko with random encryption
+  # No swapDevices needed here as disko handles it
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

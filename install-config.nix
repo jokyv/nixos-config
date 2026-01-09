@@ -15,8 +15,12 @@
     swapSize = "32G"; # Swap partition size
     efiSize = "512M"; # EFI partition size
 
-    # Enable LUKS encryption (true/false)
+    # Enable LUKS encryption for ROOT filesystem (true/false)
     useLuks = false;
+
+    # Enable random encryption for swap (true/false)
+    # Independent of root encryption - can encrypt swap without encrypting root
+    encryptSwap = true;
 
     # Encryption settings (only used if useLuks = true)
     luks = {
@@ -31,22 +35,19 @@
     subvolumes = {
       "/" = {
         # Root subvolume
+        options = [ "compress=zstd" "noatime" ];
       };
       "/home" = {
         # Home subvolume with compression
-        compression = "zstd";
+        options = [ "compress=zstd" "noatime" ];
       };
       "/nix" = {
-        # Nix store subvolume with no-atime and no-co for better performance
-        options = [
-          "noatime"
-          "compress-force=zstd:1"
-          "nodatacow"
-        ];
+        # Nix store subvolume with lighter compression
+        options = [ "noatime" "compress=zstd:1" ];
       };
-      "/var/log" = {
-        # Log subvolume with compression
-        compression = "zstd";
+      "/var" = {
+        # Var subvolume with compression
+        options = [ "compress=zstd" "noatime" ];
       };
     };
   };
