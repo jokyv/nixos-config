@@ -139,6 +139,7 @@ in
     which
     rng-tools
     clamav
+    sniffnet
 
     # Development Tools
     clang
