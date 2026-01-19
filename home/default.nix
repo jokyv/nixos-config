@@ -22,6 +22,9 @@
     ./programs/brave.nix
     ./programs/firefox.nix
 
+    # AI
+    ./programs/claude.nix
+
     # APP LAUNCHERS
     ./programs/vicinae.nix
     ./programs/fuzzel.nix # need it for my personal scripts
@@ -122,6 +125,15 @@
       uv
       virtualenv # need this for python virtual env
 
+      # Rust and tools
+      rustc
+      cargo
+      clippy
+      rustfmt
+      rust-analyzer
+      cargo-watch
+      cargo-edit
+
       # Python with packages
       (python313.withPackages (
         ps: with ps; [
@@ -155,7 +167,7 @@
       # AI & Automation
       # aider-chat[full]
       # playwright-driver
-      claude-code
+      # claude-code  # Managed by home-manager module (./programs/claude.nix)
       claude-code-router
       aider-chat-full
 
