@@ -140,5 +140,37 @@
       - When generating code with some cryptographic keys, *always* provide an authorative link to
         allow me to verify them.
     '';
+
+    settings = {
+      env = {
+        ANTHROPIC_BASE_URL = "https://api.z.ai/api/anthropic";
+        API_TIMEOUT_MS = "3000000";
+        ANTHROPIC_DEFAULT_HAIKU_MODEL = "glm-4.5-air";
+        ANTHROPIC_DEFAULT_SONNET_MODEL = "glm-4.7";
+        ANTHROPIC_DEFAULT_OPUS_MODEL = "glm-4.7";
+        # ANTHROPIC_AUTH_TOKEN = "YOUR_TOKEN_HERE";  # Use sops or env var instead
+      };
+
+      permissions = {
+        allow = [ ];
+        deny = [
+          "Bash(rm -rf :*)"
+          "Bash(sudo rm -rf :*)"
+          "Bash(dd :*)"
+          "Bash(mkfs :*)"
+          "Bash(fdisk :*)"
+          "Bash(format :*)"
+          "Bash(shred :*)"
+        ];
+      };
+
+      enabledPlugins = {
+        "feature-dev@claude-code-plugins" = true;
+        "security-guidance@claude-code-plugins" = true;
+        "conductor@conductor-cc" = true;
+        "code-simplifier@claude-plugins-official" = true;
+        "rust-analyzer-lsp@claude-plugins-official" = true;
+      };
+    };
   };
 }
