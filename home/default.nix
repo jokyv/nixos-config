@@ -37,6 +37,7 @@
     ./programs/fnott.nix
     ./programs/fzf.nix
     ./programs/ruff.nix
+    ./programs/ty.nix
     ./programs/gammastep.nix
     ./programs/git.nix
     ./programs/helix.nix
@@ -164,13 +165,6 @@
       trashy
       unimatrix
 
-      # AI & Automation
-      # aider-chat[full]
-      # playwright-driver
-      # claude-code  # Managed by home-manager module (./programs/claude.nix)
-      claude-code-router
-      aider-chat-full
-
       # Screen Capture & Clipboard
       grim
       slurp
@@ -199,7 +193,7 @@
       nixfmt-tree # official nix formatter, formats whole project.
       nufmt
       # python313Packages.python-lsp-server
-      ty
+      # ty  # Managed by home-manager module (./programs/ty.nix)
       shfmt
       taplo
       typos
