@@ -116,7 +116,7 @@ let
     # Inactive window opacity
     {
       matches = [ { is-active = false; } ];
-      opacity = 0.75;
+      opacity = 0.85;
     }
   ];
 
