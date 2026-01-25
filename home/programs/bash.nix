@@ -168,9 +168,6 @@
       eval "$(zoxide init bash)"
 
     '';
-
-    # If you want to add more PATH modifications, you can use
-    bashrcExtra = '''';
   };
 
 }

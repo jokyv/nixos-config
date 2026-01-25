@@ -1,6 +1,18 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
+let
+  TokenPath = config.sops.secrets.glm_auth_token.path;
+in
 {
+  sops.secrets.glm_auth_token = { };
+
+  home.packages = [
+    (pkgs.writeShellScriptBin "claude-wrapper" ''
+      export ANTHROPIC_AUTH_TOKEN=$(cat ${TokenPath})
+      exec ${pkgs.claude-code}/bin/claude "$@"
+    '')
+  ];
+
   programs.claude-code = {
     enable = true;
 
