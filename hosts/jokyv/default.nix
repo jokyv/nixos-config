@@ -57,6 +57,12 @@ in
   # update the CPU microcode for AMD processors
   hardware.cpu.amd.updateMicrocode = true;
 
+  # Graphics support for Steam/games
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
   # Enable Bluetooth hardware support with security settings
   hardware.bluetooth = {
     enable = true;
