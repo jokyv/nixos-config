@@ -137,5 +137,18 @@
           }
         ];
       };
+
+      # Gaming mode configuration (minimal + Steam)
+      # -------------------------------------------
+      homeConfigurations.gaming = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = { inherit pkgs-stable; };
+        modules = [
+          ./home/gaming.nix
+          stylix.homeModules.stylix
+          sops-nix.homeManagerModules.sops
+          niri.homeModules.niri
+        ];
+      };
     };
 }
