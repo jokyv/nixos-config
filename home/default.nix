@@ -244,7 +244,7 @@
     music = "${config.home.homeDirectory}";
     videos = "${config.home.homeDirectory}";
     extraConfig = {
-      XDG_PROJECTS_DIR = "${config.home.homeDirectory}/projects";
+      PROJECTS = "${config.home.homeDirectory}/projects";
     };
   };
 
