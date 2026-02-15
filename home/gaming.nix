@@ -8,18 +8,18 @@
 
 {
   imports = [
-    # Shell
+    # SHELL
     ./programs/bash.nix
 
-    # Terminal
+    # TERMINAL
     ./programs/foot.nix
     ./programs/kitty.nix
 
-    # Browser
+    # BROWSER
     ./programs/firefox.nix
     ./programs/brave.nix
 
-    # Window Manager & UI
+    # WINDOW MANAGER & UI
     ./programs/niri.nix
     ./programs/waybar.nix
     ./programs/swww.nix
@@ -27,14 +27,14 @@
     ./programs/gammastep.nix
     ./programs/swaylock.nix
 
-    # Theming
+    # THEMING
     ./programs/stylix.nix
     ./programs/starship.nix
 
-    # Utilities
+    # UTILITIES
     ./programs/git.nix
 
-    # Environment
+    # ENVIRONMENT
     ./env.nix
   ];
 
