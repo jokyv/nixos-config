@@ -79,9 +79,13 @@ Complete documentation is available in the [`docs/`](docs/) directory:
    ```
 
 3. **Home Manager Setup:**
-   ```bash
-   home-manager switch --flake .#jokyv
-   ```
+
+   Two configuration modes are available:
+
+   | Mode | Command | Description |
+   |------|---------|-------------|
+   | **Work** (default) | `just home` or `home-manager switch --flake .#jokyv` | Full development setup with all tools |
+   | **Gaming** | `just game` or `home-manager switch --flake .#gaming` | Minimal config with Steam |
 
 4. **Common Tasks:**
    - Update system: `just up`
