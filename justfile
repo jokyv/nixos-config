@@ -30,6 +30,12 @@ home:
 home-nh:
     nh home switch -c jokyv .
 
+# Switch to gaming mode
+game:
+    @echo "[INFO] Switching to gaming mode..."
+    home-manager switch --flake .#gaming || { echo "[ERROR] Gaming mode switch failed"; exit 1; }
+    @echo "[SUCCESS] Gaming mode activated"
+
 # Alias hnh for home-nh
 
 alias hnh := home-nh
