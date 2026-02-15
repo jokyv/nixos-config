@@ -1,7 +1,7 @@
 # NixOS Configuration Framework
 
 **Next-gen Declarative System Configuration**\
-![NixOS](https://img.shields.io/badge/NixOS-24.05-blue.svg)
+![NixOS](https://img.shields.io/badge/NixOS-26.05-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
 A complete NixOS ecosystem featuring modern Linux desktop capabilities with declarative configuration management.
