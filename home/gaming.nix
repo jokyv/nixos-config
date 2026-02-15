@@ -100,6 +100,7 @@
 
       # System utilities
       btop
+      just
 
       # XDG utilities
       xdg-utils
