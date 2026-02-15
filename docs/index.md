@@ -23,7 +23,11 @@ just up
 just switch
 
 # Apply home-manager changes
-just home
+just home       # Work mode (full dev setup)
+just game       # Gaming mode (minimal + Steam)
+
+# Maintenance
+just cleanup    # Smart cleanup (keep 3 generations)
 
 # Manage secrets
 just encode    # Encrypt secrets
@@ -55,6 +59,9 @@ This framework provides:
 nixos-config/
 ├── docs/               # Documentation (you are here)
 ├── home/               # Home Manager configurations
+│   ├── default.nix        # Work mode (full dev setup)
+│   ├── gaming.nix         # Gaming mode (minimal + Steam)
+│   └── programs/          # Program-specific configs
 ├── hosts/              # Host-specific settings
 ├── flake.nix          # Main configuration entrypoint
 ├── justfile          # Common tasks automation
@@ -75,6 +82,7 @@ nixos-config/
 - **Tools**: Git, Cargo, UV, Node.js
 - **LSP**: Complete language server setup
 - **Version Control**: Git with Delta diff viewer
+- **AI Assistant**: Claude Code with custom commands/skills
 
 ### System Management
 - **Package Management**: Nix Flakes + Home Manager

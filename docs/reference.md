@@ -12,9 +12,14 @@ nixos-config/
 │   ├── programs.md        # Program configurations
 │   └── secrets_management.md  # Secrets management guide
 ├── home/               # Home Manager configurations
-│   ├── default.nix        # Main home configuration
+│   ├── default.nix        # Work mode (full dev setup)
+│   ├── gaming.nix         # Gaming mode (minimal + Steam)
 │   ├── env.nix           # Environment variables
 │   └── programs/         # Individual program configurations
+│       ├── claude.nix     # Claude AI assistant config
+│       ├── claude/        # Claude commands & skills
+│       │   ├── commands/  # Custom slash commands
+│       │   └── skills/    # Custom skills
 │       ├── browser.nix
 │       ├── editor.nix
 │       ├── terminal.nix
@@ -148,11 +153,12 @@ stylix = {
 The project includes a justfile for common tasks:
 
 - `just switch`: Rebuild system configuration
-- `just home`: Apply Home Manager configuration
+- `just home`: Apply Home Manager configuration (work mode)
+- `just game`: Apply Home Manager configuration (gaming mode)
 - `just up`: Update system packages
+- `just cleanup`: Smart cleanup (keep 3 generations)
 - `just encode`: Encrypt secrets
 - `just decode`: Decrypt secrets
-- `just clean`: Clean build artifacts
 
 ## Secrets Management
 

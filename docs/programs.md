@@ -245,6 +245,32 @@ Command runner with:
 
 ## Customization
 
+## AI Assistant
+
+### Claude Code
+
+Claude AI assistant integration with custom commands and skills:
+
+- Managed via home-manager (`home/programs/claude.nix`)
+- Custom commands in `home/programs/claude/commands/`
+- Custom skills in `home/programs/claude/skills/`
+
+#### Available Commands
+
+| Command | Description |
+|---------|-------------|
+| `/work-git-commit` | Smart git commit with conventional commits |
+| `/work-issue` | Issue analysis and resolution |
+| `/work-release-notes` | Generate release notes |
+| `/work-update-claudemd` | Update CLAUDE.md based on recent changes |
+| `/work-update-docs` | Update project documentation |
+
+#### Available Skills
+
+| Skill | Description |
+|-------|-------------|
+| `smart-git-commit` | Intelligent commit message generation |
+
 ### Theming
 
 All programs are configured to use the unified theme from Stylix:
@@ -272,6 +298,7 @@ Program configurations are modularized in `home/programs/`:
 - `media.nix` - Multimedia applications
 - `development.nix` - Development tools
 - `system.nix` - System utilities
+- `claude.nix` - Claude AI assistant
 
 Each module can be imported independently and customized per host or user.
 
