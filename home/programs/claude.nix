@@ -252,6 +252,7 @@ in
         ANTHROPIC_DEFAULT_SONNET_MODEL = "glm-5";
         ANTHROPIC_DEFAULT_OPUS_MODEL = "glm-5";
         # ANTHROPIC_AUTH_TOKEN = "YOUR_TOKEN_HERE";  # Use sops or env var instead
+        # CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";  # Enable multi-agent orchestration
       };
 
       permissions = {
