@@ -3,6 +3,7 @@
 let
   TokenPath = config.sops.secrets.glm_auth_token.path;
   claudeDir = ./claude;
+  hooksConfig = import ./claude/hooks.nix;
 in
 {
   sops.secrets.glm_auth_token = { };
@@ -274,19 +275,7 @@ in
         "rust-analyzer-lsp@claude-plugins-official" = true;
       };
 
-      hooks = {
-        PreToolUse = [
-          {
-            matcher = "Write|Edit";
-            hooks = [
-              {
-                type = "command";
-                command = "mkdir -p ~/.claude/logs && echo \"[$(date '+%Y-%m-%d %H:%M:%S')] File modified: $CLAUDE_FILE_PATH\" >> ~/.claude/logs/session.log";
-              }
-            ];
-          }
-        ];
-      };
+      hooks = hooksConfig;
     };
   };
 }
