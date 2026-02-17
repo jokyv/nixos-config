@@ -62,13 +62,19 @@ just decode        # Decrypt secrets
 sudo nixos-rebuild switch --flake .#nixos
 ```
 
-## Recent Updates (2026-02-15)
+## Recent Updates (2026-02-17)
 
+- **Claude commands restructure**: Unified workflow commands
+  - `/work-setup` - Project initialization and environment setup
+  - `/work-prime` - Context priming for better AI understanding
+  - `/work-maintain` - Project maintenance (security scan, cleanup)
+  - `/work-sync-docs` - Unified doc sync (merged from update-claudemd/update-docs)
+  - Existing: `work-git-commit`, `work-issue`, `work-release-notes`
+- **Security integration**: `work-maintain` now includes `trivy` filesystem scan
+
+### Previous (2026-02-15)
 - **Gaming mode**: New `home/gaming.nix` with minimal config + Steam
 - **32-bit graphics**: Enabled `hardware.graphics.enable32Bit` for Steam
-- **Claude integration**: Commands/skills managed via home-manager
-  - Commands: `work-git-commit`, `work-issue`, `work-release-notes`, `work-update-claudemd`, `work-update-docs`
-  - Skills: `smart-git-commit`
 - **XDG fix**: Updated deprecated `XDG_PROJECTS_DIR` to `PROJECTS`
 
 ## Notes for AI Assistants

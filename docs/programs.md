@@ -259,11 +259,13 @@ Claude AI assistant integration with custom commands and skills:
 
 | Command | Description |
 |---------|-------------|
+| `/work-setup` | Project initialization and environment setup |
+| `/work-prime` | Context priming for better AI understanding |
+| `/work-maintain` | Project maintenance (security scan, cleanup) |
+| `/work-sync-docs` | Sync documentation - update CLAUDE.md and docs/ |
 | `/work-git-commit` | Smart git commit with conventional commits |
 | `/work-issue` | Issue analysis and resolution |
 | `/work-release-notes` | Generate release notes |
-| `/work-update-claudemd` | Update CLAUDE.md based on recent changes |
-| `/work-update-docs` | Update project documentation |
 
 #### Available Skills
 
