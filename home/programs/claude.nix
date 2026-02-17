@@ -97,6 +97,9 @@ in
       work-update-claudemd = "${claudeDir}/commands/work-update-claudemd.md";
       work-update-docs = "${claudeDir}/commands/work-update-docs.md";
       work-issue = "${claudeDir}/commands/work-issue.md";
+      work-prime = "${claudeDir}/commands/work-prime.md";
+      work-setup = "${claudeDir}/commands/work-setup.md";
+      work-maintain = "${claudeDir}/commands/work-maintain.md";
     };
 
     # Custom skills
@@ -270,6 +273,20 @@ in
         "conductor@conductor-cc" = false;
         "code-simplifier@claude-plugins-official" = true;
         "rust-analyzer-lsp@claude-plugins-official" = true;
+      };
+
+      hooks = {
+        PreToolUse = [
+          {
+            matcher = "Write|Edit";
+            hooks = [
+              {
+                type = "command";
+                command = "mkdir -p ~/.claude/logs && echo \"[$(date '+%Y-%m-%d %H:%M:%S')] File modified: $CLAUDE_FILE_PATH\" >> ~/.claude/logs/session.log";
+              }
+            ];
+          }
+        ];
       };
     };
   };
