@@ -8,7 +8,7 @@ Periodic maintenance workflow for codebase health and hygiene.
 
 ## Workflow Pattern
 
-**Check → Clean → Update → Audit → Report**
+**Check → Clean → Update → Security → Audit → Report**
 
 ## Phase 1: Health Check
 
@@ -91,7 +91,22 @@ Check for outdated or vulnerable dependencies:
 !`test -f package.json && npm audit 2>/dev/null | head -20 || echo "No package.json"`
 ```
 
-## Phase 4: Code Health
+## Phase 4: Security Scan
+
+Check for accidentally committed secrets:
+
+```bash
+# Scan for potential secrets (exclude encrypted files and comments)
+!`grep -rn -E "(api_key|apikey|password|passwd|secret|token|credential|private_key|aws_access|aws_secret)" --include="*.py" --include="*.ts" --include="*.js" --include="*.nix" --include="*.yaml" --include="*.yml" --include="*.env" 2>/dev/null | grep -v "secrets.enc" | grep -v ".sops" | grep -v "# " | grep -v "example" | head -20 || echo "No secrets found"`
+
+# Check for .env files that should be gitignored
+!`find . -name ".env" -o -name ".env.local" -o -name "*.env" 2>/dev/null | grep -v node_modules | head -10`
+
+# Verify .gitignore covers sensitive patterns
+!`test -f .gitignore && grep -E "(\.env|secrets|credentials|.*key.*\.pem)" .gitignore || echo "No secret patterns in .gitignore"`
+```
+
+## Phase 5: Code Health
 
 Static analysis and code quality checks:
 
@@ -106,7 +121,7 @@ Static analysis and code quality checks:
 !`test -f pyproject.toml && find . -name "*.py" -exec grep -l "def\|class" {} \; 2>/dev/null | head -10 || echo "Not a Python project"`
 ```
 
-## Phase 5: Report Generation
+## Phase 6: Report Generation
 
 Provide a structured maintenance report:
 
@@ -126,6 +141,11 @@ Provide a structured maintenance report:
 - Outdated packages: [count]
 - Security issues: [count/severity]
 - Last lock file update: [date]
+
+### Security
+- Potential secrets found: [count]
+- .env files exposed: [yes/no]
+- .gitignore coverage: [adequate/needs update]
 
 ### Code Health
 - TODOs/FIXMEs: [count]

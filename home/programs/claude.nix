@@ -94,8 +94,7 @@ in
     commands = {
       work-git-commit = "${claudeDir}/commands/work-git-commit.md";
       work-release-notes = "${claudeDir}/commands/work-release-notes.md";
-      work-update-claudemd = "${claudeDir}/commands/work-update-claudemd.md";
-      work-update-docs = "${claudeDir}/commands/work-update-docs.md";
+      work-sync-docs = "${claudeDir}/commands/work-sync-docs.md";
       work-issue = "${claudeDir}/commands/work-issue.md";
       work-prime = "${claudeDir}/commands/work-prime.md";
       work-setup = "${claudeDir}/commands/work-setup.md";
