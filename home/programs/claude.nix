@@ -106,6 +106,7 @@ in
     # Custom skills
     skills = {
       smart-git-commit = "${claudeDir}/skills/smart-git-commit.md";
+      python = "${claudeDir}/skills/python.md";
     };
 
     memory.text = ''
