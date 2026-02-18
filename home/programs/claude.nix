@@ -100,6 +100,7 @@ in
       work-prime = "${claudeDir}/commands/work-prime.md";
       work-setup = "${claudeDir}/commands/work-setup.md";
       work-maintain = "${claudeDir}/commands/work-maintain.md";
+      work-design-review = "${claudeDir}/commands/work-design-review.md";
     };
 
     # Custom skills
@@ -110,138 +111,86 @@ in
     memory.text = ''
       # CLAUDE.md - Project Conventions & AI Assistant Instructions
 
-      ## Objective
-
-      You are an AI coding assistant implementing features for this project. Your goal is to write clean, maintainable code following established conventions and patterns.
-
       ## Core Principles
 
       - **Clarity over Cleverness:** Favor readable code over obscure implementations
       - **Consistency:** Match existing code style and patterns
-      - **Modularity:** Create focused functions/components with single responsibilities
+      - **Modularity:** Single responsibility - each function/class does one thing well
       - **Minimal Scope:** Only change what's necessary for the task
       - **YAGNI & KISS:** Strictly follow requirements, don't over-engineer
 
-      ## Code Style & Structure
+      ## Code Style
 
-      ### General
-
-      - Use project's linter/formatter if present, otherwise use community standards
+      - Use project's linter/formatter if present
       - Comments explain _why_ not _what_
-      - Group imports logically: built-in → third-party → internal
-      - Use absolute imports (`@/...`) if configured
+      - Group imports: built-in → third-party → internal
+      - Indent with spaces, never tabs
+      - Empty lines have no indentation
+      - Be concise when naming; omit words if clear from context
+      - Only comment to: clarify complex code, explain non-obvious decisions, group long scopes
 
-      ### Naming Conventions
+      ### Naming
 
-      - Variables & Functions: `lower_snake_case`
-      - Components: `PascalCase`
+      - Variables/Functions: `lower_snake_case`
+      - Components/Classes: `PascalCase`
       - Constants: `UPPER_SNAKE_CASE`
-      - Files: `kebab-case` (use `PascalCase` for React components)
+      - Files: `kebab-case` (React components: `PascalCase`)
 
-      ### Documentation
+      ## Python
 
-      - Provide detailed type annotations for functions/components
-      - Add README.md for significant new modules
-      - Document complex algorithms and business logic
+      - Type hints (PEP 484) for all function signatures
+      - Prefer functional constructs (comprehensions, generators) over loops
+      - NumPy-style docstrings for functions/classes
+      - Use `match...case` instead of complex `if...elif...else`
+      - Libraries: polars > pandas, pathlib for paths, @dataclass for data, uv for deps
+      - Catch specific exceptions, never broad `except Exception:`
+      - Never swallow exceptions silently
 
-      ## Python Conventions
-
-      - Use standard Python type hints (PEP 484) for all function arguments and return values
-      - Prefer functional constructs (list comprehensions, generators, map/filter) over raw loops
-      - Use descriptive variable names with auxiliary verbs
-      - Functions and classes should have NumPy docstrings standard
-      - Use match...case instead of complex if...elif...else statements
-      - For refactoring: break into small steps, make minimal changes, maintain identical behavior
-
-      ### Exception Handling
-
-      - Catch specific exceptions, not broad `except Exception:`
-      - Use `try/except/else/finally` blocks or context managers
-      - Raise custom exception classes inheriting from `Exception` (suffix with `Error`)
-      - Log errors with context before re-raising or handling
-      - Never swallow exceptions silently without explaining why
-
-      ### Python Libraries
-
-      - Prefer polars over pandas for data analysis
-      - Use pathlib for filesystem paths
-      - Use @dataclass decorator for data-storing classes
-      - Use uv for dependency management (not pip)
-      - Use tomllib module for .toml file interactions
-
-      ## Git Commit Standards
-
-      Follow semantic commit messages:
+      ## Git Commits
 
       ```
-      <type>[scope]: <description>
+      <type>[scope]: <description>  # imperative, lowercase, ≤50 chars
 
-      [optional body]
+      [optional body - WHY not HOW]
 
-      [optional footer]
+      [optional footer - Fixes #123, BREAKING CHANGE:]
       ```
 
-      **Types:** feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
+      Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
 
-      **Guidelines:**
+      ## Communication Style
 
-      - Description: imperative, lowercase, no period, ≤50 chars
-      - Body: explain WHY not HOW, wrap at 72 chars
-      - Footer: reference issues (`Fixes #123`), breaking changes (`BREAKING CHANGE:`)
-      - Commits should be atomic and specific
-      - Use `git commit -m "message"` directly, never separate draft files
+      - Be concise - I'll ask if I need details
+      - Avoid hyperbolic expressions
+      - Provide critical feedback (not sycophantic or judgemental)
+      - Emojis: 🤔 unsure, 🔥 confident, 🥳 success, 💩 failed, 🐞 bug, 😆 joke
+      - Suggest tools/patterns with links when relevant
 
-      ## Interaction Protocol
+      ## AI Code Direction
 
-      1. Execute tasks from todo.md in specified order
-      2. Focus exclusively on current task, don't implement future features
-      3. Write code directly to correct files
-      4. Mark completed tasks with `[x]` in todo.md
-      5. Write tests for non-trivial new functions if testing framework exists
-      6. If encountering errors/ambiguities, state problem clearly and wait for instruction
+      - Never accept first draft - review for structural issues
+      - Before implementing, explain design approach and component relationships
+      - Identify circular dependencies and suggest fixes
+      - Question if a class should be a function (or vice versa)
+      - Point out mixed responsibilities in classes
+      - Ask "Is there a way to..." to explore alternatives
+      - High-level modules shouldn't depend on low-level details
 
-      # Communication style
+      ## Hooks Active
 
-      - Be concise in your responses
-      - Don't bother explaining what you did in great detail: I'll ask if I need details
-      - Avoid hyperbolic expressions and be direct
-      - Don't be sycophantic: provide critical feedback (but not judgemental)
-      - Once in a while, make a joke, but don't make it cheesy: be creative, use dark humor and nerdy jokes
-      - Use the following emojis to express the tone of your response:
-        * 🤔 - you are unsure
-        * 🔥 - you are confident and we are on a roll
-        * 🥳 - you have succeded
-        * 💩 - you have failed or something went wrong
-        * 🐞 - you found a bug
-        * 😆 - you or I have made a joke
-        * feel free to include other emojis as you see fit
-      - If you think of an architectural pattern, library or tool that can help my project, suggest it an provide a link
+      - Secret leak detection: logs potential credential exposure
+      - Binary file protection: blocks edits to binary files
+      - Conflict marker detection: warns on git merge conflicts
 
-      # Coding style
+      ## Environment
 
-      - Indent with spaces and never tabs
-      - Ensure empty lines have no indentation
-      - Be concise when naming variables, functions and classes
-      - You may omit words from a name if they are clear from context
-      - Only use comments in the following cases:
-        * To clarify complex code
-        * To explain why something was done, if it is not immediately obvious
-        * To group sequences of expression in a long scope and clarify steps (but don't use numbering)
+      - Shell: bash
+      - NixOS: use `nix shell` if CLI tool not found
+      - Python projects: use uv if `uv.lock` exists
 
-      ## Shell
+      ## Security
 
-      I use bash; for all shell commands, assume this is the shell.
-
-      I am in a NixOS environment: if you need access to a CLI tool and don't find it, you may use `nix shell` commands.
-
-      ## Python projects
-
-      Always use uv to manage the project if there is a `uv.lock`.
-
-      # Security
-
-      - When generating code with some cryptographic keys, *always* provide an authorative link to
-        allow me to verify them.
+      - For cryptographic keys, always provide authoritative link for verification
     '';
 
     settings = {
