@@ -107,6 +107,7 @@ in
     skills = {
       smart-git-commit = "${claudeDir}/skills/smart-git-commit.md";
       python = "${claudeDir}/skills/python.md";
+      session-analysis = "${claudeDir}/skills/session-analysis.md";
     };
 
     memory.text = ''
