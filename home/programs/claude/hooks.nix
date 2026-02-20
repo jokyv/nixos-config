@@ -58,5 +58,34 @@
         }
       ];
     }
+
+    # Session analysis reminder (weekly, after 20+ tool uses)
+    {
+      matcher = ".*";
+      hooks = [
+        {
+          type = "command";
+          command = ''
+            REMINDER_FILE="$HOME/.claude/logs/session-analysis-reminder"
+            COUNT_FILE="$HOME/.claude/logs/tool-count"
+            mkdir -p "$(dirname "$REMINDER_FILE")"
+
+            COUNT=$(cat "$COUNT_FILE" 2>/dev/null || echo 0)
+            COUNT=$((COUNT + 1))
+            echo "$COUNT" > "$COUNT_FILE"
+
+            if [ "$COUNT" -ge 20 ]; then
+              if [ ! -f "$REMINDER_FILE" ] || [ $(($(date +%s) - $(cat "$REMINDER_FILE" 2>/dev/null || echo 0))) -gt 604800 ]; then
+                echo ""
+                echo -e "\033[1;36m💡 TIP: Run /session-analysis to review conversation patterns\033[0m"
+                echo ""
+                date +%s > "$REMINDER_FILE"
+              fi
+              echo "0" > "$COUNT_FILE"
+            fi
+          '';
+        }
+      ];
+    }
   ];
 }
