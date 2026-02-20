@@ -77,6 +77,11 @@ sudo nixos-rebuild switch --flake .#nixos
 - **32-bit graphics**: Enabled `hardware.graphics.enable32Bit` for Steam
 - **XDG fix**: Updated deprecated `XDG_PROJECTS_DIR` to `PROJECTS`
 
+## Before Making Changes
+
+- Confirm repo/project paths explicitly before assuming location
+- Check existing syntax patterns in codebase first
+
 ## Notes for AI Assistants
 
 - This is a NixOS config project, not a typical application
