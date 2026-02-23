@@ -101,6 +101,21 @@
         rebase = true;
       };
 
+      push = {
+        # Auto-set upstream on first push (no need for -u flag)
+        autoSetupRemote = true;
+      };
+
+      fetch = {
+        # Remove local refs to deleted remote branches automatically
+        prune = true;
+      };
+
+      commit = {
+        # Default template for conventional commits (shown when running git commit without -m)
+        template = "~/dot/git/templates/commit_template.txt";
+      };
+
       core = {
         editor = "hx";
         pager = "${pkgs.writeShellScriptBin "git-pager" ''
