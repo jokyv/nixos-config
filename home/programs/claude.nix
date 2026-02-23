@@ -108,6 +108,7 @@ in
       smart-git-commit = "${claudeDir}/skills/smart-git-commit.md";
       python = "${claudeDir}/skills/python.md";
       session-analysis = "${claudeDir}/skills/session-analysis.md";
+      worktree = "${claudeDir}/skills/worktree.md";
     };
 
     memory.text = ''
@@ -193,6 +194,11 @@ in
       ## Security
 
       - For cryptographic keys, always provide authoritative link for verification
+
+      ## Risky Changes
+
+      - For large refactors or experimental work, suggest git worktree isolation
+      - Use `/skill worktree` to protect main repo
     '';
 
     settings = {
@@ -207,7 +213,39 @@ in
       };
 
       permissions = {
-        allow = [ ];
+        allow = [
+          # Git (read-only)
+          "Bash(git status:*)"
+          "Bash(git log:*)"
+          "Bash(git diff:*)"
+          "Bash(git branch:*)"
+          "Bash(git show:*)"
+          "Bash(git rev-parse:*)"
+          "Bash(git ls-files:*)"
+          "Bash(git remote:*)"
+          # Filesystem (read-only)
+          "Bash(ls:*)"
+          "Bash(cat:*)"
+          "Bash(head:*)"
+          "Bash(tail:*)"
+          "Bash(pwd)"
+          "Bash(which:*)"
+          "Bash(tree:*)"
+          "Bash(file:*)"
+          "Bash(stat:*)"
+          # Search (read-only)
+          "Bash(grep:*)"
+          "Bash(rg:*)"
+          "Bash(find:*)"
+          "Bash(fd:*)"
+          # Network (read-only)
+          "Bash(curl --head:*)"
+          "Bash(wget --spider:*)"
+          # Process info
+          "Bash(ps:*)"
+          "Bash(top -b:*)"
+          "Bash(htop -b:*)"
+        ];
         deny = [
           "Bash(rm -rf :*)"
           "Bash(sudo rm -rf :*)"
