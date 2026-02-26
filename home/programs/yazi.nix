@@ -2,6 +2,7 @@
   programs.yazi = {
     enable = true;
     enableNushellIntegration = true;
+    shellWrapperName = "yy";
     settings = {
       mgr = {
         ratio = [
