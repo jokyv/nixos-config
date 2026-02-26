@@ -12,17 +12,18 @@
     virtualisation.flushL1DataCache = "always";
     # Enable AppArmor for application confinement
     apparmor.enable = true;
-    audit = {
-      enable = true;
-      rules = [
-        # Rule 1: Monitor all execve system calls (64-bit)
-        "-a always,exit -F arch=b64 -S execve"
-        # Rule 2: Watch /etc/passwd for write changes and attribute changes
-        "-w /etc/passwd -p wa"
-        # Rule 3: Watch /etc/shadow for write changes and attribute changes
-        "-w /etc/shadow -p wa"
-      ];
-    };
+    # Audit disabled - kernel 6.18 compatibility issue with audit subsystem
+    # audit = {
+    #   enable = true;
+    #   rules = [
+    #     # Rule 1: Monitor all execve system calls (64-bit)
+    #     "-a always,exit -F arch=b64 -S execve"
+    #     # Rule 2: Watch /etc/passwd for write changes and attribute changes
+    #     "-w /etc/passwd -p wa"
+    #     # Rule 3: Watch /etc/shadow for write changes and attribute changes
+    #     "-w /etc/shadow -p wa"
+    #   ];
+    # };
   };
 
   # ---------------------------------------------
