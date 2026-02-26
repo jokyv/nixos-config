@@ -153,6 +153,7 @@
       # System Utilities
       base16-schemes
       btop
+      cbonsai
       cowsay
       dconf
       ddgr # duckduckgo on the terminal
