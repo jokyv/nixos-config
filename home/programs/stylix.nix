@@ -21,12 +21,14 @@ in
     # Black metal themes
     # base16Scheme = "${base16SchemesPath}/black-metal.yaml";
     # base16Scheme = "${base16SchemesPath}/black-metal-gorgoroth.yaml";
-    base16Scheme = "${base16SchemesPath}/black-metal-bathory.yaml";
+    # base16Scheme = "${base16SchemesPath}/black-metal-bathory.yaml";
 
-    override = {
-      base0A = "#854a55"; # Dark rose-pine accent for better contrast
-      base03 = "#2e3a47"; # Muted comment color for reduced eye strain
-    };
+    base16Scheme = "${base16SchemesPath}/kanagawa.yaml";
+
+    # override = {
+    #   base0A = "#854a55"; # Dark rose-pine accent for better contrast
+    #   base03 = "#2e3a47"; # Muted comment color for reduced eye strain
+    # };
 
     cursor = {
       package = pkgs.bibata-cursors;
