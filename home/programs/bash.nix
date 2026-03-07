@@ -7,6 +7,8 @@
   };
 
   home.sessionPath = [
+    "$HOME/.npm-global/bin"
+    "${config.home.homeDirectory}/.cache/.bun/bin"
     "${config.home.homeDirectory}/.local/share/cargo/bin"
     "${config.home.homeDirectory}/scripts/bin" # need this for my personal scripts
     # "${config.home.homeDirectory}/.local/bin" # need this for `uv tools`
