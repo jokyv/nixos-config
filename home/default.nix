@@ -24,6 +24,7 @@
 
     # AI
     ./programs/claude.nix
+    # ./programs/pi-agent.nix
 
     # APP LAUNCHERS
     ./programs/vicinae.nix
@@ -111,6 +112,10 @@
       # -----------------------------------------
       # Unstable Packages (from pkgs)
       # -----------------------------------------
+
+      # NPM
+      bun
+      nodejs_25
 
       # Shells & Terminals
       alacritty
