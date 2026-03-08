@@ -208,6 +208,10 @@ let
         "${mod}+N" = {
           action = spawn_cmd "foot -e newsraft";
         };
+        "${mod}+S" = {
+          action = spawn_cmd "foot -F cbonsai --screensaver";
+          repeat = false;
+        };
       };
 
       # System actions
