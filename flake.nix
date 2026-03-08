@@ -68,6 +68,8 @@
     };
 
     vicinae.url = "github:vicinaehq/vicinae"; # tell Nixos where to get Vicinae
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
   };
 
   outputs =
@@ -81,6 +83,7 @@
       niri,
       disko,
       devenv,
+      nixos-hardware,
       vicinae,
       ...
     }@inputs:
