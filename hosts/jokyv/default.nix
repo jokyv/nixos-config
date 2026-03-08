@@ -20,6 +20,8 @@ in
     ./maintenance.nix
     # import niri module
     inputs.niri.nixosModules.niri
+    # CPU-specific optimizations
+    inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
   ];
 
   # Set your time zone.
@@ -34,6 +36,19 @@ in
   boot.loader.systemd-boot.configurationLimit = 10;
   # Allow systemd-boot to manage EFI variables
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # Performance kernel parameters
+  boot.kernelParams = [
+    "nowatchdog" # Disable watchdog timer - reduces interrupts
+    "split_lock_detect=off" # Improve performance on some workloads
+  ];
+
+  # Sysctl tuning for desktop/gaming
+  boot.kernel.sysctl = {
+    "vm.max_map_count" = 2147483642; # Required for some games (Star Citizen, etc.)
+    "vm.swappiness" = 10; # Prefer RAM over swap
+    "kernel.sched_autogroup_enabled" = 1; # Better interactive task grouping
+  };
 
   # boot.kernelPackages = pkgs.LinuxPackages_hardened;
 
