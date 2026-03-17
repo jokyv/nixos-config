@@ -41,7 +41,6 @@
     };
   };
 
-
   # Display Management
   # services.displayManager.ly.enable = true;
   services.getty.autologinUser = "jokyv";
@@ -56,7 +55,6 @@
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
-      xdg-desktop-portal-gnome
       xdg-desktop-portal-wlr
     ];
     config.common.default = [ "*" ];

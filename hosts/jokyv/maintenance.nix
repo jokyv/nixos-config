@@ -1,8 +1,5 @@
 { inputs, pkgs, ... }:
 
-let
-  userHome = builtins.getEnv "HOME";
-in
 {
   # ---------------------------------------------
   # System Automation
