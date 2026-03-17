@@ -322,19 +322,19 @@ let
       # Scripts and custom commands
       scripts = {
         "${mod}+W" = {
-          action = spawn_script "update_wall.sh";
+          action = spawn_script "update_wall.py";
         };
         "${mod}+${shift}+W" = {
-          action = spawn_script "update_wall.sh --auto-rotate"; # auto rotate wallpapers default 15 minutes
+          action = spawn_script "update_wall.py --auto-rotate"; # auto rotate wallpapers default 15 minutes
         };
         # "${mod}+${shift}+W" = {
-        #   action = spawn_script "define_word.sh";
+        #   action = spawn_script "define_word.py";
         # };
         "${mod}+${shift}+M" = {
-          action = spawn_script "my_logout.sh";
+          action = spawn_script "my_logout.py";
         };
         "${mod}+Y" = {
-          action = spawn_script "take_screenshot.sh";
+          action = spawn_script "take_screenshot.py";
         };
 
         # Clipboard management

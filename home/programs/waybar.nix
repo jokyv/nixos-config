@@ -52,7 +52,7 @@
 
         "custom/off_button" = {
           format = "";
-          on-click = "${config.home.homeDirectory}/scripts/bin/my_logout.sh";
+          on-click = "${config.home.homeDirectory}/scripts/bin/my_logout.py";
           tooltip = false;
         };
 
