@@ -115,7 +115,6 @@
 
       # NPM
       bun
-      nodejs_25
 
       # Shells & Terminals
       alacritty
