@@ -67,6 +67,18 @@ Each host configuration includes:
 - User configurations
 - Import statements for modular components
 
+### Gaming Optimizations
+
+System-level gaming performance is configured in `hosts/jokyv/default.nix`:
+
+- **GameMode daemon** (`programs.gamemode`): Automatic CPU/IO prioritization when games run
+- **PipeWire low‑latency** (`services.pipewire.extraConfig`): 48kHz clock, 256‑sample quantum, RTKit with high priority
+- **Steam hardware** (`hardware.steam-hardware.enable`): udev rules for controllers, VR, Steam Deck support
+- **Kernel tuning** (`boot.kernelParams`, `boot.kernel.sysctl`): `nowatchdog`, `split_lock_detect=off`, `vm.max_map_count`, `vm.swappiness`, etc.
+- **AMD CPU** (`nixos-hardware.nixosModules.common-cpu-amd-pstate`): Optimal power management and performance
+
+User‑level gaming packages (Steam, Wine, MangoHUD) and environment variables are managed by Home Manager `home/gaming.nix` and activated via `just game`.
+
 ### Home Manager (`home/`)
 
 Home configurations manage:

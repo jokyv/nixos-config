@@ -231,6 +231,47 @@ Modern file encryption:
 - Simple usage
 - Secure defaults
 
+## Gaming
+
+### GameMode
+
+Feral Interactive's GameMode daemon optimizes system performance during gameplay:
+- **CPU governor:** Switches to performance while gaming
+- **I/O priority:** Elevates disk I/O for games
+- **Process priority:** Real-time scheduling tweaks
+- **Integration:** Automatically triggers with Steam games; CLI available for other launchers
+
+Configuration location: `hosts/jokyv/default.nix` (`programs.gamemode`)
+
+### Steam
+
+Steam client with full gaming features:
+- Linux Proton compatibility layer
+- Steam Play for Windows games
+- Big Picture mode and Steam Deck UI
+- Controller and VR support via udev rules
+
+Installed in Home Manager `home/gaming.nix`. Activate with `just game`.
+
+### PipeWire Low‑Latency Audio
+
+Audio pipeline tuned for gaming responsiveness:
+- Clock rate: 48000 Hz
+- Quantum: 256 samples (min 256, max 512)
+- RTKit module with high priority (`nice.level = -11`, `rt.prio = 88`)
+- Reduces audio latency and prevents dropouts
+
+Configuration: `hosts/jokyv/services.nix` (`services.pipewire.extraConfig`)
+
+### Additional Utilities
+
+Optional tools configured in `home/gaming.nix`:
+- **MangoHUD:** On‑screen performance overlay
+- **Wine/Proton:** Windows compatibility
+- **Gamescope:** Game scaling and filtering
+- **Moonlight:** Game streaming client
+
+---
 ## Automation
 
 ### Task Runner
