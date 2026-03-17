@@ -32,6 +32,14 @@ A complete NixOS ecosystem featuring modern Linux desktop capabilities with decl
 - **Productivity:** Obsidian, Zathura (PDF viewer)
 - **System Utilities:** Waybar, Fuzzel (App launcher), Cliphist (Clipboard manager)
 
+
+### Gaming Optimizations
+
+- **GameMode Daemon:** Automatic CPU/IO prioritization for games
+- **PipeWire Low‑Latency:** Tuned audio pipeline (48kHz, 256‑sample quantum, RTKit)
+- **Steam Hardware:** Controller/VR udev rules via `hardware.steam-hardware.enable`
+- **Kernel Tuning:** `vm.max_map_count`, `vm.swappiness`, `kernel.sched_autogroup_enabled`
+- **Performance P‑State:** AMD P‑state driver for optimal CPU frequency scaling
 ## Project Structure
 
 For a complete overview of the project structure and configuration files, see the **[Configuration Reference](docs/reference.md)**.
@@ -53,6 +61,7 @@ This documentation provides detailed explanations of:
 - **Secrets Management:** Encrypted credentials with sops-nix
 - **Unified Theming:** Consistent appearance across all applications
 - **Modern Workflow:** Wayland-based desktop with tiling window management
+- **Performance Tuning:** CachyOS‑inspired gaming optimizations (GameMode, low‑latency PipeWire, kernel sysctl)
 
 ## Documentation 📚
 
@@ -85,7 +94,7 @@ Complete documentation is available in the [`docs/`](docs/) directory:
    | Mode | Command | Description |
    |------|---------|-------------|
    | **Work** (default) | `just home` or `home-manager switch --flake .#jokyv` | Full development setup with all tools |
-   | **Gaming** | `just game` or `home-manager switch --flake .#gaming` | Minimal config with Steam |
+   | **Gaming** | `just game` or `home-manager switch --flake .#gaming` | Minimal config with Steam + system‑level optimizations (GameMode, low‑latency PipeWire, Steam hardware) |
 
 4. **Common Tasks:**
    - Update system: `just up`
