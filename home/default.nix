@@ -55,6 +55,7 @@
     ./programs/zathura.nix
     ./programs/zoxide.nix
 
+    ./programs/git-sync-notes.nix
     ./env.nix
 
     # ./programs/noctalia.nix
