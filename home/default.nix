@@ -155,6 +155,14 @@
       nautilus
       psst # A spotify client
 
+      # GNOME Apps
+      gnome-calendar
+      evince
+      gnome-maps
+      gnome-clocks
+      gnome-contacts
+      gnome-calculator
+
       # System Utilities
       base16-schemes
       btop
@@ -241,6 +249,7 @@
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
+    setSessionVariables = true;  # Keep legacy behavior for 24.05 stateVersion
     desktop = "${config.home.homeDirectory}";
     download = "${config.home.homeDirectory}/downloads";
     pictures = "${config.home.homeDirectory}/pics";
@@ -253,6 +262,20 @@
       PROJECTS = "${config.home.homeDirectory}/projects";
     };
   };
+
+  # ---------------------------------------------
+  # GTK configuration (to silence warnings)
+  # ---------------------------------------------
+  gtk = {
+    gtk4 = {
+      theme = null;  # Adopt new default (was config.gtk.theme)
+    };
+  };
+
+  # ---------------------------------------------
+  # Font configuration
+  # ---------------------------------------------
+  fonts.fontconfig.enable = true;
 
   # ---------------------------------------------
   # State Version
