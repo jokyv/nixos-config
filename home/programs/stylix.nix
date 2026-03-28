@@ -48,8 +48,10 @@ in
         name = "DejaVu Serif";
       };
       sansSerif = {
-        package = pkgs.noto-fonts;
-        name = "Noto Sans";
+        package = pkgs.dejavu_fonts;
+        name = "DejaVu Sans";
+        # package = pkgs.noto-fonts;
+        # name = "Noto Sans";
       };
       emoji = {
         package = pkgs.noto-fonts-monochrome-emoji;
@@ -89,21 +91,22 @@ in
       };
 
       # apply specific theme to GTK based apps
-      # gtk = {
-      #   enable = true;
-      #   iconTheme = {
-      #     # name = "Papirus-Dark";
-      #     # package = pkgs.papirus-icon-theme;
-      #     # name = "Tela";
-      #     # package = pkgs.tela-icon-theme;
-      #     # name = "everforest";
-      #     # package = pkgs.everforest-gtk-theme;
-      #     # name = "candy";
-      #     # package = pkgs.candy-icons;
-      #     name = "sweet";
-      #     package = pkgs.sweet-folders;
-      #   };
-      # };
+      gtk = {
+        enable = true;
+        # Icon themes (if needed in future - separate from Stylix):
+        # iconTheme = {
+        #   name = "Papirus-Dark";
+        #   package = pkgs.papirus-icon-theme;
+        #   name = "Tela";
+        #   package = pkgs.tela-icon-theme;
+        #   name = "everforest";
+        #   package = pkgs.everforest-gtk-theme;
+        #   name = "candy";
+        #   package = pkgs.candy-icons;
+        #   name = "sweet";
+        #   package = pkgs.sweet-folders;
+        # };
+      };
 
     };
 

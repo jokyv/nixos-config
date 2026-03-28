@@ -6,9 +6,94 @@
     enable = true;
 
     settings = {
+      # User identity
       user = {
         name = "John Kyvetos";
         email = "johnkyvetos@gmail.com";
+      };
+
+      # Aliases
+      alias = {
+        ignore = "!gi() { local IFS=','; curl -sL \"https://www.toptal.com/developers/gitignore/api/\\$*\"; }; gi";
+        l = "!f() { count=$1; if [ -z \"$count\" ]; then count=5; fi; git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -n \"$count\"; }; f";
+        graph = "!f() { count=$1; if [ -z \"$count\" ]; then count=5; fi; git log --all --graph --decorate --oneline -n \"$count\"; }; f";
+      };
+
+      # Initial configuration
+      init = {
+        defaultBranch = "main";
+      };
+
+      # Pull/push behavior
+      pull = {
+        rebase = true;
+      };
+
+      push = {
+        autoSetupRemote = true;
+      };
+
+      fetch = {
+        prune = true;
+      };
+
+      commit = {
+        template = "~/dot/git/templates/commit_template.txt";
+      };
+
+      # Core settings
+      core = {
+        editor = "hx";
+        pager = "${pkgs.writeShellScriptBin "git-pager" ''
+          exec ${pkgs.delta}/bin/delta --side-by-side
+        ''}/bin/git-pager";
+      };
+
+      color = {
+        ui = "auto";
+      };
+
+      credential = {
+        helper = "store";
+      };
+
+      interactive = {
+        diffFilter = "${pkgs.writeShellScriptBin "git-diff-filter" ''
+          exec ${pkgs.delta}/bin/delta --color-only --side-by-side
+        ''}/bin/git-diff-filter";
+      };
+
+      "add.interactive" = {
+        useBuiltin = false;
+      };
+
+      delta = {
+        features = "side-by-side line-numbers decorations";
+        navigate = true;
+        "plus-style" = "syntax \"#003800\"";
+        "minus-style" = "syntax \"#3f0001\"";
+      };
+
+      "delta \"decorations\"" = {
+        "commit-decoration-style" = "bold yellow box ul";
+        "file-style" = "bold yellow ul";
+        "file-decoration-style" = "none";
+        "hunk-header-decoration-style" = "cyan box ul";
+      };
+
+      "delta \"line-numbers\"" = {
+        "line-numbers-left-style" = "cyan";
+        "line-numbers-right-style" = "cyan";
+        "line-numbers-minus-style" = "124";
+        "line-numbers-plus-style" = "28";
+      };
+
+      merge = {
+        conflictstyle = "diff3";
+      };
+
+      diff = {
+        colorMoved = "default";
       };
     };
 
@@ -86,90 +171,8 @@
       "*.hex"
     ];
 
-    # Core settings
-    settings = {
-      alias = {
-        ignore = "!gi() { local IFS=','; curl -sL \"https://www.toptal.com/developers/gitignore/api/\\$*\"; }; gi";
-        l = "!f() { count=$1; if [ -z \"$count\" ]; then count=5; fi; git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -n \"$count\"; }; f";
-        graph = "!f() { count=$1; if [ -z \"$count\" ]; then count=5; fi; git log --all --graph --decorate --oneline -n \"$count\"; }; f";
-      };
-      init = {
-        defaultBranch = "main";
-      };
-
-      pull = {
-        rebase = true;
-      };
-
-      push = {
-        # Auto-set upstream on first push (no need for -u flag)
-        autoSetupRemote = true;
-      };
-
-      fetch = {
-        # Remove local refs to deleted remote branches automatically
-        prune = true;
-      };
-
-      commit = {
-        # Default template for conventional commits (shown when running git commit without -m)
-        template = "~/dot/git/templates/commit_template.txt";
-      };
-
-      core = {
-        editor = "hx";
-        pager = "${pkgs.writeShellScriptBin "git-pager" ''
-          exec ${pkgs.delta}/bin/delta --side-by-side
-        ''}/bin/git-pager";
-      };
-
-      color = {
-        ui = "auto";
-      };
-
-      credential = {
-        helper = "store";
-      };
-
-      interactive = {
-        diffFilter = "${pkgs.writeShellScriptBin "git-diff-filter" ''
-          exec ${pkgs.delta}/bin/delta --color-only --side-by-side
-        ''}/bin/git-diff-filter";
-      };
-
-      add.interactive = {
-        useBuiltin = false;
-      };
-
-      delta = {
-        features = "side-by-side line-numbers decorations";
-        navigate = true;
-        "plus-style" = "syntax \"#003800\"";
-        "minus-style" = "syntax \"#3f0001\"";
-      };
-
-      "delta \"decorations\"" = {
-        "commit-decoration-style" = "bold yellow box ul";
-        "file-style" = "bold yellow ul";
-        "file-decoration-style" = "none";
-        "hunk-header-decoration-style" = "cyan box ul";
-      };
-
-      "delta \"line-numbers\"" = {
-        "line-numbers-left-style" = "cyan";
-        "line-numbers-right-style" = "cyan";
-        "line-numbers-minus-style" = "124";
-        "line-numbers-plus-style" = "28";
-      };
-
-      merge = {
-        conflictstyle = "diff3";
-      };
-
-      diff = {
-        colorMoved = "default";
-      };
-
+    signing = {
+      format = "openpgp";  # Keep legacy behavior for 24.05 stateVersion
     };
   };
 }
