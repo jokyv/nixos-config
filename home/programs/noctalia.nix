@@ -238,6 +238,7 @@
       general = {
         avatarImage = "${config.home.homeDirectory}/.face";
         radiusRatio = 0.2;
+        scaleRatio = 1.5;
       };
 
       location = {
@@ -245,9 +246,18 @@
         name = "Singapore, Singapore";
       };
 
+      # Wallpaper settings (Noctalia handles wallpapers)
       wallpaper = {
-        image = "${config.home.homeDirectory}/pics/wallpapers/gankar_1.png";
-        mode = "fill";
+        enabled = true;
+        directory = "${config.home.homeDirectory}/pics/wallpapers";
+        automationEnabled = false;
+        wallpaperChangeMode = "random";
+        fillMode = "crop";
+        sortOrder = "name";
+        # Optional:
+        # enableMultiMonitorDirectories = false;
+        # showHiddenFiles = false;
+        # linkLightAndDarkWallpapers = true;
       };
     };
   };
