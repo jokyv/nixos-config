@@ -15,12 +15,13 @@
       barBorderColor = "#333333";
 
       bar = {
-        density = "compact";
+        density = "comfortable";
         position = "left";
         showCapsule = false;
         enabled = true;
         backgroundOpacity = lib.mkForce 0.85;
         capsuleOpacity = lib.mkForce 0.9;
+        fontScale = 1.2;
         margins = {
           top = 8;
           bottom = 8;
@@ -33,9 +34,6 @@
         autoHide = false;
         autoHideDelay = 300;
         autoShowDelay = 300;
-        # Increase bar size
-        capsuleHeight = 40;  # Default is ~32, increase for bigger bar
-        fontSize = 14;      # Default is ~11, increase for bigger fonts
         capsule = {
           enabled = false;
           showAppName = true;
