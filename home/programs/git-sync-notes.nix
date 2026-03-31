@@ -98,6 +98,8 @@ let
       else
         git commit -m "Auto-backup: $(date)"
         log "Committed changes"
+        # After committing, we now have unpushed commits
+        needs_push=1
       fi
     fi
 
@@ -156,7 +158,7 @@ in
       WantedBy = [ "timers.target" ];
     };
     Timer = {
-      OnCalendar = "*:0/15";
+      OnCalendar = "hourly";
       Persistent = true;
     };
   };
