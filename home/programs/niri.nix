@@ -437,7 +437,7 @@ let
 
       # Noctalia panel shortcuts
       panels = {
-        "${mod}+T" = {
+        "${mod}+A" = {
           action = spawn_cmd "noctalia-shell ipc call calendar toggle";
           cooldown-ms = 500;
         };
