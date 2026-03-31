@@ -122,27 +122,29 @@ let
 
   # Startup applications
   startup_apps = [
-    { argv = [ "swww-daemon" ]; }
-    {
-      argv = [
-        "vicinae"
-        "server"
-      ];
-    }
+    # { argv = [ "swww-daemon" ]; }
+    # {
+    #   argv = [
+    #     "vicinae"
+    #     "server"
+    #   ];
+    # }
     { argv = [ "foot" ]; }
     { argv = [ "xwayland-satellite" ]; }
     { argv = [ "xdg-desktop-portal" ]; }
-    # { argv = [ "qs" "-c" "noctalia-shell" ]; }
-    { argv = [ "waybar" ]; }
+    { argv = [ "noctalia-shell" ]; }
     { argv = [ "gammastep-indicator" ]; }
-    { argv = [ "fnott" ]; }
-    {
-      argv = [
-        "swww"
-        "img"
-        "${wallpaper_dir}/gankar_1.png"
-      ];
-    }
+
+    # Replaced by noctalia
+    # { argv = [ "waybar" ]; }
+    # { argv = [ "fnott" ]; }
+    # {
+    #   argv = [
+    #     "swww"
+    #     "img"
+    #     "${wallpaper_dir}/gankar_1.png"
+    #   ];
+    # }
     # my copy and paste setup
     {
       argv = [
@@ -190,12 +192,6 @@ let
           action = spawn "brave";
           repeat = false;
         };
-        # "${mod}+D" = {
-        #   action = spawn "fuzzel";
-        # };
-        "${mod}+Space" = {
-          action = spawn "vicinae" "toggle";
-        };
         "${mod}+D" = {
           action = spawn "discord";
         };
@@ -212,6 +208,17 @@ let
           action = spawn_cmd "foot -F cbonsai --screensaver";
           repeat = false;
         };
+
+        # Replaced by noctalia
+        # "${mod}+D" = {
+        #   action = spawn "fuzzel";
+        # };
+        # "${mod}+Space" = {
+        #   action = spawn "vicinae" "toggle";
+        # };
+        # "${mod}+${alt}+L" = {
+        #   action = spawn_cmd "swaylock";
+        # };
       };
 
       # System actions
@@ -230,9 +237,6 @@ let
         };
         "${mod}+${shift}+P" = {
           action = power-off-monitors;
-        };
-        "${mod}+${alt}+L" = {
-          action = spawn_cmd "swaylock";
         };
         "${mod}+${alt}+F" = {
           action = toggle-window-floating;
@@ -321,12 +325,12 @@ let
 
       # Scripts and custom commands
       scripts = {
-        "${mod}+W" = {
-          action = spawn_script "update_wall.py";
-        };
-        "${mod}+${shift}+W" = {
-          action = spawn_script "update_wall.py --auto-rotate"; # auto rotate wallpapers default 15 minutes
-        };
+        # "${mod}+W" = {
+        #   action = spawn_script "update_wall.py";
+        # };
+        # "${mod}+${shift}+W" = {
+        #   action = spawn_script "update_wall.py --auto-rotate"; # auto rotate wallpapers default 15 minutes
+        # };
         # "${mod}+${shift}+W" = {
         #   action = spawn_script "define_word.py";
         # };
