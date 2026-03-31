@@ -33,6 +33,9 @@
         autoHide = false;
         autoHideDelay = 300;
         autoShowDelay = 300;
+        # Increase bar size
+        capsuleHeight = 40;  # Default is ~32, increase for bigger bar
+        fontSize = 14;      # Default is ~11, increase for bigger fonts
         capsule = {
           enabled = false;
           showAppName = true;
@@ -41,19 +44,14 @@
         widgets = {
           left = [
             {
-              id = "SidePanelToggle";
-              useDistroLogo = true;
-            }
-            {
               id = "Network";
-              showLabel = false;
-              showIp = false;
             }
             {
-              id = "Audio";
-              showLabel = false;
-              showVolume = true;
-              showDevice = false;
+              id = "Volume";
+              displayMode = "onhover";
+              iconColor = "none";
+              textColor = "none";
+              middleClickCommand = "pwvucontrol || pavucontrol";
             }
             { id = "Bluetooth"; }
           ];
@@ -68,8 +66,7 @@
           ];
           right = [
             {
-              id = "SystemTray";
-              iconSize = 16;
+              id = "Tray";
             }
             # {
             #   id = "Battery";
@@ -82,46 +79,43 @@
               id = "Clock";
               formatHorizontal = "HH:mm";
               formatVertical = "HH mm";
-              useMonospacedFont = true;
-              usePrimaryColor = true;
-              showSeconds = false;
-              showDate = false;
-              dateFormat = "MMM d";
+              clockColor = "primary";
             }
             {
-              id = "Power";
-              showLogout = true;
-              showReboot = true;
-              showShutdown = true;
-              showSuspend = true;
+              id = "SessionMenu";
             }
           ];
         };
       };
 
-      # Workspace widget settings
-      workspace = {
-        showActiveOnly = false;
-        showEmpty = true;
-        showUrgent = true;
-        markActive = true;
-        markUrgent = true;
+      # Volume widget settings
+      volume = {
+        displayMode = "onhover";
+        iconColor = "none";
+        textColor = "none";
+        middleClickCommand = "pwvucontrol || pavucontrol";
       };
 
-      # Audio widget settings
-      audio = {
-        showMuted = true;
-        showInput = false;
-        showDeviceSelector = true;
-        volumeStep = 5;
+      # Tray widget settings
+      tray = {
+        blacklist = [];
+        colorizeIcons = false;
+        chevronColor = "none";
+        pinned = [];
+        drawerEnabled = true;
+        hidePassive = false;
+      };
+
+      # SessionMenu widget settings
+      sessionMenu = {
+        iconColor = "error";
       };
 
       # Network widget settings
       network = {
-        showSpeed = false;
-        showIp = false;
-        showSignalStrength = true;
-        showWifiIcon = true;
+        displayMode = "onhover";
+        iconColor = "none";
+        textColor = "none";
       };
 
       colorSchemes = {

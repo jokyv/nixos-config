@@ -435,6 +435,18 @@ let
         };
       };
 
+      # Noctalia panel shortcuts
+      panels = {
+        "${mod}+T" = {
+          action = spawn_cmd "noctalia-shell ipc call calendar toggle";
+          cooldown-ms = 500;
+        };
+        "${mod}+Shift+Escape" = {
+          action = spawn_cmd "noctalia-shell ipc call sessionMenu toggle";
+          cooldown-ms = 500;
+        };
+      };
+
     in
     # Combine all categories using foldl
     # This recursively merges all the keybinding category maps into one combined map
@@ -446,6 +458,7 @@ let
       workspaces
       scripts
       audio
+      panels
       sizing
       workspace_numbers
       monitor_movement
