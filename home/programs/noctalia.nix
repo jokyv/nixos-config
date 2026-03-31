@@ -88,6 +88,16 @@
               labelMode = "none";
               showNumbers = true;
               wrapWorkspaces = true;
+              # Active workspace styling
+              activeColor = "#00d9ff";
+              activeBackground = "#1a3a4a";
+              # Show indicators for occupied workspaces
+              showOccupied = true;
+              occupiedColor = "#888888";
+              occupiedBackground = "#2a2a2a";
+              # Urgent workspace styling
+              urgentColor = "#ff5555";
+              urgentBackground = "#3a1a1a";
             }
           ];
           right = [
@@ -99,6 +109,20 @@
               showMemoryUsage = true;
               showNetworkStats = false;
               showDiskUsage = false;
+              iconColor = "none";
+              textColor = "none";
+            }
+            {
+              id = "Spacer";
+              width = 8;
+            }
+            {
+              id = "Docker";
+              displayMode = "always";
+              showContainers = true;
+              showImages = false;
+              showVolumes = false;
+              showRunningOnly = true;
               iconColor = "none";
               textColor = "none";
             }
@@ -137,6 +161,23 @@
               width = 4;
             }
             { id = "Tray"; }
+            {
+              id = "Calendar";
+              displayMode = "always";
+              showDate = true;
+              showTime = false;
+              format = "%a %b %d";
+              iconColor = "none";
+              textColor = "none";
+              # Show next event if using calendar integration
+              showNextEvent = true;
+              eventFormat = "%title% - %start%";
+              eventIcon = "📅";
+            }
+            {
+              id = "Spacer";
+              width = 4;
+            }
             {
               id = "Clock";
               formatHorizontal = "HH:mm";
@@ -206,16 +247,33 @@
         showScrollLock = false;
       };
 
-      # SystemMonitor widget settings
-      systemMonitor = {
-        compactMode = true;
+      # Docker/Container widget settings
+      docker = {
+        displayMode = "always";
+        showContainers = true;
+        showImages = false;
+        showVolumes = false;
+        showRunningOnly = true;
         iconColor = "none";
         textColor = "none";
-        showCpuUsage = true;
-        showCpuTemp = true;
-        showMemoryUsage = true;
-        showNetworkStats = false;
-        showDiskUsage = false;
+        # Optional: custom format
+        # format = "🐳 {count}";
+      };
+
+      # Calendar widget settings
+      calendar = {
+        displayMode = "always";
+        showDate = true;
+        showTime = false;
+        format = "%a %b %d";
+        iconColor = "none";
+        textColor = "none";
+        # Show next calendar event if integrated with calendar provider
+        showNextEvent = true;
+        eventFormat = "%title% - %start%";
+        eventIcon = "📅";
+        # Optional: calendar provider (if supported)
+        # provider = "evolution";
       };
 
       # MediaMini widget settings
