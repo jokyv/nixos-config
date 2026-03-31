@@ -447,6 +447,14 @@ let
         };
       };
 
+      # Noctalia launcher shortcut
+      launcher = {
+        "${mod}+Space" = {
+          action = spawn_cmd "noctalia-shell ipc call launcher toggle";
+          cooldown-ms = 500;
+        };
+      };
+
     in
     # Combine all categories using foldl
     # This recursively merges all the keybinding category maps into one combined map
@@ -459,6 +467,7 @@ let
       scripts
       audio
       panels
+      launcher
       sizing
       workspace_numbers
       monitor_movement

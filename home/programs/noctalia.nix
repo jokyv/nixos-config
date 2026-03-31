@@ -42,6 +42,14 @@
         widgets = {
           left = [
             {
+              id = "ActiveWindow";
+              hideMode = "hidden";
+              maxWidth = 180;
+              showIcon = false;
+              textColor = "none";
+            }
+            { id = "Spacer"; width = 8; }
+            {
               id = "Network";
             }
             {
@@ -50,6 +58,20 @@
               iconColor = "none";
               textColor = "none";
               middleClickCommand = "pwvucontrol || pavucontrol";
+            }
+            {
+              id = "KeyboardLayout";
+              displayMode = "onhover";
+              showIcon = true;
+              iconColor = "none";
+              textColor = "none";
+            }
+            { id = "Spacer"; width = 8; }
+            {
+              id = "LockKeys";
+              showCapsLock = true;
+              showNumLock = true;
+              showScrollLock = false;
             }
             { id = "Bluetooth"; }
           ];
@@ -64,24 +86,52 @@
           ];
           right = [
             {
-              id = "Tray";
+              id = "SystemMonitor";
+              compactMode = true;
+              showCpuUsage = true;
+              showCpuTemp = true;
+              showMemoryUsage = true;
+              showNetworkStats = false;
+              showDiskUsage = false;
+              iconColor = "none";
+              textColor = "none";
             }
-            # {
-            #   id = "Battery";
-            #   warningThreshold = 30;
-            #   criticalThreshold = 10;
-            #   showPercentage = true;
-            #   showTime = false;
-            # }
+            { id = "Spacer"; width = 8; }
+            {
+              id = "MediaMini";
+              hideMode = "hidden";
+              showAlbumArt = true;
+              showArtistFirst = true;
+              showVisualizer = false;
+              displayMode = "onhover";
+            }
+            {
+              id = "NotificationHistory";
+              showUnreadBadge = true;
+              iconColor = "none";
+            }
+            {
+              id = "ControlCenter";
+              useDistroLogo = false;
+              icon = "settings";
+              iconColor = "none";
+            }
+            {
+              id = "Brightness";
+              displayMode = "onhover";
+              iconColor = "none";
+              textColor = "none";
+              applyToAllMonitors = false;
+            }
+            { id = "Spacer"; width = 4; }
+            { id = "Tray"; }
             {
               id = "Clock";
               formatHorizontal = "HH:mm";
               formatVertical = "HH mm";
               clockColor = "primary";
             }
-            {
-              id = "SessionMenu";
-            }
+            { id = "SessionMenu"; }
           ];
         };
       };
@@ -114,6 +164,71 @@
         displayMode = "onhover";
         iconColor = "none";
         textColor = "none";
+      };
+
+      # ActiveWindow widget settings
+      activeWindow = {
+        hideMode = "hidden";
+        maxWidth = 180;
+        showIcon = false;
+        textColor = "none";
+      };
+
+      # KeyboardLayout widget settings
+      keyboardLayout = {
+        displayMode = "onhover";
+        showIcon = true;
+        iconColor = "none";
+        textColor = "none";
+      };
+
+      # LockKeys widget settings
+      lockKeys = {
+        showCapsLock = true;
+        showNumLock = true;
+        showScrollLock = false;
+      };
+
+      # SystemMonitor widget settings
+      systemMonitor = {
+        compactMode = true;
+        iconColor = "none";
+        textColor = "none";
+        showCpuUsage = true;
+        showCpuTemp = true;
+        showMemoryUsage = true;
+        showNetworkStats = false;
+        showDiskUsage = false;
+      };
+
+      # MediaMini widget settings
+      mediaMini = {
+        hideMode = "hidden";
+        showAlbumArt = true;
+        showArtistFirst = true;
+        showVisualizer = false;
+        displayMode = "onhover";
+      };
+
+      # NotificationHistory widget settings
+      notificationHistory = {
+        showUnreadBadge = true;
+        iconColor = "none";
+      };
+
+      # ControlCenter widget settings
+      controlCenter = {
+        useDistroLogo = false;
+        icon = "settings";
+        iconColor = "none";
+      };
+
+      # Brightness widget settings
+      brightness = {
+        displayMode = "onhover";
+        iconColor = "none";
+        textColor = "none";
+        applyToAllMonitors = false;
       };
 
       colorSchemes = {
