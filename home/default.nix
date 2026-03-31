@@ -27,15 +27,15 @@
     # ./programs/pi-agent.nix
 
     # APP LAUNCHERS
-    ./programs/vicinae.nix
-    ./programs/fuzzel.nix # need it for my personal scripts
+    # ./programs/vicinae.nix
+    # ./programs/fuzzel.nix # need it for my personal scripts
 
     # OTHER
     ./programs/atuin.nix
     ./programs/bat.nix
     ./programs/fastfetch.nix
     ./programs/fd.nix
-    ./programs/fnott.nix
+    # ./programs/fnott.nix
     ./programs/fzf.nix
     ./programs/ruff.nix
     ./programs/ty.nix
@@ -48,9 +48,9 @@
     ./programs/ripgrep.nix
     ./programs/starship.nix
     ./programs/stylix.nix
-    ./programs/swaylock.nix
-    ./programs/waybar.nix
-    ./programs/swww.nix
+    # ./programs/swaylock.nix
+    # ./programs/waybar.nix
+    # ./programs/swww.nix
     ./programs/yazi.nix
     ./programs/zathura.nix
     ./programs/zoxide.nix
@@ -59,6 +59,7 @@
     ./env.nix
 
     # ./programs/noctalia.nix
+    ./programs/noctalia.nix
   ];
 
   home.username = "jokyv";
