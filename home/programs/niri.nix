@@ -325,11 +325,9 @@ let
 
       # Scripts and custom commands
       scripts = {
-        # Wallpaper: Use Noctalia for wallpaper management
-        "${mod}+W" = {
-          action = spawn_cmd "noctalia-shell ipc call wallpaper random";
-          cooldown-ms = 500;
-        };
+        # "${mod}+W" = {
+        #   action = spawn_script "update_wall.py";
+        # };
         # "${mod}+${shift}+W" = {
         #   action = spawn_script "update_wall.py --auto-rotate"; # auto rotate wallpapers default 15 minutes
         # };
@@ -496,11 +494,14 @@ in
       zoom = 0.40;
     };
     layer-rules = [
-      # Wallpaper layer rule - not needed with Noctalia
-      # {
-      #   matches = [ { namespace = "^wallpaper$"; } ];
-      #   place-within-backdrop = true;
-      # }
+      {
+        # needs swww for overview wallpaper
+        # matches = [ { namespace = "^swww-daemon$"; } ];
+
+        # needs swaybg for overview wallpaper
+        matches = [ { namespace = "^wallpaper$"; } ];
+        place-within-backdrop = true;
+      }
     ];
 
     #  layer-rules = {

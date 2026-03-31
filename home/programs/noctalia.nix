@@ -48,10 +48,7 @@
               showIcon = false;
               textColor = "none";
             }
-            {
-              id = "Spacer";
-              width = 8;
-            }
+            { id = "Spacer"; width = 8; }
             {
               id = "Network";
             }
@@ -69,10 +66,7 @@
               iconColor = "none";
               textColor = "none";
             }
-            {
-              id = "Spacer";
-              width = 8;
-            }
+            { id = "Spacer"; width = 8; }
             {
               id = "LockKeys";
               showCapsLock = true;
@@ -102,10 +96,7 @@
               iconColor = "none";
               textColor = "none";
             }
-            {
-              id = "Spacer";
-              width = 8;
-            }
+            { id = "Spacer"; width = 8; }
             {
               id = "MediaMini";
               hideMode = "hidden";
@@ -132,10 +123,7 @@
               textColor = "none";
               applyToAllMonitors = false;
             }
-            {
-              id = "Spacer";
-              width = 4;
-            }
+            { id = "Spacer"; width = 4; }
             { id = "Tray"; }
             {
               id = "Clock";
@@ -158,10 +146,10 @@
 
       # Tray widget settings
       tray = {
-        blacklist = [ ];
+        blacklist = [];
         colorizeIcons = false;
         chevronColor = "none";
-        pinned = [ ];
+        pinned = [];
         drawerEnabled = true;
         hidePassive = false;
       };
@@ -250,7 +238,6 @@
       general = {
         avatarImage = "${config.home.homeDirectory}/.face";
         radiusRatio = 0.2;
-        scaleRatio = 1.5;
       };
 
       location = {
@@ -258,18 +245,9 @@
         name = "Singapore, Singapore";
       };
 
-      # Wallpaper settings (Noctalia handles wallpapers)
       wallpaper = {
-        enabled = true;
-        directory = "${config.home.homeDirectory}/pics/wallpapers";
-        automationEnabled = false;
-        wallpaperChangeMode = "random"; # "random" or "alphabetical"
-        fillMode = "crop"; # "center", "crop", "fit", "stretch", "repeat"
-        sortOrder = "name"; # "name", "name_desc", "date_asc", "date_desc", "random"
-        # Optional settings:
-        # enableMultiMonitorDirectories = false;
-        # showHiddenFiles = false;
-        # linkLightAndDarkWallpapers = true;
+        image = "${config.home.homeDirectory}/pics/wallpapers/gankar_1.png";
+        mode = "fill";
       };
     };
   };
