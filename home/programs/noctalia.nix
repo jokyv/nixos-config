@@ -48,7 +48,10 @@
               showIcon = false;
               textColor = "none";
             }
-            { id = "Spacer"; width = 8; }
+            {
+              id = "Spacer";
+              width = 8;
+            }
             {
               id = "Network";
             }
@@ -66,7 +69,10 @@
               iconColor = "none";
               textColor = "none";
             }
-            { id = "Spacer"; width = 8; }
+            {
+              id = "Spacer";
+              width = 8;
+            }
             {
               id = "LockKeys";
               showCapsLock = true;
@@ -96,7 +102,10 @@
               iconColor = "none";
               textColor = "none";
             }
-            { id = "Spacer"; width = 8; }
+            {
+              id = "Spacer";
+              width = 8;
+            }
             {
               id = "MediaMini";
               hideMode = "hidden";
@@ -123,7 +132,10 @@
               textColor = "none";
               applyToAllMonitors = false;
             }
-            { id = "Spacer"; width = 4; }
+            {
+              id = "Spacer";
+              width = 4;
+            }
             { id = "Tray"; }
             {
               id = "Clock";
@@ -146,10 +158,10 @@
 
       # Tray widget settings
       tray = {
-        blacklist = [];
+        blacklist = [ ];
         colorizeIcons = false;
         chevronColor = "none";
-        pinned = [];
+        pinned = [ ];
         drawerEnabled = true;
         hidePassive = false;
       };
@@ -157,6 +169,11 @@
       # SessionMenu widget settings
       sessionMenu = {
         iconColor = "error";
+        # Control which actions appear in the session menu
+        showLogout = true;
+        showReboot = true;
+        showShutdown = true;
+        showSuspend = true;
       };
 
       # Network widget settings
@@ -238,7 +255,7 @@
       general = {
         avatarImage = "${config.home.homeDirectory}/.face";
         radiusRatio = 0.2;
-        scaleRatio = 1.5;
+        scaleRatio = 1.3;
       };
 
       location = {
