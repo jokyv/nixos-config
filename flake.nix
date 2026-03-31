@@ -25,16 +25,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # quickshell = {
-    #   url = "github:outfoxxed/quickshell";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    quickshell = {
+      url = "github:outfoxxed/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    # noctalia = {
-    #   url = "github:noctalia-dev/noctalia-shell";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    #   inputs.quickshell.follows = "quickshell";
-    # };
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     niri = {
       url = "github:sodiboo/niri-flake";
@@ -85,6 +84,7 @@
       devenv,
       nixos-hardware,
       vicinae,
+      noctalia,
       ...
     }@inputs:
     let
@@ -123,7 +123,7 @@
           stylix.homeModules.stylix
           sops-nix.homeManagerModules.sops
           niri.homeModules.niri
-          # noctalia.homeModules.default
+          noctalia.homeModules.default
           vicinae.homeManagerModules.default
 
           # Add devenv and direnv configuration
