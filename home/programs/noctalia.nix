@@ -1,80 +1,147 @@
 {
   config,
   pkgs,
-  inputs,
+  lib,
   ...
 }:
 {
-  # import the home manager module is already done in flake.nix
-  home-manager.users.jokyv = {
-    # import the home manager module
-    imports = [
-      inputs.noctalia.homeModules.default
-    ];
-    # configure options
-    programs.noctalia-shell = {
-      enable = true;
-      settings = {
-        # configure noctalia here; defaults will
-        # be deep merged with these attributes.
-        bar = {
-          density = "compact";
-          position = "right";
-          showCapsule = false;
-          enabled = true; # Explicitly enable the bar
-          widgets = {
-            left = [
-              {
-                id = "SidePanelToggle";
-                useDistroLogo = true;
-              }
-              {
-                id = "WiFi";
-              }
-              {
-                id = "Bluetooth";
-              }
-            ];
-            center = [
-              {
-                hideUnoccupied = false;
-                id = "Workspace";
-                labelMode = "none";
-              }
-            ];
-            right = [
-              {
-                alwaysShowPercentage = false;
-                id = "Battery";
-                warningThreshold = 30;
-              }
-              {
-                formatHorizontal = "HH:mm";
-                formatVertical = "HH mm";
-                id = "Clock";
-                useMonospacedFont = true;
-                usePrimaryColor = true;
-              }
-            ];
-          };
+  programs.noctalia-shell = {
+    enable = true;
+    settings = {
+      # Bar appearance
+      barBackground = "#1a1a1a";
+      barBorderRadius = 8;
+      barBorderWidth = 1;
+      barBorderColor = "#333333";
+
+      bar = {
+        density = "compact";
+        position = "left";
+        showCapsule = false;
+        enabled = true;
+        backgroundOpacity = lib.mkForce 0.85;
+        capsuleOpacity = lib.mkForce 0.9;
+        margins = {
+          top = 8;
+          bottom = 8;
+          inner = 4;
         };
-        colorSchemes.predefinedScheme = "Monochrome";
-        general = {
-          avatarImage = "${config.home.homeDirectory}/.face";
-          radiusRatio = 0.2;
+        widgetSpacing = 6;
+        animateCapsuleHide = true;
+        hideWhenFullscreen = false;
+        autoShow = false;
+        autoHide = false;
+        autoHideDelay = 300;
+        autoShowDelay = 300;
+        capsule = {
+          enabled = false;
+          showAppName = true;
+          showRunningApps = true;
         };
-        location = {
-          monthBeforeDay = true;
-          name = "Singapore, Singapore";
-        };
-        # Add wallpaper configuration
-        wallpaper = {
-          image = "${config.home.homeDirectory}/pics/wallpapers/gankar_1.png";
-          mode = "fill";
+        widgets = {
+          left = [
+            {
+              id = "SidePanelToggle";
+              useDistroLogo = true;
+            }
+            {
+              id = "Network";
+              showLabel = false;
+              showIp = false;
+            }
+            {
+              id = "Audio";
+              showLabel = false;
+              showVolume = true;
+              showDevice = false;
+            }
+            { id = "Bluetooth"; }
+          ];
+          center = [
+            {
+              hideUnoccupied = false;
+              id = "Workspace";
+              labelMode = "none";
+              showNumbers = true;
+              wrapWorkspaces = true;
+            }
+          ];
+          right = [
+            {
+              id = "SystemTray";
+              iconSize = 16;
+            }
+            # {
+            #   id = "Battery";
+            #   warningThreshold = 30;
+            #   criticalThreshold = 10;
+            #   showPercentage = true;
+            #   showTime = false;
+            # }
+            {
+              id = "Clock";
+              formatHorizontal = "HH:mm";
+              formatVertical = "HH mm";
+              useMonospacedFont = true;
+              usePrimaryColor = true;
+              showSeconds = false;
+              showDate = false;
+              dateFormat = "MMM d";
+            }
+            {
+              id = "Power";
+              showLogout = true;
+              showReboot = true;
+              showShutdown = true;
+              showSuspend = true;
+            }
+          ];
         };
       };
-      # this may also be a string or a path to a JSON file,
-      # but in this case must include *all* settings.
+
+      # Workspace widget settings
+      workspace = {
+        showActiveOnly = false;
+        showEmpty = true;
+        showUrgent = true;
+        markActive = true;
+        markUrgent = true;
+      };
+
+      # Audio widget settings
+      audio = {
+        showMuted = true;
+        showInput = false;
+        showDeviceSelector = true;
+        volumeStep = 5;
+      };
+
+      # Network widget settings
+      network = {
+        showSpeed = false;
+        showIp = false;
+        showSignalStrength = true;
+        showWifiIcon = true;
+      };
+
+      colorSchemes = {
+        predefinedScheme = "Monochrome";
+      };
+
+      general = {
+        avatarImage = "${config.home.homeDirectory}/.face";
+        radiusRatio = 0.2;
+      };
+
+      location = {
+        monthBeforeDay = true;
+        name = "Singapore, Singapore";
+      };
+
+      wallpaper = {
+        image = "${config.home.homeDirectory}/pics/wallpapers/gankar_1.png";
+        mode = "fill";
+      };
     };
   };
 }
