@@ -58,8 +58,8 @@
     ./programs/git-sync-notes.nix
     ./env.nix
 
-    # ./programs/noctalia.nix
     ./programs/noctalia.nix
+    ./programs/noctilia-widgets.nix
   ];
 
   home.username = "jokyv";
@@ -72,6 +72,9 @@
     OZONE_PLATFORM = "wayland";
     MOZ_ENABLE_WAYLAND = "1";
   };
+
+  # Enable Noctilia desktop widgets (clock)
+  programs.noctilia-widgets.enable = true;
 
   # ---------------------------------------------
   # SOPS configuration
@@ -250,7 +253,7 @@
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
-    setSessionVariables = true;  # Keep legacy behavior for 24.05 stateVersion
+    setSessionVariables = true; # Keep legacy behavior for 24.05 stateVersion
     desktop = "${config.home.homeDirectory}";
     download = "${config.home.homeDirectory}/downloads";
     pictures = "${config.home.homeDirectory}/pics";
@@ -269,7 +272,7 @@
   # ---------------------------------------------
   gtk = {
     gtk4 = {
-      theme = null;  # Adopt new default (was config.gtk.theme)
+      theme = null; # Adopt new default (was config.gtk.theme)
     };
   };
 

@@ -36,6 +36,7 @@
 
     # ENVIRONMENT
     ./env.nix
+
   ];
 
   home.username = "jokyv";
@@ -79,32 +80,30 @@
   # ---------------------------------------------
   # Install packages
   # ---------------------------------------------
-  home.packages =
-    with pkgs;
-    [
-      # Gaming
-      steam
+  home.packages = with pkgs; [
+    # Gaming
+    steam
 
-      # Screen Capture & Clipboard (needed for niri)
-      grim
-      slurp
-      swappy
-      cliphist
-      wl-clipboard
-      wtype
+    # Screen Capture & Clipboard (needed for niri)
+    grim
+    slurp
+    swappy
+    cliphist
+    wl-clipboard
+    wtype
 
-      # Fonts
-      font-awesome
-      noto-fonts
-      noto-fonts-color-emoji
+    # Fonts
+    font-awesome
+    noto-fonts
+    noto-fonts-color-emoji
 
-      # System utilities
-      btop
-      just
+    # System utilities
+    btop
+    just
 
-      # XDG utilities
-      xdg-utils
-    ];
+    # XDG utilities
+    xdg-utils
+  ];
 
   # ---------------------------------------------
   # systemd

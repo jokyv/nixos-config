@@ -1,0 +1,12 @@
+{
+  "id": "io.github.jokyv.noctilia.clock",
+  "name": "Clock Widget",
+  "version": "1.0.0",
+  "description": "A simple digital clock widget for Noctilia desktop",
+  "author": "User",
+  "type": "desktop-widget",
+  "main": "clock.qml",
+  "icon": "clock",
+  "tags": ["clock", "time", "date"],
+  "minNoctiliaVersion": "1.0.0"
+}
