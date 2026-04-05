@@ -5,16 +5,12 @@
 # claude-code-bin downloads prebuilt binaries, bypassing npm entirely.
 
 let
-  TokenPath = config.sops.secrets.glm_auth_token.path;
   claudeDir = ./claude;
   hooksConfig = import ./claude/hooks.nix;
 in
 {
-  sops.secrets.glm_auth_token = { };
-
   home.packages = [
     (pkgs.writeShellScriptBin "claude-wrapper" ''
-      export ANTHROPIC_AUTH_TOKEN=$(cat ${TokenPath})
       exec ${pkgs.claude-code-bin}/bin/claude "$@"
     '')
     # Smart git commit script for skill integration
@@ -94,7 +90,7 @@ in
 
   programs.claude-code = {
     enable = true;
-    package = pkgs.claude-code-bin;  # Use binary package to avoid npm build failures
+    package = pkgs.claude-code-bin; # Use binary package to avoid npm build failures
 
     # Custom commands
     commands = {
