@@ -7,7 +7,7 @@
 }:
 
 let
-  newClaudeVersion = "2.1.92";  # Latest available as of 2026-04-04
+  newClaudeVersion = "2.1.92"; # Latest available as of 2026-04-04
 
   # Override claude-code-bin to a newer version because 2.1.88 binary URLs are dead
   claudeCodeBinOverlay = final: prev: {
@@ -108,6 +108,8 @@ in
       base_path = { };
       notes_path = { };
       notes_remote = { };
+      tasks_path = { };
+      tasks_remote = { };
       name = { };
       email = { };
     };
@@ -125,7 +127,7 @@ in
         "discord"
         "keymapp"
         "claude-code"
-        "claude-code-bin"  # using binary version to avoid npm build issues
+        "claude-code-bin" # using binary version to avoid npm build issues
       ];
   };
 
