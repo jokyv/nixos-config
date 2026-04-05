@@ -123,12 +123,7 @@ let
   # Startup applications
   startup_apps = [
     # { argv = [ "swww-daemon" ]; }
-    # {
-    #   argv = [
-    #     "vicinae"
-    #     "server"
-    #   ];
-    # }
+    # { argv = [ "vicinae" "server" ]; }  # disabled - using noctalia
     { argv = [ "foot" ]; }
     { argv = [ "xwayland-satellite" ]; }
     { argv = [ "xdg-desktop-portal" ]; }

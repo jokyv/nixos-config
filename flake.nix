@@ -3,27 +3,39 @@
 
   inputs = {
 
-    # nixpkgs stable
+    #--------------------------------------------
+    # nixpkgs
+    #--------------------------------------------
+
+    # stable
     nixpkgs-stable = {
       url = "github:nixos/nixpkgs/nixos-25.05";
     };
 
-    # nixpkgs unstable
+    # unstable
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
 
-    # home manager stable
+    #--------------------------------------------
+    # nixpkgs
+    #--------------------------------------------
+
+    # hm stable
     # home-manager = {
     #   url = "github:nix-community/home-manager/release-25.05";
     #   inputs.nixpkgs.follows = "nixpkgs-stable";
     # };
 
-    # home manager unstable
+    # hm unstable
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    #--------------------------------------------
+    # desktop shell
+    #--------------------------------------------
 
     quickshell = {
       url = "github:outfoxxed/quickshell";
@@ -34,6 +46,10 @@
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    #--------------------------------------------
+    # compositor
+    #--------------------------------------------
 
     niri = {
       url = "github:sodiboo/niri-flake";
@@ -66,9 +82,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    vicinae.url = "github:vicinaehq/vicinae"; # tell Nixos where to get Vicinae
+    # vicinae.url = "github:vicinaehq/vicinae"; # disabled - using noctalia
 
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixos-hardware.url = "github:NixOS/nixos-hardware"; # Hardware-specific optimizations (AMD P-state driver for CPU power/performance)
   };
 
   outputs =
@@ -83,7 +99,7 @@
       disko,
       devenv,
       nixos-hardware,
-      vicinae,
+      # vicinae,  # disabled - using noctalia
       noctalia,
       ...
     }@inputs:
@@ -124,7 +140,7 @@
           sops-nix.homeManagerModules.sops
           niri.homeModules.niri
           noctalia.homeModules.default
-          vicinae.homeManagerModules.default
+          # vicinae.homeManagerModules.default  # disabled - using noctalia
 
           # Add devenv and direnv configuration
           {

@@ -1,5 +1,9 @@
 { config, pkgs, ... }:
 
+# Using claude-code-bin instead of claude-code to avoid npm build issues.
+# The source package fails because specific npm versions get unpublished/yanked.
+# claude-code-bin downloads prebuilt binaries, bypassing npm entirely.
+
 let
   TokenPath = config.sops.secrets.glm_auth_token.path;
   claudeDir = ./claude;
@@ -11,7 +15,7 @@ in
   home.packages = [
     (pkgs.writeShellScriptBin "claude-wrapper" ''
       export ANTHROPIC_AUTH_TOKEN=$(cat ${TokenPath})
-      exec ${pkgs.claude-code}/bin/claude "$@"
+      exec ${pkgs.claude-code-bin}/bin/claude "$@"
     '')
     # Smart git commit script for skill integration
     (pkgs.writeShellScriptBin "smart-git-commit" ''
@@ -90,6 +94,7 @@ in
 
   programs.claude-code = {
     enable = true;
+    package = pkgs.claude-code-bin;  # Use binary package to avoid npm build failures
 
     # Custom commands
     commands = {

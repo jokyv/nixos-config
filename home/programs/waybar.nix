@@ -44,11 +44,11 @@
           on-scroll-down = "hyprctl dispatch workspace r-1";
         };
 
-        "custom/os_button" = {
-          format = "";
-          on-click = "vicinae toggle";
-          tooltip = false;
-        };
+        # "custom/os_button" = {
+        #   format = "";
+        #   on-click = "vicinae toggle";  # disabled - using noctalia
+        #   tooltip = false;
+        # };
 
         "custom/off_button" = {
           format = "";

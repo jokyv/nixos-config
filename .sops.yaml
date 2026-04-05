@@ -1,9 +1,8 @@
 keys:
-  - &jokyv age1rh0g0hqwkdrf2ev6hw62ltywfeh8tlr5wpdrqany8mzgf6prgp3qyedk63
-
+  - &jokyv age1ztfa88hexsumqz9vjpmfmxzg5crhrjrpy49hlkk02suqmd8a34uqw6mpmk
 creation_rules:
   - path_regex: secrets(\.enc)?\.yaml$
-  # - path: secrets.enc.yaml
+    # - path: secrets.enc.yaml
     key_groups:
-    - age:
-      - *jokyv
+      - age:
+          - *jokyv
