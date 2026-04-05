@@ -88,22 +88,27 @@ nix run nixpkgs#ssh-to-age -- -private-key -i ~/.ssh/private > ~/.config/sops/ag
 }
 ```
 
-## .sops.yaml inside your nixos-config repo
+## .sops.yaml (in repo root)
 
-```nix
-keys:
-  # name of the key is primary
-  - &primary {{YOUR KEY HERE}}
+```yaml
 creation_rules:
-  - path_regex: secrets/secrets.yaml$
-    key_groups:
-    - age:
-      - *primary
+  - path_regex: secrets(\\.enc)?\\.(yaml|json)$
+    age: '{{YOUR PUBLIC KEY HERE}}'
 ```
+
+> **Note**: You can also put this at `~/.config/sops/config.yaml` for global use.
 
 ## Commands
 
 ```bash
-# encrypt / decrypt secrets.yaml file
-sops secrets.yaml
+# Edit secrets interactively (decrypts, opens editor, re-encrypts on save)
+sops secrets.enc.yaml
+
+# Decrypt to stdout
+sops -d secrets.enc.yaml
+
+# Encrypt a plaintext file
+sops -e secrets.yaml > secrets.enc.yaml
 ```
+
+> The `.sops.yaml` config handles key selection automatically — no need for `--age` flags.
