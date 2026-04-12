@@ -32,6 +32,15 @@ DraggableDesktopWidget {
         shadowOpacity: 0.9
     }
 
+    // Background - ensure visibility
+    Rectangle {
+        anchors.fill: parent
+        color: "transparent"
+        border.color: "#333333"
+        border.width: 1
+        radius: 8
+    }
+
     // Current time - updates every second
     property date currentTime: new Date()
 
@@ -77,7 +86,7 @@ DraggableDesktopWidget {
             text: root.formatTime(root.currentTime)
             pointSize: Math.round(Style.fontSizeXL * widgetScale)
             font.weight: Font.Bold
-            color: Color.text
+            color: "#ffffff"
             Layout.alignment: Qt.AlignHCenter
 
             // Disable animations during scaling/dragging
@@ -92,7 +101,7 @@ DraggableDesktopWidget {
             id: dateText
             text: root.formatDate(root.currentTime)
             pointSize: Math.round(Style.fontSizeM * widgetScale)
-            color: Color.textSecondary
+            color: "#e0e0e0"
             Layout.alignment: Qt.AlignHCenter
 
             Behavior on pointSize {
@@ -102,3 +111,4 @@ DraggableDesktopWidget {
         }
     }
 }
+

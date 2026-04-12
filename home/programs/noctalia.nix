@@ -180,8 +180,8 @@
             }
             {
               id = "Clock";
-              formatHorizontal = "HH:mm";
-              formatVertical = "HH mm";
+              formatHorizontal = "HH:mm %a %b %d";
+              formatVertical = "HH mm %a %b %d";
               clockColor = "primary";
             }
             { id = "SessionMenu"; }
