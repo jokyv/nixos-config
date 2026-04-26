@@ -6,6 +6,8 @@
   # General security settings
   # ---------------------------------------------
   security = {
+    rtkit.enable = true;
+
     # Protect against kernel exploits
     protectKernelImage = true;
     # Enable lockdown for VMs/containers

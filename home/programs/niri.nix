@@ -353,16 +353,16 @@ let
         };
       };
 
-      # Audio controls
+      # Audio controls (via Noctalia)
       audio = {
         "${mod}+F7" = {
-          action = spawn_cmd "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
+          action = spawn_cmd "noctalia-shell ipc call volume decrease";
         };
         "${mod}+F8" = {
-          action = spawn_cmd "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+";
+          action = spawn_cmd "noctalia-shell ipc call volume increase";
         };
         "${mod}+F9" = {
-          action = spawn_cmd "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+          action = spawn_cmd "noctalia-shell ipc call volume muteOutput";
         };
       };
 

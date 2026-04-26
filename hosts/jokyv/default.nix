@@ -78,6 +78,12 @@
   # boot.kernelPackages = pkgs.LinuxPackages_hardened;
 
   # ---------------------------------------------
+  # Audio Configuration
+  # ---------------------------------------------
+  boot.extraModprobeConfig = ''
+    options snd_hda_intel model=generic
+  '';
+  # ---------------------------------------------
   # Networking Configuration
   # ---------------------------------------------
   networking = {
