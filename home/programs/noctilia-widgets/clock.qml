@@ -32,10 +32,10 @@ DraggableDesktopWidget {
         shadowOpacity: 0.9
     }
 
-    // Background - ensure visibility
+    // Background - ensure visibility with semi-transparent dark background for better text contrast
     Rectangle {
         anchors.fill: parent
-        color: "transparent"
+        color: "#00000080"  // Semi-transparent black (50% opacity)
         border.color: "#333333"
         border.width: 1
         radius: 8
@@ -86,7 +86,7 @@ DraggableDesktopWidget {
             text: root.formatTime(root.currentTime)
             pointSize: Math.round(Style.fontSizeXL * widgetScale)
             font.weight: Font.Bold
-            color: "#ffffff"
+            color: Color.text
             Layout.alignment: Qt.AlignHCenter
 
             // Disable animations during scaling/dragging
@@ -101,7 +101,7 @@ DraggableDesktopWidget {
             id: dateText
             text: root.formatDate(root.currentTime)
             pointSize: Math.round(Style.fontSizeM * widgetScale)
-            color: "#e0e0e0"
+            color: Color.textSecondary
             Layout.alignment: Qt.AlignHCenter
 
             Behavior on pointSize {
@@ -111,4 +111,3 @@ DraggableDesktopWidget {
         }
     }
 }
-
