@@ -112,7 +112,7 @@ in
       worktree = "${claudeDir}/skills/worktree.md";
     };
 
-    memory.text = ''
+    context = ''
       # CLAUDE.md - Project Conventions & AI Assistant Instructions
 
       ## Core Principles

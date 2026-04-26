@@ -8,6 +8,7 @@
 {
   programs.firefox = {
     enable = true;
+    configPath = "${config.xdg.configHome}/mozilla/firefox";
     # extensions = with pkgs.nur.repos.rycee.firefox-addons; [
     #   bitwarden
     #   darkreader
