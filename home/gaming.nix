@@ -24,7 +24,8 @@
     ./programs/waybar.nix
     ./programs/swww.nix
     ./programs/fnott.nix
-    ./programs/gammastep.nix
+    # ./programs/gammastep.nix
+    ./programs/wlsunset.nix
     ./programs/swaylock.nix
 
     # THEMING

@@ -114,7 +114,7 @@
             }
             {
               id = "Spacer";
-              width = 8;
+              width = 2;
             }
             {
               id = "Docker";
@@ -128,7 +128,7 @@
             }
             {
               id = "Spacer";
-              width = 8;
+              width = 2;
             }
             {
               id = "MediaMini";
@@ -158,30 +158,17 @@
             }
             {
               id = "Spacer";
-              width = 4;
+              width = 2;
             }
             { id = "Tray"; }
             {
-              id = "Calendar";
-              displayMode = "always";
-              showDate = true;
-              showTime = false;
-              format = "%a %b %d";
-              iconColor = "none";
-              textColor = "none";
-              # Show next event if using calendar integration
-              showNextEvent = true;
-              eventFormat = "%title% - %start%";
-              eventIcon = "📅";
-            }
-            {
               id = "Spacer";
-              width = 4;
+              width = 2;
             }
             {
               id = "Clock";
-              formatHorizontal = "HH:mm %a %b %d";
-              formatVertical = "HH mm %a %b %d";
+              formatHorizontal = "HH:mm ddd, MMM dd";
+              formatVertical = "HH mm - MMM dd";
               clockColor = "primary";
             }
             { id = "SessionMenu"; }
@@ -265,7 +252,7 @@
         displayMode = "always";
         showDate = true;
         showTime = false;
-        format = "%a %b %d";
+        format = "ddd, MMM dd";
         iconColor = "none";
         textColor = "none";
         # Show next calendar event if integrated with calendar provider
@@ -304,6 +291,39 @@
         iconColor = "none";
         textColor = "none";
         applyToAllMonitors = false;
+      };
+
+      # Dock settings
+      dock = {
+        enabled = true;
+        position = "bottom";
+        dockType = "floating";
+        displayMode = "auto_hide";
+
+        backgroundOpacity = 0.9;
+        floatingRatio = 0.85;
+        size = 0.95;
+
+        showLauncherIcon = true;
+        launcherPosition = "start";
+        launcherUseDistroLogo = true;
+
+        pinnedApps = [
+          "firefox"
+          "foot"
+          "nautilus"
+          "discord"
+          "obsidian"
+        ];
+        pinnedStatic = true;
+        inactiveIndicators = true;
+
+        groupApps = true;
+        showDockIndicator = true;
+        indicatorThickness = 6;
+        indicatorColor = "primary";
+        indicatorOpacity = 0.7;
+        onlySameOutput = false;
       };
 
       colorSchemes = {

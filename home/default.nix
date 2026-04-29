@@ -57,7 +57,8 @@ in
     ./programs/fzf.nix
     ./programs/ruff.nix
     ./programs/ty.nix
-    ./programs/gammastep.nix
+    # ./programs/gammastep.nix
+    ./programs/wlsunset.nix
     ./programs/git.nix
     ./programs/helix.nix
     ./programs/niri.nix

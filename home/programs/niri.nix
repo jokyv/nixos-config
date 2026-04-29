@@ -128,7 +128,7 @@ let
     { argv = [ "xwayland-satellite" ]; }
     { argv = [ "xdg-desktop-portal" ]; }
     { argv = [ "noctalia-shell" ]; }
-    { argv = [ "gammastep-indicator" ]; }
+    # { argv = [ "gammastep-indicator" ]; }  # replaced by noctalia / wlsunset
 
     # Replaced by noctalia
     # { argv = [ "waybar" ]; }
