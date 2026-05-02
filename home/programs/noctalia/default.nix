@@ -4,7 +4,12 @@
   lib,
   ...
 }:
+
 {
+  imports = [
+    ./noctalia-widgets.nix
+  ];
+
   programs.noctalia-shell = {
     enable = true;
     settings = {
@@ -21,7 +26,7 @@
         enabled = true;
         backgroundOpacity = lib.mkForce 0.85;
         capsuleOpacity = lib.mkForce 0.9;
-        fontScale = 1.2;
+        fontScale = 1.05;
         margins = {
           top = 8;
           bottom = 8;
@@ -85,8 +90,8 @@
             {
               hideUnoccupied = false;
               id = "Workspace";
-              labelMode = "none";
-              showNumbers = true;
+              labelMode = "icon";
+              showNumbers = false;
               wrapWorkspaces = true;
               # Active workspace styling
               activeColor = "#00d9ff";
@@ -114,7 +119,7 @@
             }
             {
               id = "Spacer";
-              width = 2;
+              width = 4;
             }
             {
               id = "Docker";
@@ -128,7 +133,7 @@
             }
             {
               id = "Spacer";
-              width = 2;
+              width = 4;
             }
             {
               id = "MediaMini";
@@ -158,12 +163,12 @@
             }
             {
               id = "Spacer";
-              width = 2;
+              width = 4;
             }
             { id = "Tray"; }
             {
               id = "Spacer";
-              width = 2;
+              width = 4;
             }
             {
               id = "Clock";
@@ -341,18 +346,37 @@
         name = "Singapore, Singapore";
       };
 
+      # Night Light (wlsunset)
+      nightLight = {
+        enabled = true;
+        autoSchedule = true;
+        nightTemp = "3400";
+        dayTemp = "6500";
+      };
+
       # Wallpaper settings (Noctalia handles wallpapers)
       wallpaper = {
         enabled = true;
+        overviewEnabled = true;
         directory = "${config.home.homeDirectory}/pics/wallpapers";
-        automationEnabled = false;
+        automationEnabled = true;
         wallpaperChangeMode = "random";
+        randomIntervalSec = 600;
+        skipStartupTransition = true;
         fillMode = "crop";
         sortOrder = "name";
         # Optional:
         # enableMultiMonitorDirectories = false;
         # showHiddenFiles = false;
         # linkLightAndDarkWallpapers = true;
+      };
+
+      # Desktop widgets (clock widget on wallpaper)
+      desktopWidgets = {
+        enabled = true;
+        overviewEnabled = true;
+        gridSnap = false;
+        gridSnapScale = false;
       };
     };
   };

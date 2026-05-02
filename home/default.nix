@@ -77,8 +77,7 @@ in
     ./programs/git-sync-notes.nix
     ./env.nix
 
-    ./programs/noctalia.nix
-    ./programs/noctilia-widgets.nix
+    ./programs/noctalia/default.nix
   ];
 
   home.username = "jokyv";
@@ -94,8 +93,7 @@ in
     NIX_IGNORE_DEPRECATIONS = "1";
   };
 
-  # Enable Noctilia desktop widgets (clock)
-  programs.noctilia-widgets.enable = true;
+  # Desktop widgets handled via noctalia.nix (desktopWidgets section)
 
   # ---------------------------------------------
   # SOPS configuration
