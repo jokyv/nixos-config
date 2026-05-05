@@ -17,8 +17,8 @@ let
   scripts_dir = "${home_dir}/scripts/bin";
 
   # Reusable spawn commands
-  spawn_script = script: config.lib.niri.actions.spawn "sh" "-c" "${scripts_dir}/${script}";
-  spawn_cmd = cmd: config.lib.niri.actions.spawn "sh" "-c" cmd;
+  spawn_script = script: config.lib.niri.actions.spawn "${scripts_dir}/${script}";
+  spawn_script_arg = script: arg: config.lib.niri.actions.spawn "${scripts_dir}/${script}" arg;
 
   # Output configuration
   # run `niri msg outputs` to get your monitor details
@@ -82,7 +82,7 @@ let
     # Workspace 3: Notes & Documentation (Obsidian)
     {
       matches = [ { app-id = "^obsidian$"; } ];
-      # open-on-workspace = 3;
+      open-on-workspace = 3;
       open-maximized = true;
     }
 
@@ -124,7 +124,7 @@ let
   startup_apps = [
     # { argv = [ "swww-daemon" ]; }
     # { argv = [ "vicinae" "server" ]; }  # disabled - using noctalia
-    { argv = [ "foot" ]; }
+    { argv = [ "foot" "--server" ]; }
     { argv = [ "xwayland-satellite" ]; }
     { argv = [ "xdg-desktop-portal" ]; }
     { argv = [ "noctalia-shell" ]; }
@@ -152,7 +152,7 @@ let
     # open terminal and run command
     {
       argv = [
-        "foot"
+        "footclient"
         "sh"
         "-c"
         "cd ${home_dir}/nixos-config && git pull && echo 'Press Enter to close' && read"
@@ -172,7 +172,7 @@ let
       # Application launchers
       apps = {
         "${mod}+T" = {
-          action = spawn "foot";
+          action = spawn "footclient";
           cooldown-ms = 500;
         };
         "${mod}+${shift}+T" = {
@@ -194,13 +194,13 @@ let
           action = spawn "nautilus";
         };
         "${mod}+O" = {
-          action = spawn_cmd "obsidian --enable-features=UseOzonePlatform --ozone-platform=wayland";
+          action = spawn "obsidian" "--enable-features=UseOzonePlatform" "--ozone-platform=wayland";
         };
         "${mod}+N" = {
-          action = spawn_cmd "foot -e newsraft";
+          action = spawn "footclient" "newsraft";
         };
         "${mod}+S" = {
-          action = spawn_cmd "foot -F cbonsai --screensaver";
+          action = spawn "footclient" "-F" "cbonsai" "--screensaver";
           repeat = false;
         };
 
@@ -212,7 +212,7 @@ let
         #   action = spawn "vicinae" "toggle";
         # };
         # "${mod}+${alt}+L" = {
-        #   action = spawn_cmd "swaylock";
+        #   action = spawn "swaylock";
         # };
       };
 
@@ -322,11 +322,11 @@ let
       scripts = {
         # Wallpaper: Use Noctalia for wallpaper management
         "${mod}+W" = {
-          action = spawn_cmd "noctalia-shell ipc call wallpaper random";
+          action = spawn "noctalia-shell" "ipc" "call" "wallpaper" "random";
           cooldown-ms = 500;
         };
         # "${mod}+${shift}+W" = {
-        #   action = spawn_script "update_wall.py --auto-rotate";
+        #   action = spawn_script_arg "update_wall.py" "--auto-rotate";
         # };
         # "${mod}+${shift}+W" = {
         #   action = spawn_script "define_word.py";
@@ -340,29 +340,29 @@ let
 
         # Clipboard management
         "${mod}+${shift}+C" = {
-          action = spawn_script "clip_hist.py add";
+          action = spawn_script_arg "clip_hist.py" "add";
         };
         "${mod}+${shift}+V" = {
-          action = spawn_script "clip_hist.py paste";
+          action = spawn_script_arg "clip_hist.py" "paste";
         };
         "${mod}+${shift}+S" = {
-          action = spawn_script "clip_hist.py sel";
+          action = spawn_script_arg "clip_hist.py" "sel";
         };
         "${mod}+${shift}+D" = {
-          action = spawn_script "clip_hist.py del";
+          action = spawn_script_arg "clip_hist.py" "del";
         };
       };
 
       # Audio controls (via Noctalia)
       audio = {
         "${mod}+F7" = {
-          action = spawn_cmd "noctalia-shell ipc call volume decrease";
+          action = spawn "noctalia-shell" "ipc" "call" "volume" "decrease";
         };
         "${mod}+F8" = {
-          action = spawn_cmd "noctalia-shell ipc call volume increase";
+          action = spawn "noctalia-shell" "ipc" "call" "volume" "increase";
         };
         "${mod}+F9" = {
-          action = spawn_cmd "noctalia-shell ipc call volume muteOutput";
+          action = spawn "noctalia-shell" "ipc" "call" "volume" "muteOutput";
         };
       };
 
@@ -435,11 +435,11 @@ let
       # Noctalia panel shortcuts
       panels = {
         "${mod}+A" = {
-          action = spawn_cmd "noctalia-shell ipc call calendar toggle";
+          action = spawn "noctalia-shell" "ipc" "call" "calendar" "toggle";
           cooldown-ms = 500;
         };
         "${mod}+Shift+Escape" = {
-          action = spawn_cmd "noctalia-shell ipc call sessionMenu toggle";
+          action = spawn "noctalia-shell" "ipc" "call" "sessionMenu" "toggle";
           cooldown-ms = 500;
         };
       };
@@ -447,7 +447,7 @@ let
       # Noctalia launcher shortcut
       launcher = {
         "${mod}+Space" = {
-          action = spawn_cmd "noctalia-shell ipc call launcher toggle";
+          action = spawn "noctalia-shell" "ipc" "call" "launcher" "toggle";
           cooldown-ms = 500;
         };
       };
