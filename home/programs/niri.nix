@@ -13,7 +13,7 @@ let
   # Constants and reusable values
   home_dir = config.home.homeDirectory;
   screenshots_dir = "${home_dir}/pics/screenshots";
-  wallpaper_dir = "${home_dir}/pics/wallpapers";
+  # wallpaper_dir = "${home_dir}/pics/wallpapers"; # not in use noctalia handles this
   scripts_dir = "${home_dir}/scripts/bin";
 
   # Reusable spawn commands
@@ -82,7 +82,7 @@ let
     # Workspace 3: Notes & Documentation (Obsidian)
     {
       matches = [ { app-id = "^obsidian$"; } ];
-      open-on-workspace = 3;
+      open-on-workspace = "3";
       open-maximized = true;
     }
 
@@ -122,34 +122,15 @@ let
 
   # Startup applications
   startup_apps = [
-    # { argv = [ "swww-daemon" ]; }
-    # { argv = [ "vicinae" "server" ]; }  # disabled - using noctalia
-    { argv = [ "foot" "--server" ]; }
-    { argv = [ "xwayland-satellite" ]; }
-    { argv = [ "xdg-desktop-portal" ]; }
-    { argv = [ "noctalia-shell" ]; }
-    # { argv = [ "gammastep-indicator" ]; }  # replaced by noctalia / wlsunset
-
-    # Replaced by noctalia
-    # { argv = [ "waybar" ]; }
-    # { argv = [ "fnott" ]; }
-    # {
-    #   argv = [
-    #     "swww"
-    #     "img"
-    #     "${wallpaper_dir}/gankar_1.png"
-    #   ];
-    # }
-    # my copy and paste setup
     {
       argv = [
-        "wl-paste"
-        "--watch"
-        "cliphist"
-        "store"
+        "foot"
+        "--server"
       ];
     }
-    # open terminal and run command
+    # { argv = [ "xwayland-satellite" ]; } # niri v25.08 spawns on-demand
+    { argv = [ "xdg-desktop-portal" ]; }
+    { argv = [ "noctalia-shell" ]; }
     {
       argv = [
         "footclient"
@@ -158,6 +139,20 @@ let
         "cd ${home_dir}/nixos-config && git pull && echo 'Press Enter to close' && read"
       ];
     }
+
+    # Replaced by noctalia
+    # { argv = [ "vicinae" "server" ]; } # disabled - using noctalia instead
+    # { argv = [ "gammastep-indicator" ]; } # disabled - using noctalia instead
+    # { argv = [ "waybar" ]; } # disabled - using noctalia instead
+    # { argv = [ "fnott" ]; } # disabled - using noctalia instead
+    # { argv = [ "swww-daemon" ]; } # disabled - using noctalia instead
+    # {
+    #   argv = [
+    #     "swww"
+    #     "img"
+    #     "${wallpaper_dir}/gankar_1.png"
+    #   ];
+    # }
   ];
 
   # Keybindings organized by category
@@ -182,6 +177,9 @@ let
         "${mod}+B" = {
           action = spawn "firefox";
           repeat = false;
+          hotkey-overlay = {
+            title = "Firefox";
+          };
         };
         "${mod}+${shift}+B" = {
           action = spawn "brave";
@@ -189,15 +187,18 @@ let
         };
         "${mod}+D" = {
           action = spawn "discord";
+          repeat = false;
         };
         "${mod}+E" = {
           action = spawn "nautilus";
         };
         "${mod}+O" = {
           action = spawn "obsidian" "--enable-features=UseOzonePlatform" "--ozone-platform=wayland";
+          repeat = false;
         };
         "${mod}+N" = {
           action = spawn "footclient" "newsraft";
+          repeat = false;
         };
         "${mod}+S" = {
           action = spawn "footclient" "-F" "cbonsai" "--screensaver";
@@ -226,6 +227,7 @@ let
         };
         "${mod}+Q" = {
           action = close-window;
+          repeat = false;
         };
         "${mod}+${shift}+Q" = {
           action = quit;
@@ -251,6 +253,9 @@ let
         };
         "${mod}+${shift}+F" = {
           action = fullscreen-window;
+        };
+        "${mod}+${shift}+${ctrl}+F" = {
+          action = maximize-window-to-edges;
         };
         "${mod}+Comma" = {
           action = consume-window-into-column;
@@ -418,18 +423,18 @@ let
           action = move-column-to-monitor-right;
         };
 
-        "${mod}+${shift}+${ctrl}+Left" = {
-          action = move-column-to-monitor-left;
-        };
-        "${mod}+${shift}+${ctrl}+Down" = {
-          action = move-column-to-monitor-down;
-        };
-        "${mod}+${shift}+${ctrl}+Up" = {
-          action = move-column-to-monitor-up;
-        };
-        "${mod}+${shift}+${ctrl}+Right" = {
-          action = move-column-to-monitor-right;
-        };
+        # "${mod}+${shift}+${ctrl}+Left" = {
+        #   action = move-column-to-monitor-left;
+        # };
+        # "${mod}+${shift}+${ctrl}+Down" = {
+        #   action = move-column-to-monitor-down;
+        # };
+        # "${mod}+${shift}+${ctrl}+Up" = {
+        #   action = move-column-to-monitor-up;
+        # };
+        # "${mod}+${shift}+${ctrl}+Right" = {
+        #   action = move-column-to-monitor-right;
+        # };
       };
 
       # Noctalia panel shortcuts
@@ -448,6 +453,10 @@ let
       launcher = {
         "${mod}+Space" = {
           action = spawn "noctalia-shell" "ipc" "call" "launcher" "toggle";
+          cooldown-ms = 500;
+        };
+        "${mod}+${shift}+Space" = {
+          action = spawn "noctalia-shell" "ipc" "call" "launcher" "clipboard";
           cooldown-ms = 500;
         };
       };
@@ -481,8 +490,11 @@ in
       hide-after-inactive-ms = 1000;
     };
     hotkey-overlay.skip-at-startup = true;
-    # hotkey-overlay.hide-not-bound = true;
+    hotkey-overlay.hide-not-bound = true;
     prefer-no-csd = true;
+    debug = {
+      deactivate-unfocused-windows = true;
+    };
     screenshot-path = "${screenshots_dir}/screenshot from %Y-%m-%d %H-%M-%S.png";
 
     # overview settings
@@ -490,13 +502,8 @@ in
       backdrop-color = "#777777";
       zoom = 0.40;
     };
-    layer-rules = [
-      # Wallpaper layer rule - not needed with Noctalia
-      # {
-      #   matches = [ { namespace = "^wallpaper$"; } ];
-      #   place-within-backdrop = true;
-      # }
-    ];
+    # HM module 25.11 lacks layer background-effects / blur.
+    layer-rules = [ ];
 
     #  layer-rules = {
     #   swww-wallpaper = {
@@ -585,14 +592,16 @@ in
 
     # Workspace configuration
     workspaces = {
+      "1" = { };
+      "2" = { };
+      "3" = { };
+      "4" = { };
+
       # Enable workspace wrapping (when you go past the last workspace, wrap to first)
       # wrap-around = true;
 
       # Number of workspaces (default is 10, but you can customize)
       # count = 10;
-
-      # Remove the names section entirely - it's causing configuration errors
-      # The workspace-specific functionality will work without names
     };
 
     # Enhanced layout settings
@@ -600,6 +609,9 @@ in
       gaps = 15;
       center-focused-column = "never";
       always-center-single-column = true;
+      shadow = {
+        enable = true;
+      };
 
       preset-column-widths = [
         { proportion = 1.0 / 2.0; }

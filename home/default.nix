@@ -9,9 +9,9 @@
 let
   newClaudeVersion = "2.1.92"; # Latest available as of 2026-04-04
 
-  # Override claude-code-bin to a newer version because 2.1.88 binary URLs are dead
-  claudeCodeBinOverlay = final: prev: {
-    claude-code-bin = prev.claude-code-bin.overrideAttrs (old: {
+  # Override claude-code to a newer version because 2.1.88 binary URLs are dead
+  claudeCodeOverlay = final: prev: {
+    claude-code = prev.claude-code.overrideAttrs (old: {
       version = newClaudeVersion;
       src = prev.fetchurl {
         url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/${newClaudeVersion}/linux-x64/claude";
@@ -24,7 +24,7 @@ let
 
 in
 {
-  nixpkgs.overlays = [ claudeCodeBinOverlay ];
+  nixpkgs.overlays = [ claudeCodeOverlay ];
   imports = [
 
     # SHELL
@@ -125,8 +125,7 @@ in
         "obsidian"
         "discord"
         "keymapp"
-        "claude-code"
-        "claude-code-bin" # using binary version to avoid npm build issues
+        "claude-code" # binary package; source build has npm issues
       ];
   };
 

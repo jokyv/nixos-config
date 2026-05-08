@@ -7,7 +7,6 @@
 
 {
   imports = [
-    ./noctalia-widgets.nix
   ];
 
   programs.noctalia-shell = {
@@ -309,7 +308,7 @@
         floatingRatio = 0.85;
         size = 0.95;
 
-        showLauncherIcon = true;
+        showLauncherIcon = false;
         launcherPosition = "start";
         launcherUseDistroLogo = true;
 
@@ -346,6 +345,18 @@
         name = "Singapore, Singapore";
       };
 
+      appLauncher = {
+        enableClipboardHistory = true;
+        autoPasteClipboard = false;
+        enableClipPreview = true;
+        clipboardWrapText = true;
+        enableClipboardSmartIcons = true;
+        enableClipboardChips = true;
+        clipboardWatchTextCommand = "wl-paste --type text --watch cliphist store";
+        clipboardWatchImageCommand = "wl-paste --type image --watch cliphist store";
+        position = "center";
+      };
+
       # Night Light (wlsunset)
       nightLight = {
         enabled = true;
@@ -357,7 +368,6 @@
       # Wallpaper settings (Noctalia handles wallpapers)
       wallpaper = {
         enabled = true;
-        overviewEnabled = true;
         directory = "${config.home.homeDirectory}/pics/wallpapers";
         automationEnabled = true;
         wallpaperChangeMode = "random";
@@ -366,17 +376,68 @@
         fillMode = "crop";
         sortOrder = "name";
         # Optional:
+        # overviewEnabled = true; # make wallpaper blur
         # enableMultiMonitorDirectories = false;
         # showHiddenFiles = false;
         # linkLightAndDarkWallpapers = true;
       };
 
-      # Desktop widgets (clock widget on wallpaper)
+      # Desktop widgets (wallpaper widgets)
       desktopWidgets = {
         enabled = true;
         overviewEnabled = true;
         gridSnap = false;
         gridSnapScale = false;
+        monitorWidgets = [
+          {
+            name = "HDMI-A-1";
+            widgets = [
+              {
+                id = "Clock";
+                x = 820;
+                y = 40;
+                scale = 1.0;
+              }
+              {
+                id = "Weather";
+                x = 730;
+                y = 230;
+                scale = 1.0;
+              }
+              {
+                id = "SystemStat";
+                statType = "CPU";
+                x = 770;
+                y = 330;
+                scale = 1.0;
+              }
+            ];
+          }
+          {
+            name = "DP-1";
+            widgets = [
+              {
+                id = "Clock";
+                x = 820;
+                y = 40;
+                scale = 1.0;
+              }
+              {
+                id = "Weather";
+                x = 720;
+                y = 250;
+                scale = 1.0;
+              }
+              {
+                id = "SystemStat";
+                statType = "CPU";
+                x = 780;
+                y = 350;
+                scale = 1.0;
+              }
+            ];
+          }
+        ];
       };
     };
   };
