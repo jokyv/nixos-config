@@ -180,6 +180,7 @@
     # System Utilities
     aide
     brightnessctl
+    ddcutil
     killall
     lshw
     logrotate
