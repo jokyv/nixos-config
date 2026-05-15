@@ -10,7 +10,29 @@
       avatarImage = "${config.home.homeDirectory}/.face";
       radiusRatio = 0.2;
       scaleRatio = 1.3;
+      enableShadows = false;
       enableBlurBehind = false;
+      animationSpeed = 1.0;
+      animationDisabled = false;
+
+      # Lock screen (replaces swaylock)
+      lockScreenBlur = true;
+      lockScreenTint = true;
+      lockScreenMonitors = [ ];
+      lockScreenCountdown = true;
+      lockScreenButtons = true;
+      lockScreenHibernate = false;
+      lockScreenMediaControls = true;
+      compactLockScreen = false;
+      lockScreenAnimations = true;
+      lockOnSuspend = true;
+
+      clockStyle = "digital";
+      clockFormat = "12hour";
+      dimmerOpacity = 0.6;
+
+      showChangelogOnStartup = false;
+      telemetryEnabled = false;
     };
 
     # UI/popup styling

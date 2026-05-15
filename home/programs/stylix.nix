@@ -91,22 +91,7 @@ in
       };
 
       # apply specific theme to GTK based apps
-      gtk = {
-        enable = true;
-        # Icon themes (if needed in future - separate from Stylix):
-        # iconTheme = {
-        #   name = "Papirus-Dark";
-        #   package = pkgs.papirus-icon-theme;
-        #   name = "Tela";
-        #   package = pkgs.tela-icon-theme;
-        #   name = "everforest";
-        #   package = pkgs.everforest-gtk-theme;
-        #   name = "candy";
-        #   package = pkgs.candy-icons;
-        #   name = "sweet";
-        #   package = pkgs.sweet-folders;
-        # };
-      };
+      gtk.enable = true;
 
     };
 

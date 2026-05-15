@@ -6,6 +6,7 @@
     ./widgets.nix
     ./notifications.nix
     ./ui.nix
+    ./idle.nix
     ./launcher.nix
     ./dock.nix
     ./wallpaper.nix

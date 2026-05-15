@@ -501,6 +501,15 @@ in
     overview = {
       backdrop-color = "#777777";
       zoom = 0.40;
+      workspace-shadow = {
+        softness = 40;
+        spread = 10;
+        offset = {
+          x = 0;
+          y = 10;
+        };
+        color = "#00000070";
+      };
     };
     # HM module 25.11 lacks layer background-effects / blur.
     layer-rules = [ ];

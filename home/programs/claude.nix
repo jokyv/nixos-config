@@ -5,6 +5,7 @@
 
 let
   claudeDir = ./claude;
+  sharedSkillsDir = /home/jokyv/agent-dotfiles/shared/skills;
   hooksConfig = import ./claude/hooks.nix;
 in
 {
@@ -105,10 +106,10 @@ in
 
     # Custom skills
     skills = {
-      smart-git-commit = "${claudeDir}/skills/smart-git-commit.md";
-      python = "${claudeDir}/skills/python.md";
-      session-analysis = "${claudeDir}/skills/session-analysis.md";
-      worktree = "${claudeDir}/skills/worktree.md";
+      smart-git-commit = "${sharedSkillsDir}/smart-git-commit/SKILL.md";
+      python = "${sharedSkillsDir}/python/SKILL.md";
+      session-analysis = "${sharedSkillsDir}/session-analysis/SKILL.md";
+      worktree = "${sharedSkillsDir}/worktree/SKILL.md";
     };
 
     context = ''

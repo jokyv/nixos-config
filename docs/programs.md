@@ -294,7 +294,7 @@ Claude AI assistant integration with custom commands and skills:
 
 - Managed via home-manager (`home/programs/claude.nix`)
 - Custom commands in `home/programs/claude/commands/`
-- Custom skills in `home/programs/claude/skills/`
+- Custom skills in `~/agent-dotfiles/shared/skills/`
 
 #### Available Commands
 
@@ -313,6 +313,9 @@ Claude AI assistant integration with custom commands and skills:
 | Skill | Description |
 |-------|-------------|
 | `smart-git-commit` | Intelligent commit message generation |
+| `python` | Modern Python conventions |
+| `session-analysis` | Review recent Claude sessions for friction |
+| `worktree` | Isolate risky work in git worktrees |
 
 ### Theming
 
