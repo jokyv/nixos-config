@@ -5,7 +5,7 @@
 
 let
   claudeDir = ./claude;
-  sharedSkillsDir = /home/jokyv/agent-dotfiles/shared/skills;
+  sharedSkillsDir = "/home/jokyv/agent-dotfiles/skills";
   hooksConfig = import ./claude/hooks.nix;
 in
 {
@@ -110,6 +110,7 @@ in
       python = "${sharedSkillsDir}/python/SKILL.md";
       session-analysis = "${sharedSkillsDir}/session-analysis/SKILL.md";
       worktree = "${sharedSkillsDir}/worktree/SKILL.md";
+      tdd = "${sharedSkillsDir}/tdd/SKILL.md";
     };
 
     context = ''

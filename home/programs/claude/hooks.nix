@@ -33,6 +33,33 @@
   ];
 
   PostToolUse = [
+    # TDD enforcement: warn when editing Python files without test files
+    {
+      matcher = "Write|Edit";
+      hooks = [
+        {
+          type = "command";
+          command = ''
+            FILE="$CLAUDE_FILE_PATH"
+            if echo "$FILE" | grep -q '\.py$' && ! echo "$FILE" | grep -qiE '(test_|_test|conftest)' && [ -f "$FILE" ]; then
+              BASENAME=$(basename "$FILE" .py)
+              DIRNAME=$(dirname "$FILE")
+              FOUND=false
+              for TPATH in "$DIRNAME/test_$BASENAME.py" "$DIRNAME/$BASENAME"_test.py "$DIRNAME/../test_$BASENAME.py" "test_$BASENAME.py" "tests/test_$BASENAME.py" "tests/unit/test_$BASENAME.py"; do
+                if [ -f "$TPATH" ]; then FOUND=true; break; fi
+              done
+              if [ "$FOUND" = false ]; then
+                echo ""
+                echo -e "\033[1;33m⚠️  TDD: No test file for $FILE\033[0m"
+                echo "   Run /skill tdd to start test-first workflow"
+                echo ""
+              fi
+            fi
+          '';
+        }
+      ];
+    }
+
     # Desktop notification on task completion
     {
       matcher = "TaskOutput";
