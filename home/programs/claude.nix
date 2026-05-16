@@ -4,8 +4,8 @@
 # The package downloads prebuilt binaries, bypassing npm entirely.
 
 let
-  claudeDir = ./claude;
-  sharedSkillsDir = "/home/jokyv/agent-dotfiles/skills";
+  agentDotfiles = "/home/jokyv/agent-dotfiles";
+  sharedSkillsDir = "${agentDotfiles}/skills";
   hooksConfig = import ./claude/hooks.nix;
 in
 {
@@ -94,14 +94,14 @@ in
 
     # Custom commands
     commands = {
-      work-git-commit = "${claudeDir}/commands/work-git-commit.md";
-      work-release-notes = "${claudeDir}/commands/work-release-notes.md";
-      work-sync-docs = "${claudeDir}/commands/work-sync-docs.md";
-      work-issue = "${claudeDir}/commands/work-issue.md";
-      work-prime = "${claudeDir}/commands/work-prime.md";
-      work-setup = "${claudeDir}/commands/work-setup.md";
-      work-maintain = "${claudeDir}/commands/work-maintain.md";
-      work-design-review = "${claudeDir}/commands/work-design-review.md";
+      work-git-commit = "${agentDotfiles}/claude/commands/work-git-commit.md";
+      work-release-notes = "${agentDotfiles}/claude/commands/work-release-notes.md";
+      work-sync-docs = "${agentDotfiles}/claude/commands/work-sync-docs.md";
+      work-issue = "${agentDotfiles}/claude/commands/work-issue.md";
+      work-prime = "${agentDotfiles}/claude/commands/work-prime.md";
+      work-setup = "${agentDotfiles}/claude/commands/work-setup.md";
+      work-maintain = "${agentDotfiles}/claude/commands/work-maintain.md";
+      work-design-review = "${agentDotfiles}/claude/commands/work-design-review.md";
     };
 
     # Custom skills
