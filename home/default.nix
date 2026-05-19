@@ -29,8 +29,6 @@ in
 
     # SHELL
     ./programs/bash.nix
-    # ./programs/nu.nix
-    # ./programs/xonsh.nix
 
     # TERMINAL
     ./programs/foot.nix
@@ -42,22 +40,17 @@ in
 
     # AI
     ./programs/claude.nix
-    # ./programs/pi-agent.nix
 
     # APP LAUNCHERS
-    # ./programs/vicinae.nix
-    # ./programs/fuzzel.nix # need it for my personal scripts
 
     # OTHER
     ./programs/atuin.nix
     ./programs/bat.nix
     ./programs/fastfetch.nix
     ./programs/fd.nix
-    # ./programs/fnott.nix
     ./programs/fzf.nix
     ./programs/ruff.nix
     ./programs/ty.nix
-    # ./programs/gammastep.nix
     ./programs/wlsunset.nix
     ./programs/git.nix
     ./programs/helix.nix
@@ -67,9 +60,6 @@ in
     ./programs/ripgrep.nix
     ./programs/starship.nix
     ./programs/stylix.nix
-    # ./programs/swaylock.nix
-    # ./programs/waybar.nix
-    # ./programs/swww.nix
     ./programs/yazi.nix
     ./programs/zathura.nix
     ./programs/zoxide.nix

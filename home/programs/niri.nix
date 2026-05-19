@@ -128,7 +128,6 @@ let
         "--server"
       ];
     }
-    # { argv = [ "xwayland-satellite" ]; } # niri v25.08 spawns on-demand
     { argv = [ "xdg-desktop-portal" ]; }
     { argv = [ "noctalia-shell" ]; }
     {
@@ -139,20 +138,6 @@ let
         "cd ${home_dir}/nixos-config && git pull && echo 'Press Enter to close' && read"
       ];
     }
-
-    # Replaced by noctalia
-    # { argv = [ "vicinae" "server" ]; } # disabled - using noctalia instead
-    # { argv = [ "gammastep-indicator" ]; } # disabled - using noctalia instead
-    # { argv = [ "waybar" ]; } # disabled - using noctalia instead
-    # { argv = [ "fnott" ]; } # disabled - using noctalia instead
-    # { argv = [ "swww-daemon" ]; } # disabled - using noctalia instead
-    # {
-    #   argv = [
-    #     "swww"
-    #     "img"
-    #     "${wallpaper_dir}/gankar_1.png"
-    #   ];
-    # }
   ];
 
   # Keybindings organized by category

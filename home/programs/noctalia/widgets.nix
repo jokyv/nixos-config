@@ -27,6 +27,7 @@
       showReboot = true;
       showShutdown = true;
       showSuspend = true;
+      countdownDuration = 5000;
     };
 
     # Network widget settings

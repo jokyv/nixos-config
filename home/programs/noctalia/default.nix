@@ -11,6 +11,7 @@
     ./dock.nix
     ./wallpaper.nix
     ./desktop-widgets.nix
+    ./resume-fix.nix
   ];
 
   programs.noctalia-shell.enable = true;
