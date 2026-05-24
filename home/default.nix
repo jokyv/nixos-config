@@ -180,7 +180,7 @@ in
 
       # System Utilities
       base16-schemes
-      btop
+      bottom
       cbonsai
       cowsay
       dconf

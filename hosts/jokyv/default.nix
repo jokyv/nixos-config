@@ -188,7 +188,6 @@
     smartmontools
     usbutils
     pciutils
-    htop
     file
     which
     rng-tools

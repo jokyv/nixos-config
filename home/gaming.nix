@@ -99,7 +99,7 @@
     noto-fonts-color-emoji
 
     # System utilities
-    btop
+    bottom
     just
 
     # XDG utilities
