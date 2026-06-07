@@ -63,6 +63,7 @@ let
           bottom-right = r;
         };
       clip-to-geometry = true;
+      draw-border-with-background = false;
     }
 
     # Workspace 1: Development (Helix)

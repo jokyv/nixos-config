@@ -294,6 +294,12 @@ in
   fonts.fontconfig.enable = true;
 
   # ---------------------------------------------
+  # Hyprland eval warning: silence configType deprecation
+  # Module loaded by noctalia/niri dependency, not directly used
+  # ---------------------------------------------
+  wayland.windowManager.hyprland.configType = "hyprlang";
+
+  # ---------------------------------------------
   # State Version
   # ---------------------------------------------
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
