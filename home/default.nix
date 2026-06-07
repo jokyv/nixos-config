@@ -286,9 +286,6 @@ in
       package = pkgs.candy-icons;
       name = "candy-icons";
     };
-    gtk4 = {
-      theme = null; # Adopt new default (was config.gtk.theme)
-    };
   };
 
   # ---------------------------------------------
