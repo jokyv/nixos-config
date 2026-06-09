@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  programs.noctalia-shell.settings = {
+  programs.noctalia.settings = {
     barBackground = "#1a1a1a";
     barBorderRadius = 8;
     barBorderWidth = 1;

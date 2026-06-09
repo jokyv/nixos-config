@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  programs.noctalia-shell.settings = {
+  programs.noctalia.settings = {
     # Wallpaper settings (Noctalia handles wallpapers)
     wallpaper = {
       enabled = true;

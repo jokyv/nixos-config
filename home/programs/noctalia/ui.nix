@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  programs.noctalia-shell.settings = {
+  programs.noctalia.settings = {
     colorSchemes = {
       predefinedScheme = "Monochrome";
     };

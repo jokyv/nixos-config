@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  programs.noctalia-shell.settings = {
+  programs.noctalia.settings = {
     # Volume widget settings
     volume = {
       displayMode = "onhover";

@@ -14,5 +14,5 @@
     ./resume-fix.nix
   ];
 
-  programs.noctalia-shell.enable = true;
+  programs.noctalia.enable = true;
 }

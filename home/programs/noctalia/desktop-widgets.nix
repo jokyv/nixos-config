@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 {
-  programs.noctalia-shell.settings = {
+  programs.noctalia.settings = {
     # Desktop widgets (wallpaper widgets)
     desktopWidgets = {
       enabled = true;
