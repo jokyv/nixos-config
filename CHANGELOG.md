@@ -3,7 +3,6 @@
 ### 🚀 Features
 
 - *(fnott)* Implement per-urgency timeouts and action configuration
-- *(fnott)* Implement per-urgency timeouts and action configuration
 - Add Ruff configuration using Home Manager
 - Implement universal NixOS installer with auto-detection
 - *(home)* Use proper claude-code home-manager module
@@ -62,39 +61,8 @@
 
 ### 💼 Other
 
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
 - Apply issue #23 improvements
-- Update
-- Update
-- Update
-- Update
+- General dependency updates
 - Update
 
 ### 🚜 Refactor
@@ -103,7 +71,6 @@
 - Extract system automation to maintenance.nix
 - *(claude)* Merge doc commands, add security scan to maintain
 - *(claude)* Extract hooks to separate file with improved config
-- *(justfile)* Organize recipes into logical groups
 - *(justfile)* Organize recipes into logical groups
 - *(claude)* Clean up memory text and add design-review command
 - *(hosts/jokyv)* Restructured kernel sysctl settings with inline docs
