@@ -1,13 +1,166 @@
+## [0.7.0] - 2026-06-09
+
+### 🚀 Features
+
+- *(fnott)* Implement per-urgency timeouts and action configuration
+- *(fnott)* Implement per-urgency timeouts and action configuration
+- Add Ruff configuration using Home Manager
+- Implement universal NixOS installer with auto-detection
+- *(home)* Use proper claude-code home-manager module
+- *(jokyv)* Add sniffnet package
+- *(claude)* Add settings for env, permissions, and plugins
+- *(home)* Add ty type checker configuration
+- *(home)* Manage claude commands and skills via home-manager
+- *(secrets)* Add glm_auth_token for claude-code
+- *(gaming)* Add gaming mode home-manager configuration
+- *(justfile)* Add game command for gaming mode
+- *(claude)* Add work-setup, work-maintain commands and hooks
+- *(claude)* Add binary file and conflict marker hooks
+- *(claude)* Add experimental agent teams option (commented)
+- *(claude)* Add python skill for modern tooling conventions
+- Add session-analysis skill for conversation feedback loops
+- Add weekly session-analysis reminder hook
+- *(git)* Add push autoSetupRemote, fetch prune, and commit template
+- *(claude)* Add worktree isolation skill and risky changes memory
+- *(yazi)* Add shell wrapper name yy
+- Update pi-agent to use npm package instead of git build
+- *(niri)* Add Mod+S cbonsai screensaver keybinding
+- *(perf)* Add CachyOS-inspired performance optimizations
+- *(gaming)* Implement CachyOS-inspired performance optimizations
+- *(home/programs)* Added git-sync-notes systemd timer
+- *(git-sync-notes)* Track pending push status and reduce backup frequency to hourly
+- *(flake)* Add noctalia-shell and quickshell flake inputs
+- *(home)* Migrate to noctalia-shell, remove legacy bar components
+- *(noctalia)* Add comprehensive bar configuration with custom styling, widgets, and shortcuts
+- *(noctalia)* Refactor widget IDs and add niri shortcuts
+- *(noctalia)* Add new widgets and launcher shortcut
+- *(noctalia)* Add workspace enhancements, docker monitor, and calendar widget
+- *(noctilia)* Add custom desktop widgets module
+- Add tasks path configuration for notes and fix whitespace
+- *(noctalia)* Enhance clock widget with date display and improved visibility
+- Add noctalia idle and ui settings
+- Add TDD enforcement hook and skill registration
+
+### 🐛 Bug Fixes
+
+- *(docs)* Code block text color for dark theme
+- *(docs)* Force code block colors with !important
+- *(nixos)* Remove disko module from flake.nix
+- *(nixos)* Use mkForce for fileSystems to override disko
+- *(disko)* Separate swap and root encryption
+- *(claude)* Update git convention reference in work-git-commit
+- *(xdg)* Use new extraConfig key format
+- *(security)* Disable audit for kernel 6.18 compat
+- Remove duplicate vm.swappiness from hardware-configuration.nix
+- *(home)* Improve git config, git-sync-notes, and fix font rendering
+- *(noctalia)* Correct bar sizing configuration
+- *(niri)* Change clock panel shortcut from Mod+T to Mod+A to avoid conflict
+- *(home)* Upgrade claude-code-bin to 2.1.92 and migrate from npm build
+- *(noctilia)* Restore clock widget functionality with improved background
+- Clean up deprecated programs, add noctalia resume fix
+- *(niri)* Silence hyprland warning, disable border bg, cleanup gitignore
+
+### 💼 Other
+
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Apply issue #23 improvements
+- Update
+- Update
+- Update
+- Update
+- Update
+
+### 🚜 Refactor
+
+- *(disko)* Separate installation from normal rebuilds
+- Extract system automation to maintenance.nix
+- *(claude)* Merge doc commands, add security scan to maintain
+- *(claude)* Extract hooks to separate file with improved config
+- *(justfile)* Organize recipes into logical groups
+- *(justfile)* Organize recipes into logical groups
+- *(claude)* Clean up memory text and add design-review command
+- *(hosts/jokyv)* Restructured kernel sysctl settings with inline docs
+- *(hosts/jokyv)* Cleaned up unused variables and portal config
+- *(home/programs)* Migrated niri and waybar to use Python scripts
+- *(niri)* Replace waybar/fnott startup with noctalia-shell
+- *(noctalia)* Improve formatting and add session menu settings
+- *(home)* Update claude config and firefox path
+- *(jokyv)* Streamline audio and service config
+- *(home)* Replace gammastep with wlsunset and tweak noctalia
+- *(home)* Restructure noctalia config and adjust settings
+- *(home)* Switch Claude and update niri/noctalia
+- *(noctalia)* Split bar config into module
+- Point claude commands to agent-dotfiles, remove stale copies
+- *(noctalia)* Rename programs.noctalia-shell to programs.noctalia
+
+### 📚 Documentation
+
+- Organize documentation structure and add comprehensive guides
+- Add dark theme support for GitHub Pages
+- Update documentation for universal installer feature
+- Fix directory structure in reference.md
+- Move universal installer to docs directory
+- *(readme)* Add gaming mode documentation and include just
+- Update documentation with gaming mode and claude integration
+- Add CLAUDE.md for AI assistant context
+- *(readme)* Update NixOS version badge to 26.05
+- Update claude commands documentation for restructured workflow
+- *(secrets)* Update sops configuration format and usage examples
+
+### 🎨 Styling
+
+- *(stylix)* Switch to kanagawa theme
+
+### ⚙️ Miscellaneous Tasks
+
+- *(programs)* Claude auth token wrapper, niri opacity tweak
+- *(pkgs)* Add cbonsai
+- Update
+- Update
+- *(claude)* Remove unused glm auth token configuration
+- Replace btop with bottom, remove htop
+- *(home)* Remove deprecated gtk4 theme override
+
+### ◀️ Revert
+
+- Restore disko imports to fix module evaluation
 ## [0.6.0] - 2025-12-12
 
 ### 🚀 Features
 
-- _(disks)_ Isolate /nix and /tmp filesystems
+- *(disks)* Isolate /nix and /tmp filesystems
 - Enhance Brave browser with performance and privacy flags
 - Improve fnott configuration with timeouts and shortcuts
 - Enhance fuzzel with keybindings and dmenu mode
 - Enhance gammastep with tray, notifications, and fade
-- _(jokyv)_ Isolate /var on a separate subvolume
+- *(jokyv)* Isolate /var on a separate subvolume
 - Enable bluetooth and pipewire jack/32-bit alsa support
 - Add animation and visual enhancement settings to niri config
 - Add workspace config and enhanced layout settings
@@ -25,18 +178,18 @@
 - Add flake-freshness script for monitoring package versions
 - Support package tracking across all flake inputs
 - Add auto-detection of packages from flake outputs
-- _(health)_ Add input age check to flake health script
+- *(health)* Add input age check to flake health script
 - Replace polars with rich for better table formatting
 - Update bash aliases and add Python packages
 - Sort outdated packages first in table
 - Make flake health script executable and path-aware
 - Pin libreoffice to stable nixpkgs channel
-- _(niri)_ Add layer rule for swww wallpaper
+- *(niri)* Add layer rule for swww wallpaper
 - Add devenv and direnv to home-manager configuration
 - Chain diffastic with delta for refined word-level diffs
 - Configure difft as external git diff tool
 - Add development tools and improve system configuration
-- _(niri)_ Remap `${mod}+${shift}+W` to toggle wallpaper update loop
+- *(niri)* Remap `${mod}+${shift}+W` to toggle wallpaper update loop
 - Update niri config with new settings and keybindings
 - Add Vicinae launcher and update system configuration
 
@@ -86,8 +239,25 @@
 
 ### 💼 Other
 
-- _(home)_ Improve and document program configurations
+- *(home)* Improve and document program configurations
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
 - Add AI assistant directories to ignores
+- Update
+- Update
+- Update
 
 ### 🚜 Refactor
 
@@ -106,7 +276,7 @@
 - Improve niri config structure and simplify presets
 - Remove duplicate workspace_quick_access keybindings
 - Optimize swap and compression settings in disk config
-- _(flake)_ Use attribute sets for input definitions
+- *(flake)* Use attribute sets for input definitions
 - Use config.lib.niri.actions.spawn directly
 - Reorganize disk config files and update stylix scheme paths
 - Simplify package tracking to use single nixpkgs input
@@ -140,7 +310,7 @@
 
 ### ⚡ Performance
 
-- _(nixos)_ Use sd-switch to avoid restarting user services on rebuild
+- *(nixos)* Use sd-switch to avoid restarting user services on rebuild
 
 ### 🎨 Styling
 
@@ -156,7 +326,7 @@
 
 ### ⚙️ Miscellaneous Tasks
 
-- _(nixos)_ Apply generation 123
+- *(nixos)* Apply generation 123
 - Update zoxide config for bash shell
 - Remove unsupported border and shadow settings from niri config
 - Remove unsupported focus-ring settings
@@ -178,18 +348,18 @@
 - Add devenv and fix difftastic typo in home config
 - Add claude.nix file
 - Started documentation for this repo
-- _(yazi)_ Rename manager to mgr in yazi settings
-
+- *(yazi)* Rename manager to mgr in yazi settings
+- *(release)* Update changelog for v0.6.0
 ## [0.5.0] - 2025-10-06
 
 ### 🚀 Features
 
-- _(niri)_ Automatically pull nixos-config on startup
+- *(niri)* Automatically pull nixos-config on startup
 - Add systemd service for waybar
 - Update niri config with input, layout, and startup improvements
 - Add newline to waybar clock format
 - Add niri config for window rules and overview zoom
-- _(host)_ Enable firewall, pipewire, and security hardening
+- *(host)* Enable firewall, pipewire, and security hardening
 - Add waybar to niri startup programs
 - Add security hardening configurations to NixOS setup
 - Enhance user config, security, packages and nix settings
@@ -198,19 +368,19 @@
 - Enhance security and persistence settings
 - Enhance system security with sudo config and root lock
 - Add services configuration and remove duplicate SSH block
-- _(jokyv)_ Add declarative disk configuration with disko
-- _(host)_ Add ZRAM swap and LUKS encryption option
+- *(jokyv)* Add declarative disk configuration with disko
+- *(host)* Add ZRAM swap and LUKS encryption option
 - Add obsidian and nh programs, update wayland env vars
 - Add blueman and bluetooth configuration
 - Enhance bluetooth security with privacy and timeout settings
 - Enable blueman service for bluetooth
-- _(justfile)_ Add diff, format, and buffedswitch recipes
+- *(justfile)* Add diff, format, and buffedswitch recipes
 - Add error handling to home command
 - Add utility scripts for NixOS development and maintenance
 - Improve justfile recipes with error handling and sudo
 - Add colorized output and better logging
 - Add status command and improve justfile organization
-- _(nixos)_ Enable system maintenance and hardware features
+- *(nixos)* Enable system maintenance and hardware features
 - Add noctalia-shell configuration
 - Add wallpaper configuration and enable noctalia bar
 
@@ -246,7 +416,7 @@
 
 ### 🚜 Refactor
 
-- _(home)_ Simplify service definitions and organize packages
+- *(home)* Simplify service definitions and organize packages
 - Update waybar and sww configuration
 - Update NixOS configuration with comments and cleanup
 - Fix syntax and add lynis package
@@ -288,13 +458,13 @@
 - Comment out hardened kernel and add IPv6 sysctl rules
 - Remove duplicate blueman from user packages
 - Enable dprint in home configuration
-- _(autoupgrade)_ Use local flake for development
+- *(autoupgrade)* Use local flake for development
 - Disable nu shell and adjust git diff output
-- _(nixos)_ Apply generation 120
-- _(nixos)_ Apply generation 120
+- *(nixos)* Apply generation 120
+- *(nixos)* Apply generation 120
 - Set bash shell with strict options in justfile
 - Fix justfile syntax and simplify tasks
-- _(nixos)_ Apply generation 120
+- *(nixos)* Apply generation 120
 - Update formatting tool and fix commit script
 - Reorganize justfile commands and update health check
 - Remove no-cd setting from justfile
@@ -302,10 +472,9 @@
 - Remove unused docs command from justfile
 - Update packages and refactor justfile commands
 - Reorder niri keybindings
-- _(nixos)_ Apply generation 121
+- *(nixos)* Apply generation 121
 - Add noctalia-shell and quickshell flake inputs
 - Update flake inputs and noctalia configuration
-
 ## [0.4.0] - 2025-09-01
 
 ### 🚀 Features
@@ -313,7 +482,7 @@
 - Migrate wallpaper management from waypaper to swww
 - Add 'talk' alias and update scripts path handling
 - Add gh-create alias for GitHub repo creation
-- _(git)_ Add count parameter to log aliases
+- *(git)* Add count parameter to log aliases
 - Refactor home-manager configuration
 
 ### 🐛 Bug Fixes
@@ -339,23 +508,22 @@
 
 - Update CHANGELOG.md with new version
 - Disable dprint and adjust niri config
-- _(release)_ Update changelog for v0.4.0
-
+- *(release)* Update changelog for v0.4.0
 ## [0.3.0] - 2025-05-31
 
 ### 🚀 Features
 
-- _(helix.nix)_ Continue to next row if markdown list
-- _(nu)_ Added alias to activate venv for AI
-- _(helix.nix)_ Markdown config updates
+- *(helix.nix)* Continue to next row if markdown list
+- *(nu)* Added alias to activate venv for AI
+- *(helix.nix)* Markdown config updates
 - Add GitHub CLI (gh) to default home packages
 - Add scripts/apps directory, Python packages and mkDefault for fnott
 - Add gh-create alias for creating and pushing to GitHub repo
 
 ### 🐛 Bug Fixes
 
-- _(stylix.nix)_ Commented out kvantum config part
-- _(nu.nix)_ Replaced depreceated config due to update
+- *(stylix.nix)* Commented out kvantum config part
+- *(nu.nix)* Replaced depreceated config due to update
 - Comment out GTK dark theme preference in Stylix
 - Move style properties to window#waybar selector to fix CSS error
 - Use @bg_active for Waybar tooltip background to ensure solidity
@@ -397,47 +565,46 @@
 
 - Comment out xdg-desktop-portal configuration
 - Update niri, stylix, waybar configs and jokyv host config
-
 ## [0.2.0] - 2025-02-02
 
 ### 🚀 Features
 
-- _(nu.nix)_ Switched to variable home inetead of username
-- _(jokyv/default.nix)_ Removing python programs that i dn not need
-- _(fnott.nix)_ Specify summary font
-- _(niri.nix)_ Add scripts to niri binds
-- _(home/default.nix)_ Add jq program
-- _(helix.nix)_ Added nufmt and markdown-oxide to languages part
-- _(fnott.nix)_ Decrease the timeout values
-- _(foot.nix)_ Removed a lot of settings for troubleshooting
-- _(niri.nix)_ Clip_hist.py bindings and cliphist spawn at startup
-- _(waybar.nix)_ Added off button functionality
-- _(helix.nix)_ Added inline errors
-- _(starship.nix)_ Enabled sudo and added icons for it
-- _(fd)_ Added fd nix configs
-- _(atuin.nix)_ Enabled nushell integration
-- _(yazi.nix)_ Enable nushell integration
-- _(starship.nix)_ Enable nushell integration
-- _(home/default.nix)_ Added more programs managed by home-manager
-- _(brave.nix)_ Config for brave on wayland
-- _(obsidian.nix)_ Added obsidian and small refactoring
-- _(niri.nix)_ Shortcuts for obsidian and take screenshot script
-- _(typos)_ Add typos-lsp for typos support on markdown files
-- _(niri)_ Added window rules for firefox + URL refs with examples
-- _(home)_ Added aider
-- _(helix)_ Re-organising the languages section
-- _(nu.nix)_ Add path for aider app
-- _(home)_ Add discord but failing to launch
-- _(niri.nix)_ Add key binding for clip_hist.py del
-- _(hosts/jokyv)_ Removed some python packaages i do not need
+- *(nu.nix)* Switched to variable home inetead of username
+- *(jokyv/default.nix)* Removing python programs that i dn not need
+- *(fnott.nix)* Specify summary font
+- *(niri.nix)* Add scripts to niri binds
+- *(home/default.nix)* Add jq program
+- *(helix.nix)* Added nufmt and markdown-oxide to languages part
+- *(fnott.nix)* Decrease the timeout values
+- *(foot.nix)* Removed a lot of settings for troubleshooting
+- *(niri.nix)* Clip_hist.py bindings and cliphist spawn at startup
+- *(waybar.nix)* Added off button functionality
+- *(helix.nix)* Added inline errors
+- *(starship.nix)* Enabled sudo and added icons for it
+- *(fd)* Added fd nix configs
+- *(atuin.nix)* Enabled nushell integration
+- *(yazi.nix)* Enable nushell integration
+- *(starship.nix)* Enable nushell integration
+- *(home/default.nix)* Added more programs managed by home-manager
+- *(brave.nix)* Config for brave on wayland
+- *(obsidian.nix)* Added obsidian and small refactoring
+- *(niri.nix)* Shortcuts for obsidian and take screenshot script
+- *(typos)* Add typos-lsp for typos support on markdown files
+- *(niri)* Added window rules for firefox + URL refs with examples
+- *(home)* Added aider
+- *(helix)* Re-organising the languages section
+- *(nu.nix)* Add path for aider app
+- *(home)* Add discord but failing to launch
+- *(niri.nix)* Add key binding for clip_hist.py del
+- *(hosts/jokyv)* Removed some python packaages i do not need
 
 ### 🐛 Bug Fixes
 
-- _(starship.nix)_ Fix the format
-- _(niri.nix)_ Take screenshot path, script etc
-- _(zsa)_ Added zsa udev rules for my keyboard
-- _(foot)_ Fixed issue with foot and made it the default terminal
-- _(niri)_ Issues with typos and floating commands
+- *(starship.nix)* Fix the format
+- *(niri.nix)* Take screenshot path, script etc
+- *(zsa)* Added zsa udev rules for my keyboard
+- *(foot)* Fixed issue with foot and made it the default terminal
+- *(niri)* Issues with typos and floating commands
 
 ### 💼 Other
 
@@ -456,21 +623,20 @@
 
 ### 🚜 Refactor
 
-- _(home/default.nix)_ Small changes
-- _(home/default.nix)_ Refactoring the packages list.
-- _(waybar.nix)_ Small changes
+- *(home/default.nix)* Small changes
+- *(home/default.nix)* Refactoring the packages list.
+- *(waybar.nix)* Small changes
 
 ### 📚 Documentation
 
-- _(CHANGELOG.md)_ Create changelog for my commits/releases
-
+- *(CHANGELOG.md)* Create changelog for my commits/releases
 ## [0.1.0] - 2024-12-28
 
 ### 🚀 Features
 
-- _(dprint.json)_ Added dprint.json config file for markdown format
+- *(dprint.json)* Added dprint.json config file for markdown format
 
 ### 📚 Documentation
 
-- _(README.md)_ Add readme file
-- _(LICENSE)_ Added license
+- *(README.md)* Add readme file
+- *(LICENSE)* Added license
