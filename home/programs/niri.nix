@@ -130,7 +130,7 @@ let
       ];
     }
     { argv = [ "xdg-desktop-portal" ]; }
-    { argv = [ "noctalia-shell" ]; }
+    { argv = [ "noctalia" ]; }
     {
       argv = [
         "footclient"
@@ -313,7 +313,7 @@ let
       scripts = {
         # Wallpaper: Use Noctalia for wallpaper management
         "${mod}+W" = {
-          action = spawn "noctalia-shell" "ipc" "call" "wallpaper" "random";
+          action = spawn "noctalia" "msg" "wallpaper-random";
           cooldown-ms = 500;
         };
         # "${mod}+${shift}+W" = {
@@ -347,13 +347,13 @@ let
       # Audio controls (via Noctalia)
       audio = {
         "${mod}+F7" = {
-          action = spawn "noctalia-shell" "ipc" "call" "volume" "decrease";
+          action = spawn "noctalia" "msg" "volume-down";
         };
         "${mod}+F8" = {
-          action = spawn "noctalia-shell" "ipc" "call" "volume" "increase";
+          action = spawn "noctalia" "msg" "volume-up";
         };
         "${mod}+F9" = {
-          action = spawn "noctalia-shell" "ipc" "call" "volume" "muteOutput";
+          action = spawn "noctalia" "msg" "volume-mute";
         };
       };
 
@@ -426,11 +426,11 @@ let
       # Noctalia panel shortcuts
       panels = {
         "${mod}+A" = {
-          action = spawn "noctalia-shell" "ipc" "call" "calendar" "toggle";
+          action = spawn "noctalia" "msg" "panel-toggle" "control-center";
           cooldown-ms = 500;
         };
         "${mod}+Shift+Escape" = {
-          action = spawn "noctalia-shell" "ipc" "call" "sessionMenu" "toggle";
+          action = spawn "noctalia" "msg" "panel-toggle" "session";
           cooldown-ms = 500;
         };
       };
@@ -438,11 +438,11 @@ let
       # Noctalia launcher shortcut
       launcher = {
         "${mod}+Space" = {
-          action = spawn "noctalia-shell" "ipc" "call" "launcher" "toggle";
+          action = spawn "noctalia" "msg" "panel-toggle" "launcher";
           cooldown-ms = 500;
         };
         "${mod}+${shift}+Space" = {
-          action = spawn "noctalia-shell" "ipc" "call" "launcher" "clipboard";
+          action = spawn "noctalia" "msg" "panel-toggle" "launcher" "clipboard";
           cooldown-ms = 500;
         };
       };

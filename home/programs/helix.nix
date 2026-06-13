@@ -200,6 +200,7 @@
         yaml-language-server = {
           command = "yaml-language-server";
           args = [ "--stdio" ];
+          timeout = 5;
         };
       };
 
@@ -347,9 +348,10 @@
           ];
           language-servers = [ "yaml-language-server" ];
           formatter = {
-            command = "prettier";
+            command = "dprint";
             args = [
-              "--parser"
+              "fmt"
+              "--stdin"
               "yaml"
             ];
           };

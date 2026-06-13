@@ -14,7 +14,7 @@
     };
     Service = {
       Type = "oneshot";
-      ExecStart = "${pkgs.bash}/bin/bash -c 'sleep 2 && ${pkgs.procps}/bin/pkill noctalia-shell || true'";
+      ExecStart = "${pkgs.bash}/bin/bash -c 'sleep 2 && ${pkgs.procps}/bin/pkill noctalia || true'";
       # Noctalia is in niri's spawn-at-startup, so niri respawns it
       # automatically after we kill the stale process.
     };

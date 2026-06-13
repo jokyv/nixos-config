@@ -2,51 +2,43 @@
 
 {
   programs.noctalia.settings = {
-    # Notification settings
-    notifications = {
-      enabled = true;
-      enableMarkdown = false;
-      density = "default";
-      location = "top_right";
-      overlayLayer = true;
-      backgroundOpacity = lib.mkForce 1;
-      respectExpireTimeout = false;
-      lowUrgencyDuration = 3;
-      normalUrgencyDuration = 8;
-      criticalUrgencyDuration = 15;
-      clearDismissed = true;
-      saveToHistory = {
-        low = true;
-        normal = true;
-        critical = true;
-      };
-      sounds = {
-        enabled = false;
-        volume = 0.5;
-        separateSounds = false;
-        criticalSoundFile = "";
-        normalSoundFile = "";
-        lowSoundFile = "";
-        excludedApps = "discord,firefox,chrome,chromium,edge";
-      };
-      enableMediaToast = false;
-      enableKeyboardLayoutToast = true;
-      enableBatteryToast = true;
+    notification = {
+      enable_daemon = true;
+      position = "top_right";
+      layer = "top";
+      background_opacity = 1.0;
+      scale = 1.0;
+      offset_x = 20;
+      offset_y = 8;
+      show_actions = true;
+      show_app_name = true;
+      collapse_on_dismiss = true;
+      blacklist_allow_critical = true;
+      blacklist = [ ];
+      allowed_urgencies = [ ];
+      monitors = [ ];
     };
 
-    # OSD settings (on-screen popup for volume/brightness changes)
     osd = {
-      enabled = true;
-      location = "top_right";
-      autoHideMs = 2000;
-      overlayLayer = true;
-      backgroundOpacity = lib.mkForce 1;
-      enabledTypes = [
-        0
-        1
-        2
-      ];
+      position = "top_center";
+      background_opacity = 1.0;
+      scale = 1.0;
+      offset_x = 20;
+      offset_y = 8;
+      orientation = "horizontal";
       monitors = [ ];
+
+      kinds = {
+        volume = true;
+        brightness = true;
+        bluetooth = true;
+        wifi = true;
+        keyboard_layout = true;
+        lock_keys = true;
+        caffeine = true;
+        dnd = true;
+        power_profile = true;
+      };
     };
   };
 }

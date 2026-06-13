@@ -2,16 +2,33 @@
 
 {
   programs.noctalia.settings = {
-    # Idle timeouts (replaces swayidle)
     idle = {
-      enabled = true;
-      screenOffTimeout = 300; # 5 min
-      lockTimeout = 360; # 6 min (60s after screen off)
-      suspendTimeout = 1800; # 30 min
-      fadeDuration = 3;
-      # lockCommand = "";        # uses noctalia lock screen by default
-      # screenOffCommand = "";   # uses DPMS by default
-      # suspendCommand = "";     # uses systemctl suspend by default
+      behavior_order = [ "screen-off" "lock" "lock-and-suspend" ];
+      pre_action_fade_seconds = 3.0;
+
+      behavior = {
+        "screen-off" = {
+          action = "screen_off";
+          timeout = 300;
+          enabled = true;
+          command = "";
+          resume_command = "";
+        };
+        lock = {
+          action = "lock";
+          timeout = 360;
+          enabled = true;
+          command = "";
+          resume_command = "";
+        };
+        "lock-and-suspend" = {
+          action = "lock_and_suspend";
+          timeout = 1800;
+          enabled = true;
+          command = "";
+          resume_command = "";
+        };
+      };
     };
   };
 }

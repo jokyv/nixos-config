@@ -1,6 +1,13 @@
 {
   description = "One Flake to Rule Them All";
 
+  nixConfig = {
+    extra-substituters = [ "https://noctalia.cachix.org" ];
+    extra-trusted-public-keys = [
+      "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+    ];
+  };
+
   inputs = {
 
     #--------------------------------------------
@@ -39,7 +46,7 @@
 
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
 
     #--------------------------------------------
@@ -77,9 +84,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # vicinae.url = "github:vicinaehq/vicinae"; # disabled - using noctalia
-
-    nixos-hardware.url = "github:NixOS/nixos-hardware"; # Hardware-specific optimizations (AMD P-state driver for CPU power/performance)
+    # Hardware-specific optimizations (AMD P-state driver for CPU power/performance)
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
   };
 
   outputs =
@@ -94,7 +100,6 @@
       disko,
       devenv,
       nixos-hardware,
-      # vicinae,  # disabled - using noctalia
       noctalia,
       ...
     }@inputs:
@@ -114,6 +119,7 @@
           ./hosts/jokyv/default.nix # aka configuration.nix file
           ./hosts/jokyv/hardware-configuration.nix
           disko.nixosModules.disko
+          nixos-hardware.nixosModules.common-cpu-amd-pstate
           # stylix.nixosModules.stylix
           # home-manager.nixosModules.home-manager
           # {

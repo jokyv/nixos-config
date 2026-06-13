@@ -93,7 +93,7 @@ nix run nixpkgs#ssh-to-age -- -private-key -i ~/.ssh/private > ~/.config/sops/ag
 ```yaml
 creation_rules:
   - path_regex: secrets(\\.enc)?\\.(yaml|json)$
-    age: '{{YOUR PUBLIC KEY HERE}}'
+    age: "{{YOUR PUBLIC KEY HERE}}"
 ```
 
 > **Note**: You can also put this at `~/.config/sops/config.yaml` for global use.

@@ -5,6 +5,7 @@ This document describes the configured programs and their customizations in this
 ## Installation
 
 For installing the NixOS system, see the [Installation Guide](installation.md). The system includes a universal installer that:
+
 - Auto-detects the first available disk
 - Configures filesystems (Btrfs/Ext4) with optional LUKS encryption
 - Sets up partition layouts automatically
@@ -28,6 +29,7 @@ Configuration location: `home/programs/editor.nix`
 #### Kitty
 
 Modern, GPU-accelerated terminal emulator with:
+
 - True color support
 - Font ligatures
 - Tabs support
@@ -36,6 +38,7 @@ Modern, GPU-accelerated terminal emulator with:
 #### Foot
 
 Lightweight Wayland-native terminal with:
+
 - Minimal resource usage
 - Wayland integration
 - Scrollback buffer
@@ -46,6 +49,7 @@ Lightweight Wayland-native terminal with:
 #### Nushell
 
 Modern shell with structured data support:
+
 - Built-in data manipulation commands
 - JSON/YAML support
 - Auto-completion
@@ -54,6 +58,7 @@ Modern shell with structured data support:
 #### Bash
 
 Default shell with customizations:
+
 - Custom prompt
 - Useful aliases
 - Auto-completion enhancements
@@ -65,6 +70,7 @@ Default shell with customizations:
 #### Git
 
 Configured with:
+
 - Delta diff viewer for better diffs
 - Custom aliases for common operations
 - GPG signing support
@@ -106,6 +112,7 @@ Configured with:
 #### Firefox
 
 Configured with:
+
 - Privacy-enhancing settings
 - Custom extensions
 - Hardware acceleration
@@ -114,6 +121,7 @@ Configured with:
 #### Brave
 
 Privacy-focused browser with:
+
 - Ad-blocking
 - Crypto wallet
 - Brave rewards
@@ -124,6 +132,7 @@ Privacy-focused browser with:
 #### Nautilus
 
 GNOME file manager with:
+
 - Thumbnail previews
 - Archive support
 - Network filesystem support
@@ -132,6 +141,7 @@ GNOME file manager with:
 #### Yazi
 
 Terminal file manager with:
+
 - TUI interface
 - Image preview
 - Fuzzy finding
@@ -142,6 +152,7 @@ Terminal file manager with:
 #### Discord
 
 Desktop client with:
+
 - Voice chat
 - Screen sharing
 - Rich presence
@@ -154,6 +165,7 @@ Desktop client with:
 #### Htop
 
 Process viewer with:
+
 - Color-coded metrics
 - Tree view
 - Resource monitoring
@@ -162,6 +174,7 @@ Process viewer with:
 #### Btop
 
 Modern system monitor with:
+
 - Real-time graphs
 - Battery status
 - Network usage
@@ -172,6 +185,7 @@ Modern system monitor with:
 #### Cliphist
 
 Clipboard history manager:
+
 - Persistent history
 - Image support
 - Keyboard shortcuts
@@ -182,6 +196,7 @@ Clipboard history manager:
 #### Fuzzel
 
 Wayland-native launcher with:
+
 - Fuzzy finding
 - Custom themes
 - Keyboard navigation
@@ -194,6 +209,7 @@ Wayland-native launcher with:
 #### PipeWire
 
 Low-latency audio server with:
+
 - Professional audio support
 - Bluetooth audio
 - Network streaming
@@ -204,6 +220,7 @@ Low-latency audio server with:
 #### MPV
 
 Video player with:
+
 - Hardware acceleration
 - High-quality scaling
 - Subtitle support
@@ -216,6 +233,7 @@ Video player with:
 #### KeePassXC
 
 Cross-platform password manager:
+
 - Encrypted database
 - Auto-type
 - Browser integration
@@ -226,6 +244,7 @@ Cross-platform password manager:
 #### Age
 
 Modern file encryption:
+
 - Ed25519 keys
 - SSH key support
 - Simple usage
@@ -236,6 +255,7 @@ Modern file encryption:
 ### GameMode
 
 Feral Interactive's GameMode daemon optimizes system performance during gameplay:
+
 - **CPU governor:** Switches to performance while gaming
 - **I/O priority:** Elevates disk I/O for games
 - **Process priority:** Real-time scheduling tweaks
@@ -246,6 +266,7 @@ Configuration location: `hosts/jokyv/default.nix` (`programs.gamemode`)
 ### Steam
 
 Steam client with full gaming features:
+
 - Linux Proton compatibility layer
 - Steam Play for Windows games
 - Big Picture mode and Steam Deck UI
@@ -256,6 +277,7 @@ Installed in Home Manager `home/gaming.nix`. Activate with `just game`.
 ### PipeWire Low‑Latency Audio
 
 Audio pipeline tuned for gaming responsiveness:
+
 - Clock rate: 48000 Hz
 - Quantum: 256 samples (min 256, max 512)
 - RTKit module with high priority (`nice.level = -11`, `rt.prio = 88`)
@@ -266,12 +288,14 @@ Configuration: `hosts/jokyv/services.nix` (`services.pipewire.extraConfig`)
 ### Additional Utilities
 
 Optional tools configured in `home/gaming.nix`:
+
 - **MangoHUD:** On‑screen performance overlay
 - **Wine/Proton:** Windows compatibility
 - **Gamescope:** Game scaling and filtering
 - **Moonlight:** Game streaming client
 
 ---
+
 ## Automation
 
 ### Task Runner
@@ -279,6 +303,7 @@ Optional tools configured in `home/gaming.nix`:
 #### Just
 
 Command runner with:
+
 - Justfile syntax
 - Command aliases
 - Shell integration
@@ -298,28 +323,29 @@ Claude AI assistant integration with custom commands and skills:
 
 #### Available Commands
 
-| Command | Description |
-|---------|-------------|
-| `/work-setup` | Project initialization and environment setup |
-| `/work-prime` | Context priming for better AI understanding |
-| `/work-maintain` | Project maintenance (security scan, cleanup) |
-| `/work-sync-docs` | Sync documentation - update CLAUDE.md and docs/ |
-| `/work-git-commit` | Smart git commit with conventional commits |
-| `/work-issue` | Issue analysis and resolution |
-| `/work-release-notes` | Generate release notes |
+| Command               | Description                                     |
+| --------------------- | ----------------------------------------------- |
+| `/work-setup`         | Project initialization and environment setup    |
+| `/work-prime`         | Context priming for better AI understanding     |
+| `/work-maintain`      | Project maintenance (security scan, cleanup)    |
+| `/work-sync-docs`     | Sync documentation - update CLAUDE.md and docs/ |
+| `/work-git-commit`    | Smart git commit with conventional commits      |
+| `/work-issue`         | Issue analysis and resolution                   |
+| `/work-release-notes` | Generate release notes                          |
 
 #### Available Skills
 
-| Skill | Description |
-|-------|-------------|
-| `smart-git-commit` | Intelligent commit message generation |
-| `python` | Modern Python conventions |
+| Skill              | Description                                |
+| ------------------ | ------------------------------------------ |
+| `smart-git-commit` | Intelligent commit message generation      |
+| `python`           | Modern Python conventions                  |
 | `session-analysis` | Review recent Claude sessions for friction |
-| `worktree` | Isolate risky work in git worktrees |
+| `worktree`         | Isolate risky work in git worktrees        |
 
 ### Theming
 
 All programs are configured to use the unified theme from Stylix:
+
 - Consistent colors across applications
 - Dark/light mode support
 - Custom color schemes
@@ -328,6 +354,7 @@ All programs are configured to use the unified theme from Stylix:
 ### Keybindings
 
 Consistent keybindings across applications where applicable:
+
 - Vim-style in terminal applications
 - Custom shortcuts for window management
 - Browser navigation shortcuts

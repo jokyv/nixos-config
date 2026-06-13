@@ -32,7 +32,6 @@ A complete NixOS ecosystem featuring modern Linux desktop capabilities with decl
 - **Productivity:** Obsidian, Zathura (PDF viewer)
 - **System Utilities:** Waybar, Fuzzel (App launcher), Cliphist (Clipboard manager)
 
-
 ### Gaming Optimizations
 
 - **GameMode Daemon:** Automatic CPU/IO prioritization for games
@@ -40,6 +39,7 @@ A complete NixOS ecosystem featuring modern Linux desktop capabilities with decl
 - **Steam Hardware:** Controller/VR udev rules via `hardware.steam-hardware.enable`
 - **Kernel Tuning:** `vm.max_map_count`, `vm.swappiness`, `kernel.sched_autogroup_enabled`
 - **Performance P‑State:** AMD P‑state driver for optimal CPU frequency scaling
+
 ## Project Structure
 
 For a complete overview of the project structure and configuration files, see the **[Configuration Reference](docs/reference.md)**.
@@ -91,10 +91,10 @@ Complete documentation is available in the [`docs/`](docs/) directory:
 
    Two configuration modes are available:
 
-   | Mode | Command | Description |
-   |------|---------|-------------|
-   | **Work** (default) | `just home` or `home-manager switch --flake .#jokyv` | Full development setup with all tools |
-   | **Gaming** | `just game` or `home-manager switch --flake .#gaming` | Minimal config with Steam + system‑level optimizations (GameMode, low‑latency PipeWire, Steam hardware) |
+   | Mode               | Command                                               | Description                                                                                             |
+   | ------------------ | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+   | **Work** (default) | `just home` or `home-manager switch --flake .#jokyv`  | Full development setup with all tools                                                                   |
+   | **Gaming**         | `just game` or `home-manager switch --flake .#gaming` | Minimal config with Steam + system‑level optimizations (GameMode, low‑latency PipeWire, Steam hardware) |
 
 4. **Common Tasks:**
    - Update system: `just up`

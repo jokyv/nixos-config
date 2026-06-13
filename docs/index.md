@@ -5,16 +5,19 @@ Welcome to the documentation for this modern NixOS configuration framework featu
 ## Quick Start
 
 ### Prerequisites
+
 - NixOS system with flakes enabled
 - Basic familiarity with Nix
 - Age encryption key for secrets
 
 ### Installation
+
 1. Clone this repository
 2. Follow the [Installation Guide](installation.md) for detailed steps
 3. Apply configuration: `nixos-rebuild switch --flake .#hostname`
 
 ### Key Commands
+
 ```bash
 # Update system
 just up
@@ -37,6 +40,7 @@ just decode    # Decrypt secrets
 ## Documentation
 
 ### Core Guides
+
 - **[Installation Guide](installation.md)** - Complete setup instructions
 - **[Configuration Reference](reference.md)** - Detailed configuration reference
 - **[Program Configurations](programs.md)** - Configured programs and settings
@@ -71,6 +75,7 @@ nixos-config/
 ## Key Features
 
 ### Desktop Environment
+
 - **Display Protocol**: Wayland for modern graphics
 - **Window Manager**: Niri tiling compositor
 - **Terminal**: Kitty/Foot with full Unicode support
@@ -78,6 +83,7 @@ nixos-config/
 - **Browser**: Firefox with privacy settings
 
 ### Development Stack
+
 - **Languages**: Nix, Rust, Python, Go, JavaScript
 - **Tools**: Git, Cargo, UV, Node.js
 - **LSP**: Complete language server setup
@@ -85,6 +91,7 @@ nixos-config/
 - **AI Assistant**: Claude Code with custom commands/skills
 
 ### System Management
+
 - **Package Management**: Nix Flakes + Home Manager
 - **Security**: sops-nix with AGE encryption
 - **Theming**: Stylix unified theming
@@ -93,11 +100,13 @@ nixos-config/
 ## Getting Help
 
 ### Troubleshooting
+
 - Check the [Configuration Reference](reference.md) for common issues
 - Review logs with `journalctl -xe`
 - Test configurations with `nix flake check`
 
 ### Community
+
 - [NixOS Discourse](https://discourse.nixos.org/)
 - [NixOS Wiki](https://wiki.nixos.org/)
 - [Home Manager Manual](https://nix-community.github.io/home-manager/)
@@ -107,6 +116,7 @@ nixos-config/
 This configuration follows semantic versioning and conventional commits.
 
 When contributing:
+
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
@@ -119,4 +129,4 @@ This project is licensed under the MIT License - see the [LICENSE](../LICENSE) f
 
 ---
 
-*Built with ❤️ using NixOS*
+_Built with ❤️ using NixOS_
