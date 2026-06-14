@@ -49,7 +49,7 @@
 
     theme = {
       source = "builtin";
-      builtin = "Noctalia";
+      builtin = "Kanagawa";
       mode = "dark";
       wallpaper_scheme = "m3-content";
       community_palette = "";
