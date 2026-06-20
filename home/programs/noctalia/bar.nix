@@ -7,14 +7,15 @@
       widgets = {
         enabled = true;
         position = "left";
-        thickness = 38;
+        thickness = 48;
         reserve_space = true;
-        scale = 1.0;
+        scale = 0.9;
         start = [
           "active_window"
           "spacer"
           "network_rx"
           "network_tx"
+          "spacer"
           "output_volume"
           "keyboard_layout"
           "spacer"
@@ -44,8 +45,8 @@
         radius = 0;
         shadow = true;
         contact_shadow = false;
-        padding = 6;
-        widget_spacing = 4;
+        padding = 4;
+        widget_spacing = 3;
         margin_edge = 0;
         margin_ends = 0;
         auto_hide = false;
@@ -96,7 +97,7 @@
 
     widget.date = {
       type = "clock";
-      format = "{:%H:%M  %a %d %b}";
+      format = "{:%H:%M · %a %d %b}";
     };
 
     # System monitor — separate widgets for cpu, temp, ram, network
@@ -112,7 +113,7 @@
 
     widget.ram = {
       type = "sysmon";
-      stat = "ram_used";
+      # stat = "ram_used";
     };
 
     widget.network_rx = {
