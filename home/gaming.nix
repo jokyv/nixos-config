@@ -21,12 +21,7 @@
 
     # WINDOW MANAGER & UI
     ./programs/niri.nix
-    ./programs/waybar.nix
-    ./programs/swww.nix
-    ./programs/fnott.nix
-    # ./programs/gammastep.nix
     ./programs/wlsunset.nix
-    ./programs/swaylock.nix
 
     # THEMING
     ./programs/stylix.nix
@@ -37,11 +32,10 @@
 
     # ENVIRONMENT
     ./env.nix
+    ./common.nix
 
   ];
 
-  home.username = "jokyv";
-  home.homeDirectory = "/home/jokyv";
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     MOZ_ENABLE_WAYLAND = "1";
@@ -107,11 +101,6 @@
   ];
 
   # ---------------------------------------------
-  # systemd
-  # ---------------------------------------------
-  systemd.user.startServices = "sd-switch";
-
-  # ---------------------------------------------
   # Set XDG user directories
   # ---------------------------------------------
   xdg.userDirs = {
@@ -140,9 +129,4 @@
     };
   };
 
-  # ---------------------------------------------
-  # State Version
-  # ---------------------------------------------
-  home.stateVersion = "24.05";
-  programs.home-manager.enable = true;
 }

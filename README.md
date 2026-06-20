@@ -30,7 +30,8 @@ A complete NixOS ecosystem featuring modern Linux desktop capabilities with decl
 - **Browsers:** Firefox, Brave
 - **File Management:** Nautilus, Yazi (Terminal file manager)
 - **Productivity:** Obsidian, Zathura (PDF viewer)
-- **System Utilities:** Waybar, Fuzzel (App launcher), Cliphist (Clipboard manager)
+- **Desktop Shell:** Noctalia (launcher/widgets/dock/notifications)
+- **Clipboard:** Cliphist (Clipboard manager)
 
 ### Gaming Optimizations
 

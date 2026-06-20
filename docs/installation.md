@@ -104,13 +104,13 @@ Boot from the USB and ensure you have internet:
 ping google.com
 
 # Clone this repository
-git clone https://github.com/jokyv/nixos-config.git /tmp/nixos-config
+git clone <your-repo-url> /tmp/nixos-config
 cd /tmp/nixos-config
 ```
 
 ### 3. Set Hostname
 
-Edit `hosts/jokyv/default.nix` and set your hostname:
+Edit `hosts/<host-name>/default.nix` and set your hostname:
 
 ```nix
 networking.hostname = "nixos";  # Change to your preferred hostname
@@ -120,7 +120,7 @@ networking.hostname = "nixos";  # Change to your preferred hostname
 
 **IMPORTANT**: For installation ONLY, temporarily add disko to your host config:
 
-In `hosts/jokyv/default.nix`, add these lines to the `imports` array:
+In `hosts/<host-name>/default.nix`, add these lines to the `imports` array:
 
 ```nix
 imports = [
@@ -139,8 +139,8 @@ Choose one of these methods:
 **Option A: Temporary password (simple)**
 
 ```nix
-# In hosts/jokyv/default.nix, add:
-users.users.jokyv.initialPassword = "changeme";
+# In hosts/<host-name>/default.nix, add:
+users.users.<user-name>.initialPassword = "changeme";
 ```
 
 Remove this line after first boot and set a proper password with `passwd`.
@@ -152,10 +152,10 @@ Remove this line after first boot and set a proper password with `passwd`.
 import = [ inputs.sops-nix.nixosModules.sops ]
 
 # Define the secret
-sops.secrets."pass_jokyv" = { };
+sops.secrets."pass_<user-name>" = { };
 
 # Use it for user password
-users.users.jokyv.passwordFile = config.sops.secrets."pass_jokyv".path;
+users.users.<user-name>.passwordFile = config.sops.secrets."pass_<user-name>".path;
 ```
 
 ### 6. Run the Installer
@@ -202,8 +202,8 @@ If you need to select a specific disk or use a legacy configuration:
 After booting into your new system, you **must** remove disko from the host configuration to prevent issues with future rebuilds:
 
 ```bash
-# Edit hosts/jokyv/default.nix
-nano ~/nixos-config/hosts/jokyv/default.nix
+# Edit hosts/<host-name>/default.nix
+nano ~/nixos-config/hosts/<host-name>/default.nix
 ```
 
 Remove these lines from the `imports` array:
@@ -242,14 +242,14 @@ sudo btrfs subvolume list /
 
 ```bash
 # Clone the repository
-git clone git@github.com:jokyv/nixos-config.git ~/nixos-config
+git clone git@github.com:<your-username>/nixos-config.git ~/nixos-config
 cd ~/nixos-config
 
 # Install home-manager temporarily
 nix shell -p home-manager
 
 # Apply Home Manager configuration
-home-manager switch --flake .#jokyv
+home-manager switch --flake .#<user-name>
 
 # Or use just (if you have justfile installed)
 just home
@@ -338,7 +338,7 @@ nixos-config/
 ├── disks/
 │   └── universal-config.nix    # Auto-detecting disk config (for installation only)
 ├── hosts/
-│   └── jokyv/
+│   └── <host-name>/
 │       ├── default.nix         # Host configuration (does NOT import universal-config)
 │       └── hardware-configuration.nix  # Generated hardware config with mount points
 └── docs/
@@ -354,7 +354,7 @@ nixos-config/
 To add a new host:
 
 1. Create `hosts/new-host/default.nix`
-2. Copy from `hosts/jokyv/default.nix`
+2. Copy from `hosts/<host-name>/default.nix`
 3. Set `networking.hostname` to the new hostname
 4. Adjust host-specific settings
 5. For installation: temporarily add `inputs.disko.nixosModules.disko` and `../../disks/universal-config.nix` to imports, then remove after installation
@@ -364,7 +364,7 @@ Then add to `flake.nix`:
 
 ```nix
 nixosConfigurations = {
-  jokyv = nixpkgs.lib.nixosSystem { modules = [ ./hosts/jokyv/default.nix ... ]; };
+  your-host = nixpkgs.lib.nixosSystem { modules = [ ./hosts/<host-name>/default.nix ... ]; };
   new-host = nixpkgs.lib.nixosSystem { modules = [ ./hosts/new-host/default.nix ... ]; };
 };
 ```

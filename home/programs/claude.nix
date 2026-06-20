@@ -4,7 +4,7 @@
 # The package downloads prebuilt binaries, bypassing npm entirely.
 
 let
-  agentDotfiles = "/home/jokyv/agent-dotfiles";
+  agentDotfiles = "${config.home.homeDirectory}/agent-dotfiles";
   sharedSkillsDir = "${agentDotfiles}/skills";
   hooksConfig = import ./claude/hooks.nix;
 in

@@ -57,7 +57,7 @@ nix run nixpkgs#ssh-to-age -- -private-key -i ~/.ssh/private > ~/.config/sops/ag
 
   sops.secrets.example-key = { };
   sops.secrets."myservice/my_subdir/my_secret" = {
-    owner = "jokyv"; # add another owner, otherwise use sudo
+    owner = "user"; # add another owner, otherwise use sudo
   };
 
   # example with systemd service

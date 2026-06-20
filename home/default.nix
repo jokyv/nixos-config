@@ -66,12 +66,11 @@ in
 
     ./programs/git-sync-notes.nix
     ./env.nix
+    ./common.nix
 
     ./programs/noctalia/default.nix
   ];
 
-  home.username = "jokyv";
-  home.homeDirectory = "/home/jokyv";
   home.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     OBSIDIAN_USE_WAYLAND = "1";
@@ -252,13 +251,6 @@ in
     ]);
 
   # ---------------------------------------------
-  # systemd
-  # ---------------------------------------------
-
-  # Only reload system units when changing configs [EXPERIMENT]
-  systemd.user.startServices = "sd-switch";
-
-  # ---------------------------------------------
   # Set XDG user directories
   # ---------------------------------------------
   xdg.userDirs = {
@@ -299,10 +291,4 @@ in
   # ---------------------------------------------
   wayland.windowManager.hyprland.configType = "hyprlang";
 
-  # ---------------------------------------------
-  # State Version
-  # ---------------------------------------------
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "24.05";
-  programs.home-manager.enable = true;
 }

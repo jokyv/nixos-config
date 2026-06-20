@@ -22,7 +22,7 @@ Helix is configured as the primary text editor with modern features:
 - Modal editing experience
 - Built-in file explorer and fuzzy finder
 
-Configuration location: `home/programs/editor.nix`
+Configuration location: `home/programs/helix.nix`
 
 ### Terminal Emulators
 
@@ -191,16 +191,19 @@ Clipboard history manager:
 - Keyboard shortcuts
 - Privacy options
 
-### Application Launcher
+### Desktop Shell
 
-#### Fuzzel
+#### Noctalia
 
-Wayland-native launcher with:
+Desktop shell used for:
 
-- Fuzzy finding
-- Custom themes
-- Keyboard navigation
-- Application icons
+- Launcher
+- Widgets
+- Dock
+- Wallpaper
+- Notifications
+
+Module location: `home/programs/noctalia/default.nix`
 
 ## Multimedia
 
@@ -318,8 +321,8 @@ Command runner with:
 Claude AI assistant integration with custom commands and skills:
 
 - Managed via home-manager (`home/programs/claude.nix`)
-- Custom commands in `home/programs/claude/commands/`
-- Custom skills in `~/agent-dotfiles/shared/skills/`
+- Custom commands in `$HOME/agent-dotfiles/claude/commands/`
+- Custom skills in `$HOME/agent-dotfiles/skills/`
 
 #### Available Commands
 
@@ -364,14 +367,16 @@ Consistent keybindings across applications where applicable:
 
 Program configurations are modularized in `home/programs/`:
 
-- `browser.nix` - Web browser settings
-- `editor.nix` - Text editor configuration
-- `terminal.nix` - Terminal emulator settings
-- `shell.nix` - Shell configuration
-- `media.nix` - Multimedia applications
-- `development.nix` - Development tools
-- `system.nix` - System utilities
-- `claude.nix` - Claude AI assistant
+- `bash.nix` - Bash shell config
+- `brave.nix` / `firefox.nix` - Browser settings
+- `foot.nix` / `kitty.nix` - Terminal emulators
+- `helix.nix` - Text editor configuration
+- `claude.nix` - Claude Code integration
+- `git.nix`, `fzf.nix`, `zoxide.nix`, `yazi.nix`, `starship.nix` - Shell/dev tools
+- `niri.nix` - Niri compositor bindings and rules
+- `stylix.nix` - Theming
+- `noctalia/` - Desktop shell modules
+- `deprecated/` - Old configs kept for reference
 
 Each module can be imported independently and customized per host or user.
 

@@ -14,16 +14,21 @@ nixos-config/
 ├── home/               # Home Manager configurations
 │   ├── default.nix        # Work mode (full dev setup)
 │   ├── gaming.nix         # Gaming mode (minimal + Steam)
-│   ├── env.nix           # Environment variables
-│   └── programs/         # Individual program configurations
-│       ├── claude.nix     # Claude AI assistant config
-│       ├── claude/        # Claude commands & skills
-│       │   ├── commands/  # Custom slash commands
-│       │   └── skills/    # Custom skills
-│       ├── browser.nix
-│       ├── editor.nix
-│       ├── terminal.nix
-│       └── ...
+│   ├── env.nix            # Environment variables
+│   └── programs/          # Individual program configurations
+│       ├── bash.nix
+│       ├── brave.nix
+│       ├── claude.nix
+│       ├── claude/        # Claude hooks
+│       │   └── hooks.nix
+│       ├── foot.nix
+│       ├── firefox.nix
+│       ├── helix.nix
+│       ├── kitty.nix
+│       ├── niri.nix
+│       ├── stylix.nix
+│       ├── yazi.nix
+│       └── deprecated/    # Old configs kept out of imports
 ├── hosts/              # Host-specific configurations
 │   └── jokyv/          # Host-specific files
 │       ├── default.nix           # Main host configuration
