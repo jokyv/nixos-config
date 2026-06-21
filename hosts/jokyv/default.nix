@@ -2,9 +2,6 @@
 
 {
   imports = [
-    # disko configuration
-    inputs.disko.nixosModules.disko
-    ../../disks/universal-config.nix
     # zsa keyboard configuration
     ./zsa-udev-rules.nix
     # security configuration
@@ -87,7 +84,7 @@
   # Networking Configuration
   # ---------------------------------------------
   networking = {
-    # Hostname is now configured in install-config.nix and applied via universal-config.nix
+    hostName = "nixos";
     networkmanager.enable = true;
     nameservers = [
       "1.1.1.1"

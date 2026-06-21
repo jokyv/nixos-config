@@ -16,7 +16,7 @@
 
     # stable
     nixpkgs-stable = {
-      url = "github:nixos/nixpkgs/nixos-25.05";
+      url = "github:nixos/nixpkgs/nixos-26.05";
     };
 
     # unstable
@@ -90,14 +90,12 @@
 
   outputs =
     {
-      self,
       nixpkgs,
       nixpkgs-stable,
       home-manager,
       stylix,
       sops-nix,
       niri,
-      disko,
       devenv,
       nixos-hardware,
       noctalia,
@@ -118,7 +116,6 @@
         modules = [
           ./hosts/jokyv/default.nix # aka configuration.nix file
           ./hosts/jokyv/hardware-configuration.nix
-          disko.nixosModules.disko
           nixos-hardware.nixosModules.common-cpu-amd-pstate
           # stylix.nixosModules.stylix
           # home-manager.nixosModules.home-manager
@@ -127,6 +124,39 @@
           #   home-manager.useUserPackages = true;
           #   home-manager.users.jokyv = import ./home/default.nix;
           # }
+        ];
+      };
+
+      nixosConfigurations.dora = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/dora/default.nix
+          ./hosts/dora/hardware-configuration.nix
+        ];
+      };
+
+      nixosConfigurations."jokyv-install" = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {
+          inherit inputs;
+          hostModule = ./hosts/jokyv/default.nix;
+          installConfigFile = ./install/jokyv.nix;
+        };
+        modules = [
+          ./install/default.nix
+        ];
+      };
+
+      nixosConfigurations."dora-install" = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {
+          inherit inputs;
+          hostModule = ./hosts/dora/default.nix;
+          installConfigFile = ./install/dora.nix;
+        };
+        modules = [
+          ./install/default.nix
         ];
       };
 
@@ -141,7 +171,6 @@
           sops-nix.homeManagerModules.sops
           niri.homeModules.niri
           noctalia.homeModules.default
-          # vicinae.homeManagerModules.default  # disabled - using noctalia
 
           # Add devenv and direnv configuration
           {
