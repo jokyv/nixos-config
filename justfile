@@ -1,5 +1,5 @@
 set shell := ["bash", "-euo", "pipefail", "-c"]
-set positional-arguments := true
+set positional-arguments
 
 # Display all available commands sorted
 default:
