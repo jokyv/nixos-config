@@ -234,6 +234,20 @@
           };
         }
         {
+          name = "just";
+          auto-format = true;
+          formatter = {
+            command = "just";
+            args = [
+              "--dump"
+              "--dump-format"
+              "just"
+              "-f"
+              "-"
+            ];
+          };
+        }
+        {
           name = "json";
           auto-format = true;
           file-types = [
