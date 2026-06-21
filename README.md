@@ -4,7 +4,7 @@
 ![NixOS](https://img.shields.io/badge/NixOS-26.05-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-A complete NixOS ecosystem featuring modern Linux desktop capabilities with declarative configuration management.
+A complete NixOS ecosystem featuring modern Linux desktop capabilities with declarative configuration management across 2 machines.
 
 ## Featured Stack
 
@@ -75,6 +75,13 @@ Complete documentation is available in the [`docs/`](docs/) directory:
 
 > **GitHub Pages**: Documentation is also available as a hosted website at https://jokyv.github.io/nixos-config/
 
+## Machine Matrix
+
+| Host | User | Role | Install output |
+| --- | --- | --- | --- |
+| `nixos` | `jokyv` | main desktop | `.#jokyv-install` |
+| `dora` | `dora` | GNOME family PC | `.#dora-install` |
+
 ## Getting Started
 
 1. **Prerequisites:**
@@ -84,9 +91,7 @@ Complete documentation is available in the [`docs/`](docs/) directory:
 
 2. **Installation:**
    - See the [Installation Guide](docs/installation.md) for detailed steps
-   ```bash
-   nixos-rebuild switch --flake .#nixos
-   ```
+   - System rebuild: `nixos-rebuild switch --flake .#nixos`
 
 3. **Home Manager Setup:**
 

@@ -46,12 +46,19 @@ just decode    # Decrypt secrets
 - **[Program Configurations](programs.md)** - Configured programs and settings
 - **[Secrets Management](secrets_management.md)** - Managing encrypted secrets
 
-### Configuration Overview
+### Machine Matrix
+
+| Host | User | Role | Notes |
+| --- | --- | --- | --- |
+| `nixos` | `jokyv` | main desktop | Niri + Home Manager |
+| `dora` | `dora` | GNOME family PC | system-only, no Home Manager |
+
+## Configuration Overview
 
 This framework provides:
 
 - **Declarative System** - Entire system defined in Nix
-- **Modern Desktop** - Wayland with Niri compositor
+- **Modern Desktop** - Wayland with Niri or GNOME
 - **Unified Theming** - Stylix for consistent appearance
 - **Secret Management** - Encrypted configuration with sops-nix
 - **Development Ready** - Pre-configured development environment
@@ -63,9 +70,11 @@ This framework provides:
 nixos-config/
 ├── docs/               # Documentation (you are here)
 ├── home/               # Home Manager configurations
-│   ├── default.nix        # Work mode (full dev setup)
-│   ├── gaming.nix         # Gaming mode (minimal + Steam)
-│   └── programs/          # Program-specific configs
+│   ├── core/             # Shared home modules
+│   ├── profiles/         # Work/gaming profile modules
+│   ├── default.nix       # Work entrypoint
+│   ├── gaming.nix        # Gaming entrypoint
+│   └── programs/         # Program-specific configs
 ├── hosts/              # Host-specific settings
 ├── flake.nix          # Main configuration entrypoint
 ├── justfile          # Common tasks automation

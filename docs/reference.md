@@ -12,9 +12,10 @@ nixos-config/
 │   ├── programs.md        # Program configurations
 │   └── secrets_management.md  # Secrets management guide
 ├── home/               # Home Manager configurations
-│   ├── default.nix        # Work mode (full dev setup)
-│   ├── gaming.nix         # Gaming mode (minimal + Steam)
-│   ├── env.nix            # Environment variables
+│   ├── core/              # Shared home modules
+│   ├── profiles/          # Work/gaming profile modules
+│   ├── default.nix        # Work entrypoint
+│   ├── gaming.nix         # Gaming entrypoint
 │   └── programs/          # Individual program configurations
 │       ├── bash.nix
 │       ├── brave.nix
@@ -30,15 +31,22 @@ nixos-config/
 │       ├── yazi.nix
 │       └── deprecated/    # Old configs kept out of imports
 ├── hosts/              # Host-specific configurations
-│   └── jokyv/          # Host-specific files
+│   ├── dora/           # GNOME host files
+│   │   ├── default.nix           # GNOME host configuration
+│   │   ├── desktop.nix          # GNOME desktop policy
+│   │   └── hardware-configuration.nix  # Hardware settings
+│   └── jokyv/         # Current host files
 │       ├── default.nix           # Main host configuration
 │       ├── hardware-configuration.nix  # Hardware settings
 │       └── zsa-udev-rules.nix    # Custom udev rules
 ├── disks/              # Disk configurations (shared across hosts)
-│   ├── universal-config.nix    # Auto-detecting installer
+│   ├── universal-config.nix    # Shared disko module
 │   ├── disk-config-btrfs-luks.nix  # Legacy Btrfs+LUKS config
 │   └── disk-config-btrfs.nix       # Legacy Btrfs config
-├── install-config.nix  # Universal installer settings
+├── install/            # Install-only config for disko
+│   ├── default.nix      # Install wrapper
+│   ├── jokyv.nix        # Install knobs for jokyv
+│   └── dora.nix         # Install knobs for dora
 ├── flake.nix          # Main flake configuration
 ├── flake.lock         # Locked dependency versions
 ├── justfile          # Task automation commands
@@ -71,6 +79,13 @@ Each host configuration includes:
 - Service definitions
 - User configurations
 - Import statements for modular components
+
+### Machine Matrix
+
+| Host | User | Role | Install output |
+| --- | --- | --- | --- |
+| `nixos` | `jokyv` | main desktop | `.#jokyv-install` |
+| `dora` | `dora` | GNOME family PC | `.#dora-install` |
 
 ### Gaming Optimizations
 
