@@ -1,5 +1,15 @@
-{ inputs, pkgs, ... }:
+{ config, inputs, pkgs, primaryUser ? "jokyv", ... }:
 
+let
+  repoDir = "/home/${primaryUser}/nixos-config";
+  prefetchSystem = pkgs.writeShellScriptBin "prefetch-system-closure" ''
+    exec ${pkgs.nixVersions.stable}/bin/nix build \
+      --accept-flake-config \
+      --extra-experimental-features "nix-command flakes" \
+      --no-link \
+      ${repoDir}#nixosConfigurations.${config.networking.hostName}.config.system.build.toplevel
+  '';
+in
 {
   # ---------------------------------------------
   # System Automation
@@ -55,6 +65,33 @@
 
     # Enable nix-direnv for development environments
     package = pkgs.nixVersions.stable;
+  };
+
+  systemd.services.prefetch-system-closure = {
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${prefetchSystem}/bin/prefetch-system-closure";
+    };
+  };
+
+  systemd.timers.prefetch-system-closure = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "5m";
+      OnUnitActiveSec = "6h";
+      Persistent = true;
+      RandomizedDelaySec = "15m";
+    };
+  };
+
+  systemd.paths.prefetch-system-closure = {
+    wantedBy = [ "paths.target" ];
+    pathConfig = {
+      PathChanged = "${repoDir}/flake.lock";
+      Unit = "prefetch-system-closure.service";
+    };
   };
 
   # Automatic system updates

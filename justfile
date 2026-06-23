@@ -66,6 +66,15 @@ dry:
     sudo nixos-rebuild dry-activate --fast --flake .#nixos --show-trace || { echo "[ERROR] Dry-run failed"; exit 1; }
     @echo "[SUCCESS] Dry-build completed successfully"
 
+# Prefetch home + system closures for faster rebuilds
+[group('maintenance')]
+prefetch:
+    @echo "[INFO] Warming Home Manager build cache..."
+    @nix build --accept-flake-config --extra-experimental-features "nix-command flakes" --no-link .#homeConfigurations.jokyv.activationPackage || { echo "[ERROR] Home prefetch failed"; exit 1; }
+    @echo "[INFO] Warming NixOS system build cache..."
+    @nix build --accept-flake-config --extra-experimental-features "nix-command flakes" --no-link .#nixosConfigurations.nixos.config.system.build.toplevel || { echo "[ERROR] System prefetch failed"; exit 1; }
+    @echo "[SUCCESS] Build cache warm-up completed"
+
 # Run tests
 [group('dev')]
 test:

@@ -1,6 +1,8 @@
 { inputs, pkgs, ... }:
 
 {
+  _module.args.primaryUser = "jokyv";
+
   imports = [
     # zsa keyboard configuration
     ./zsa-udev-rules.nix

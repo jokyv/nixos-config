@@ -1,6 +1,7 @@
 { pkgs, ... }:
 
 {
+  _module.args.primaryUser = "dora";
   imports = [
     ../jokyv/security.nix
     ../jokyv/maintenance.nix
