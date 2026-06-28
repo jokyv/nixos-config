@@ -15,6 +15,7 @@
       # Aliases
       alias = {
         ignore = "!gi() { local IFS=','; curl -sL \"https://www.toptal.com/developers/gitignore/api/\\$*\"; }; gi";
+        audit = "!python3 ~/scripts/bin/git_util.py --audit";
         l = "!f() { count=$1; if [ -z \"$count\" ]; then count=5; fi; git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -n \"$count\"; }; f";
         graph = "!f() { count=$1; if [ -z \"$count\" ]; then count=5; fi; git log --all --graph --decorate --oneline -n \"$count\"; }; f";
       };
