@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 {
 
@@ -67,15 +67,6 @@
     allowPing = false; # Block ping requests (stealth mode)
     rejectPackets = false; # false = DROP (silent), true = REJECT (respond)
 
-    # Essential desktop ports
-    allowedTCPPorts = [
-      5353 # mDNS/Bonjour - for network discovery (printers, file sharing)
-    ];
-
-    allowedUDPPorts = [
-      5353 # mDNS/Bonjour
-    ];
-
     # Important for desktop functionality
     checkReversePath = false; # Better compatibility with VPNs and complex networks
   };
@@ -90,7 +81,6 @@
       Defaults        passwd_timeout=1          # Password prompt timeout
       Defaults        lecture=once              # Show security warning one time
       Defaults        logfile=/var/log/sudo.log # Log all sudo commands
-      Defaults        log_input,log_output      # Log input/output of commands
       Defaults        requiretty                # Require TTY for sudo
       Defaults        use_pty                   # Always use pseudo-terminal
 
@@ -123,20 +113,47 @@
     }
   ];
 
-  # SSH configuration (for GitHub)
+  # SSH server (disabled until inbound SSH is needed).
+  # Git push/pull only needs the openssh client package.
   services.openssh = {
-    enable = true; # Enable SSH client (for git push/pull)
+    enable = false;
     settings = {
       PasswordAuthentication = false; # Disable password auth (use keys only)
       PermitRootLogin = "no"; # Disable root login over SSH
     };
-    openFirewall = false; # Important: Don't open SSH server port!
+    openFirewall = false; # Don't open SSH server port.
   };
 
   # Antivirus engine
   services.clamav = {
     daemon.enable = true;
     updater.enable = true;
+  };
+
+  # Weekly vulnerability audit for the current system closure.
+  # Reports are stored in /var/log/audit-reports; inspect with `just vulnix-report`.
+  systemd.tmpfiles.rules = [
+    "d /var/log/audit-reports 0750 root root - -"
+  ];
+
+  systemd.services.vulnix-audit = {
+    description = "Run Vulnix system vulnerability audit";
+    serviceConfig.Type = "oneshot";
+    environment.LANG = "C.UTF-8";
+    script = ''
+      report="/var/log/audit-reports/vulnix-$(date +%s).json"
+      ${pkgs.vulnix}/bin/vulnix --system --json > "$report" || true
+      ln -sfn "$report" /var/log/audit-reports/vulnix-latest.json
+    '';
+  };
+
+  systemd.timers.vulnix-audit = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "weekly";
+      Persistent = true;
+      RandomizedDelaySec = "1h";
+    };
   };
 
   # ---------------------------------------------

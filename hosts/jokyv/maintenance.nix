@@ -72,6 +72,7 @@ in
     wants = [ "network-online.target" ];
     serviceConfig = {
       Type = "oneshot";
+      User = primaryUser;
       ExecStart = "${prefetchSystem}/bin/prefetch-system-closure";
     };
   };

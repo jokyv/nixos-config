@@ -115,6 +115,9 @@
   # Bluetooth
   services.blueman.enable = true;
 
+  # Secret Service for WM sessions (Niri)
+  services.gnome.gnome-keyring.enable = true;
+
   # Firmware (keep this)
   hardware.enableRedistributableFirmware = true;
 

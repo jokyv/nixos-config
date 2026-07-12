@@ -107,6 +107,8 @@
       pkgs-stable = nixpkgs-stable.legacyPackages.${system};
     in
     {
+      formatter.${system} = pkgs.nixfmt;
+
       # NixOS system configuration
       # here you can create different configurations with different host names for different machines
       # -----------------------------------------------------

@@ -43,6 +43,11 @@ switch:
     sudo nixos-rebuild switch --impure --flake .#nixos --show-trace || { echo "[ERROR] System rebuild failed"; exit 1; }
     @echo "[SUCCESS] System rebuild successful"
 
+# Roll back to previous system generation
+[group('rebuild')]
+rollback:
+    sudo nixos-rebuild switch --rollback --flake .#nixos
+
 # Rebuild the system using nh
 [group('rebuild')]
 switch-nh:
@@ -230,6 +235,24 @@ health:
     nix config check || true
     @echo "[SUCCESS] Health checks completed"
 
+# Show latest Vulnix vulnerability audit report
+[group('maintenance')]
+vulnix-report:
+    @latest="$(sudo readlink -f /var/log/audit-reports/vulnix-latest.json 2>/dev/null || true)"; \
+    if [ -z "$latest" ] || [ ! -f "$latest" ]; then \
+      echo "[WARN] No Vulnix report found. Run: sudo systemctl start vulnix-audit.service"; \
+      exit 0; \
+    fi; \
+    echo "[INFO] Latest Vulnix report: $latest"; \
+    sudo ls -lh "$latest"; \
+    echo "[INFO] Preview:"; \
+    if command -v jq >/dev/null 2>&1; then \
+      sudo jq . "$latest" | head -80; \
+    else \
+      sudo head -80 "$latest"; \
+    fi; \
+    echo "[INFO] Full report: sudo less $latest"
+
 # Full system health check with complete store verification (slow)
 [group('maintenance')]
 health-full:
@@ -270,7 +293,7 @@ useful-commands:
     @echo "home-manager switch --flake .#user - use flake"
 
     @echo "sudo nixos-rebuild list-generations - list generation" 
-    @echo "sudo nixos-rebuild switch --rollback - swith to previous generation" 
+    @echo "just rollback - switch to previous system generation"
     @echo "sudo nixos-rebuild boot --option number <id> - boot into generataion id"
 
     @echo "home-manager generations - list home generations"

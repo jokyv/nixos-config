@@ -28,6 +28,8 @@
   # ---------------------------------------------
   # Use systemd-boot as the bootloader, alternatively use GRUB
   boot.loader.systemd-boot.enable = true;
+  # Disable boot menu command-line editing for physical-access hardening.
+  boot.loader.systemd-boot.editor = false;
   # Limit the number of previous generations to keep
   boot.loader.systemd-boot.configurationLimit = 10;
   # Allow systemd-boot to manage EFI variables
@@ -94,6 +96,10 @@
     ]; # Reliable DNS
     enableIPv6 = true; # Keep IPv6 enabled
   };
+
+  # Do not block boot waiting for network; desktop can connect after login.
+  # Services that need network should depend on network-online.target explicitly.
+  systemd.services.NetworkManager-wait-online.enable = false;
 
   # ---------------------------------------------
   # Hardware Configuration
