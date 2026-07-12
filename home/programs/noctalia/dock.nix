@@ -6,7 +6,7 @@
       enabled = true;
       position = "bottom";
       auto_hide = true;
-      background_opacity = 0.9;
+      background_opacity = lib.mkForce 0.9;
       icon_size = 48;
       magnification = true;
       magnification_scale = 1.45;

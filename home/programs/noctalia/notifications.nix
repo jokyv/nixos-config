@@ -6,7 +6,6 @@
       enable_daemon = true;
       position = "top_right";
       layer = "top";
-      background_opacity = 1.0;
       scale = 1.0;
       offset_x = 20;
       offset_y = 8;
@@ -21,7 +20,6 @@
 
     osd = {
       position = "top_center";
-      background_opacity = 1.0;
       scale = 1.0;
       offset_x = 20;
       offset_y = 8;

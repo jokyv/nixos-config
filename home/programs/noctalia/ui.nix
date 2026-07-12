@@ -13,7 +13,7 @@
       corner_radius_scale = 0.2;
       time_format = "{:%I:%M %p}";
       date_format = "%A, %x";
-      font_family = "sans-serif";
+      font_family = lib.mkForce "sans-serif";
       telemetry_enabled = false;
       setup_wizard_enabled = false;
       disable_mipmaps = false;
@@ -48,12 +48,12 @@
     };
 
     theme = {
-      source = "builtin";
+      source = lib.mkForce "builtin";
       builtin = "Kanagawa";
-      mode = "dark";
+      mode = lib.mkForce "dark";
       wallpaper_scheme = "m3-content";
       community_palette = "";
-      custom_palette = "";
+      custom_palette = lib.mkForce "";
     };
 
     nightlight = {

@@ -37,7 +37,8 @@
     ];
 
     # FZF environment variables
-    fileWidgetCommand = "fd --type f --strip-cwd-prefix --hidden --follow --exclude .git";
-    changeDirWidgetCommand = "fd --type=d --hidden --strip-cwd-prefix --exclude .git . $HOME";
+    fileWidget.command = "fd --type f --strip-cwd-prefix --hidden --follow --exclude .git";
+    changeDirWidget.command = "fd --type=d --hidden --strip-cwd-prefix --exclude .git . $HOME";
+    historyWidget.command = "";
   };
 }

@@ -131,14 +131,6 @@ let
     }
     { argv = [ "xdg-desktop-portal" ]; }
     { argv = [ "noctalia" ]; }
-    {
-      argv = [
-        "footclient"
-        "sh"
-        "-c"
-        "cd ${home_dir}/nixos-config && git pull && echo 'Press Enter to close' && read"
-      ];
-    }
   ];
 
   # Keybindings organized by category
