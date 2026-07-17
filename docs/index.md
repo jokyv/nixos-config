@@ -48,10 +48,10 @@ just decode    # Decrypt secrets
 
 ### Machine Matrix
 
-| Host | User | Role | Notes |
-| --- | --- | --- | --- |
-| `nixos` | `jokyv` | main desktop | Niri + Home Manager |
-| `dora` | `dora` | GNOME family PC | system-only, no Home Manager |
+| Host    | User    | Role            | Notes                        |
+| ------- | ------- | --------------- | ---------------------------- |
+| `nixos` | `jokyv` | main desktop    | Niri + Home Manager          |
+| `dora`  | `dora`  | GNOME family PC | system-only, no Home Manager |
 
 ## Configuration Overview
 

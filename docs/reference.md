@@ -82,10 +82,10 @@ Each host configuration includes:
 
 ### Machine Matrix
 
-| Host | User | Role | Install output |
-| --- | --- | --- | --- |
-| `nixos` | `jokyv` | main desktop | `.#jokyv-install` |
-| `dora` | `dora` | GNOME family PC | `.#dora-install` |
+| Host    | User    | Role            | Install output    |
+| ------- | ------- | --------------- | ----------------- |
+| `nixos` | `jokyv` | main desktop    | `.#jokyv-install` |
+| `dora`  | `dora`  | GNOME family PC | `.#dora-install`  |
 
 ### Gaming Optimizations
 

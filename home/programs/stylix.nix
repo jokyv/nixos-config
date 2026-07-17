@@ -4,6 +4,8 @@ let
   base16SchemesPath = "${pkgs.base16-schemes}/share/themes/";
 in
 {
+  home.pointerCursor.enable = true;
+
   stylix = {
     enable = true;
     autoEnable = true;

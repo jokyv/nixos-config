@@ -1,6 +1,7 @@
 # Installation Guide
 
 This repo has 2 install paths:
+
 - `jokyv-install` for current machine
 - `dora-install` for dora machine
 
