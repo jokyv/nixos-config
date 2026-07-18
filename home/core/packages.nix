@@ -9,6 +9,7 @@
     just
     noto-fonts
     noto-fonts-color-emoji
+    pre-commit
     slurp
     swappy
     wl-clipboard
