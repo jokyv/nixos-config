@@ -13,53 +13,85 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = [
-    "nvme"
-    "xhci_pci"
-    "ahci"
-    "usb_storage"
-    "usbhid"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
+  boot = {
+    initrd.availableKernelModules = [
+      "nvme"
+      "xhci_pci"
+      "ahci"
+      "usb_storage"
+      "usbhid"
+      "sd_mod"
+    ];
+    initrd.kernelModules = [ ];
+    kernelModules = [ "kvm-amd" ];
 
-  boot.extraModulePackages = [ ];
+    extraModulePackages = [ ];
 
-  fileSystems."/" = lib.mkForce {
-    device = "/dev/disk/by-uuid/80fb4361-f167-4ef1-8701-56aa4a0d5e36";
-    fsType = "btrfs";
-    options = [ "subvol=@" "noatime" "compress-force=zstd:3" "ssd" "discard=async" ];
   };
 
-  fileSystems."/home" = lib.mkForce {
-    device = "/dev/disk/by-uuid/80fb4361-f167-4ef1-8701-56aa4a0d5e36";
-    fsType = "btrfs";
-    options = [ "subvol=@home" "noatime" "compress=zstd" ];
-  };
+  fileSystems = {
+    "/" = lib.mkForce {
+      device = "/dev/disk/by-uuid/80fb4361-f167-4ef1-8701-56aa4a0d5e36";
+      fsType = "btrfs";
+      options = [
+        "subvol=@"
+        "noatime"
+        "compress-force=zstd:3"
+        "ssd"
+        "discard=async"
+      ];
+    };
 
-  fileSystems."/nix" = lib.mkForce {
-    device = "/dev/disk/by-uuid/80fb4361-f167-4ef1-8701-56aa4a0d5e36";
-    fsType = "btrfs";
-    options = [ "subvol=@nix" "noatime" "compress-force=zstd:1" "nodatacow" ];
-  };
+    "/home" = lib.mkForce {
+      device = "/dev/disk/by-uuid/80fb4361-f167-4ef1-8701-56aa4a0d5e36";
+      fsType = "btrfs";
+      options = [
+        "subvol=@home"
+        "noatime"
+        "compress=zstd"
+      ];
+    };
 
-  fileSystems."/var" = lib.mkForce {
-    device = "/dev/disk/by-uuid/80fb4361-f167-4ef1-8701-56aa4a0d5e36";
-    fsType = "btrfs";
-    options = [ "subvol=@var" "noatime" "compress=zstd" ];
-  };
+    "/nix" = lib.mkForce {
+      device = "/dev/disk/by-uuid/80fb4361-f167-4ef1-8701-56aa4a0d5e36";
+      fsType = "btrfs";
+      options = [
+        "subvol=@nix"
+        "noatime"
+        "compress-force=zstd:1"
+        "nodatacow"
+      ];
+    };
 
-  fileSystems."/boot" = lib.mkForce {
-    device = "/dev/disk/by-uuid/8EC2-84E6";
-    fsType = "vfat";
-    options = [ "fmask=0077" "dmask=0077" ];
-  };
+    "/var" = lib.mkForce {
+      device = "/dev/disk/by-uuid/80fb4361-f167-4ef1-8701-56aa4a0d5e36";
+      fsType = "btrfs";
+      options = [
+        "subvol=@var"
+        "noatime"
+        "compress=zstd"
+      ];
+    };
 
-  # Add tmpfs for /tmp
-  fileSystems."/tmp" = lib.mkForce {
-    fsType = "tmpfs";
-    options = [ "defaults" "size=4G" "mode=1777" ];
+    "/boot" = lib.mkForce {
+      device = "/dev/disk/by-uuid/8EC2-84E6";
+      fsType = "vfat";
+      options = [
+        "fmask=0077"
+        "dmask=0077"
+      ];
+    };
+
+    # Add tmpfs for /tmp
+    "/tmp" = lib.mkForce {
+      fsType = "tmpfs";
+      options = [
+        "defaults"
+        "size=4G"
+        "mode=1777"
+      ];
+    };
+
   };
 
   # Swap is managed by disko with random encryption

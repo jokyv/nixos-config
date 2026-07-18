@@ -1,4 +1,9 @@
-{ inputs, hostModule, installConfigFile, ... }:
+{
+  inputs,
+  hostModule,
+  installConfigFile,
+  ...
+}:
 
 {
   imports = [

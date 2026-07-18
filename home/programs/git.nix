@@ -173,7 +173,7 @@
     ];
 
     signing = {
-      format = "openpgp";  # Keep legacy behavior for 24.05 stateVersion
+      format = "openpgp"; # Keep legacy behavior for 24.05 stateVersion
     };
   };
 }

@@ -24,55 +24,70 @@
   time.timeZone = "Asia/Singapore";
 
   # ---------------------------------------------
-  # Bootloader Configuration
+  # Bootloader and kernel configuration
   # ---------------------------------------------
-  # Use systemd-boot as the bootloader, alternatively use GRUB
-  boot.loader.systemd-boot.enable = true;
-  # Disable boot menu command-line editing for physical-access hardening.
-  boot.loader.systemd-boot.editor = false;
-  # Limit the number of previous generations to keep
-  boot.loader.systemd-boot.configurationLimit = 10;
-  # Allow systemd-boot to manage EFI variables
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    loader = {
+      systemd-boot = {
+        enable = true;
+        # Disable boot menu command-line editing for physical-access hardening.
+        editor = false;
+        # Limit the number of previous generations to keep
+        configurationLimit = 10;
+      };
+      # Allow systemd-boot to manage EFI variables
+      efi.canTouchEfiVariables = true;
+    };
 
-  # Performance kernel parameters
-  boot.kernelParams = [
-    "nowatchdog" # Disable watchdog timer - reduces interrupts
-    "split_lock_detect=off" # Improve performance on some workloads
-    # "mitigations=off" # Disable security mitigations for performance (NOT recommended for production)
-    # "preempt=full" # Full preemption for desktop responsiveness
-  ];
+    kernelParams = [
+      "nowatchdog" # Disable watchdog timer - reduces interrupts
+      "split_lock_detect=off" # Improve performance on some workloads
+      # "mitigations=off" # Disable security mitigations for performance (NOT recommended for production)
+      # "preempt=full" # Full preemption for desktop responsiveness
+    ];
 
-  # Performance-oriented sysctl (security hardening in security.nix)
-  boot.kernel.sysctl = {
-    "vm.max_map_count" = 2147483642; # Required for some games (Star Citizen, etc.)
-    "vm.swappiness" = 10; # Prefer RAM over swap
-    "kernel.sched_autogroup_enabled" = 1; # Better interactive task grouping
-    "vm.vfs_cache_pressure" = 50; # Controls tendency to reclaim VFS cache
-    "vm.dirty_bytes" = 268435456; # Start writeback at 256MB
-    "vm.dirty_background_bytes" = 67108864; # Background writeback at 64MB
-    "vm.dirty_writeback_centisecs" = 1500; # Writeback interval 15 seconds
-    "vm.transhuge" = "madvise"; # Transparent Huge Pages madvise mode
-    "net.ipv4.tcp_congestion_control" = "bbr"; # BBR TCP congestion control
-    "kernel.nmi_watchdog" = 0; # Disable NMI watchdog (hard lockup detector)
-    "kernel.unprivileged_userns_clone" = 1; # Allow unprivileged containers
-    "kernel.printk" = "3 3 3 3"; # Kernel printk settings
-    "net.core.netdev_max_backlog" = 4096; # Increase network device backlog
-    "fs.file-max" = 2097152; # Increase file handles and inode cache
+    # Performance-oriented sysctl (security hardening in security.nix)
+    kernel.sysctl = {
+      "vm.max_map_count" = 2147483642; # Required for some games (Star Citizen, etc.)
+      "vm.swappiness" = 10; # Prefer RAM over swap
+      "kernel.sched_autogroup_enabled" = 1; # Better interactive task grouping
+      "vm.vfs_cache_pressure" = 50; # Controls tendency to reclaim VFS cache
+      "vm.dirty_bytes" = 268435456; # Start writeback at 256MB
+      "vm.dirty_background_bytes" = 67108864; # Background writeback at 64MB
+      "vm.dirty_writeback_centisecs" = 1500; # Writeback interval 15 seconds
+      "vm.transhuge" = "madvise"; # Transparent Huge Pages madvise mode
+      "net.ipv4.tcp_congestion_control" = "bbr"; # BBR TCP congestion control
+      "kernel.nmi_watchdog" = 0; # Disable NMI watchdog (hard lockup detector)
+      "kernel.unprivileged_userns_clone" = 1; # Allow unprivileged containers
+      "kernel.printk" = "3 3 3 3"; # Kernel printk settings
+      "net.core.netdev_max_backlog" = 4096; # Increase network device backlog
+      "fs.file-max" = 2097152; # Increase file handles and inode cache
+    };
   };
 
   # ---------------------------------------------
   # Gaming Optimizations
   # ---------------------------------------------
-  programs.gamemode = {
-    enable = true;
-    settings = {
-      gamemode.start_reason = "GameMode activated";
-      gamemode.end_reason = "GameMode deactivated";
-      gamemode.enable_render_boost = true;
-      gamemode.enable_soft_realtime = true;
-      gamemode.io_rebalance_ioprio = true;
+  programs = {
+    gamemode = {
+      enable = true;
+      settings = {
+        gamemode = {
+          start_reason = "GameMode activated";
+          end_reason = "GameMode deactivated";
+          enable_render_boost = true;
+          enable_soft_realtime = true;
+          io_rebalance_ioprio = true;
+        };
+      };
     };
+
+    niri = {
+      enable = true;
+      package = pkgs.niri;
+    };
+
+    nix-ld.enable = true; # needs this for python uv
   };
 
   hardware.steam-hardware.enable = true;
@@ -104,36 +119,38 @@
   # ---------------------------------------------
   # Hardware Configuration
   # ---------------------------------------------
-  # update the CPU microcode for AMD processors
-  hardware.cpu.amd.updateMicrocode = true;
+  hardware = {
+    # update the CPU microcode for AMD processors
+    cpu.amd.updateMicrocode = true;
 
-  # Graphics support for Steam/games
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
+    # Graphics support for Steam/games
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
 
-  # Enable Bluetooth hardware support with security settings
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-    settings = {
-      General = {
-        # Enable profiles
-        Enable = "Source,Sink,Media,Socket";
-        # Security and privacy
-        DiscoverableTimeout = 180; # Stop being discoverable after 3 minutes
-        PairableTimeout = 0; # Stay pairable indefinitely
-        Privacy = "device"; # Use device mode for better privacy
-        ControllerMode = "dual"; # Support both BR/EDR and LE
-        # Experimental features
-        Experimental = true; # Enable experimental features if needed
-      };
-      Policy = {
-        AutoEnable = true; # Auto-enable when devices are connected
-        ReconnectAttempts = 7; # Number of reconnect attempts
-        ReconnectIntervals = "1, 2, 3"; # Intervals between attempts in seconds
-        # Class = "0x200414"; # Restrict to specific device class if desired
+    # Enable Bluetooth hardware support with security settings
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+      settings = {
+        General = {
+          # Enable profiles
+          Enable = "Source,Sink,Media,Socket";
+          # Security and privacy
+          DiscoverableTimeout = 180; # Stop being discoverable after 3 minutes
+          PairableTimeout = 0; # Stay pairable indefinitely
+          Privacy = "device"; # Use device mode for better privacy
+          ControllerMode = "dual"; # Support both BR/EDR and LE
+          # Experimental features
+          Experimental = true; # Enable experimental features if needed
+        };
+        Policy = {
+          AutoEnable = true; # Auto-enable when devices are connected
+          ReconnectAttempts = 7; # Number of reconnect attempts
+          ReconnectIntervals = "1, 2, 3"; # Intervals between attempts in seconds
+          # Class = "0x200414"; # Restrict to specific device class if desired
+        };
       };
     };
   };
@@ -141,10 +158,6 @@
   # ---------------------------------------------
   # System Programs
   # ---------------------------------------------
-  programs.niri.enable = true;
-  programs.niri.package = pkgs.niri;
-
-  programs.nix-ld.enable = true; # needs this for python uv
   # programs.nix-ld.libraries = with pkgs; [
   #   stdenv.cc.cc.lib # Required for most Rust/Python binaries
   #   zlib # Common dependency
@@ -261,10 +274,12 @@
   # ---------------------------------------------
   # Use ZRAM for compressed RAM-based swap. It's much faster than disk-based swap.
   # The system will use this first and only fall back to the disk swap partition if ZRAM fills up.
-  zramSwap.enable = true;
-  zramSwap.memoryPercent = 50; # Default is 50% already
-  zramSwap.algorithm = "zstd"; # Use zstd compression
-  zramSwap.priority = 100; # Higher priority than disk swap
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50; # Default is 50% already
+    algorithm = "zstd"; # Use zstd compression
+    priority = 100; # Higher priority than disk swap
+  };
 
   # ---------------------------------------------
   # System Version

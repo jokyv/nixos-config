@@ -1,4 +1,4 @@
-{ ... }:
+_:
 
 let
   newClaudeVersion = "2.1.92"; # Latest available as of 2026-04-04

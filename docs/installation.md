@@ -35,6 +35,23 @@ nixos-config/
 - `.#jokyv-install` → install `nixos` box / user `jokyv`
 - `.#dora-install` → install `dora` box / user `dora`
 
+## Naming policy
+
+- Host names: lowercase, short, stable names; use role-based names for shared machines and person-based names for personal machines.
+- User names: lowercase, stable login names; one primary user per personal host by default.
+- Install outputs: use the `<profile>-install` suffix. Profile names usually mirror host names but may differ.
+- Host and user names may differ. Example: host `nixos` uses user `jokyv`.
+- Keep install output names stable; they are flake targets used by installation commands.
+
+Current mapping:
+
+| Runtime host | Primary user | Install output | Notes |
+| --- | --- | --- | --- |
+| `nixos` | `jokyv` | `jokyv-install` | Current profile name differs from hostname. |
+| `dora` | `dora` | `dora-install` | Profile name matches hostname. |
+
+New host example: host `lab` with user `jokyv` can use install output `lab-install`.
+
 ## Install flow
 
 1. Clone repo

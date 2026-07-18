@@ -213,6 +213,8 @@ dev: fmt test dry
 # Perform a quick security audit of the flake without building anything
 [group('dev')]
 audit:
+    nix develop --command deadnix --fail .
+    nix develop --command statix check
     nix flake check --no-build --no-eval-cache
 
 # Display detailed system information including Nix version and platform details

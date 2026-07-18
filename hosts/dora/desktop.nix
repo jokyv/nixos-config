@@ -1,41 +1,45 @@
 { pkgs, ... }:
 
 {
-  # GNOME desktop
-  services.xserver.enable = true;
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
-  services.gnome.gnome-keyring.enable = true;
+  services = {
+    # GNOME desktop
+    xserver.enable = true;
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+    gnome.gnome-keyring.enable = true;
+
+    # Desktop plumbing
+    dbus = {
+      enable = true;
+      implementation = "broker";
+    };
+
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
+      wireplumber.enable = true;
+    };
+
+    fwupd.enable = true;
+    fstrim.enable = true;
+    blueman.enable = true;
+  };
+
   programs.dconf.enable = true;
 
-  # Desktop plumbing
-  services.dbus = {
-    enable = true;
-    implementation = "broker";
-  };
-
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-    wireplumber.enable = true;
-  };
-
-  services.fwupd.enable = true;
-  services.fstrim.enable = true;
-  services.blueman.enable = true;
-  hardware.enableRedistributableFirmware = true;
-
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
-
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
+  hardware = {
+    enableRedistributableFirmware = true;
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
   };
 
   xdg.portal = {

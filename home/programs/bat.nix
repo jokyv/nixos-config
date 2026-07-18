@@ -1,4 +1,4 @@
-{ ... }:
+_:
 
 {
   # Set MANPAGER to use bat for viewing man pages with color.

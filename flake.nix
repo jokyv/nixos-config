@@ -109,57 +109,74 @@
     {
       formatter.${system} = pkgs.nixfmt;
 
+      devShells.${system}.default = pkgs.mkShell {
+        packages = with pkgs; [
+          just
+          deadnix
+          statix
+          nix-diff
+          nix-index
+          nix-prefetch-git
+          nixfmt
+          nix-output-monitor
+          nil
+        ];
+      };
+
       # NixOS system configuration
       # here you can create different configurations with different host names for different machines
       # -----------------------------------------------------
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        inherit system; # this is equal to system = system;
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/jokyv/default.nix # aka configuration.nix file
-          ./hosts/jokyv/hardware-configuration.nix
-          nixos-hardware.nixosModules.common-cpu-amd-pstate
-          # stylix.nixosModules.stylix
-          # home-manager.nixosModules.home-manager
-          # {
-          #   home-manager.useGlobalPkgs = true;
-          #   home-manager.useUserPackages = true;
-          #   home-manager.users.jokyv = import ./home/default.nix;
-          # }
-        ];
-      };
-
-      nixosConfigurations.dora = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./hosts/dora/default.nix
-          ./hosts/dora/hardware-configuration.nix
-        ];
-      };
-
-      nixosConfigurations."jokyv-install" = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs;
-          hostModule = ./hosts/jokyv/default.nix;
-          installConfigFile = ./install/jokyv.nix;
+      nixosConfigurations = {
+        nixos = nixpkgs.lib.nixosSystem {
+          inherit system; # this is equal to system = system;
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/jokyv/default.nix # aka configuration.nix file
+            ./hosts/jokyv/hardware-configuration.nix
+            nixos-hardware.nixosModules.common-cpu-amd-pstate
+            # stylix.nixosModules.stylix
+            # home-manager.nixosModules.home-manager
+            # {
+            #   home-manager.useGlobalPkgs = true;
+            #   home-manager.useUserPackages = true;
+            #   home-manager.users.jokyv = import ./home/default.nix;
+            # }
+          ];
         };
-        modules = [
-          ./install/default.nix
-        ];
-      };
 
-      nixosConfigurations."dora-install" = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs;
-          hostModule = ./hosts/dora/default.nix;
-          installConfigFile = ./install/dora.nix;
+        dora = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [
+            ./hosts/dora/default.nix
+            ./hosts/dora/hardware-configuration.nix
+          ];
         };
-        modules = [
-          ./install/default.nix
-        ];
+
+        "jokyv-install" = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            hostModule = ./hosts/jokyv/default.nix;
+            installConfigFile = ./install/jokyv.nix;
+          };
+          modules = [
+            ./install/default.nix
+          ];
+        };
+
+        "dora-install" = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit inputs;
+            hostModule = ./hosts/dora/default.nix;
+            installConfigFile = ./install/dora.nix;
+          };
+          modules = [
+            ./install/default.nix
+          ];
+        };
+
       };
 
       # Home Manager configuration (standalone)

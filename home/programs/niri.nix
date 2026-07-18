@@ -459,170 +459,172 @@ let
 
 in
 {
-  programs.niri.enable = true;
-  programs.niri.package = pkgs.niri;
+  programs.niri = {
+    enable = true;
+    package = pkgs.niri;
 
-  programs.niri.settings = {
-    cursor = {
-      hide-when-typing = true;
-      hide-after-inactive-ms = 1000;
-    };
-    hotkey-overlay.skip-at-startup = true;
-    hotkey-overlay.hide-not-bound = true;
-    prefer-no-csd = true;
-    debug = {
-      deactivate-unfocused-windows = true;
-    };
-    screenshot-path = "${screenshots_dir}/screenshot from %Y-%m-%d %H-%M-%S.png";
-
-    # overview settings
-    overview = {
-      backdrop-color = "#777777";
-      zoom = 0.40;
-      workspace-shadow = {
-        softness = 40;
-        spread = 10;
-        offset = {
-          x = 0;
-          y = 10;
-        };
-        color = "#00000070";
+    settings = {
+      cursor = {
+        hide-when-typing = true;
+        hide-after-inactive-ms = 1000;
       };
-    };
-    # HM module 25.11 lacks layer background-effects / blur.
-    layer-rules = [ ];
+      hotkey-overlay.skip-at-startup = true;
+      hotkey-overlay.hide-not-bound = true;
+      prefer-no-csd = true;
+      debug = {
+        deactivate-unfocused-windows = true;
+      };
+      screenshot-path = "${screenshots_dir}/screenshot from %Y-%m-%d %H-%M-%S.png";
 
-    #  layer-rules = {
-    #   swww-wallpaper = {
-    #     match.namespace = "swww-daemon";
-    #     place-within-backdrop = true;
-    #   };
-    # };
+      # overview settings
+      overview = {
+        backdrop-color = "#777777";
+        zoom = 0.40;
+        workspace-shadow = {
+          softness = 40;
+          spread = 10;
+          offset = {
+            x = 0;
+            y = 10;
+          };
+          color = "#00000070";
+        };
+      };
+      # HM module 25.11 lacks layer background-effects / blur.
+      layer-rules = [ ];
 
-    # Animation configurations for smoother visuals
-    animations = {
-      window-open = {
-        kind = {
-          spring = {
-            damping-ratio = 0.6;
-            stiffness = 1000;
-            epsilon = 0.001;
+      #  layer-rules = {
+      #   swww-wallpaper = {
+      #     match.namespace = "swww-daemon";
+      #     place-within-backdrop = true;
+      #   };
+      # };
+
+      # Animation configurations for smoother visuals
+      animations = {
+        window-open = {
+          kind = {
+            spring = {
+              damping-ratio = 0.6;
+              stiffness = 1000;
+              epsilon = 0.001;
+            };
           };
         };
-      };
-      window-close = {
-        kind = {
-          spring = {
-            damping-ratio = 0.6;
-            stiffness = 1000;
-            epsilon = 0.001;
+        window-close = {
+          kind = {
+            spring = {
+              damping-ratio = 0.6;
+              stiffness = 1000;
+              epsilon = 0.001;
+            };
           };
         };
-      };
 
-      # Workspace switch animations
-      workspace-switch = {
-        kind = {
-          spring = {
-            damping-ratio = 0.6;
-            stiffness = 800;
-            epsilon = 0.001;
+        # Workspace switch animations
+        workspace-switch = {
+          kind = {
+            spring = {
+              damping-ratio = 0.6;
+              stiffness = 800;
+              epsilon = 0.001;
+            };
           };
         };
-      };
 
-      # window resize animations
-      window-resize = {
-        kind = {
-          spring = {
-            damping-ratio = 0.7;
-            stiffness = 600;
-            epsilon = 0.001;
+        # window resize animations
+        window-resize = {
+          kind = {
+            spring = {
+              damping-ratio = 0.7;
+              stiffness = 600;
+              epsilon = 0.001;
+            };
           };
         };
-      };
 
-      config-notification-open-close = {
-        kind = {
-          spring = {
-            damping-ratio = 0.6;
-            stiffness = 1000;
-            epsilon = 0.001;
+        config-notification-open-close = {
+          kind = {
+            spring = {
+              damping-ratio = 0.6;
+              stiffness = 1000;
+              epsilon = 0.001;
+            };
           };
         };
+
       };
 
-    };
-
-    input = {
-      warp-mouse-to-focus.enable = true;
-      # focus-follows-mouse.enable = true;
-      workspace-auto-back-and-forth = true;
-      keyboard = {
-        xkb = {
-          layout = "us, gr"; # US and Greek layouts
-          model = "pc105";
-          options = "grp:alt_ctrl_shift_toggle";
+      input = {
+        warp-mouse-to-focus.enable = true;
+        # focus-follows-mouse.enable = true;
+        workspace-auto-back-and-forth = true;
+        keyboard = {
+          xkb = {
+            layout = "us, gr"; # US and Greek layouts
+            model = "pc105";
+            options = "grp:alt_ctrl_shift_toggle";
+          };
+        };
+        mouse = {
+          # off = false;
+          # natural-scroll = false;
+          # accel-speed = 0.2;
+          # accel-profile = "flat";
+          # scroll-method = "no-scroll";
         };
       };
-      mouse = {
-        # off = false;
-        # natural-scroll = false;
-        # accel-speed = 0.2;
-        # accel-profile = "flat";
-        # scroll-method = "no-scroll";
+
+      # Use 'inherit' when variable name matches setting name exactly
+      inherit outputs;
+
+      # Workspace configuration
+      workspaces = {
+        "1" = { };
+        "2" = { };
+        "3" = { };
+        "4" = { };
+
+        # Enable workspace wrapping (when you go past the last workspace, wrap to first)
+        # wrap-around = true;
+
+        # Number of workspaces (default is 10, but you can customize)
+        # count = 10;
       };
+
+      # Enhanced layout settings
+      layout = {
+        gaps = 15;
+        center-focused-column = "never";
+        always-center-single-column = true;
+        shadow = {
+          enable = true;
+        };
+
+        preset-column-widths = [
+          { proportion = 1.0 / 2.0; }
+          { proportion = 3.0 / 3.0; }
+        ];
+
+        default-column-width = {
+          proportion = 1.0 / 2.0;
+        };
+
+        struts = {
+          top = 15;
+          bottom = 15;
+          left = 15;
+          right = 15;
+        };
+      };
+
+      spawn-at-startup = startup_apps;
+
+      binds = keybinds;
+
+      # Use explicit assignment when variable name differs from setting name
+      # for this save check `-` vs `_`
+      window-rules = window_rules;
     };
-
-    # Use 'inherit' when variable name matches setting name exactly
-    inherit outputs;
-
-    # Workspace configuration
-    workspaces = {
-      "1" = { };
-      "2" = { };
-      "3" = { };
-      "4" = { };
-
-      # Enable workspace wrapping (when you go past the last workspace, wrap to first)
-      # wrap-around = true;
-
-      # Number of workspaces (default is 10, but you can customize)
-      # count = 10;
-    };
-
-    # Enhanced layout settings
-    layout = {
-      gaps = 15;
-      center-focused-column = "never";
-      always-center-single-column = true;
-      shadow = {
-        enable = true;
-      };
-
-      preset-column-widths = [
-        { proportion = 1.0 / 2.0; }
-        { proportion = 3.0 / 3.0; }
-      ];
-
-      default-column-width = {
-        proportion = 1.0 / 2.0;
-      };
-
-      struts = {
-        top = 15;
-        bottom = 15;
-        left = 15;
-        right = 15;
-      };
-    };
-
-    spawn-at-startup = startup_apps;
-
-    binds = keybinds;
-
-    # Use explicit assignment when variable name differs from setting name
-    # for this save check `-` vs `_`
-    window-rules = window_rules;
   };
 }

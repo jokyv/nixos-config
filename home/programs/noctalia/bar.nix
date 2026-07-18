@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   programs.noctalia.settings = {
     bar = {
       order = [ "widgets" ];
@@ -55,75 +54,77 @@
     };
 
     # Widget configurations
-    widget.active_window = {
-      type = "active_window";
-      icon_size = 14.0;
-      max_length = 180.0;
-      min_length = 80.0;
-      title_scroll = "none";
-    };
+    widget = {
+      active_window = {
+        type = "active_window";
+        icon_size = 14.0;
+        max_length = 180.0;
+        min_length = 80.0;
+        title_scroll = "none";
+      };
 
-    widget.spacer = {
-      type = "spacer";
-    };
+      spacer = {
+        type = "spacer";
+      };
 
-    widget.output_volume = {
-      type = "volume";
-      device = "output";
-    };
+      output_volume = {
+        type = "volume";
+        device = "output";
+      };
 
-    widget.keyboard_layout = {
-      type = "keyboard_layout";
-      cycle_command = "";
-      hide_when_single_layout = false;
-    };
+      keyboard_layout = {
+        type = "keyboard_layout";
+        cycle_command = "";
+        hide_when_single_layout = false;
+      };
 
-    widget.lock_keys = {
-      type = "lock_keys";
-      display = "short";
-      hide_when_off = false;
-      show_caps_lock = true;
-      show_num_lock = true;
-      show_scroll_lock = false;
-    };
+      lock_keys = {
+        type = "lock_keys";
+        display = "short";
+        hide_when_off = false;
+        show_caps_lock = true;
+        show_num_lock = true;
+        show_scroll_lock = false;
+      };
 
-    widget.media = {
-      type = "media";
-      art_size = 16.0;
-      max_length = 220.0;
-      min_length = 80.0;
-      title_scroll = "none";
-    };
+      media = {
+        type = "media";
+        art_size = 16.0;
+        max_length = 220.0;
+        min_length = 80.0;
+        title_scroll = "none";
+      };
 
-    widget.date = {
-      type = "clock";
-      format = "{:%H:%M · %a %d %b}";
-    };
+      date = {
+        type = "clock";
+        format = "{:%H:%M · %a %d %b}";
+      };
 
-    # System monitor — separate widgets for cpu, temp, ram, network
-    widget.temp = {
-      type = "sysmon";
-      stat = "cpu_temp";
-    };
+      # System monitor — separate widgets for cpu, temp, ram, network
+      temp = {
+        type = "sysmon";
+        stat = "cpu_temp";
+      };
 
-    widget.cpu = {
-      type = "sysmon";
-      stat = "cpu_usage";
-    };
+      cpu = {
+        type = "sysmon";
+        stat = "cpu_usage";
+      };
 
-    widget.ram = {
-      type = "sysmon";
-      # stat = "ram_used";
-    };
+      ram = {
+        type = "sysmon";
+        # stat = "ram_used";
+      };
 
-    widget.network_rx = {
-      type = "sysmon";
-      stat = "net_rx";
-    };
+      network_rx = {
+        type = "sysmon";
+        stat = "net_rx";
+      };
 
-    widget.network_tx = {
-      type = "sysmon";
-      stat = "net_tx";
+      network_tx = {
+        type = "sysmon";
+        stat = "net_tx";
+      };
     };
   };
 }

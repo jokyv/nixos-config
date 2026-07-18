@@ -191,6 +191,42 @@ The project includes a justfile for common tasks:
 - `just cleanup`: Smart cleanup (keep 3 generations)
 - `just encode`: Encrypt secrets
 - `just decode`: Decrypt secrets
+- `just audit`: Run flake, dead-code, and Nix lint checks
+
+## Repository Development Shell
+
+Enter repo-scoped maintenance tools with:
+
+```bash
+nix develop
+```
+
+Available tools:
+
+- `nixfmt`: Format Nix files
+- `nixd`: Nix language server used by Helix (installed through Home Manager)
+- `deadnix`: Find unused Nix declarations
+- `statix`: Check Nix style and suggestions
+- `nix-diff`: Compare derivations
+- `nix-index`: Search package contents
+- `nix-prefetch-git`: Prefetch Git sources and hashes
+- `nix-output-monitor` (`nom`): Improve Nix build output
+- `just`: Run repository tasks
+
+One-shot usage works without entering an interactive shell:
+
+```bash
+nix develop --command deadnix --fail .
+nix develop --command statix check
+```
+
+Fix commands modify files. Review changes before continuing:
+
+```bash
+nix develop --command deadnix --edit .
+nix develop --command statix fix .
+git diff
+```
 
 ## Secrets Management
 
@@ -202,11 +238,26 @@ The configuration uses sops-nix for encrypted secrets:
 
 ## Development Workflow
 
-1. Make configuration changes
-2. Test locally: `nix flake check`
-3. Apply changes: `just switch` or `just home`
-4. Commit changes with semantic commit messages
-5. Update changelog for significant changes
+1. Make one small configuration change in Helix.
+2. Save; Helix runs `nixfmt` automatically for Nix files. `nixd` reports editor diagnostics.
+3. Run targeted static checks:
+
+   ```bash
+   nix develop --command deadnix --fail .
+   nix develop --command statix check
+   ```
+
+4. Review or fix findings. Do not run auto-fixes blindly across the repository.
+5. Run the flake check:
+
+   ```bash
+   nix flake check --no-build
+   ```
+
+6. Apply only after checks pass: `just switch` or `just home`. `just audit` runs the same static checks as one command; it currently reports existing repository lint debt that must be fixed incrementally.
+7. If system activation fails, inspect the exact failed unit before retrying.
+8. Review `git diff`, then commit with semantic commit message.
+9. Update changelog for significant changes.
 
 ## Troubleshooting
 

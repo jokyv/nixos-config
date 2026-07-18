@@ -108,57 +108,57 @@
 { pkgs, ... }:
 
 {
-  # System services
-  services.fwupd.enable = true;
-  services.fstrim.enable = true;
+  services = {
+    # System services
+    fwupd.enable = true;
+    fstrim.enable = true;
 
-  # Bluetooth
-  services.blueman.enable = true;
+    # Bluetooth
+    blueman.enable = true;
 
-  # Secret Service for WM sessions (Niri)
-  services.gnome.gnome-keyring.enable = true;
+    # Secret Service for WM sessions (Niri)
+    gnome.gnome-keyring.enable = true;
 
-  # Firmware (keep this)
-  hardware.enableRedistributableFirmware = true;
+    # Audio (clean PipeWire setup)
+    pipewire = {
+      enable = true;
 
-  # Audio (clean PipeWire setup)
-  services.pipewire = {
-    enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
 
-    alsa.enable = true;
-    alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
 
-    pulse.enable = true;
-    jack.enable = true;
+      wireplumber.enable = true;
+      wireplumber.extraConfig."10-bluez-disable-aac" = {
+        "monitor.bluez.properties" = {
+          "bluez5.codecs" = [
+            "sbc_xq"
+            "sbc"
+            "aptx"
+            "aptx_hd"
+            "ldac"
+            "faststream"
+            "g722"
+            "opus"
+            "lc3"
+          ];
+        };
+      };
+    };
 
-    wireplumber.enable = true;
-  };
+    # Login
+    getty.autologinUser = "jokyv";
 
-  # (Optional) Bluetooth codec tweak — keep only if you actually use BT headphones
-  services.pipewire.wireplumber.extraConfig."10-bluez-disable-aac" = {
-    "monitor.bluez.properties" = {
-      "bluez5.codecs" = [
-        "sbc_xq"
-        "sbc"
-        "aptx"
-        "aptx_hd"
-        "ldac"
-        "faststream"
-        "g722"
-        "opus"
-        "lc3"
-      ];
+    # DBus
+    dbus = {
+      enable = true;
+      implementation = "broker";
     };
   };
 
-  # Login
-  services.getty.autologinUser = "jokyv";
-
-  # DBus
-  services.dbus = {
-    enable = true;
-    implementation = "broker";
-  };
+  # Firmware (keep this)
+  hardware.enableRedistributableFirmware = true;
 
   # Portals
   xdg.portal = {

@@ -1,4 +1,10 @@
-{ config, inputs, pkgs, primaryUser ? "jokyv", ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  primaryUser ? "jokyv",
+  ...
+}:
 
 let
   repoDir = "/home/${primaryUser}/nixos-config";
@@ -67,31 +73,33 @@ in
     package = pkgs.nixVersions.stable;
   };
 
-  systemd.services.prefetch-system-closure = {
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      User = primaryUser;
-      ExecStart = "${prefetchSystem}/bin/prefetch-system-closure";
+  systemd = {
+    services.prefetch-system-closure = {
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        User = primaryUser;
+        ExecStart = "${prefetchSystem}/bin/prefetch-system-closure";
+      };
     };
-  };
 
-  systemd.timers.prefetch-system-closure = {
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnBootSec = "5m";
-      OnUnitActiveSec = "6h";
-      Persistent = true;
-      RandomizedDelaySec = "15m";
+    timers.prefetch-system-closure = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "5m";
+        OnUnitActiveSec = "6h";
+        Persistent = true;
+        RandomizedDelaySec = "15m";
+      };
     };
-  };
 
-  systemd.paths.prefetch-system-closure = {
-    wantedBy = [ "paths.target" ];
-    pathConfig = {
-      PathChanged = "${repoDir}/flake.lock";
-      Unit = "prefetch-system-closure.service";
+    paths.prefetch-system-closure = {
+      wantedBy = [ "paths.target" ];
+      pathConfig = {
+        PathChanged = "${repoDir}/flake.lock";
+        Unit = "prefetch-system-closure.service";
+      };
     };
   };
 

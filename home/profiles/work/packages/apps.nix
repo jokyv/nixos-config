@@ -1,7 +1,8 @@
 { pkgs, pkgs-stable, ... }:
 
 {
-  home.packages = with pkgs;
+  home.packages =
+    with pkgs;
     [
       # GUI Applications
       discord

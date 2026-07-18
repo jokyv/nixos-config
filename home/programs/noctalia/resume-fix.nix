@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   # Restart Noctalia after system resume to fix stale IPC socket.
@@ -10,7 +15,10 @@
   systemd.user.services.noctalia-resume = {
     Unit = {
       Description = "Restart Noctalia after resume";
-      After = [ "suspend.target" "hibernate.target" ];
+      After = [
+        "suspend.target"
+        "hibernate.target"
+      ];
     };
     Service = {
       Type = "oneshot";
@@ -19,7 +27,10 @@
       # automatically after we kill the stale process.
     };
     Install = {
-      WantedBy = [ "suspend.target" "hibernate.target" ];
+      WantedBy = [
+        "suspend.target"
+        "hibernate.target"
+      ];
     };
   };
 }

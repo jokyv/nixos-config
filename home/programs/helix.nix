@@ -6,9 +6,13 @@
     settings = {
       editor = {
         # auto-save = true;
-        auto-save.focus-lost = true;
-        auto-save.after-delay.enable = true;
-        auto-save.after-delay.timeout = 30000;
+        auto-save = {
+          focus-lost = true;
+          after-delay = {
+            enable = true;
+            timeout = 30000;
+          };
+        };
 
         bufferline = "multiple";
         cursorline = true;

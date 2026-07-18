@@ -31,31 +31,33 @@
   # ---------------------------------------------
   # Kernel security hardening (sysctl)
   # ---------------------------------------------
-  boot.kernel.sysctl."kernel.kptr_restrict" = 2; # Hide kernel pointers from /proc
-  boot.kernel.sysctl."dev.tty.ldisc_autoload" = 0; # Prevent loading TTY line disciplines (security hardening)
-  boot.kernel.sysctl."fs.suid_dumpable" = 0; # Restrict core dumps (0 = false)
-  boot.kernel.sysctl."fs.protected_fifos" = 2; # Protect FIFOs
-  boot.kernel.sysctl."fs.protected_regular" = 2; # Protect regular files
-  boot.kernel.sysctl."fs.protected_hardlinks" = 1; # Disallow following hardlinks outside current filesystem
-  boot.kernel.sysctl."fs.protected_symlinks" = 1; # Disallow following symlinks outside current filesystem
-  boot.kernel.sysctl."kernel.sysrq" = false; # Disable Magic SysRq key (security precaution)
-  boot.kernel.sysctl."kernel.unprivileged_bpf_disabled" = true; # Disallow unprivileged BPF (prevents BPF-based attacks)
-  boot.kernel.sysctl."kernel.dmesg_restrict" = 1; # Restrict dmesg to privileged users (prevents information leakage)
-  boot.kernel.sysctl."kernel.core_uses_pid" = 1; # Include PID in core dump filename for better tracking
-  boot.kernel.sysctl."kernel.ctrl-alt-del" = 0; # Disable Ctrl+Alt+Del reboot (prevent accidental reboots)
-  boot.kernel.sysctl."net.core.bpf_jit_harden" = 2; # Enable BPF JIT hardening (anti-ROP/JIT spraying)
-  boot.kernel.sysctl."net.ipv4.conf.all.accept_redirects" = false; # Disable ICMP redirects (prevent MITM)
-  boot.kernel.sysctl."net.ipv6.conf.all.accept_redirects" = false; # Disable IPv6 ICMP redirects
-  boot.kernel.sysctl."net.ipv4.conf.default.accept_redirects" = false; # Disable default ICMP redirects
-  boot.kernel.sysctl."net.ipv6.conf.default.accept_redirects" = false; # Disable default IPv6 ICMP redirects
-  boot.kernel.sysctl."net.ipv4.conf.all.log_martians" = true; # Log suspicious packets (martians) for detection
-  boot.kernel.sysctl."net.ipv6.conf.all.log_martians" = true; # Log IPv6 suspicious packets
-  boot.kernel.sysctl."net.ipv4.conf.default.log_martians" = true; # Log martians by default
-  boot.kernel.sysctl."net.ipv6.conf.default.log_martians" = true; # Log IPv6 martians by default
-  boot.kernel.sysctl."net.ipv4.conf.all.rp_filter" = true; # Enable source path validation (anti-spoofing)
-  boot.kernel.sysctl."net.ipv6.conf.all.rp_filter" = true; # Enable IPv6 source path validation
-  boot.kernel.sysctl."net.ipv4.conf.all.send_redirects" = false; # Prevent sending ICMP redirects (avoid network attacks)
-  boot.kernel.sysctl."net.ipv6.conf.all.send_redirects" = false; # Prevent sending IPv6 ICMP redirects
+  boot.kernel.sysctl = {
+    "kernel.kptr_restrict" = 2; # Hide kernel pointers from /proc
+    "dev.tty.ldisc_autoload" = 0; # Prevent loading TTY line disciplines (security hardening)
+    "fs.suid_dumpable" = 0; # Restrict core dumps (0 = false)
+    "fs.protected_fifos" = 2; # Protect FIFOs
+    "fs.protected_regular" = 2; # Protect regular files
+    "fs.protected_hardlinks" = 1; # Disallow following hardlinks outside current filesystem
+    "fs.protected_symlinks" = 1; # Disallow following symlinks outside current filesystem
+    "kernel.sysrq" = false; # Disable Magic SysRq key (security precaution)
+    "kernel.unprivileged_bpf_disabled" = true; # Disallow unprivileged BPF (prevents BPF-based attacks)
+    "kernel.dmesg_restrict" = 1; # Restrict dmesg to privileged users (prevents information leakage)
+    "kernel.core_uses_pid" = 1; # Include PID in core dump filename for better tracking
+    "kernel.ctrl-alt-del" = 0; # Disable Ctrl+Alt+Del reboot (prevent accidental reboots)
+    "net.core.bpf_jit_harden" = 2; # Enable BPF JIT hardening (anti-ROP/JIT spraying)
+    "net.ipv4.conf.all.accept_redirects" = false; # Disable ICMP redirects (prevent MITM)
+    "net.ipv6.conf.all.accept_redirects" = false; # Disable IPv6 ICMP redirects
+    "net.ipv4.conf.default.accept_redirects" = false; # Disable default ICMP redirects
+    "net.ipv6.conf.default.accept_redirects" = false; # Disable default IPv6 ICMP redirects
+    "net.ipv4.conf.all.log_martians" = true; # Log suspicious packets (martians) for detection
+    "net.ipv6.conf.all.log_martians" = true; # Log IPv6 suspicious packets
+    "net.ipv4.conf.default.log_martians" = true; # Log martians by default
+    "net.ipv6.conf.default.log_martians" = true; # Log IPv6 martians by default
+    "net.ipv4.conf.all.rp_filter" = true; # Enable source path validation (anti-spoofing)
+    "net.ipv6.conf.all.rp_filter" = true; # Enable IPv6 source path validation
+    "net.ipv4.conf.all.send_redirects" = false; # Prevent sending ICMP redirects (avoid network attacks)
+    "net.ipv6.conf.all.send_redirects" = false; # Prevent sending IPv6 ICMP redirects
+  };
 
   # ---------------------------------------------
   # Network security settings
@@ -132,30 +134,6 @@
 
   # Weekly vulnerability audit for the current system closure.
   # Reports are stored in /var/log/audit-reports; inspect with `just vulnix-report`.
-  systemd.tmpfiles.rules = [
-    "d /var/log/audit-reports 0750 root root - -"
-  ];
-
-  systemd.services.vulnix-audit = {
-    description = "Run Vulnix system vulnerability audit";
-    serviceConfig.Type = "oneshot";
-    environment.LANG = "C.UTF-8";
-    script = ''
-      report="/var/log/audit-reports/vulnix-$(date +%s).json"
-      ${pkgs.vulnix}/bin/vulnix --system --json > "$report" || true
-      ln -sfn "$report" /var/log/audit-reports/vulnix-latest.json
-    '';
-  };
-
-  systemd.timers.vulnix-audit = {
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "weekly";
-      Persistent = true;
-      RandomizedDelaySec = "1h";
-    };
-  };
-
   # ---------------------------------------------
   # Kernel security settings
   # ---------------------------------------------
@@ -168,44 +146,71 @@
     "tipc"
   ];
 
-  # ---------------------------------------------
-  # Systemd security settings
-  # ---------------------------------------------
-  systemd.services.systemd-rfkill = {
-    serviceConfig = {
-      ProtectSystem = "strict";
-      ProtectHome = true;
-      ProtectKernelTunables = true;
-      ProtectKernelModules = true;
-      ProtectControlGroups = true;
-      ProtectClock = true;
-      ProtectProc = "invisible";
-      ProcSubset = "pid";
-      PrivateTmp = true;
-      MemoryDenyWriteExecute = true;
-      NoNewPrivileges = true;
-      LockPersonality = true;
-      RestrictRealtime = true;
-      SystemCallArchitectures = "native";
-      UMask = "0077";
-      IPAddressDeny = "any";
-    };
-  };
+  systemd = {
+    tmpfiles.rules = [
+      "d /var/log/audit-reports 0750 root root - -"
+    ];
 
-  systemd.services.systemd-journald = {
-    serviceConfig = {
-      UMask = "0077";
-      PrivateNetwork = true;
-      ProtectHostname = true;
-      ProtectKernelModules = true;
-    };
-  };
+    services = {
+      vulnix-audit = {
+        description = "Run Vulnix system vulnerability audit";
+        serviceConfig.Type = "oneshot";
+        environment.LANG = "C.UTF-8";
+        script = ''
+          report="/var/log/audit-reports/vulnix-$(date +%s).json"
+          ${pkgs.vulnix}/bin/vulnix --system --json > "$report" || true
+          ln -sfn "$report" /var/log/audit-reports/vulnix-latest.json
+        '';
+      };
 
-  systemd.timers.clamav-freshclam = {
-    timerConfig = {
-      OnCalendar = lib.mkForce "daily";
-      Persistent = lib.mkForce true;
-      RandomizedDelaySec = lib.mkForce "1h";
+      systemd-rfkill = {
+        serviceConfig = {
+          ProtectSystem = "strict";
+          ProtectHome = true;
+          ProtectKernelTunables = true;
+          ProtectKernelModules = true;
+          ProtectControlGroups = true;
+          ProtectClock = true;
+          ProtectProc = "invisible";
+          ProcSubset = "pid";
+          PrivateTmp = true;
+          MemoryDenyWriteExecute = true;
+          NoNewPrivileges = true;
+          LockPersonality = true;
+          RestrictRealtime = true;
+          SystemCallArchitectures = "native";
+          UMask = "0077";
+          IPAddressDeny = "any";
+        };
+      };
+
+      systemd-journald = {
+        serviceConfig = {
+          UMask = "0077";
+          PrivateNetwork = true;
+          ProtectHostname = true;
+          ProtectKernelModules = true;
+        };
+      };
+    };
+
+    timers = {
+      vulnix-audit = {
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnCalendar = "weekly";
+          Persistent = true;
+          RandomizedDelaySec = "1h";
+        };
+      };
+
+      clamav-freshclam = {
+        timerConfig = {
+          OnCalendar = lib.mkForce "daily";
+          Persistent = lib.mkForce true;
+          RandomizedDelaySec = "1h";
+        };
+      };
     };
   };
 

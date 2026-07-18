@@ -1,9 +1,18 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
   programs.noctalia.settings = {
     idle = {
-      behavior_order = [ "screen-off" "lock" "lock-and-suspend" ];
+      behavior_order = [
+        "screen-off"
+        "lock"
+        "lock-and-suspend"
+      ];
       pre_action_fade_seconds = 3.0;
 
       behavior = {
