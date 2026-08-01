@@ -490,16 +490,6 @@ in
           color = "#00000070";
         };
       };
-      # HM module 25.11 lacks layer background-effects / blur.
-      layer-rules = [ ];
-
-      #  layer-rules = {
-      #   swww-wallpaper = {
-      #     match.namespace = "swww-daemon";
-      #     place-within-backdrop = true;
-      #   };
-      # };
-
       # Animation configurations for smoother visuals
       animations = {
         window-open = {

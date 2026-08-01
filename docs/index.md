@@ -42,6 +42,8 @@ just decode    # Decrypt secrets
 ### Core Guides
 
 - **[Installation Guide](installation.md)** - Complete setup instructions
+- **[Recovery Guide](recovery.md)** - Recovery media and current-host recovery procedure
+- **[Security Baseline](security.md)** - Threat model, hardware compatibility, and security rollout
 - **[Configuration Reference](reference.md)** - Detailed configuration reference
 - **[Program Configurations](programs.md)** - Configured programs and settings
 - **[Secrets Management](secrets_management.md)** - Managing encrypted secrets
@@ -97,7 +99,6 @@ nixos-config/
 - **Tools**: Git, Cargo, UV, Node.js
 - **LSP**: Complete language server setup
 - **Version Control**: Git with Delta diff viewer
-- **AI Assistant**: Claude Code with custom commands/skills
 
 ### System Management
 

@@ -10,6 +10,7 @@
     ../programs/niri.nix
     ../programs/wlsunset.nix
     ../programs/stylix.nix
+    ../programs/effects.nix
     ../programs/starship.nix
     ../programs/git.nix
   ];

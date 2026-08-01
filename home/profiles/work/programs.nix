@@ -4,7 +4,6 @@
   imports = [
     ../../programs/atuin.nix
     ../../programs/bat.nix
-    ../../programs/claude.nix
     ../../programs/fastfetch.nix
     ../../programs/fd.nix
     ../../programs/fzf.nix

@@ -13,7 +13,6 @@
         "obsidian"
         "discord"
         "keymapp"
-        "claude-code"
       ];
   };
 }

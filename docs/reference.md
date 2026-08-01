@@ -19,9 +19,6 @@ nixos-config/
 │   └── programs/          # Individual program configurations
 │       ├── bash.nix
 │       ├── brave.nix
-│       ├── claude.nix
-│       ├── claude/        # Claude hooks
-│       │   └── hooks.nix
 │       ├── foot.nix
 │       ├── firefox.nix
 │       ├── helix.nix

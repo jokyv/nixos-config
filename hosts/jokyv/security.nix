@@ -14,18 +14,38 @@
     virtualisation.flushL1DataCache = "always";
     # Enable AppArmor for application confinement
     apparmor.enable = true;
-    # Audit disabled - kernel 6.18 compatibility issue with audit subsystem
-    # audit = {
-    #   enable = true;
-    #   rules = [
-    #     # Rule 1: Monitor all execve system calls (64-bit)
-    #     "-a always,exit -F arch=b64 -S execve"
-    #     # Rule 2: Watch /etc/passwd for write changes and attribute changes
-    #     "-w /etc/passwd -p wa"
-    #     # Rule 3: Watch /etc/shadow for write changes and attribute changes
-    #     "-w /etc/shadow -p wa"
-    #   ];
-    # };
+
+    # Audit events relevant to local privilege escalation and system changes.
+    audit = {
+      enable = true;
+      failureMode = "printk";
+      backlogLimit = 8192;
+      rules = [
+        "-w /etc/passwd -p wa -k identity"
+        "-w /etc/shadow -p wa -k identity"
+        "-w /etc/group -p wa -k identity"
+        "-w /etc/sudoers -p wa -k sudoers"
+        "-w /etc/pam.d -p wa -k authentication"
+        "-a always,exit -F arch=b64 -S mount,umount2 -F auid>=1000 -F auid!=unset -k mounts"
+        "-a always,exit -F arch=b64 -S init_module,finit_module,delete_module -F auid>=1000 -F auid!=unset -k kernel-modules"
+      ];
+    };
+
+    auditd = {
+      enable = true;
+      settings = {
+        log_format = "ENRICHED";
+        max_log_file = 50;
+        num_logs = 10;
+        max_log_file_action = "rotate";
+        space_left = 1024;
+        space_left_action = "syslog";
+        admin_space_left = 512;
+        admin_space_left_action = "suspend";
+        disk_full_action = "suspend";
+        disk_error_action = "syslog";
+      };
+    };
   };
 
   # ---------------------------------------------
@@ -115,21 +135,32 @@
     }
   ];
 
-  # SSH server (disabled until inbound SSH is needed).
-  # Git push/pull only needs the openssh client package.
-  services.openssh = {
-    enable = false;
-    settings = {
-      PasswordAuthentication = false; # Disable password auth (use keys only)
-      PermitRootLogin = "no"; # Disable root login over SSH
+  services = {
+    logrotate.settings."/var/log/sudo.log" = {
+      frequency = "daily";
+      maxsize = "10M";
+      rotate = 14;
+      compress = true;
+      missingok = true;
+      create = "0600 root root";
     };
-    openFirewall = false; # Don't open SSH server port.
-  };
 
-  # Antivirus engine
-  services.clamav = {
-    daemon.enable = true;
-    updater.enable = true;
+    # SSH server (disabled until inbound SSH is needed).
+    # Git push/pull only needs the openssh client package.
+    openssh = {
+      enable = false;
+      settings = {
+        PasswordAuthentication = false; # Disable password auth (use keys only)
+        PermitRootLogin = "no"; # Disable root login over SSH
+      };
+      openFirewall = false; # Don't open SSH server port.
+    };
+
+    # Antivirus engine
+    clamav = {
+      daemon.enable = true;
+      updater.enable = true;
+    };
   };
 
   # Weekly vulnerability audit for the current system closure.

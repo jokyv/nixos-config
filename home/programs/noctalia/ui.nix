@@ -77,21 +77,6 @@
       unit = "metric";
     };
 
-    backdrop = {
-      enabled = false;
-      blur_intensity = 0.5;
-      tint_intensity = 0.3;
-    };
-
-    lockscreen = {
-      enabled = true;
-      blurred_desktop = false;
-      blur_intensity = 0.5;
-      tint_intensity = 0.3;
-      wallpaper = "";
-      monitors = [ ];
-    };
-
     keybinds = {
       up = [ "Up" ];
       down = [ "Down" ];

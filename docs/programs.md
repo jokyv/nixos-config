@@ -314,37 +314,6 @@ Command runner with:
 
 ## Customization
 
-## AI Assistant
-
-### Claude Code
-
-Claude AI assistant integration with custom commands and skills:
-
-- Managed via home-manager (`home/programs/claude.nix`)
-- Custom commands in `$HOME/agent-dotfiles/claude/commands/`
-- Custom skills in `$HOME/agent-dotfiles/skills/`
-
-#### Available Commands
-
-| Command               | Description                                     |
-| --------------------- | ----------------------------------------------- |
-| `/work-setup`         | Project initialization and environment setup    |
-| `/work-prime`         | Context priming for better AI understanding     |
-| `/work-maintain`      | Project maintenance (security scan, cleanup)    |
-| `/work-sync-docs`     | Sync documentation - update CLAUDE.md and docs/ |
-| `/work-git-commit`    | Smart git commit with conventional commits      |
-| `/work-issue`         | Issue analysis and resolution                   |
-| `/work-release-notes` | Generate release notes                          |
-
-#### Available Skills
-
-| Skill              | Description                                |
-| ------------------ | ------------------------------------------ |
-| `smart-git-commit` | Intelligent commit message generation      |
-| `python`           | Modern Python conventions                  |
-| `session-analysis` | Review recent Claude sessions for friction |
-| `worktree`         | Isolate risky work in git worktrees        |
-
 ### Theming
 
 All programs are configured to use the unified theme from Stylix:
@@ -371,7 +340,6 @@ Program configurations are modularized in `home/programs/`:
 - `brave.nix` / `firefox.nix` - Browser settings
 - `foot.nix` / `kitty.nix` - Terminal emulators
 - `helix.nix` - Text editor configuration
-- `claude.nix` - Claude Code integration
 - `git.nix`, `fzf.nix`, `zoxide.nix`, `yazi.nix`, `starship.nix` - Shell/dev tools
 - `niri.nix` - Niri compositor bindings and rules
 - `stylix.nix` - Theming

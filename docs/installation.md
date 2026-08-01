@@ -45,10 +45,10 @@ nixos-config/
 
 Current mapping:
 
-| Runtime host | Primary user | Install output | Notes |
-| --- | --- | --- | --- |
-| `nixos` | `jokyv` | `jokyv-install` | Current profile name differs from hostname. |
-| `dora` | `dora` | `dora-install` | Profile name matches hostname. |
+| Runtime host | Primary user | Install output  | Notes                                       |
+| ------------ | ------------ | --------------- | ------------------------------------------- |
+| `nixos`      | `jokyv`      | `jokyv-install` | Current profile name differs from hostname. |
+| `dora`       | `dora`       | `dora-install`  | Profile name matches hostname.              |
 
 New host example: host `lab` with user `jokyv` can use install output `lab-install`.
 
@@ -93,11 +93,27 @@ Mom PC install config. `disk.device = null` for auto-detect, no disk swap, light
 - `dora` stays system-only
 - `nixos` keeps Home Manager
 
+## Temporary files and caches
+
+`nixos` uses tmpfs for temporary data:
+
+- `/tmp` has a 4 GiB tmpfs and is cleared on reboot.
+- `~/.cache/fontconfig` has a 256 MiB tmpfs and rebuilds font caches after reboot.
+- `~/.cache/mesa_shader_cache` has a 256 MiB tmpfs and rebuilds GPU shader caches after reboot. First game or graphics application launch may stutter.
+
+Do not store personal files, downloads, projects, or caches needed offline in these paths. Browser, Nix, UV, Puppeteer, and other large caches remain persistent.
+
+Verify mounts after rebuild or install:
+
+```bash
+findmnt /tmp ~/.cache/fontconfig ~/.cache/mesa_shader_cache
+```
+
 ## Verify after install
 
 ```bash
 nixos-rebuild switch --flake .#nixos
-findmnt /tmp
+findmnt /tmp ~/.cache/fontconfig ~/.cache/mesa_shader_cache
 lsblk -f
 systemctl --failed
 ```
