@@ -1,620 +1,233 @@
-# Niri wiki: https://github.com/YaLTeR/niri/wiki
-# Niri flake wiki: https://github.com/sodiboo/niri-flake/blob/main/docs.md
-# Niri flake example: https://github.com/sodiboo/system/blob/main/niri.mod.nix
+# Niri configuration: https://niri-wm.github.io/niri/Configuration%3A-Introduction.html
 
 {
   config,
-  lib,
   pkgs,
   ...
 }:
 
 let
-  # Constants and reusable values
-  home_dir = config.home.homeDirectory;
-  screenshots_dir = "${home_dir}/pics/screenshots";
-  # wallpaper_dir = "${home_dir}/pics/wallpapers"; # not in use noctalia handles this
-  scripts_dir = "${home_dir}/scripts/bin";
-
-  # Reusable spawn commands
-  spawn_script = script: config.lib.niri.actions.spawn "${scripts_dir}/${script}";
-  spawn_script_arg = script: arg: config.lib.niri.actions.spawn "${scripts_dir}/${script}" arg;
-
-  # Output configuration
-  # run `niri msg outputs` to get your monitor details
-  outputs = {
-    "HDMI-A-1" = {
-      mode = {
-        width = 1920;
-        height = 1080;
-        refresh = 120.0;
-      };
-      scale = 1;
-      position = {
-        x = 0;
-        y = 0;
-      };
-    };
-    "DP-1" = {
-      mode = {
-        width = 1920;
-        height = 1080;
-        refresh = 120.0;
-      };
-      scale = 1;
-      position = {
-        x = 1920;
-        y = 0;
-      };
-    };
-  };
-
-  # Window rules with better organization
-  window_rules = [
-    {
-      geometry-corner-radius =
-        let
-          r = 8.0;
-        in
-        {
-          top-left = r;
-          top-right = r;
-          bottom-left = r;
-          bottom-right = r;
-        };
-      clip-to-geometry = true;
-      draw-border-with-background = false;
-    }
-
-    # Workspace 1: Development (Helix)
-    {
-      matches = [ { app-id = "^helix$"; } ];
-      # open-on-workspace = 1;
-      open-maximized = true;
-    }
-    # Workspace 2: Web Browsing (Firefox)
-    {
-      matches = [ { app-id = "^firefox$"; } ];
-      # open-on-workspace = 2;
-      open-maximized = true;
-      scroll-factor = 0.90;
-    }
-
-    # Workspace 3: Notes & Documentation (Obsidian)
-    {
-      matches = [ { app-id = "^obsidian$"; } ];
-      open-on-workspace = "3";
-      open-maximized = true;
-    }
-
-    # Workspace 4: Communication (Discord)
-    {
-      matches = [ { app-id = "^discord$"; } ];
-      # open-on-workspace = 4;
-      open-floating = true;
-    }
-
-    # Firefox special windows
-    {
-      matches = [
-        {
-          app-id = "^firefox$";
-          title = "^Picture-in-Picture$";
-        }
-      ];
-      open-floating = true;
-    }
-    {
-      matches = [
-        {
-          app-id = "^firefox$";
-          title = "^Private Browsing$";
-        }
-      ];
-      open-floating = true;
-    }
-
-    # Inactive window opacity
-    {
-      matches = [ { is-active = false; } ];
-      opacity = 0.85;
-    }
-  ];
-
-  # Startup applications
-  startup_apps = [
-    {
-      argv = [
-        "foot"
-        "--server"
-      ];
-    }
-    { argv = [ "xdg-desktop-portal" ]; }
-    { argv = [ "noctalia" ]; }
-  ];
-
-  # Keybindings organized by category
-  keybinds =
-    with config.lib.niri.actions;
-    let
-      mod = "Mod";
-      shift = "Shift";
-      ctrl = "Ctrl";
-      alt = "Alt";
-
-      # Application launchers
-      apps = {
-        "${mod}+T" = {
-          action = spawn "footclient";
-          cooldown-ms = 500;
-        };
-        "${mod}+${shift}+T" = {
-          action = spawn "kitty";
-          cooldown-ms = 500;
-        };
-        "${mod}+B" = {
-          action = spawn "firefox";
-          repeat = false;
-          hotkey-overlay = {
-            title = "Firefox";
-          };
-        };
-        "${mod}+${shift}+B" = {
-          action = spawn "brave";
-          repeat = false;
-        };
-        "${mod}+D" = {
-          action = spawn "discord";
-          repeat = false;
-        };
-        "${mod}+E" = {
-          action = spawn "nautilus";
-        };
-        "${mod}+O" = {
-          action = spawn "obsidian" "--enable-features=UseOzonePlatform" "--ozone-platform=wayland";
-          repeat = false;
-        };
-        "${mod}+N" = {
-          action = spawn "footclient" "newsraft";
-          repeat = false;
-        };
-        "${mod}+S" = {
-          action = spawn "footclient" "-F" "cbonsai" "--screensaver";
-          repeat = false;
-        };
-
-        # Replaced by noctalia
-        # "${mod}+D" = {
-        #   action = spawn "fuzzel";
-        # };
-        # "${mod}+Space" = {
-        #   action = spawn "vicinae" "toggle";
-        # };
-        # "${mod}+${alt}+L" = {
-        #   action = spawn "swaylock";
-        # };
-      };
-
-      # System actions
-      system = {
-        "${mod}+Escape" = {
-          action = toggle-overview;
-        };
-        "${mod}+${shift}+Slash" = {
-          action = show-hotkey-overlay;
-        };
-        "${mod}+Q" = {
-          action = close-window;
-          repeat = false;
-        };
-        "${mod}+${shift}+Q" = {
-          action = quit;
-        };
-        "${mod}+${shift}+P" = {
-          action = power-off-monitors;
-        };
-        "${mod}+${alt}+F" = {
-          action = toggle-window-floating;
-        };
-        "${mod}+${shift}+${alt}+F" = {
-          action = switch-focus-between-floating-and-tiling;
-        };
-      };
-
-      # Window management
-      windows = {
-        "${mod}+R" = {
-          action = switch-preset-column-width;
-        };
-        "${mod}+F" = {
-          action = maximize-column;
-        };
-        "${mod}+${shift}+F" = {
-          action = fullscreen-window;
-        };
-        "${mod}+${shift}+${ctrl}+F" = {
-          action = maximize-window-to-edges;
-        };
-        "${mod}+Comma" = {
-          action = consume-window-into-column;
-        };
-        "${mod}+Period" = {
-          action = expel-window-from-column;
-        };
-      };
-
-      # Focus and movement
-      focus = {
-        "${mod}+H" = {
-          action = focus-column-left;
-        };
-        "${mod}+J" = {
-          action = focus-window-down;
-        };
-        "${mod}+K" = {
-          action = focus-window-up;
-        };
-        "${mod}+L" = {
-          action = focus-column-right;
-        };
-
-        "${mod}+${shift}+H" = {
-          action = focus-monitor-left;
-        };
-        "${mod}+${shift}+L" = {
-          action = focus-monitor-right;
-        };
-
-        "${mod}+${ctrl}+H" = {
-          action = move-column-left;
-        };
-        "${mod}+${ctrl}+J" = {
-          action = move-window-down;
-        };
-        "${mod}+${ctrl}+K" = {
-          action = move-window-up;
-        };
-        "${mod}+${ctrl}+L" = {
-          action = move-column-right;
-        };
-      };
-
-      # Workspace management
-      workspaces = {
-        "${mod}+U" = {
-          action = focus-workspace-down;
-        };
-        "${mod}+I" = {
-          action = focus-workspace-up;
-        };
-        "${mod}+${ctrl}+U" = {
-          action = move-column-to-workspace-down;
-        };
-        "${mod}+${ctrl}+I" = {
-          action = move-column-to-workspace-up;
-        };
-        "${mod}+${shift}+U" = {
-          action = move-workspace-down;
-        };
-        "${mod}+${shift}+I" = {
-          action = move-workspace-up;
-        };
-      };
-
-      # Scripts and custom commands
-      scripts = {
-        # Wallpaper: Use Noctalia for wallpaper management
-        "${mod}+W" = {
-          action = spawn "noctalia" "msg" "wallpaper-random";
-          cooldown-ms = 500;
-        };
-        # "${mod}+${shift}+W" = {
-        #   action = spawn_script_arg "update_wall.py" "--auto-rotate";
-        # };
-        # "${mod}+${shift}+W" = {
-        #   action = spawn_script "define_word.py";
-        # };
-        "${mod}+${shift}+M" = {
-          action = spawn_script "my_logout.py";
-        };
-        "${mod}+Y" = {
-          action = spawn_script "take_screenshot.py";
-        };
-
-        # Clipboard management
-        "${mod}+${shift}+C" = {
-          action = spawn_script_arg "clip_hist.py" "add";
-        };
-        "${mod}+${shift}+V" = {
-          action = spawn_script_arg "clip_hist.py" "paste";
-        };
-        "${mod}+${shift}+S" = {
-          action = spawn_script_arg "clip_hist.py" "sel";
-        };
-        "${mod}+${shift}+D" = {
-          action = spawn_script_arg "clip_hist.py" "del";
-        };
-      };
-
-      # Audio controls (via Noctalia)
-      audio = {
-        "${mod}+F7" = {
-          action = spawn "noctalia" "msg" "volume-down";
-        };
-        "${mod}+F8" = {
-          action = spawn "noctalia" "msg" "volume-up";
-        };
-        "${mod}+F9" = {
-          action = spawn "noctalia" "msg" "volume-mute";
-        };
-      };
-
-      # Window sizing
-      sizing = {
-        "${mod}+Minus" = {
-          action = set-column-width "-10%";
-        };
-        "${mod}+Equal" = {
-          action = set-column-width "+10%";
-        };
-        "${mod}+${shift}+Minus" = {
-          action = set-window-height "-10%";
-        };
-        "${mod}+${shift}+Equal" = {
-          action = set-window-height "+10%";
-        };
-      };
-
-      # Workspace number bindings (generated programmatically)
-      workspace_numbers =
-        # mod+number focus on workspace
-        lib.listToAttrs (
-          map (num: {
-            name = "${mod}+${toString num}";
-            value = {
-              action.focus-workspace = num;
-            };
-          }) (lib.range 1 9)
-        )
-        # mod+ctrl+number move window to workspace
-        // lib.listToAttrs (
-          map (num: {
-            name = "${mod}+${ctrl}+${toString num}";
-            value = {
-              action.move-column-to-workspace = num;
-            };
-          }) (lib.range 1 9)
-        );
-
-      # Monitor movement
-      monitor_movement = {
-        "${mod}+${shift}+${ctrl}+H" = {
-          action = move-column-to-monitor-left;
-        };
-        "${mod}+${shift}+${ctrl}+J" = {
-          action = move-column-to-monitor-down;
-        };
-        "${mod}+${shift}+${ctrl}+K" = {
-          action = move-column-to-monitor-up;
-        };
-        "${mod}+${shift}+${ctrl}+L" = {
-          action = move-column-to-monitor-right;
-        };
-
-        # "${mod}+${shift}+${ctrl}+Left" = {
-        #   action = move-column-to-monitor-left;
-        # };
-        # "${mod}+${shift}+${ctrl}+Down" = {
-        #   action = move-column-to-monitor-down;
-        # };
-        # "${mod}+${shift}+${ctrl}+Up" = {
-        #   action = move-column-to-monitor-up;
-        # };
-        # "${mod}+${shift}+${ctrl}+Right" = {
-        #   action = move-column-to-monitor-right;
-        # };
-      };
-
-      # Noctalia panel shortcuts
-      panels = {
-        "${mod}+A" = {
-          action = spawn "noctalia" "msg" "panel-toggle" "control-center";
-          cooldown-ms = 500;
-        };
-        "${mod}+Shift+Escape" = {
-          action = spawn "noctalia" "msg" "panel-toggle" "session";
-          cooldown-ms = 500;
-        };
-      };
-
-      # Noctalia launcher shortcut
-      launcher = {
-        "${mod}+Space" = {
-          action = spawn "noctalia" "msg" "panel-toggle" "launcher";
-          cooldown-ms = 500;
-        };
-        "${mod}+${shift}+Space" = {
-          action = spawn "noctalia" "msg" "panel-toggle" "launcher" "clipboard";
-          cooldown-ms = 500;
-        };
-      };
-
-    in
-    # Combine all categories using foldl
-    # This recursively merges all the keybinding category maps into one combined map
-    lib.foldl lib.recursiveUpdate { } [
-      apps
-      system
-      windows
-      focus
-      workspaces
-      scripts
-      audio
-      panels
-      launcher
-      sizing
-      workspace_numbers
-      monitor_movement
-    ];
-
+  screenshots_dir = "${config.home.homeDirectory}/pics/screenshots";
+  scripts_dir = "${config.home.homeDirectory}/scripts/bin";
 in
 {
-  programs.niri = {
+  wayland.windowManager.niri = {
     enable = true;
     package = pkgs.niri;
 
-    settings = {
-      cursor = {
-        hide-when-typing = true;
-        hide-after-inactive-ms = 1000;
-      };
-      hotkey-overlay.skip-at-startup = true;
-      hotkey-overlay.hide-not-bound = true;
-      prefer-no-csd = true;
-      debug = {
-        deactivate-unfocused-windows = true;
-      };
-      screenshot-path = "${screenshots_dir}/screenshot from %Y-%m-%d %H-%M-%S.png";
-
-      # overview settings
-      overview = {
-        backdrop-color = "#777777";
-        zoom = 0.40;
-        workspace-shadow = {
-          softness = 40;
-          spread = 10;
-          offset = {
-            x = 0;
-            y = 10;
-          };
-          color = "#00000070";
-        };
-      };
-      # Animation configurations for smoother visuals
-      animations = {
-        window-open = {
-          kind = {
-            spring = {
-              damping-ratio = 0.6;
-              stiffness = 1000;
-              epsilon = 0.001;
-            };
-          };
-        };
-        window-close = {
-          kind = {
-            spring = {
-              damping-ratio = 0.6;
-              stiffness = 1000;
-              epsilon = 0.001;
-            };
-          };
-        };
-
-        # Workspace switch animations
-        workspace-switch = {
-          kind = {
-            spring = {
-              damping-ratio = 0.6;
-              stiffness = 800;
-              epsilon = 0.001;
-            };
-          };
-        };
-
-        # window resize animations
-        window-resize = {
-          kind = {
-            spring = {
-              damping-ratio = 0.7;
-              stiffness = 600;
-              epsilon = 0.001;
-            };
-          };
-        };
-
-        config-notification-open-close = {
-          kind = {
-            spring = {
-              damping-ratio = 0.6;
-              stiffness = 1000;
-              epsilon = 0.001;
-            };
-          };
-        };
-
-      };
-
-      input = {
-        warp-mouse-to-focus.enable = true;
-        # focus-follows-mouse.enable = true;
-        workspace-auto-back-and-forth = true;
-        keyboard = {
-          xkb = {
-            layout = "us, gr"; # US and Greek layouts
-            model = "pc105";
-            options = "grp:alt_ctrl_shift_toggle";
-          };
-        };
-        mouse = {
-          # off = false;
-          # natural-scroll = false;
-          # accel-speed = 0.2;
-          # accel-profile = "flat";
-          # scroll-method = "no-scroll";
-        };
-      };
-
-      # Use 'inherit' when variable name matches setting name exactly
-      inherit outputs;
-
-      # Workspace configuration
-      workspaces = {
-        "1" = { };
-        "2" = { };
-        "3" = { };
-        "4" = { };
-
-        # Enable workspace wrapping (when you go past the last workspace, wrap to first)
-        # wrap-around = true;
-
-        # Number of workspaces (default is 10, but you can customize)
-        # count = 10;
-      };
-
-      # Enhanced layout settings
-      layout = {
-        gaps = 15;
-        center-focused-column = "never";
-        always-center-single-column = true;
-        shadow = {
-          enable = true;
-        };
-
-        preset-column-widths = [
-          { proportion = 1.0 / 2.0; }
-          { proportion = 3.0 / 3.0; }
-        ];
-
-        default-column-width = {
-          proportion = 1.0 / 2.0;
-        };
-
-        struts = {
-          top = 15;
-          bottom = 15;
-          left = 15;
-          right = 15;
-        };
-      };
-
-      spawn-at-startup = startup_apps;
-
-      binds = keybinds;
-
-      # Use explicit assignment when variable name differs from setting name
-      # for this save check `-` vs `_`
-      window-rules = window_rules;
-    };
+    # Native Home Manager currently exposes generic KDL serialization. Keep this
+    # validated KDL to preserve Niri's typed nodes, flags, repeated rules, and binds.
+    extraConfig = ''
+      input {
+          keyboard {
+              xkb {
+                  layout "us, gr"
+                  model "pc105"
+                  rules ""
+                  variant ""
+                  options "grp:alt_ctrl_shift_toggle"
+              }
+              repeat-delay 600
+              repeat-rate 25
+              track-layout "global"
+          }
+          touchpad {
+              tap
+              natural-scroll
+          }
+          warp-mouse-to-focus
+          workspace-auto-back-and-forth
+      }
+      output "DP-1" {
+          scale 1
+          transform "normal"
+          position x=1920 y=0
+          mode "1920x1080@120.000000"
+      }
+      output "HDMI-A-1" {
+          scale 1
+          transform "normal"
+          position x=0 y=0
+          mode "1920x1080@120.000000"
+      }
+      screenshot-path "${screenshots_dir}/screenshot from %Y-%m-%d %H-%M-%S.png"
+      prefer-no-csd
+      overview {
+          zoom 0.400000
+          backdrop-color "#777777"
+          workspace-shadow {
+              offset x=0 y=10
+              softness 40
+              spread 10
+              color "#00000070"
+          }
+      }
+      layout {
+          gaps 15
+          struts {
+              left 15
+              right 15
+              top 15
+              bottom 15
+          }
+          focus-ring { width 4; }
+          border { off; }
+          shadow {
+              on
+              offset x=0.000000 y=5.000000
+              softness 30.000000
+              spread 5.000000
+              draw-behind-window false
+              color "#00000070"
+          }
+          default-column-width { proportion 0.500000; }
+          preset-column-widths {
+              proportion 0.500000
+              proportion 1.000000
+          }
+          center-focused-column "never"
+          always-center-single-column
+      }
+      cursor {
+          xcursor-theme "default"
+          xcursor-size 24
+          hide-when-typing
+          hide-after-inactive-ms 1000
+      }
+      hotkey-overlay {
+          skip-at-startup
+          hide-not-bound
+      }
+      binds {
+          Mod+1 { focus-workspace 1; }
+          Mod+2 { focus-workspace 2; }
+          Mod+3 { focus-workspace 3; }
+          Mod+4 { focus-workspace 4; }
+          Mod+5 { focus-workspace 5; }
+          Mod+6 { focus-workspace 6; }
+          Mod+7 { focus-workspace 7; }
+          Mod+8 { focus-workspace 8; }
+          Mod+9 { focus-workspace 9; }
+          Mod+A cooldown-ms=500 { spawn "noctalia" "msg" "panel-toggle" "control-center"; }
+          Mod+Alt+F { toggle-window-floating; }
+          Mod+B hotkey-overlay-title="Firefox" repeat=false { spawn "firefox"; }
+          Mod+Comma { consume-window-into-column; }
+          Mod+Ctrl+1 { move-column-to-workspace 1; }
+          Mod+Ctrl+2 { move-column-to-workspace 2; }
+          Mod+Ctrl+3 { move-column-to-workspace 3; }
+          Mod+Ctrl+4 { move-column-to-workspace 4; }
+          Mod+Ctrl+5 { move-column-to-workspace 5; }
+          Mod+Ctrl+6 { move-column-to-workspace 6; }
+          Mod+Ctrl+7 { move-column-to-workspace 7; }
+          Mod+Ctrl+8 { move-column-to-workspace 8; }
+          Mod+Ctrl+9 { move-column-to-workspace 9; }
+          Mod+Ctrl+H { move-column-left; }
+          Mod+Ctrl+I { move-column-to-workspace-up; }
+          Mod+Ctrl+J { move-window-down; }
+          Mod+Ctrl+K { move-window-up; }
+          Mod+Ctrl+L { move-column-right; }
+          Mod+Ctrl+U { move-column-to-workspace-down; }
+          Mod+D repeat=false { spawn "discord"; }
+          Mod+E { spawn "nautilus"; }
+          Mod+Equal { set-column-width "+10%"; }
+          Mod+Escape { toggle-overview; }
+          Mod+F { maximize-column; }
+          Mod+F7 { spawn "noctalia" "msg" "volume-down"; }
+          Mod+F8 { spawn "noctalia" "msg" "volume-up"; }
+          Mod+F9 { spawn "noctalia" "msg" "volume-mute"; }
+          Mod+H { focus-column-left; }
+          Mod+I { focus-workspace-up; }
+          Mod+J { focus-window-down; }
+          Mod+K { focus-window-up; }
+          Mod+L { focus-column-right; }
+          Mod+Minus { set-column-width "-10%"; }
+          Mod+N repeat=false { spawn "footclient" "newsraft"; }
+          Mod+O repeat=false { spawn "obsidian" "--enable-features=UseOzonePlatform" "--ozone-platform=wayland"; }
+          Mod+Period { expel-window-from-column; }
+          Mod+Q repeat=false { close-window; }
+          Mod+R { switch-preset-column-width; }
+          Mod+S repeat=false { spawn "footclient" "-F" "cbonsai" "--screensaver"; }
+          Mod+Shift+Alt+F { switch-focus-between-floating-and-tiling; }
+          Mod+Shift+B repeat=false { spawn "brave"; }
+          Mod+Shift+C { spawn "${scripts_dir}/clip_hist.py" "add"; }
+          Mod+Shift+Ctrl+F { maximize-window-to-edges; }
+          Mod+Shift+Ctrl+H { move-column-to-monitor-left; }
+          Mod+Shift+Ctrl+J { move-column-to-monitor-down; }
+          Mod+Shift+Ctrl+K { move-column-to-monitor-up; }
+          Mod+Shift+Ctrl+L { move-column-to-monitor-right; }
+          Mod+Shift+D { spawn "${scripts_dir}/clip_hist.py" "del"; }
+          Mod+Shift+Equal { set-window-height "+10%"; }
+          Mod+Shift+Escape cooldown-ms=500 { spawn "noctalia" "msg" "panel-toggle" "session"; }
+          Mod+Shift+F { fullscreen-window; }
+          Mod+Shift+H { focus-monitor-left; }
+          Mod+Shift+I { move-workspace-up; }
+          Mod+Shift+L { focus-monitor-right; }
+          Mod+Shift+M { spawn "${scripts_dir}/my_logout.py"; }
+          Mod+Shift+Minus { set-window-height "-10%"; }
+          Mod+Shift+P { power-off-monitors; }
+          Mod+Shift+Q { quit; }
+          Mod+Shift+S { spawn "${scripts_dir}/clip_hist.py" "sel"; }
+          Mod+Shift+Slash { show-hotkey-overlay; }
+          Mod+Shift+Space cooldown-ms=500 { spawn "noctalia" "msg" "panel-toggle" "launcher" "clipboard"; }
+          Mod+Shift+T cooldown-ms=500 { spawn "kitty"; }
+          Mod+Shift+U { move-workspace-down; }
+          Mod+Shift+V { spawn "${scripts_dir}/clip_hist.py" "paste"; }
+          Mod+Space cooldown-ms=500 { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
+          Mod+T cooldown-ms=500 { spawn "footclient"; }
+          Mod+U { focus-workspace-down; }
+          Mod+W cooldown-ms=500 { spawn "noctalia" "msg" "wallpaper-random"; }
+          Mod+Y { spawn "${scripts_dir}/take_screenshot.py"; }
+      }
+      workspace "1"
+      workspace "2"
+      workspace "3"
+      workspace "4"
+      spawn-at-startup "foot" "--server"
+      spawn-at-startup "xdg-desktop-portal"
+      spawn-at-startup "noctalia"
+      window-rule {
+          draw-border-with-background false
+          geometry-corner-radius 8.000000 8.000000 8.000000 8.000000
+          clip-to-geometry true
+      }
+      window-rule {
+          match app-id="^helix$"
+          open-maximized true
+      }
+      window-rule {
+          match app-id="^firefox$"
+          open-maximized true
+          scroll-factor 0.900000
+      }
+      window-rule {
+          match app-id="^obsidian$"
+          open-on-workspace "3"
+          open-maximized true
+      }
+      window-rule {
+          match app-id="^discord$"
+          open-floating true
+      }
+      window-rule {
+          match app-id="^firefox$" title="^Picture-in-Picture$"
+          open-floating true
+      }
+      window-rule {
+          match app-id="^firefox$" title="^Private Browsing$"
+          open-floating true
+      }
+      window-rule {
+          match is-active=false
+          opacity 0.850000
+      }
+      animations {
+          config-notification-open-close { spring damping-ratio=0.600000 epsilon=0.001000 stiffness=1000; }
+          window-close { spring damping-ratio=0.600000 epsilon=0.001000 stiffness=1000; }
+          window-open { spring damping-ratio=0.600000 epsilon=0.001000 stiffness=1000; }
+          window-resize { spring damping-ratio=0.700000 epsilon=0.001000 stiffness=600; }
+          workspace-switch { spring damping-ratio=0.600000 epsilon=0.001000 stiffness=800; }
+      }
+      debug { deactivate-unfocused-windows true; }
+    '';
   };
 }

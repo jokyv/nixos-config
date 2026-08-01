@@ -49,16 +49,6 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    #--------------------------------------------
-    # compositor
-    #--------------------------------------------
-
-    niri = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-stable.follows = "nixpkgs-stable";
-    };
-
     stylix = {
       url = "github:danth/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -95,7 +85,6 @@
       home-manager,
       stylix,
       sops-nix,
-      niri,
       devenv,
       nixos-hardware,
       noctalia,
@@ -188,7 +177,6 @@
           ./home/default.nix
           stylix.homeModules.stylix
           sops-nix.homeManagerModules.sops
-          niri.homeModules.niri
           noctalia.homeModules.default
 
           # Add devenv and direnv configuration
@@ -215,7 +203,7 @@
           ./home/gaming.nix
           stylix.homeModules.stylix
           sops-nix.homeManagerModules.sops
-          niri.homeModules.niri
+          noctalia.homeModules.default
         ];
       };
     };

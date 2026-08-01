@@ -23,7 +23,5 @@
     };
   };
 
-  # Niri 26.04 supports blur, but current niri-flake settings schema lacks
-  # `blur` and `background-effect`. Add Niri blur and layer rules here once
-  # the input exposes those settings.
+  # Add Niri blur and layer rules in home/programs/niri.nix.
 }

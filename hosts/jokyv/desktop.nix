@@ -1,10 +1,6 @@
-{ inputs, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  imports = [
-    inputs.niri.nixosModules.niri
-  ];
-
   programs = {
     gamemode = {
       enable = true;
