@@ -105,8 +105,18 @@
 #     config.common.default = [ "*" ];
 #   };
 # }
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
+let
+  restartNoctalia = pkgs.writeShellScript "restart-noctalia-after-resume" ''
+    ${pkgs.coreutils}/bin/sleep 2
+    ${pkgs.util-linux}/bin/runuser -u jokyv -- \
+      ${pkgs.coreutils}/bin/env \
+        XDG_RUNTIME_DIR=/run/user/1000 \
+        DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus \
+        ${pkgs.systemd}/bin/systemctl --user restart noctalia.service
+  '';
+in
 {
   services = {
     # System services
@@ -167,5 +177,14 @@
       xdg-desktop-portal-wlr
     ];
     config.common.default = [ "*" ];
+  };
+
+  # systemd-sleep returns only after wake. Restart through user manager so
+  # Noctalia reconnects to Wayland instead of relying on niri startup.
+  systemd.services = {
+    systemd-suspend.serviceConfig.ExecStartPost = lib.mkAfter [ restartNoctalia ];
+    systemd-hibernate.serviceConfig.ExecStartPost = lib.mkAfter [ restartNoctalia ];
+    systemd-hybrid-sleep.serviceConfig.ExecStartPost = lib.mkAfter [ restartNoctalia ];
+    systemd-suspend-then-hibernate.serviceConfig.ExecStartPost = lib.mkAfter [ restartNoctalia ];
   };
 }

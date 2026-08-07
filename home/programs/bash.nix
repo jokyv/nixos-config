@@ -4,11 +4,11 @@
   home.sessionVariables = {
     # NIX_PATH = "nixpkgs=https://github.com/nixos/nixpkgs/archive/refs/heads/master.tar.gz";
     SOPS_AGE_KEY_FILE = "${config.home.homeDirectory}/.config/sops/age/secrets.key";
+    BUN_INSTALL = "${config.home.homeDirectory}/.bun";
   };
 
   home.sessionPath = [
-    "$HOME/.npm-global/bin"
-    "${config.home.homeDirectory}/.cache/.bun/bin"
+    "${config.home.homeDirectory}/.bun/bin"
     "${config.home.homeDirectory}/.local/share/cargo/bin"
     "${config.home.homeDirectory}/scripts/bin" # need this for my personal scripts
     # "${config.home.homeDirectory}/.local/bin" # need this for `uv tools`

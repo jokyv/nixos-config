@@ -6,31 +6,20 @@
 }:
 
 {
-  # Restart Noctalia after system resume to fix stale IPC socket.
-  # Noctalia stays in niri's spawn-at-startup (systemd can't manage
-  # Wayland-native processes without graphical-session.target).
-  # This oneshot runs after suspend/hibernate and restarts Noctalia
-  # so IPC keybinds (session menu, launcher, volume) work again.
-
-  systemd.user.services.noctalia-resume = {
+  # Run Noctalia as a user service so systemd owns its lifecycle.
+  # niri imports Wayland session variables before this service starts.
+  systemd.user.services.noctalia = {
     Unit = {
-      Description = "Restart Noctalia after resume";
-      After = [
-        "suspend.target"
-        "hibernate.target"
-      ];
+      Description = "Noctalia desktop shell";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
     };
     Service = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.bash}/bin/bash -c 'sleep 2 && ${pkgs.procps}/bin/pkill noctalia || true'";
-      # Noctalia is in niri's spawn-at-startup, so niri respawns it
-      # automatically after we kill the stale process.
+      ExecStartPre = "${pkgs.bash}/bin/bash -c '${pkgs.procps}/bin/pkill -x noctalia || true'";
+      ExecStart = "${config.programs.noctalia.package}/bin/noctalia";
+      Restart = "on-failure";
+      RestartSec = 2;
     };
-    Install = {
-      WantedBy = [
-        "suspend.target"
-        "hibernate.target"
-      ];
-    };
+    Install.WantedBy = [ "graphical-session.target" ];
   };
 }
