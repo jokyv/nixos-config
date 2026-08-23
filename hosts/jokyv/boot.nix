@@ -20,7 +20,7 @@
     ];
 
     extraModprobeConfig = ''
-      options snd_had_intel model=generic
+      options snd_hda_intel model=generic
     '';
   };
 }

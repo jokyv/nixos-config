@@ -18,14 +18,14 @@
       behavior = {
         "screen-off" = {
           action = "screen_off";
-          timeout = 300;
+          timeout = 600;
           enabled = true;
           command = "";
           resume_command = "";
         };
         lock = {
           action = "lock";
-          timeout = 360;
+          timeout = 900;
           enabled = true;
           command = "";
           resume_command = "";

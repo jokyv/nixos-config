@@ -6,7 +6,7 @@
 }:
 
 {
-  # Run Noctalia as a user service so systemd owns its lifecycle.
+  # Keep retrying after compositor suspend disconnects Noctalia cleanly.
   # niri imports Wayland session variables before this service starts.
   systemd.user.services.noctalia = {
     Unit = {
@@ -15,9 +15,12 @@
       After = [ "graphical-session.target" ];
     };
     Service = {
-      ExecStartPre = "${pkgs.bash}/bin/bash -c '${pkgs.procps}/bin/pkill -x noctalia || true'";
+      # Noctalia package wrapper process is named ".noctalia-wrap", not
+      # "noctalia"; match executable path so stale shell instances cannot
+      # prevent systemd from starting its managed instance.
+      ExecStartPre = "${pkgs.bash}/bin/bash -c '${pkgs.procps}/bin/pkill -f \"/bin/noctalia$\" || true'";
       ExecStart = "${config.programs.noctalia.package}/bin/noctalia";
-      Restart = "on-failure";
+      Restart = "always";
       RestartSec = 2;
     };
     Install.WantedBy = [ "graphical-session.target" ];

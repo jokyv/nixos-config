@@ -184,7 +184,7 @@ in
       workspace "4"
       spawn-at-startup "foot" "--server"
       spawn-at-startup "xdg-desktop-portal"
-      spawn-at-startup "${pkgs.systemd}/bin/systemctl" "--user" "import-environment" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP" "NIRI_SOCKET"
+      spawn-at-startup "${pkgs.bash}/bin/bash" "-c" "${pkgs.systemd}/bin/systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP NIRI_SOCKET && ${pkgs.systemd}/bin/systemctl --user start noctalia.service"
       window-rule {
           draw-border-with-background false
           geometry-corner-radius 8.000000 8.000000 8.000000 8.000000

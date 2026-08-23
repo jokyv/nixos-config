@@ -155,6 +155,20 @@ in
           ];
         };
       };
+      # Realtek ALC887-VD reports its analog jack unavailable. Force its
+      # stereo profile so motherboard speakers/headphones remain selectable.
+      wireplumber.extraConfig."51-force-analog" = {
+        "monitor.alsa.rules" = [
+          {
+            matches = [
+              { "device.name" = "alsa_card.pci-0000_0b_00.4"; }
+            ];
+            actions.update-props = {
+              "device.profile" = "output:analog-stereo";
+            };
+          }
+        ];
+      };
     };
 
     # Login
