@@ -7,6 +7,7 @@
     ../../programs/fastfetch.nix
     ../../programs/fd.nix
     ../../programs/fzf.nix
+    ../../programs/herdr.nix
     ../../programs/ruff.nix
     ../../programs/ty.nix
     ../../programs/helix.nix
