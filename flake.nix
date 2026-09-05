@@ -60,7 +60,7 @@
     };
 
     nh = {
-      url = "github:viperML/nh";
+      url = "github:nix-community/nh";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -71,6 +71,11 @@
 
     devenv = {
       url = "github:cachix/devenv/latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    herdr = {
+      url = "github:herdrdev/herdr/v0.8.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -172,7 +177,9 @@
       # ---------------------------------------
       homeConfigurations.jokyv = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-        extraSpecialArgs = { inherit pkgs-stable; };
+        extraSpecialArgs = {
+          inherit inputs pkgs-stable;
+        };
         modules = [
           ./home/default.nix
           stylix.homeModules.stylix
