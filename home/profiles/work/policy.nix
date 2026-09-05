@@ -12,6 +12,7 @@
       builtins.elem (lib.getName pkg) [
         "obsidian"
         "discord"
+        "discord-unwrapped"
         "keymapp"
       ];
   };
