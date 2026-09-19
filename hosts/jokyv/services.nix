@@ -172,7 +172,7 @@ in
     };
 
     # Login
-    getty.autologinUser = "jokyv";
+    # getty.autologinUser = "jokyv";
 
     # DBus
     dbus = {

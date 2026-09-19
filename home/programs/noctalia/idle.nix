@@ -19,7 +19,7 @@
         "screen-off" = {
           action = "screen_off";
           timeout = 600;
-          enabled = true;
+          enabled = false;
           command = "";
           resume_command = "";
         };
@@ -33,7 +33,7 @@
         "lock-and-suspend" = {
           action = "lock_and_suspend";
           timeout = 1800;
-          enabled = true;
+          enabled = false;
           command = "";
           resume_command = "";
         };

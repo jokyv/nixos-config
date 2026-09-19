@@ -76,6 +76,9 @@ in
 
     targets = {
 
+      # Rofi unused; avoid deprecated Home Manager option from Stylix target.
+      rofi.enable = false;
+
       # Configure the Fnott target
       fnott.enable = false;
 
