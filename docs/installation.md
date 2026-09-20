@@ -1,125 +1,196 @@
 # Installation Guide
 
-This repo has 2 install paths:
+## Scope
 
-- `jokyv-install` for current machine
-- `dora-install` for dora machine
+This repository currently declares one install output:
 
-`disko` still handles partitioning.
+- `jokyv-install` installs host `nixos` for user `jokyv`.
+
+`dora` has no install or runtime output until its target hardware is available.
+
+## Installer interface
+
+Each `.<host>-install` output composes three modules:
+
+```text
+Disko layout
+host policy
+host-specific installer hardware
+```
+
+`install/default.nix` is seam for this composition.
+
+| Module                                    | Owns                                        | Must not own                    |
+| ----------------------------------------- | ------------------------------------------- | ------------------------------- |
+| `disks/universal-config.nix`              | Partitioning, formatting, mount layout      | Host UUIDs                      |
+| `hosts/<host>/default.nix`                | Host policy, users, services, desktop       | Disko device selection          |
+| `hosts/<host>/installer-hardware.nix`     | Boot-critical kernel modules                | Filesystem UUIDs or mounts      |
+| `hosts/<host>/hardware-configuration.nix` | Installed-machine UUIDs and hardware        | Shared or installer disk layout |
+| `install/<host>.nix`                      | Disk target and filesystem install settings | Runtime host policy             |
+
+Installer hardware exists so Disko installation can boot target storage without importing an old `hardware-configuration.nix`. Generated hardware configuration contains current filesystem UUIDs; importing it during a fresh format can override new Disko mounts.
 
 ## Files
 
 ```text
 nixos-config/
 ├── install/
-│   ├── default.nix        # Install wrapper (disko + host module)
-│   ├── jokyv.nix          # Install config for jokyv machine
-│   └── dora.nix           # Install config for dora machine
+│   ├── default.nix              # Disko + host + installer hardware
+│   └── jokyv.nix                # Jokyv disk settings
 ├── disks/
-│   └── universal-config.nix  # Shared disk module
+│   └── universal-config.nix      # Shared Disko layout
 ├── hosts/
 │   ├── jokyv/
 │   │   ├── default.nix
+│   │   ├── installer-hardware.nix
 │   │   └── hardware-configuration.nix
 │   └── dora/
 │       ├── default.nix
-│       ├── desktop.nix
-│       └── hardware-configuration.nix
+│       └── desktop.nix
 └── flake.nix
 ```
 
-`hosts/*/default.nix` owns runtime config. `install/default.nix` owns install wiring. `install/*.nix` owns install knobs.
+Create Dora’s install settings, installer hardware, and hardware configuration on Dora after its target disk is identified.
 
-## Install outputs
+## Jokyv installation
 
-- `.#jokyv-install` → install `nixos` box / user `jokyv`
-- `.#dora-install` → install `dora` box / user `dora`
+Use this flow only when reinstalling current Jokyv machine.
 
-## Naming policy
+### 1. Boot Live USB and clone repository
 
-- Host names: lowercase, short, stable names; use role-based names for shared machines and person-based names for personal machines.
-- User names: lowercase, stable login names; one primary user per personal host by default.
-- Install outputs: use the `<profile>-install` suffix. Profile names usually mirror host names but may differ.
-- Host and user names may differ. Example: host `nixos` uses user `jokyv`.
-- Keep install output names stable; they are flake targets used by installation commands.
-
-Current mapping:
-
-| Runtime host | Primary user | Install output  | Notes                                       |
-| ------------ | ------------ | --------------- | ------------------------------------------- |
-| `nixos`      | `jokyv`      | `jokyv-install` | Current profile name differs from hostname. |
-| `dora`       | `dora`       | `dora-install`  | Profile name matches hostname.              |
-
-New host example: host `lab` with user `jokyv` can use install output `lab-install`.
-
-## Install flow
-
-1. Clone repo
-2. Edit matching `install/*.nix`
-3. Set hostname in `hosts/<host-name>/default.nix`
-4. Boot NixOS Live USB
-5. Run `disko` with matching install output
-6. Run `nixos-install` with same output
-7. Reboot
-
-### Example: dora machine
+Boot NixOS Live USB in UEFI mode.
 
 ```bash
-sudo nix run --experimental-features "nix-command flakes" github:nix-community/disko -- --mode disko --flake .#dora-install
-sudo nixos-install --no-root-password --flake .#dora-install
+git clone https://github.com/jokyv/nixos-config.git /tmp/nixos-config
+cd /tmp/nixos-config
 ```
 
-### Example: jokyv
+`/tmp` is suitable for Live USB use. It disappears after reboot.
+
+### 2. Identify target disk
 
 ```bash
-sudo nix run --experimental-features "nix-command flakes" github:nix-community/disko -- --mode disko --flake .#jokyv-install
-sudo nixos-install --no-root-password --flake .#jokyv-install
+lsblk -o NAME,SIZE,MODEL,SERIAL,TRAN,TYPE
+ls -l /dev/disk/by-id/
 ```
 
-## Install config files
+Identify intended internal disk by model, size, and serial. Do not select Live USB.
 
-### `install/jokyv.nix`
-
-Current machine install config. Disk set explicit, disk swap on, swap encryption on.
-
-### `install/dora.nix`
-
-Mom PC install config. `disk.device = null` for auto-detect, no disk swap, light tmpfs.
-
-## Host setup
-
-- `nixos` host → user `jokyv`
-- `dora` host → user `dora`
-- `dora` stays system-only
-- `nixos` keeps Home Manager
-
-## Temporary files and caches
-
-`nixos` uses tmpfs for temporary data:
-
-- `/tmp` has a 4 GiB tmpfs and is cleared on reboot.
-- `~/.cache/fontconfig` has a 256 MiB tmpfs and rebuilds font caches after reboot.
-- `~/.cache/mesa_shader_cache` has a 256 MiB tmpfs and rebuilds GPU shader caches after reboot. First game or graphics application launch may stutter.
-
-Do not store personal files, downloads, projects, or caches needed offline in these paths. Browser, Nix, UV, Puppeteer, and other large caches remain persistent.
-
-Verify mounts after rebuild or install:
+Confirm selected stable ID resolves to expected kernel device:
 
 ```bash
-findmnt /tmp ~/.cache/fontconfig ~/.cache/mesa_shader_cache
+readlink -f /dev/disk/by-id/<target-disk>
 ```
 
-## Verify after install
+### 3. Configure explicit target
+
+Edit Jokyv install settings in cloned repository:
 
 ```bash
-nixos-rebuild switch --flake .#nixos
+$EDITOR install/jokyv.nix
+```
+
+Set `disk.device` to selected `/dev/disk/by-id/...` path:
+
+```nix
+disk.device = "/dev/disk/by-id/<target-disk>";
+```
+
+Do not use `/dev/nvme0n1` on a different machine. Confirm selected path names intended physical disk. Disko format is destructive.
+
+### 4. Partition, format, and mount
+
+```bash
+sudo nix run --experimental-features "nix-command flakes" github:nix-community/disko -- \
+  --mode disko --flake /tmp/nixos-config#jokyv-install
+```
+
+### 5. Verify target mounts
+
+Do this before `nixos-install`:
+
+```bash
+findmnt -R /mnt
+lsblk -f
+```
+
+Expected mounts include `/mnt`, `/mnt/boot`, `/mnt/home`, `/mnt/nix`, and `/mnt/var` when configured by Disko.
+
+Expected Btrfs subvolumes:
+
+```text
+@      /
+@home  /home
+@nix   /nix
+@var   /var
+```
+
+### 6. Install
+
+```bash
+sudo nixos-install --no-root-password \
+  --flake /tmp/nixos-config#jokyv-install
+```
+
+`--no-root-password` is safe only after primary-user password setup. Jokyv root and user accounts have no login password configured. Before reboot:
+
+```bash
+sudo nixos-enter --root /mnt -c 'passwd jokyv'
+```
+
+### 7. Reboot and verify
+
+Remove Live USB. Boot new systemd-boot entry.
+
+```bash
 findmnt /tmp ~/.cache/fontconfig ~/.cache/mesa_shader_cache
 lsblk -f
 systemctl --failed
 ```
 
+Clone repository into primary user home after first login. Future runtime rebuilds use:
+
+```bash
+sudo nixos-rebuild switch --flake ~/nixos-config#nixos
+```
+
+Dora remains unprovisioned until its physical target disk is available. Then follow **New host setup**.
+
+## New host setup
+
+For third or unrelated machine, create install-only configuration before running Disko:
+
+1. `hosts/<host>/default.nix` for hostname, user, host policy.
+2. `hosts/<host>/installer-hardware.nix` for target boot drivers only.
+3. `install/<host>.nix` for explicit `/dev/disk/by-id/...` target and Disko settings.
+4. Install `nixosConfigurations."<host>-install"` in `flake.nix`, passing host policy, installer hardware, and install settings to `install/default.nix`.
+
+Run Disko and `nixos-install` with this install output. It does not require a pre-existing `hardware-configuration.nix`.
+
+After first boot:
+
+1. Clone repository into `~/nixos-config`.
+2. Generate and verify machine hardware configuration:
+
+   ```bash
+   sudo nixos-generate-config --show-hardware-config
+   ```
+
+3. Store result at `hosts/<host>/hardware-configuration.nix`. Never copy another host’s UUIDs.
+4. Add runtime `nixosConfigurations.<host>` in `flake.nix`, importing host policy and this machine’s hardware configuration.
+5. Run `sudo nixos-rebuild switch --flake ~/nixos-config#<host>`.
+
+## Disk settings
+
+### `install/jokyv.nix`
+
+Current machine settings: Btrfs, 32 GiB randomly encrypted swap, 512 MiB EFI partition, unencrypted root.
+
+`dora` has no active install settings. Create `install/dora.nix` only on Dora after selecting its stable `/dev/disk/by-id/...` target.
+
 ## Troubleshooting
 
-- No disks found → check `lsblk`
-- Wrong disk → set `disk.device` in matching `install/*.nix`
-- Boot issues → check `/boot`, `lsblk -f`, `hardware-configuration.nix`
+- No target disk: run `lsblk -f` and inspect `/dev/disk/by-id/`.
+- Wrong target selected: stop before Disko; change `disk.device`.
+- Mounts missing after Disko: inspect `findmnt -R /mnt`; do not run `nixos-install`.
+- Boot fails: check `/boot`, `lsblk -f`, and host-specific `hardware-configuration.nix`.

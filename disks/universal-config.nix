@@ -3,7 +3,16 @@
 let
   cfg = import installConfigFile;
 
-  device = if cfg.disk.device != null then cfg.disk.device else "/dev/disk/by-diskseq/1";
+  device = cfg.disk.device;
+
+  btrfsSubvolumes = lib.mapAttrs' (
+    mountpoint: value:
+    lib.nameValuePair (if mountpoint == "/" then "@" else "@${lib.removePrefix "/" mountpoint}") {
+      inherit mountpoint;
+      mountOptions =
+        (value.options or [ ]) ++ lib.optionals (value ? compression) [ "compress=${value.compression}" ];
+    }
+  ) cfg.btrfs.subvolumes;
 
   partitions = {
     ESP = {
@@ -30,16 +39,7 @@ let
                 "-L"
                 cfg.btrfs.filesystemLabel
               ];
-              subvolumes = lib.optionalAttrs (cfg.disk.filesystem == "btrfs") (
-                lib.mapAttrs' (
-                  name: value:
-                  lib.nameValuePair "@${name}" {
-                    mountpoint = name;
-                    mountOptions =
-                      (value.options or [ ]) ++ lib.optionals (value ? compression) [ "compress=${value.compression}" ];
-                  }
-                ) cfg.btrfs.subvolumes
-              );
+              subvolumes = lib.optionalAttrs (cfg.disk.filesystem == "btrfs") btrfsSubvolumes;
             };
           }
         else
@@ -54,16 +54,7 @@ let
                 "-L"
                 cfg.ext4.filesystemLabel
               ];
-            subvolumes = lib.optionalAttrs (cfg.disk.filesystem == "btrfs") (
-              lib.mapAttrs' (
-                name: value:
-                lib.nameValuePair "@${name}" {
-                  mountpoint = name;
-                  mountOptions =
-                    (value.options or [ ]) ++ lib.optionals (value ? compression) [ "compress=${value.compression}" ];
-                }
-              ) cfg.btrfs.subvolumes
-            );
+            subvolumes = lib.optionalAttrs (cfg.disk.filesystem == "btrfs") btrfsSubvolumes;
           };
     };
   }

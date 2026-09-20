@@ -1,7 +1,7 @@
 {
   inputs,
   hostModule,
-  installConfigFile,
+  installerHardwareModule,
   ...
 }:
 
@@ -10,5 +10,6 @@
     inputs.disko.nixosModules.disko
     ../disks/universal-config.nix
     hostModule
+    installerHardwareModule
   ];
 }

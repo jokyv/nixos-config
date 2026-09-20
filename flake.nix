@@ -138,33 +138,13 @@
           ];
         };
 
-        dora = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit inputs; };
-          modules = [
-            ./hosts/dora/default.nix
-            ./hosts/dora/hardware-configuration.nix
-          ];
-        };
-
         "jokyv-install" = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
             inherit inputs;
             hostModule = ./hosts/jokyv/default.nix;
+            installerHardwareModule = ./hosts/jokyv/installer-hardware.nix;
             installConfigFile = ./install/jokyv.nix;
-          };
-          modules = [
-            ./install/default.nix
-          ];
-        };
-
-        "dora-install" = nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs;
-            hostModule = ./hosts/dora/default.nix;
-            installConfigFile = ./install/dora.nix;
           };
           modules = [
             ./install/default.nix

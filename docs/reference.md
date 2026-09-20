@@ -28,10 +28,9 @@ nixos-config/
 │       ├── yazi.nix
 │       └── deprecated/    # Old configs kept out of imports
 ├── hosts/              # Host-specific configurations
-│   ├── dora/           # GNOME host files
+│   ├── dora/           # GNOME policy; install configuration waits for target hardware
 │   │   ├── default.nix           # GNOME host configuration
-│   │   ├── desktop.nix          # GNOME desktop policy
-│   │   └── hardware-configuration.nix  # Hardware settings
+│   │   └── desktop.nix           # GNOME desktop policy
 │   └── jokyv/         # Current host files
 │       ├── default.nix           # Main host configuration
 │       ├── hardware-configuration.nix  # Hardware settings
@@ -42,8 +41,7 @@ nixos-config/
 │   └── disk-config-btrfs.nix       # Legacy Btrfs config
 ├── install/            # Install-only config for disko
 │   ├── default.nix      # Install wrapper
-│   ├── jokyv.nix        # Install knobs for jokyv
-│   └── dora.nix         # Install knobs for dora
+│   └── jokyv.nix        # Jokyv install settings
 ├── flake.nix          # Main flake configuration
 ├── flake.lock         # Locked dependency versions
 ├── justfile          # Task automation commands
@@ -79,10 +77,10 @@ Each host configuration includes:
 
 ### Machine Matrix
 
-| Host    | User    | Role            | Install output    |
-| ------- | ------- | --------------- | ----------------- |
-| `nixos` | `jokyv` | main desktop    | `.#jokyv-install` |
-| `dora`  | `dora`  | GNOME family PC | `.#dora-install`  |
+| Host    | User    | Role                                      | Install output    |
+| ------- | ------- | ----------------------------------------- | ----------------- |
+| `nixos` | `jokyv` | main desktop                              | `.#jokyv-install` |
+| `dora`  | `dora`  | GNOME policy; target hardware unavailable | Not available     |
 
 ### Gaming Optimizations
 

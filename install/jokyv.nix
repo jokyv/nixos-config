@@ -1,14 +1,14 @@
 {
   # Install config for jokyv machine
   disk = {
-    device = "/dev/nvme0n1";
+    device = "/dev/disk/by-id/nvme-eui.0025385691b5a680";
     filesystem = "btrfs";
     swapSize = "32G";
     efiSize = "512M";
     useLuks = false;
     encryptSwap = true;
     luks = {
-      name = "crypted";
+      name = "encrypted";
     };
   };
 
@@ -17,8 +17,10 @@
     subvolumes = {
       "/" = {
         options = [
-          "compress=zstd"
+          "compress-force=zstd:3"
           "noatime"
+          "ssd"
+          "discard=async"
         ];
       };
       "/home" = {
@@ -30,7 +32,8 @@
       "/nix" = {
         options = [
           "noatime"
-          "compress=zstd:1"
+          "compress-force=zstd:1"
+          "nodatacow"
         ];
       };
       "/var" = {
