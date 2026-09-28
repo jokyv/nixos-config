@@ -17,6 +17,8 @@
       show_actions = true;
       show_app_name = true;
       collapse_on_dismiss = true;
+      keep_dismissed_in_history = false;
+      history_retention_hours = 720;
       blacklist_allow_critical = true;
       blacklist = [ ];
       allowed_urgencies = [ ];

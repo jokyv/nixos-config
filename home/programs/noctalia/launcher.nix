@@ -12,6 +12,7 @@
       clipboard_auto_paste = "auto";
       clipboard_confirm_clear_history = true;
       clipboard_history_max_entries = 100;
+      launcher.show_app_actions = true;
 
       panel = {
         launcher_placement = "centered";

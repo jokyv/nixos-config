@@ -19,6 +19,11 @@
       disable_mipmaps = false;
       shared_gl_context = true;
       show_location = true;
+      screenshot = {
+        annotate = true;
+        directory = "${config.home.homeDirectory}/pics/screenshots";
+      };
+      window_switcher.mru = true;
 
       animation = {
         enabled = true;

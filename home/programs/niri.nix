@@ -99,6 +99,7 @@ in
           hide-not-bound
       }
       binds {
+          Alt+Tab { spawn "noctalia" "msg" "window-switcher"; }
           Mod+1 { focus-workspace 1; }
           Mod+2 { focus-workspace 2; }
           Mod+3 { focus-workspace 3; }
@@ -172,6 +173,7 @@ in
           Mod+Shift+T cooldown-ms=500 { spawn "kitty"; }
           Mod+Shift+U { move-workspace-down; }
           Mod+Shift+V { spawn "${scripts_dir}/clip_hist.py" "paste"; }
+          Mod+Shift+Y { spawn "noctalia" "msg" "screenshot-region"; }
           Mod+Space cooldown-ms=500 { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
           Mod+T cooldown-ms=500 { spawn "footclient"; }
           Mod+U { focus-workspace-down; }
