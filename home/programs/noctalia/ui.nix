@@ -19,11 +19,18 @@
       disable_mipmaps = false;
       shared_gl_context = true;
       show_location = true;
+      readline_shortcuts = true;
       screenshot = {
         annotate = true;
+        skip_annotate_on_copy_save = true;
+        close_on_save = true;
         directory = "${config.home.homeDirectory}/pics/screenshots";
       };
-      window_switcher.mru = true;
+      window_switcher = {
+        mru = true;
+        style = "compact";
+        show_all_outputs = true;
+      };
 
       animation = {
         enabled = true;
@@ -106,6 +113,12 @@
     calendar = {
       enabled = true;
       refresh_minutes = 15;
+      reminders = {
+        enabled = true;
+        use_event_reminders = true;
+        default_lead_minutes = 10;
+        all_day_digest_time = "09:00";
+      };
     };
 
     control_center = {

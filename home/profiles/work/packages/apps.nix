@@ -11,6 +11,7 @@
       psst # A spotify client
 
       # GNOME Apps
+      evolution
       gnome-calendar
       evince
       gnome-maps

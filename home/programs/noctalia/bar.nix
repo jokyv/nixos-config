@@ -41,6 +41,9 @@ _: {
         background_opacity = 0.85;
         border = "outline";
         border_width = 0.0;
+        capsule = true;
+        capsule_border = "outline";
+        capsule_border_width = 1.0;
         radius = 0;
         shadow = true;
         contact_shadow = false;
@@ -89,7 +92,8 @@ _: {
 
       media = {
         type = "media";
-        art_size = 16.0;
+        art_size = 24.0;
+        rotate_album_art = true;
         max_length = 220.0;
         min_length = 80.0;
         title_scroll = "none";
@@ -104,26 +108,36 @@ _: {
       temp = {
         type = "sysmon";
         stat = "cpu_temp";
+        custom_label = "TEMP";
+        show_glyph = false;
       };
 
       cpu = {
         type = "sysmon";
         stat = "cpu_usage";
+        custom_label = "CPU";
+        show_glyph = false;
       };
 
       ram = {
         type = "sysmon";
-        # stat = "ram_used";
+        stat = "ram_used";
+        custom_label = "RAM";
+        show_glyph = false;
       };
 
       network_rx = {
         type = "sysmon";
         stat = "net_rx";
+        custom_label = "RX";
+        show_glyph = false;
       };
 
       network_tx = {
         type = "sysmon";
         stat = "net_tx";
+        custom_label = "TX";
+        show_glyph = false;
       };
     };
   };

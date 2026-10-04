@@ -28,7 +28,7 @@
     cargo-edit
 
     # Python with packages
-    (python313.withPackages (
+    (python314.withPackages (
       ps: with ps; [
         requests
         pyyaml

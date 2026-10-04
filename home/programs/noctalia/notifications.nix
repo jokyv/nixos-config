@@ -12,6 +12,10 @@
       position = "top_right";
       layer = "top";
       scale = 1.0;
+      follow_focused_output = true;
+      width = 380;
+      border_color = "outline";
+      border_width = 1;
       offset_x = 20;
       offset_y = 8;
       show_actions = true;
@@ -28,6 +32,10 @@
     osd = {
       position = "top_center";
       scale = 1.0;
+      follow_focused_output = true;
+      hide_delay_ms = 1600;
+      border_color = "outline";
+      border_width = 1;
       offset_x = 20;
       offset_y = 8;
       orientation = "horizontal";
