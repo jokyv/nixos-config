@@ -13,9 +13,9 @@
 
         # Core configuration
         $env.config = {
-            show_banner: false    
+            show_banner: false
             table: {
-                mode: rounded    
+                mode: rounded
                 index_mode: always
                 show_empty: true
                 padding: { left: 1, right: 1 }
@@ -49,8 +49,8 @@
         # Environment variables
         $env.EDITOR = "hx"
         $env.PATH = (
-            $env.PATH 
-            | split row (char esep) 
+            $env.PATH
+            | split row (char esep)
             | append [
                 "~/scripts/bin"
                 "~/scripts/apps"
@@ -62,13 +62,13 @@
 
         def l [] { ls . | sort-by type size }
         def ll [] {
-            ls -al 
-            | where { |it| not ($exclude_list | any { |exclude| $it.name | str contains $exclude }) } 
+            ls -al
+            | where { |it| not ($exclude_list | any { |exclude| $it.name | str contains $exclude }) }
             | sort-by type
         }
         def lls [] {
-            ls -al 
-            | where { |it| not ($exclude_list | any { |exclude| $it.name | str contains $exclude }) } 
+            ls -al
+            | where { |it| not ($exclude_list | any { |exclude| $it.name | str contains $exclude }) }
             | sort-by size
         }
 
@@ -170,7 +170,7 @@
       "glo" = "git log --oneline";
       "glg" = "git_util.py --log_graph";
       "gpulla" = "git_util.py --pull_all_dirs";
-      "gpusha" = "git_util.py --push_all_dirs";
+      "gpusha" = "git_util.py --auto_commit --all";
       "gac" = "git_util.py --auto_commit";
       "gcame" = "git commit --amend --no-edit";
       "gcheck" = "git checkout .";

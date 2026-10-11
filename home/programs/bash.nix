@@ -112,7 +112,7 @@
       "glo" = "git log --oneline";
       "glg" = "python3 ~/scripts/bin/git_util.py --log_graph";
       "gpulla" = "python3 ~/scripts/bin/git_util.py --pull_all_dirs";
-      "gpusha" = "python3 ~/scripts/bin/git_util.py --push_all_dirs";
+      "gpusha" = "python3 ~/scripts/bin/git_util.py --auto_commit --all";
       "gac" = "python3 ~/scripts/bin/git_util.py --auto_commit";
       "gcame" = "git commit --amend --no-edit";
       "gcheck" = "git checkout .";
