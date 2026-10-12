@@ -1,7 +1,64 @@
+## [1.0.0] - 2026-10-12
+
+### 🚀 Features
+
+- _(noctalia)_ Migrate config to v5
+- _(hosts)_ Split install flow
+- _(nix)_ Warm build cache in background
+- _(system)_ Harden services and add maintenance
+- _(nixos)_ Modularize and harden host
+- _(niri)_ Migrate to native home manager module
+- _(home)_ Add herdr config
+- _(work)_ Enable herdr
+- _(noctalia)_ Enable v5 shell features
+- Configure Noctalia and work setup
+
+### 🐛 Bug Fixes
+
+- _(home)_ Update desktop program settings
+- _(desktop)_ Restore noctalia after resume
+- _(jokyv)_ Stabilize desktop session
+- _(noctalia)_ Use on-surface color for caps lock
+
+### 📚 Documentation
+
+- _(changelog)_ Clean up v0.7.0 entries
+- Refresh machine matrix
+
+### 🚜 Refactor
+
+- _(noctalia)_ Tweak bar layout
+- _(home)_ Extract shared home module
+- _(home)_ Split core and profiles
+- _(config)_ Remove old entrypoints
+- _(installer)_ Separate hardware config
+
+### 🎨 Styling
+
+- Format CHANGELOG.md markdown syntax
+- _(justfile)_ Update syntax
+
+### ⚙️ Miscellaneous Tasks
+
+- _(theme)_ Adjust noctalia styling
+- _(git)_ Add audit alias
+- Enable stylix cursor and format docs
+- Add devshell and clean nix config
+- _(flake)_ Update inputs
+- _(work)_ Allow discord-unwrapped
+- Update desktop defaults
+- _(aliases)_ Route gpusha to auto-commit
+
+### 💼 Other
+
+- Update
+- Add pre-commit to home packages
+
 ## [0.7.0] - 2026-06-09
 
 ### 🚀 Features
 
+- _(fnott)_ Implement per-urgency timeouts and action configuration
 - _(fnott)_ Implement per-urgency timeouts and action configuration
 - Add Ruff configuration using Home Manager
 - Implement universal NixOS installer with auto-detection
@@ -59,11 +116,19 @@
 - Clean up deprecated programs, add noctalia resume fix
 - _(niri)_ Silence hyprland warning, disable border bg, cleanup gitignore
 
-### 💼 Other
+### 📚 Documentation
 
-- Apply issue #23 improvements
-- General dependency updates
-- Update
+- Organize documentation structure and add comprehensive guides
+- Add dark theme support for GitHub Pages
+- Update documentation for universal installer feature
+- Fix directory structure in reference.md
+- Move universal installer to docs directory
+- _(readme)_ Add gaming mode documentation and include just
+- Update documentation with gaming mode and claude integration
+- Add CLAUDE.md for AI assistant context
+- _(readme)_ Update NixOS version badge to 26.05
+- Update claude commands documentation for restructured workflow
+- _(secrets)_ Update sops configuration format and usage examples
 
 ### 🚜 Refactor
 
@@ -71,6 +136,7 @@
 - Extract system automation to maintenance.nix
 - _(claude)_ Merge doc commands, add security scan to maintain
 - _(claude)_ Extract hooks to separate file with improved config
+- _(justfile)_ Organize recipes into logical groups
 - _(justfile)_ Organize recipes into logical groups
 - _(claude)_ Clean up memory text and add design-review command
 - _(hosts/jokyv)_ Restructured kernel sysctl settings with inline docs
@@ -87,20 +153,6 @@
 - Point claude commands to agent-dotfiles, remove stale copies
 - _(noctalia)_ Rename programs.noctalia-shell to programs.noctalia
 
-### 📚 Documentation
-
-- Organize documentation structure and add comprehensive guides
-- Add dark theme support for GitHub Pages
-- Update documentation for universal installer feature
-- Fix directory structure in reference.md
-- Move universal installer to docs directory
-- _(readme)_ Add gaming mode documentation and include just
-- Update documentation with gaming mode and claude integration
-- Add CLAUDE.md for AI assistant context
-- _(readme)_ Update NixOS version badge to 26.05
-- Update claude commands documentation for restructured workflow
-- _(secrets)_ Update sops configuration format and usage examples
-
 ### 🎨 Styling
 
 - _(stylix)_ Switch to kanagawa theme
@@ -114,10 +166,48 @@
 - _(claude)_ Remove unused glm auth token configuration
 - Replace btop with bottom, remove htop
 - _(home)_ Remove deprecated gtk4 theme override
+- _(release)_ Update changelog for v0.7.0
 
 ### ◀️ Revert
 
 - Restore disko imports to fix module evaluation
+
+### 💼 Other
+
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Apply issue #23 improvements
+- Update
+- Update
+- Update
+- Update
+- Update
 
 ## [0.6.0] - 2025-12-12
 
@@ -205,27 +295,22 @@
 - Correct layer-rules matches format to use list structure
 - Update script paths and add Python requests package
 
-### 💼 Other
+### 📚 Documentation
 
-- _(home)_ Improve and document program configurations
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Add AI assistant directories to ignores
-- Update
-- Update
-- Update
+- Update changelog for v0.5.0
+- Add comments explaining inheritance patterns
+- Add installation instructions
+- Replace SSH clone URL with HTTPS in install guide
+- Update disk config file path in installation instructions
+- Add example for setting initial user password
+- Switch clone command to SSH URL in install guide
+- Update install guide and tweak niri config
+- Update installation instructions and fix git clone URLs
+- Add secrets management documentation
+
+### ⚡ Performance
+
+- _(nixos)_ Use sd-switch to avoid restarting user services on rebuild
 
 ### 🚜 Refactor
 
@@ -262,23 +347,6 @@
 - Switch Python LSP to ty and improve configuration
 - Move python packages to home manager and improve health checks
 - Consolidate Python packages using withPackages
-
-### 📚 Documentation
-
-- Update changelog for v0.5.0
-- Add comments explaining inheritance patterns
-- Add installation instructions
-- Replace SSH clone URL with HTTPS in install guide
-- Update disk config file path in installation instructions
-- Add example for setting initial user password
-- Switch clone command to SSH URL in install guide
-- Update install guide and tweak niri config
-- Update installation instructions and fix git clone URLs
-- Add secrets management documentation
-
-### ⚡ Performance
-
-- _(nixos)_ Use sd-switch to avoid restarting user services on rebuild
 
 ### 🎨 Styling
 
@@ -318,6 +386,28 @@
 - Started documentation for this repo
 - _(yazi)_ Rename manager to mgr in yazi settings
 - _(release)_ Update changelog for v0.6.0
+
+### 💼 Other
+
+- _(home)_ Improve and document program configurations
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Add AI assistant directories to ignores
+- Update
+- Update
+- Update
 
 ## [0.5.0] - 2025-10-06
 
@@ -363,25 +453,6 @@
 - Correct shell variable handling in just recipes
 - Revert commit command to working version
 - Correct noctalia config for current user
-
-### 💼 Other
-
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
 
 ### 🚜 Refactor
 
@@ -445,6 +516,25 @@
 - Add noctalia-shell and quickshell flake inputs
 - Update flake inputs and noctalia configuration
 
+### 💼 Other
+
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+
 ## [0.4.0] - 2025-09-01
 
 ### 🚀 Features
@@ -464,6 +554,12 @@
 - Correct default count handling in git aliases
 - Use -n for count in git log aliases
 
+### ⚙️ Miscellaneous Tasks
+
+- Update CHANGELOG.md with new version
+- Disable dprint and adjust niri config
+- _(release)_ Update changelog for v0.4.0
+
 ### 💼 Other
 
 - Update
@@ -473,12 +569,6 @@
 - Update
 - Update
 - Update
-
-### ⚙️ Miscellaneous Tasks
-
-- Update CHANGELOG.md with new version
-- Disable dprint and adjust niri config
-- _(release)_ Update changelog for v0.4.0
 
 ## [0.3.0] - 2025-05-31
 
@@ -494,21 +584,16 @@
 ### 🐛 Bug Fixes
 
 - _(stylix.nix)_ Commented out kvantum config part
-- _(nu.nix)_ Replaced depreceated config due to update
+- _(nu.nix)_ Replaced deprecated config due to update
 - Comment out GTK dark theme preference in Stylix
 - Move style properties to window#waybar selector to fix CSS error
 - Use @bg_active for Waybar tooltip background to ensure solidity
 - Remove xdg-desktop-portal-gtk from portal config
 
-### 💼 Other
+### 📚 Documentation
 
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
-- Update
+- Create changelog for my commits/releases
+- Restructure and expand README documentation
 
 ### 🚜 Refactor
 
@@ -516,11 +601,6 @@
 - Simplify configs and update python to 3.12
 - Remove commented-out XDG portal config from home-manager
 - Center clock module by moving it to modules-center
-
-### 📚 Documentation
-
-- Create changelog for my commits/releases
-- Restructure and expand README documentation
 
 ### 🎨 Styling
 
@@ -536,6 +616,16 @@
 
 - Comment out xdg-desktop-portal configuration
 - Update niri, stylix, waybar configs and jokyv host config
+
+### 💼 Other
+
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
+- Update
 
 ## [0.2.0] - 2025-02-02
 
@@ -578,6 +668,16 @@
 - _(foot)_ Fixed issue with foot and made it the default terminal
 - _(niri)_ Issues with typos and floating commands
 
+### 📚 Documentation
+
+- _(CHANGELOG.md)_ Create changelog for my commits/releases
+
+### 🚜 Refactor
+
+- _(home/default.nix)_ Small changes
+- _(home/default.nix)_ Refactoring the packages list.
+- _(waybar.nix)_ Small changes
+
 ### 💼 Other
 
 - Update
@@ -592,16 +692,6 @@
 - Update
 - Update
 - Update
-
-### 🚜 Refactor
-
-- _(home/default.nix)_ Small changes
-- _(home/default.nix)_ Refactoring the packages list.
-- _(waybar.nix)_ Small changes
-
-### 📚 Documentation
-
-- _(CHANGELOG.md)_ Create changelog for my commits/releases
 
 ## [0.1.0] - 2024-12-28
 
