@@ -29,6 +29,9 @@
           substituteInPlace src/shell/bar/widgets/sysmon_widget.cpp \
             --replace-fail 'return FormatUnits::formatBinaryMib(stats.ramUsedMb);' \
             'return std::format("{:.1F} G", static_cast<double>(stats.ramUsedMb) / 1024.0);'
+          substituteInPlace src/shell/bar/widgets/lock_keys_widget.cpp \
+            --replace-fail 'lockState.capsLock ? colorSpecFromRole(ColorRole::Primary)' \
+            'lockState.capsLock ? colorSpecFromRole(ColorRole::OnSurface)'
         '';
       });
 
