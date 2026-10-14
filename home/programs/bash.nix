@@ -100,27 +100,27 @@
       "tre" = "python3 ~/scripts/bin/fzf_util.py --empty_trash";
 
       # Git
-      "ginit" = "python3 ~/scripts/bin/git_util.py --init_template";
+      "ginit" = "~/scripts/bin/git_util --init_template";
       "gpu" = "git push";
       "gpl" = "git pull";
       "ga" = "git add";
       "gall" = "git add -A";
       "gc" = "git commit";
       "gcm" = "git commit -m";
-      "gcw" = "python3 ~/scripts/bin/git_util.py --commit_workflow";
+      "gcw" = "~/scripts/bin/git_util --commit_workflow";
       "gl" = "git log";
       "glo" = "git log --oneline";
-      "glg" = "python3 ~/scripts/bin/git_util.py --log_graph";
-      "gpulla" = "python3 ~/scripts/bin/git_util.py --pull_all_dirs";
-      "gpusha" = "python3 ~/scripts/bin/git_util.py --auto_commit --all";
-      "gac" = "python3 ~/scripts/bin/git_util.py --auto_commit";
+      "glg" = "~/scripts/bin/git_util --log_graph";
+      "gpulla" = "~/scripts/bin/git_util --pull_all_dirs";
+      "gpusha" = "~/scripts/bin/git_util --auto_commit --all";
+      "gac" = "~/scripts/bin/git_util --auto_commit";
       "gcame" = "git commit --amend --no-edit";
       "gcheck" = "git checkout .";
       "gs" = "git status -sb";
-      "gsa" = "python3 ~/scripts/bin/git_util.py --status_all_dirs";
-      "gclean" = "python3 ~/scripts/bin/git_util.py --clean_up";
+      "gsa" = "~/scripts/bin/git_util --status_all_dirs";
+      "gclean" = "~/scripts/bin/git_util --clean_up";
       "gd" = "git diff -w";
-      "gh-create" = "python3 ~/scripts/bin/git_util.py --create_push_gh_repo";
+      "gh-create" = "~/scripts/bin/git_util --create_push_gh_repo";
 
     };
 

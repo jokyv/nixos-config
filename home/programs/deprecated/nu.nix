@@ -158,27 +158,27 @@
       "tre" = "fzf_util.py --empty_trash";
 
       # Git
-      "ginit" = "git_util.py --init_template";
+      "ginit" = "git_util --init_template";
       "gpu" = "git push";
       "gpl" = "git pull";
       "ga" = "git add";
       "gall" = "git add -A";
       "gc" = "git commit";
       "gcm" = "git commit -m";
-      "gcw" = "git_util.py --commit_workflow";
+      "gcw" = "git_util --commit_workflow";
       "gl" = "git log";
       "glo" = "git log --oneline";
-      "glg" = "git_util.py --log_graph";
-      "gpulla" = "git_util.py --pull_all_dirs";
-      "gpusha" = "git_util.py --auto_commit --all";
-      "gac" = "git_util.py --auto_commit";
+      "glg" = "git_util --log_graph";
+      "gpulla" = "git_util --pull_all_dirs";
+      "gpusha" = "git_util --auto_commit --all";
+      "gac" = "git_util --auto_commit";
       "gcame" = "git commit --amend --no-edit";
       "gcheck" = "git checkout .";
       "gs" = "git status -sb";
-      "gsa" = "git_util.py --status_all_dirs";
-      "gclean" = "git_util.py --clean_up";
+      "gsa" = "git_util --status_all_dirs";
+      "gclean" = "git_util --clean_up";
       "gd" = "git diff -w";
-      "gh-create" = "git_util.py --create_push_gh_repo";
+      "gh-create" = "git_util --create_push_gh_repo";
     };
   };
 }

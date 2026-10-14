@@ -1,3 +1,9 @@
+## [Unreleased]
+
+### Bug Fixes
+
+- _(git)_ Route Bash, Nushell, and Git audit aliases through the project-aware `git_util` launcher so Git utilities no longer require manual Python environment activation.
+
 ## [1.0.0] - 2026-10-12
 
 ### 🚀 Features
