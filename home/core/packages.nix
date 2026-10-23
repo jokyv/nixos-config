@@ -5,6 +5,7 @@
     bottom
     cliphist
     font-awesome
+    gogcli # Google APIs CLI (gmail)
     grim
     just
     noto-fonts
