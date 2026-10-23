@@ -41,14 +41,8 @@ in
       output "DP-1" {
           scale 1
           transform "normal"
-          position x=1920 y=0
-          mode "1920x1080@120.000000"
-      }
-      output "HDMI-A-1" {
-          scale 1
-          transform "normal"
           position x=0 y=0
-          mode "1920x1080@120.000000"
+          mode "1920x1080@119.982000"
       }
       screenshot-path "${screenshots_dir}/screenshot from %Y-%m-%d %H-%M-%S.png"
       prefer-no-csd
