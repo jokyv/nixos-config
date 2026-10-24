@@ -119,6 +119,14 @@ let
 in
 {
   services = {
+    displayManager.regreet = {
+      enable = true;
+      settings.background = {
+        path = "${../../home/wallpaper.png}";
+        fit = "Cover";
+      };
+    };
+
     # System services
     fwupd.enable = true;
     fstrim.enable = true;
