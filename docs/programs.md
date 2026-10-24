@@ -4,12 +4,11 @@ This document describes the configured programs and their customizations in this
 
 ## Installation
 
-For installing the NixOS system, see the [Installation Guide](installation.md). The system includes a universal installer that:
+For installing the NixOS system, see the [Installation Guide](installation.md). The Disko installer uses an explicitly configured target disk; it does not auto-detect a safe disk to format.
 
-- Auto-detects the first available disk
-- Configures filesystems (Btrfs/Ext4) with optional LUKS encryption
-- Sets up partition layouts automatically
-- Requires no manual disk identification
+- Configure filesystems (Btrfs/Ext4) with optional LUKS encryption
+- Set up partition layouts from the host's install settings
+- Select and verify the target disk before formatting; Disko formatting is destructive
 
 ## Development Tools
 

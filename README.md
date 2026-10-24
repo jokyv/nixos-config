@@ -55,7 +55,7 @@ This documentation provides detailed explanations of:
 
 ## Key Features
 
-- **Universal Installer:** Auto-detects first disk with configurable filesystems (Btrfs/Ext4) and LUKS encryption
+- **Universal Installer:** Uses an explicitly selected target disk with configurable filesystems (Btrfs/Ext4) and optional LUKS encryption; verify the target before formatting
 - **Declarative Configuration:** Entire system state defined in Nix expressions
 - **Reproducible Builds:** Deterministic package management
 - **Atomic Upgrades:** Rollback support for system changes
