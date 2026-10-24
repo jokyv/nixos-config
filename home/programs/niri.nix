@@ -44,6 +44,9 @@ in
           position x=0 y=0
           mode "1920x1080@119.982000"
       }
+      output "HDMI-A-1" {
+          off
+      }
       screenshot-path "${screenshots_dir}/screenshot from %Y-%m-%d %H-%M-%S.png"
       prefer-no-csd
       overview {
@@ -146,17 +149,17 @@ in
           Mod+Shift+B repeat=false { spawn "brave"; }
           Mod+Shift+C { spawn "${scripts_dir}/clip_hist.py" "add"; }
           Mod+Shift+Ctrl+F { maximize-window-to-edges; }
-          Mod+Shift+Ctrl+H { move-column-to-monitor-left; }
-          Mod+Shift+Ctrl+J { move-column-to-monitor-down; }
-          Mod+Shift+Ctrl+K { move-column-to-monitor-up; }
-          Mod+Shift+Ctrl+L { move-column-to-monitor-right; }
+          // Mod+Shift+Ctrl+H { move-column-to-monitor-left; }
+          // Mod+Shift+Ctrl+J { move-column-to-monitor-down; }
+          // Mod+Shift+Ctrl+K { move-column-to-monitor-up; }
+          // Mod+Shift+Ctrl+L { move-column-to-monitor-right; }
           Mod+Shift+D { spawn "${scripts_dir}/clip_hist.py" "del"; }
           Mod+Shift+Equal { set-window-height "+10%"; }
           Mod+Shift+Escape cooldown-ms=500 { spawn "noctalia" "msg" "panel-toggle" "session"; }
           Mod+Shift+F { fullscreen-window; }
-          Mod+Shift+H { focus-monitor-left; }
+          // Mod+Shift+H { focus-monitor-left; }
           Mod+Shift+I { move-workspace-up; }
-          Mod+Shift+L { focus-monitor-right; }
+          // Mod+Shift+L { focus-monitor-right; }
           Mod+Shift+M { spawn "${scripts_dir}/my_logout.py"; }
           Mod+Shift+Minus { set-window-height "-10%"; }
           Mod+Shift+P { power-off-monitors; }
