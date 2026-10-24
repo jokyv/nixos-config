@@ -46,7 +46,7 @@
 
       # Linux Scripts
       "sb" = "python3 ~/scripts/bin/linux_util.py --source_bash_profile";
-      "cdd" = "python3 ~/scripts/bin/linux_util.py --cd_with_eza";
+      "cdd" = "cd_with_eza";
 
       # Weather aliases
       "weather" = "python3 ~/scripts/bin/linux_util.py --weather";
@@ -160,6 +160,7 @@
       }
 
       # Source additional scripts, aliases, and exports
+      source_if_exists "$HOME/scripts/bin/bash_util.sh"
       source_if_exists $HOME/nixos-config/bin/linux_scripts.sh
 
       # Initialize external programs and utilities
