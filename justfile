@@ -17,7 +17,7 @@ help:
 [group('rebuild')]
 home:
     @echo "[INFO] Rebuilding Home Manager configuration..."
-    home-manager switch -b backup --flake .#jokyv --show-trace || { echo "[ERROR] Home Manager switch failed"; exit 1; }
+    home-manager switch -b backup --flake .#jokyv --show-trace
     @echo "[SUCCESS] Home Manager rebuild successful"
 
 # Rebuild the home config using nh
@@ -29,7 +29,7 @@ home-nh:
 [group('rebuild')]
 game:
     @echo "[INFO] Switching to gaming mode..."
-    home-manager switch --flake .#gaming || { echo "[ERROR] Gaming mode switch failed"; exit 1; }
+    home-manager switch --flake .#gaming
     @echo "[SUCCESS] Gaming mode activated"
 
 # Alias hnh for home-nh
@@ -40,7 +40,7 @@ alias hnh := home-nh
 [group('rebuild')]
 switch:
     @echo "[INFO] Rebuilding system configuration..."
-    sudo nixos-rebuild switch --impure --flake .#nixos --show-trace || { echo "[ERROR] System rebuild failed"; exit 1; }
+    sudo nixos-rebuild switch --impure --flake .#nixos --show-trace
     @echo "[SUCCESS] System rebuild successful"
 
 # Roll back to previous system generation
@@ -61,23 +61,23 @@ alias snh := switch-nh
 [group('rebuild')]
 boot:
     @echo "[WARNING] Building boot configuration..."
-    sudo nixos-rebuild boot --fast --impure --flake .#nixos --show-trace || { echo "[ERROR] Boot config failed"; exit 1; }
+    sudo nixos-rebuild boot --fast --impure --flake .#nixos --show-trace
     @echo "[SUCCESS] Boot configuration built successfully"
 
 # Dry-build a new configuration
 [group('rebuild')]
 dry:
     @echo "[WARNING] Running dry-build..."
-    sudo nixos-rebuild dry-activate --fast --flake .#nixos --show-trace || { echo "[ERROR] Dry-run failed"; exit 1; }
+    sudo nixos-rebuild dry-activate --fast --flake .#nixos --show-trace
     @echo "[SUCCESS] Dry-build completed successfully"
 
 # Prefetch home + system closures for faster rebuilds
 [group('maintenance')]
 prefetch:
     @echo "[INFO] Warming Home Manager build cache..."
-    @nix build --accept-flake-config --extra-experimental-features "nix-command flakes" --no-link .#homeConfigurations.jokyv.activationPackage || { echo "[ERROR] Home prefetch failed"; exit 1; }
+    @nix build --accept-flake-config --extra-experimental-features "nix-command flakes" --no-link .#homeConfigurations.jokyv.activationPackage
     @echo "[INFO] Warming NixOS system build cache..."
-    @nix build --accept-flake-config --extra-experimental-features "nix-command flakes" --no-link .#nixosConfigurations.nixos.config.system.build.toplevel || { echo "[ERROR] System prefetch failed"; exit 1; }
+    @nix build --accept-flake-config --extra-experimental-features "nix-command flakes" --no-link .#nixosConfigurations.nixos.config.system.build.toplevel
     @echo "[SUCCESS] Build cache warm-up completed"
 
 # Run tests
@@ -85,6 +85,8 @@ prefetch:
 test:
     @echo "[INFO] Running tests..."
     nix flake check --show-trace --print-build-logs --verbose
+    nix eval --raw .#homeConfigurations.jokyv.activationPackage.drvPath >/dev/null
+    nix eval --raw .#homeConfigurations.gaming.activationPackage.drvPath >/dev/null
     @echo "[SUCCESS] Tests completed"
 
 # Update all inputs
@@ -113,30 +115,30 @@ repl:
 [group('maintenance')]
 cleanup-dry:
     @echo "[INFO] Dry run - showing what would be cleaned..."
-    nh clean all --keep 3 --dry || { echo "[ERROR] Dry cleanup failed"; exit 1; }
+    nh clean all --keep 3 --dry
     @echo "[SUCCESS] Dry cleanup completed"
 
 # Quick cleanup - keep 10 generations (safe)
 [group('maintenance')]
 cleanup-quick:
     @echo "[INFO] Running quick cleanup (keeping 10 generations)..."
-    nh clean all --keep 10 || { echo "[ERROR] Quick cleanup failed"; exit 1; }
+    nh clean all --keep 10
     @echo "[SUCCESS] Quick cleanup completed"
 
 # Smart cleanup - keep 3 generations (recommended for regular use)
 [group('maintenance')]
 cleanup-smart:
     @echo "[INFO] Running smart cleanup (keeping 3 generations)..."
-    nh clean all --keep 3 || { echo "[ERROR] Smart clean failed"; exit 1; }
-    sudo nix store optimise || { echo "[ERROR] Store optimization failed"; exit 1; }
+    nh clean all --keep 3
+    sudo nix store optimise
     @echo "[SUCCESS] Smart cleanup completed"
 
 # Deep / aggressive cleanup (use with caution)
 [group('maintenance')]
 cleanup-deep:
     @echo "[WARNING] Running deep cleanup (keeping only current generation)..."
-    nh clean all --keep 1 || { echo "[ERROR] Deep clean failed"; exit 1; }
-    sudo nix-collect-garbage --delete-older-than 30d || { echo "[ERROR] Garbage collection failed"; exit 1; }
+    nh clean all --keep 1
+    sudo nix-collect-garbage --delete-older-than 30d
     @echo "[SUCCESS] Deep cleanup completed"
 
 # cleanup alias (points to smart cleanup as default)
@@ -156,18 +158,19 @@ decode:
 # Safely edit encrypted secrets using SOPS (Secrets OPerationS)
 [group('secrets')]
 edit-secrets:
-    sops secrets.yaml
+    sops secrets.enc.yaml || { status=$?; [ "$status" -eq 200 ] || exit "$status"; }
 
 # Validate that the encrypted secrets file can be decrypted successfully
 [group('secrets')]
 validate-secrets:
     @echo "[INFO] Validating secrets..."
-    sops -d secrets.enc.yaml > /dev/null && echo "[SUCCESS] Secrets are valid" || { echo "[ERROR] Secrets validation failed"; exit 1; }
+    sops -d secrets.enc.yaml > /dev/null
+    @echo "[SUCCESS] Secrets are valid"
 
 # Rotate the encryption key for secrets (use if keys are compromised)
 [group('secrets')]
 rotate-secrets:
-    sops --rotate secrets.yaml
+    sops --rotate secrets.enc.yaml
 
 # Show the current changes
 [group('dev')]
@@ -188,9 +191,9 @@ commit:
     @echo "Committing generation {{ `sudo nixos-rebuild list-generations | awk '/True/ {print $1}'` }}"
     git commit -am "chore(nixos): apply generation {{ `sudo nixos-rebuild list-generations | awk '/True/ {print $1}'` }}"
 
-# Buffed nixos-rebuild switch - depends on fmt, switch, and commit
+# Format and rebuild the system without committing
 [group('rebuild')]
-buffedswitch: fmt switch commit
+buffedswitch: fmt switch
     @echo "Done."
 
 # Quick system status check
@@ -294,7 +297,7 @@ useful-commands:
     @echo "home-manager switch - apply home config"
     @echo "home-manager switch --flake .#user - use flake"
 
-    @echo "sudo nixos-rebuild list-generations - list generation" 
+    @echo "sudo nixos-rebuild list-generations - list generation"
     @echo "just rollback - switch to previous system generation"
     @echo "sudo nixos-rebuild boot --option number <id> - boot into generataion id"
 
