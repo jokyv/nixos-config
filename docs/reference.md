@@ -223,6 +223,12 @@ nix develop --command statix fix .
 git diff
 ```
 
+### CI Validation
+
+[The GitHub Actions workflow](../.github/workflows/check.yml) runs `nix develop --command just test` on pushes and pull requests using an x86_64 Linux runner. It reuses the local test recipe to check the NixOS host and installer outputs and evaluate both Home Manager profiles.
+
+CI accepts the flake's Nix settings non-interactively. It does not activate configurations or require the private SOPS AGE key. Evaluation checks do not verify boot or desktop runtime behavior.
+
 ## Secrets Management
 
 The configuration uses sops-nix for encrypted secrets:
