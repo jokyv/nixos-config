@@ -8,9 +8,11 @@ This repository currently declares one install output:
 
 `dora` has no install or runtime output until its target hardware is available.
 
+See [Host, User, and Output Naming](reference.md#host-user-and-output-naming) for naming rules, current-machine examples, and the preserved `nixos`/`jokyv-install` exception.
+
 ## Installer interface
 
-Each `.<host>-install` output composes three modules:
+Each install output composes three modules:
 
 ```text
 Disko layout

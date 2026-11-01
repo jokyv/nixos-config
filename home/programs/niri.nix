@@ -39,13 +39,17 @@ in
           workspace-auto-back-and-forth
       }
       output "DP-1" {
+          off
           scale 1
           transform "normal"
           position x=0 y=0
           mode "1920x1080@119.982000"
       }
       output "HDMI-A-1" {
-          off
+          scale 1.35
+          transform "normal"
+          position x=0 y=0
+          mode "3840x2160@60.000"
       }
       screenshot-path "${screenshots_dir}/screenshot from %Y-%m-%d %H-%M-%S.png"
       prefer-no-csd
@@ -195,7 +199,6 @@ in
       }
       window-rule {
           match app-id="^firefox$"
-          open-maximized true
           scroll-factor 0.900000
       }
       window-rule {

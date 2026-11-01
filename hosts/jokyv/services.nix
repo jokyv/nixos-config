@@ -121,10 +121,8 @@ in
   services = {
     displayManager.regreet = {
       enable = true;
-      settings.background = {
-        path = "${../../home/wallpaper.png}";
-        fit = "Cover";
-      };
+      # Keep the greeter dark without the image-loading path that caused freezes.
+      settings.GTK.application_prefer_dark_theme = true;
     };
 
     # System services

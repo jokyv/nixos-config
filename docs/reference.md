@@ -77,10 +77,31 @@ Each host configuration includes:
 
 ### Machine Matrix
 
-| Host    | User    | Role                                      | Install output    |
-| ------- | ------- | ----------------------------------------- | ----------------- |
-| `nixos` | `jokyv` | main desktop                              | `.#jokyv-install` |
-| `dora`  | `dora`  | GNOME policy; target hardware unavailable | Not available     |
+| Host    | User    | Role                                      | Runtime output | Install output    |
+| ------- | ------- | ----------------------------------------- | -------------- | ----------------- |
+| `nixos` | `jokyv` | main desktop                              | `.#nixos`      | `.#jokyv-install` |
+| `dora`  | `dora`  | GNOME policy; target hardware unavailable | Not available  | Not available     |
+
+### Host, User, and Output Naming
+
+- **Hostnames:** Use short, lowercase, role-based or person-based names, such as `atlas` or `dora`. Set the machine name with `networking.hostName`.
+- **Usernames:** Use lowercase, stable login names. A personal host normally has one primary user; shared machines can have multiple users. Hostname and username may match, as with `dora`, but do not have to: a user keeps the same login name across differently named hosts.
+- **New host paths and outputs:** Use the hostname for `hosts/<host>/`, runtime output `nixosConfigurations.<host>`, install settings `install/<host>.nix`, and install output `nixosConfigurations."<host>-install"`. Select the outputs with `.#<host>` and `.#<host>-install`. Here `<host>` means the hostname, not the username.
+
+Existing names are preserved. The main desktop is the exception: hostname and runtime output `nixos`, primary user `jokyv`, host files in `hosts/jokyv/`, install settings `install/jokyv.nix`, and install output `jokyv-install`. This policy does not rename any of them. Dora currently has policy files in `hosts/dora/` but no runtime or install flake output; `dora-install` is a future name, not an available output.
+
+For example, a future personal host named `atlas` with primary user `jokyv` would use:
+
+| Setting          | Example                                                                |
+| ---------------- | ---------------------------------------------------------------------- |
+| Hostname         | `networking.hostName = "atlas";`                                       |
+| Primary user     | `users.users.jokyv`                                                    |
+| Host policy      | `hosts/atlas/default.nix`                                              |
+| Runtime output   | `nixosConfigurations.atlas`, selected with `.#atlas`                   |
+| Install settings | `install/atlas.nix`                                                    |
+| Install output   | `nixosConfigurations."atlas-install"`, selected with `.#atlas-install` |
+
+This is a naming example, not a currently declared host. Follow [New host setup](installation.md#new-host-setup) to provision it.
 
 ### Gaming Optimizations
 
