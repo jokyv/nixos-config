@@ -9,7 +9,10 @@
 let
   repoDir = "/home/${primaryUser}/nixos-config";
   prefetchSystem = pkgs.writeShellScriptBin "prefetch-system-closure" ''
-    exec ${pkgs.nixVersions.stable}/bin/nix build \
+    ${pkgs.coreutils}/bin/mkdir -p "/home/${primaryUser}/.cache"
+    exec ${pkgs.util-linux}/bin/flock "/home/${primaryUser}/.cache/nix-prefetch.lock" \
+      ${pkgs.nixVersions.stable}/bin/nix build \
+      --max-jobs 1 --cores 4 \
       --accept-flake-config \
       --extra-experimental-features "nix-command flakes" \
       --no-link \
@@ -77,11 +80,25 @@ in
     services.prefetch-system-closure = {
       after = [ "network-online.target" ];
       wants = [ "network-online.target" ];
+      onFailure = [ "prefetch-system-closure-failed.service" ];
       serviceConfig = {
         Type = "oneshot";
         User = primaryUser;
         ExecStart = "${prefetchSystem}/bin/prefetch-system-closure";
       };
+    };
+
+    services.prefetch-system-closure-failed = {
+      description = "Notify about NixOS prefetch failure";
+      serviceConfig = {
+        Type = "oneshot";
+        User = primaryUser;
+      };
+      script = ''
+        export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(${pkgs.coreutils}/bin/id -u)/bus"
+        exec ${pkgs.libnotify}/bin/notify-send --urgency=critical \
+          "NixOS prefetch failed" "Check: journalctl -u prefetch-system-closure.service"
+      '';
     };
 
     timers.prefetch-system-closure = {

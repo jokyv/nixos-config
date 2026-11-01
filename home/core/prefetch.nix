@@ -3,7 +3,10 @@
 let
   repoDir = "${config.home.homeDirectory}/nixos-config";
   prefetchHome = pkgs.writeShellScriptBin "prefetch-home-closure" ''
-    exec ${pkgs.nix}/bin/nix build \
+    ${pkgs.coreutils}/bin/mkdir -p "${config.home.homeDirectory}/.cache"
+    exec ${pkgs.util-linux}/bin/flock "${config.home.homeDirectory}/.cache/nix-prefetch.lock" \
+      ${pkgs.nix}/bin/nix build \
+      --max-jobs 1 --cores 4 \
       --accept-flake-config \
       --extra-experimental-features "nix-command flakes" \
       --no-link \
@@ -15,12 +18,21 @@ in
     services.prefetch-home-closure = {
       Unit = {
         Description = "Prefetch Home Manager closure";
+        OnFailure = [ "prefetch-home-closure-failed.service" ];
         After = [ "network-online.target" ];
         Wants = [ "network-online.target" ];
       };
       Service = {
         Type = "oneshot";
         ExecStart = "${prefetchHome}/bin/prefetch-home-closure";
+      };
+    };
+
+    services.prefetch-home-closure-failed = {
+      Unit.Description = "Notify about Home Manager prefetch failure";
+      Service = {
+        Type = "oneshot";
+        ExecStart = ''${pkgs.libnotify}/bin/notify-send --urgency=critical "Home Manager prefetch failed" "Check: journalctl --user -u prefetch-home-closure.service"'';
       };
     };
 
