@@ -30,7 +30,6 @@
       #   ublock-origin
       #   1
       #   password
-      #   duckduckgo-privacy-essentials
       #   auto-tab-discard # increase browser speed and reduce memory when too many open tabs
 
       #   #   # bitwarden
@@ -38,20 +37,35 @@
       #   #   # sidebery # vertical tabs tree and bookmarks
       # ];
 
+      search = {
+        force = true;
+        default = "google";
+        privateDefault = "google";
+      };
+
+      userChrome = ''
+        #TabsToolbar, #nav-bar, #PersonalToolbar {
+          padding-block: 3px !important;
+        }
+      '';
+
       settings = {
         # General settings
-        "browser.search.defaultenginename" = "duckduckgo";
-        "browser.startup.homepage" = "https://www.duckduckgo.com";
-        "browser.startup.page" = 2;
-        "browser.newtabpage.enabled" = false;
-        "browser.newtabpage.dataSource" = "about:blank";
+        "browser.startup.homepage" = "about:home";
+        "browser.startup.page" = 1;
+        "browser.newtabpage.enabled" = true;
+        "browser.newtabpage.activity-stream.showSearch" = true;
+        "browser.newtabpage.activity-stream.feeds.topsites" = true;
+        "browser.newtabpage.activity-stream.topSitesRows" = 2;
+        "browser.newtabpage.activity-stream.feeds.section.highlights" = false;
         "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+        "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
         "browser.tabs.closeWindowWithLastTab" = false;
         "browser.shell.checkDefaultBrowser" = false;
         "browser.shell.defaultBrowserCheckCount" = 1;
         "browser.sessionstore.enabled" = true;
         "browser.sessionstore.resume_from_crash" = true;
-        "browser.sessionstore.resume_session_once" = true;
+        "browser.sessionstore.resume_session_once" = false;
 
         # Privacy and security settings
         "privacy.trackingprotection.enabled" = true;

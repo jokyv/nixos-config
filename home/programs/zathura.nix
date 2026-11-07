@@ -32,7 +32,7 @@
       # recolor-keephue = true;
 
       # Font settings
-      font = "${config.stylix.fonts.sansSerif.name} 11";
+      font = "${config.stylix.fonts.sansSerif.name} ${toString config.stylix.fonts.sizes.applications}";
 
       # UI settings
       statusbar-home-tilde = true;

@@ -1,4 +1,8 @@
-{ config, ... }:
+{
+  config,
+  desktopSession ? "niri",
+  ...
+}:
 
 {
   home.sessionVariables = {
@@ -7,7 +11,7 @@
     VISUAL = "hx";
     BROWSER = "firefox";
     TERMINAL = "foot";
-    WM = "niri";
+    WM = desktopSession;
     TERM = "xterm-256color";
     COLORTERM = "truecolor";
 

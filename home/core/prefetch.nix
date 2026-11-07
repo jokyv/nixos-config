@@ -1,7 +1,17 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  desktopSession ? "niri",
+  ...
+}:
 
 let
   repoDir = "${config.home.homeDirectory}/nixos-config";
+  homeOutput =
+    if desktopSession == "niri" then
+      config.home.username
+    else
+      ''\"${config.home.username}@nixos-gnome-development\"'';
   prefetchHome = pkgs.writeShellScriptBin "prefetch-home-closure" ''
     ${pkgs.coreutils}/bin/mkdir -p "${config.home.homeDirectory}/.cache"
     exec ${pkgs.util-linux}/bin/flock "${config.home.homeDirectory}/.cache/nix-prefetch.lock" \
@@ -10,7 +20,7 @@ let
       --accept-flake-config \
       --extra-experimental-features "nix-command flakes" \
       --no-link \
-      ${repoDir}#homeConfigurations.${config.home.username}.activationPackage
+      ${repoDir}#homeConfigurations.${homeOutput}.activationPackage
   '';
 in
 {

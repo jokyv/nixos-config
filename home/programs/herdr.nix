@@ -1,9 +1,22 @@
-{ inputs, pkgs, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
 
 {
   home.packages = [
     inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
+
+  xdg.configFile."herdr-app/settings.json".text = builtins.toJSON {
+    zoom = 1.2;
+    sounds.enabled = false;
+    font = config.stylix.fonts.monospace.name;
+    font_size = 16.0;
+    minimum_contrast = 1.0;
+  };
 
   home.file.".config/herdr/config.toml".text = ''
     onboarding = false

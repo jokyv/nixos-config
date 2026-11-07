@@ -6,6 +6,8 @@
 
 A complete NixOS ecosystem featuring modern Linux desktop capabilities with declarative configuration management across 2 machines.
 
+See [configuration structure](docs/configuration-structure.md) for user/host profiles, migration aliases, and current limitations.
+
 ## Featured Stack
 
 ### Core Components
@@ -106,6 +108,35 @@ Complete documentation is available in the [`docs/`](docs/) directory:
    - Update system: `just up`
    - Rebuild configuration: `just switch`
    - Manage secrets: `just encode` / `just decode`
+
+## Nix on macOS
+
+The plan is to try macOS on the iMac with an external monitor before deciding whether to keep it, keep the NixOS desktop, or buy a Mac mini. First, check that the external display works reliably when the iMac's built-in screen fails.
+
+- Use Nix and standalone Home Manager for personal packages and configuration; Homebrew is not required to get started.
+- The flake includes a minimal Apple Silicon Home Manager profile, `jokyv@mac-hm`, with the home directory `/Users/jokyv`. It has not yet been verified on the iMac; the macOS account name and home directory must match.
+- Consider nix-darwin later for declarative macOS settings or other system-level configuration. It is not currently configured in this repository. On shared Macs, avoid changing system-wide settings without the other users' agreement.
+- The intended workflow is to install Nix, clone this repository, and apply the personal configuration with a single command. A macOS-specific `just` command has not been added yet; installation, permissions, and initial setup will still require manual steps.
+
+This setup is for personal accounts and machines, not for managing family members' configurations.
+
+### Initial setup on an Apple Silicon Mac
+
+1. Install [Nix for macOS](https://nix.dev/install-nix.html), then open a new terminal and verify that `nix --version` works. Installing Git may prompt macOS to install the Xcode Command Line Tools.
+2. Confirm that the macOS account is named `jokyv` and its home directory is `/Users/jokyv` (`whoami` and `echo "$HOME"`). If not, adjust the `jokyv@mac-hm` profile in `flake.nix` before applying it.
+3. Clone the repository and run standalone Home Manager:
+
+   ```sh
+   git clone https://github.com/jokyv/nixos-config.git ~/nixos-config
+   cd ~/nixos-config
+   nix run --extra-experimental-features 'nix-command flakes' \
+     github:nix-community/home-manager -- switch --flake '.#jokyv@mac-hm'
+   ```
+
+   This downloads and runs Home Manager without installing it separately. It may take time on the first run. Review any existing dotfile conflicts before moving or backing them up; Home Manager may refuse to overwrite them.
+4. After editing the configuration, run the same `nix run ... switch` command again from the repository. The profile currently includes personal Git, Helix and command-line tool configuration, not the full Linux desktop setup.
+
+These steps are a starting point and have not yet been tested on the iMac. The command runs the current Home Manager CLI from GitHub; the configuration's dependencies are pinned by `flake.lock`.
 
 ## License
 

@@ -1,4 +1,8 @@
-{ ... }:
+{
+  lib,
+  desktopSession ? "niri",
+  ...
+}:
 
 {
   imports = [
@@ -18,6 +22,6 @@
     ../../programs/zathura.nix
     ../../programs/zoxide.nix
     ../../programs/git-sync-notes.nix
-    ../../programs/noctalia/default.nix
-  ];
+  ]
+  ++ lib.optionals (desktopSession == "niri") [ ../../programs/noctalia/default.nix ];
 }

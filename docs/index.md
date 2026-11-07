@@ -73,8 +73,8 @@ nixos-config/
 ├── docs/               # Documentation (you are here)
 ├── home/               # Home Manager configurations
 │   ├── core/             # Shared home modules
-│   ├── profiles/         # Work/gaming profile modules
-│   ├── default.nix       # Work entrypoint
+│   ├── profiles/         # Development/gaming profile modules
+│   ├── default.nix       # Development entrypoint
 │   ├── gaming.nix        # Gaming entrypoint
 │   └── programs/         # Program-specific configs
 ├── hosts/              # Host-specific settings

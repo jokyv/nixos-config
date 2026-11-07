@@ -44,6 +44,7 @@
 
       # Core settings
       core = {
+        hooksPath = "${config.home.homeDirectory}/dot/git/hooks";
         editor = "hx";
         pager = "${pkgs.writeShellScriptBin "git-pager" ''
           exec ${pkgs.delta}/bin/delta --side-by-side
@@ -99,7 +100,7 @@
     };
 
     ignores = [
-      # AI directorys
+      # AI directories
       ".claude"
       ".gemini"
       "**/.gemini"

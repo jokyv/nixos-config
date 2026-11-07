@@ -9,7 +9,7 @@
   programs.noctalia.settings = {
     shell = {
       avatar_path = "${config.home.homeDirectory}/.face";
-      ui_scale = 1.0;
+      ui_scale = 1.1;
       corner_radius_scale = 0.2;
       time_format = "{:%I:%M %p}";
       date_format = "%A, %x";

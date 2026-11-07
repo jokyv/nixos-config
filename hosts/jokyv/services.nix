@@ -114,6 +114,11 @@ let
       ${pkgs.coreutils}/bin/env \
         XDG_RUNTIME_DIR=/run/user/1000 \
         DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus \
+        ${pkgs.systemd}/bin/systemctl --user is-active --quiet niri.service || exit 0
+    ${pkgs.util-linux}/bin/runuser -u jokyv -- \
+      ${pkgs.coreutils}/bin/env \
+        XDG_RUNTIME_DIR=/run/user/1000 \
+        DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus \
         ${pkgs.systemd}/bin/systemctl --user restart noctalia.service
   '';
 in
@@ -197,6 +202,10 @@ in
       xdg-desktop-portal-wlr
     ];
     config.common.default = [ "*" ];
+    config.gnome.default = [
+      "gnome"
+      "gtk"
+    ];
   };
 
   # systemd-sleep returns only after wake. Restart through user manager so

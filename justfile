@@ -32,6 +32,23 @@ game:
     home-manager switch --flake .#gaming
     @echo "[SUCCESS] Gaming mode activated"
 
+# Apply a profile for the desktop session you are using.
+[group('rebuild')]
+dev-niri:
+    home-manager switch -b backup --flake '.#jokyv@nixos-niri-development' --show-trace
+
+[group('rebuild')]
+dev-gnome:
+    home-manager switch -b backup --flake '.#jokyv@nixos-gnome-development' --show-trace
+
+[group('rebuild')]
+game-niri:
+    home-manager switch -b backup --flake '.#jokyv@nixos-niri-gaming' --show-trace
+
+[group('rebuild')]
+game-gnome:
+    home-manager switch -b backup --flake '.#jokyv@nixos-gnome-gaming' --show-trace
+
 # Alias hnh for home-nh
 
 alias hnh := home-nh
@@ -87,6 +104,12 @@ test:
     nix flake check --show-trace --print-build-logs --verbose
     nix eval --raw .#homeConfigurations.jokyv.activationPackage.drvPath >/dev/null
     nix eval --raw .#homeConfigurations.gaming.activationPackage.drvPath >/dev/null
+    for profile in 'jokyv@nixos-niri' 'jokyv@nixos-gnome' 'dora@nixos-gnome' 'jokyv@mac-hm' 'jokyv@nixos-niri-development' 'jokyv@nixos-niri-gaming' 'jokyv@nixos-gnome-development' 'jokyv@nixos-gnome-gaming'; do nix eval --raw ".#homeConfigurations.\"$profile\".activationPackage.drvPath" >/dev/null; done
+    test "$(nix eval --raw '.#homeConfigurations.jokyv.activationPackage.drvPath')" = "$(nix eval --raw '.#homeConfigurations."jokyv@nixos-niri".activationPackage.drvPath')"
+    test "$(nix eval --raw '.#nixosConfigurations.nixos.config.system.build.toplevel.drvPath')" = "$(nix eval --raw '.#nixosConfigurations.nixos-niri.config.system.build.toplevel.drvPath')"
+    test "$(nix eval --raw '.#homeConfigurations."dora@nixos-gnome".config.home.homeDirectory')" = /home/dora
+    test "$(nix eval --raw '.#homeConfigurations."jokyv@mac-hm".config.home.homeDirectory')" = /Users/jokyv
+    test "$(nix eval --json '.#homeConfigurations."dora@nixos-gnome".config.programs.git.enable')" = false
     @echo "[SUCCESS] Tests completed"
 
 # Update all inputs

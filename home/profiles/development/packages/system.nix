@@ -6,7 +6,6 @@
     base16-schemes
     cowsay
     dconf
-    ddgr # duckduckgo on the terminal
     delta
     dysk
     eza

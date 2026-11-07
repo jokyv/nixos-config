@@ -46,7 +46,7 @@ in
           mode "1920x1080@119.982000"
       }
       output "HDMI-A-1" {
-          scale 1.35
+          scale 1.25
           transform "normal"
           position x=0 y=0
           mode "3840x2160@60.000"
@@ -171,7 +171,8 @@ in
           Mod+Shift+S { spawn "${scripts_dir}/clip_hist.py" "sel"; }
           Mod+Shift+Slash { show-hotkey-overlay; }
           Mod+Shift+Space cooldown-ms=500 { spawn "noctalia" "msg" "panel-toggle" "launcher" "clipboard"; }
-          Mod+Shift+T cooldown-ms=500 { spawn "kitty"; }
+          Mod+Shift+Ctrl+T cooldown-ms=500 { spawn "kitty"; }
+          Mod+Shift+T cooldown-ms=500 { spawn "herdr-app"; }
           Mod+Shift+U { move-workspace-down; }
           Mod+Shift+V { spawn "${scripts_dir}/clip_hist.py" "paste"; }
           Mod+Shift+Y { spawn "noctalia" "msg" "screenshot-region"; }
@@ -220,7 +221,7 @@ in
       }
       window-rule {
           match is-active=false
-          opacity 0.850000
+          opacity 0.950000
       }
       animations {
           config-notification-open-close { spring damping-ratio=0.600000 epsilon=0.001000 stiffness=1000; }

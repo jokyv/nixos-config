@@ -11,6 +11,7 @@
   systemd.user.services.noctalia = {
     Unit = {
       Description = "Noctalia desktop shell";
+      ConditionEnvironment = "XDG_CURRENT_DESKTOP=niri";
       PartOf = [ "graphical-session.target" ];
       After = [ "graphical-session.target" ];
     };

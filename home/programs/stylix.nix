@@ -60,10 +60,10 @@ in
         name = "Noto Emoji";
       };
       sizes = {
-        terminal = 15;
-        applications = 12;
-        popups = 15;
-        desktop = 12;
+        terminal = 18;
+        applications = 18;
+        popups = 18;
+        desktop = 18;
       };
     };
 

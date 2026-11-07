@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   _module.args.primaryUser = "dora";
@@ -6,6 +11,9 @@
     ../jokyv/security.nix
     ../jokyv/maintenance.nix
     ../jokyv/btrfs.nix
+    ../users/jokyv.nix
+    ../users/dora.nix
+    inputs.home-manager.nixosModules.home-manager
     ./desktop.nix
   ];
 
@@ -33,20 +41,18 @@
     enableIPv6 = true;
   };
 
-  # User
-  users.users.dora = {
-    isNormalUser = true;
-    description = "dora";
-    shell = pkgs.bashInteractive;
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "audio"
-      "video"
-      "input"
-      "bluetooth"
-      "plugdev"
-    ];
+  # Activate both users' Home Manager profiles with the system.
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.jokyv = {
+      imports = [ ../../home/users/jokyv.nix ];
+      home.stateVersion = "24.05";
+    };
+    users.dora = {
+      imports = [ ../../home/users/dora.nix ];
+      home.stateVersion = "24.05";
+    };
   };
 
   users.users.root = {
@@ -74,6 +80,12 @@
     LC_TELEPHONE = "en_SG.UTF-8";
     LC_TIME = "en_SG.UTF-8";
   };
+
+  # The shared maintenance module assumes a working host output and checkout.
+  # Enable these only after the GNOME machine and its repository are provisioned.
+  system.autoUpgrade.enable = lib.mkForce false;
+  systemd.timers.prefetch-system-closure.enable = lib.mkForce false;
+  systemd.paths.prefetch-system-closure.enable = lib.mkForce false;
 
   # Memory
   zramSwap.enable = false;

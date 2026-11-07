@@ -45,7 +45,7 @@
       "cleanup" = "find . -type f -name '*.DS_Store' -ls -delete";
 
       # Linux Scripts
-      "sb" = "python3 ~/scripts/bin/linux_util.py --source_bash_profile";
+      "sb" = "source ~/.bash_profile";
       "cdd" = "cd_with_eza";
 
       # Weather aliases

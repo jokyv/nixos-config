@@ -1,4 +1,8 @@
-_:
+{
+  lib,
+  primaryUser ? "jokyv",
+  ...
+}:
 
 {
   # ---------------------------------------------
@@ -7,7 +11,8 @@ _:
   # This assumes you are using BTRFS for your filesystems.
   # These settings help with maintaining the filesystem's health and performance.
 
-  fileSystems = {
+  # These UID-specific cache mounts belong only to the original host.
+  fileSystems = lib.mkIf (primaryUser == "jokyv") {
     "/home/jokyv/.cache/fontconfig" = {
       device = "none";
       fsType = "tmpfs";

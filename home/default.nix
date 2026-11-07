@@ -9,6 +9,6 @@
     ./core/prefetch.nix
     ./core/packages.nix
     ./core/programs.nix
-    ./profiles/work
+    ./profiles/development
   ];
 }

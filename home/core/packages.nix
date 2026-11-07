@@ -7,6 +7,7 @@
     font-awesome
     gogcli # Google APIs CLI (gmail)
     grim
+    herdr-desktop
     just
     noto-fonts
     noto-fonts-color-emoji

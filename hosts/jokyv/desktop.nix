@@ -23,5 +23,8 @@
     nix-ld.enable = true; # needs this for python uv
   };
 
+  # Keep ReGreet and make GNOME available as an additional login session.
+  services.desktopManager.gnome.enable = true;
+
   hardware.steam-hardware.enable = true;
 }

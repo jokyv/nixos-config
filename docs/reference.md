@@ -13,8 +13,8 @@ nixos-config/
 │   └── secrets_management.md  # Secrets management guide
 ├── home/               # Home Manager configurations
 │   ├── core/              # Shared home modules
-│   ├── profiles/          # Work/gaming profile modules
-│   ├── default.nix        # Work entrypoint
+│   ├── profiles/          # Development/gaming profile modules
+│   ├── default.nix        # Development entrypoint
 │   ├── gaming.nix         # Gaming entrypoint
 │   └── programs/          # Individual program configurations
 │       ├── bash.nix
@@ -201,7 +201,7 @@ stylix = {
 The project includes a justfile for common tasks:
 
 - `just switch`: Rebuild system configuration
-- `just home`: Apply Home Manager configuration (work mode)
+- `just home`: Apply Home Manager configuration (development mode)
 - `just game`: Apply Home Manager configuration (gaming mode)
 - `just up`: Update system packages
 - `just cleanup`: Smart cleanup (keep 3 generations)
