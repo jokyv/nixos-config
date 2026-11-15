@@ -22,7 +22,7 @@ See [configuration structure](docs/configuration-structure.md) for user/host pro
 
 - **Language Servers:** Nixd, Rust-analyzer, Python-LSP, Markdown Oxide
 - **Version Control:** Git with Delta diff viewer
-- **Shell Environments:** Nushell, Bash, Xonsh
+- **Shell Environment:** Bash (Nushell and Xonsh configurations are in `home/programs/deprecated/`)
 - **Package Management:** UV (Python), Cargo (Rust)
 
 ### Desktop Environment
