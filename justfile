@@ -17,7 +17,7 @@ help:
 [group('rebuild')]
 home:
     @echo "[INFO] Rebuilding Home Manager configuration..."
-    home-manager switch -b backup --flake .#jokyv --show-trace
+    home-manager switch --flake .#jokyv --show-trace
     @echo "[SUCCESS] Home Manager rebuild successful"
 
 # Rebuild the home config using nh
@@ -35,19 +35,19 @@ game:
 # Apply a profile for the desktop session you are using.
 [group('rebuild')]
 dev-niri:
-    home-manager switch -b backup --flake '.#jokyv@nixos-niri-development' --show-trace
+    home-manager switch --flake '.#jokyv@nixos-niri-development' --show-trace
 
 [group('rebuild')]
 dev-gnome:
-    home-manager switch -b backup --flake '.#jokyv@nixos-gnome-development' --show-trace
+    home-manager switch --flake '.#jokyv@nixos-gnome-development' --show-trace
 
 [group('rebuild')]
 game-niri:
-    home-manager switch -b backup --flake '.#jokyv@nixos-niri-gaming' --show-trace
+    home-manager switch --flake '.#jokyv@nixos-niri-gaming' --show-trace
 
 [group('rebuild')]
 game-gnome:
-    home-manager switch -b backup --flake '.#jokyv@nixos-gnome-gaming' --show-trace
+    home-manager switch --flake '.#jokyv@nixos-gnome-gaming' --show-trace
 
 # Alias hnh for home-nh
 

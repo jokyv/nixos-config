@@ -148,27 +148,19 @@ in
           Mod+Period { expel-window-from-column; }
           Mod+Q repeat=false { close-window; }
           Mod+R { switch-preset-column-width; }
-          Mod+S repeat=false { spawn "footclient" "-F" "cbonsai" "--screensaver"; }
           Mod+Shift+Alt+F { switch-focus-between-floating-and-tiling; }
           Mod+Shift+B repeat=false { spawn "brave"; }
           Mod+Shift+C { spawn "${scripts_dir}/clip_hist.py" "add"; }
           Mod+Shift+Ctrl+F { maximize-window-to-edges; }
-          // Mod+Shift+Ctrl+H { move-column-to-monitor-left; }
-          // Mod+Shift+Ctrl+J { move-column-to-monitor-down; }
-          // Mod+Shift+Ctrl+K { move-column-to-monitor-up; }
-          // Mod+Shift+Ctrl+L { move-column-to-monitor-right; }
-          Mod+Shift+D { spawn "${scripts_dir}/clip_hist.py" "del"; }
           Mod+Shift+Equal { set-window-height "+10%"; }
           Mod+Shift+Escape cooldown-ms=500 { spawn "noctalia" "msg" "panel-toggle" "session"; }
           Mod+Shift+F { fullscreen-window; }
-          // Mod+Shift+H { focus-monitor-left; }
+          Mod+Shift+H { swap-window-left; }
           Mod+Shift+I { move-workspace-up; }
-          // Mod+Shift+L { focus-monitor-right; }
-          Mod+Shift+M { spawn "${scripts_dir}/my_logout.py"; }
+          Mod+Shift+L { swap-window-right; }
           Mod+Shift+Minus { set-window-height "-10%"; }
           Mod+Shift+P { power-off-monitors; }
           Mod+Shift+Q { quit; }
-          Mod+Shift+S { spawn "${scripts_dir}/clip_hist.py" "sel"; }
           Mod+Shift+Slash { show-hotkey-overlay; }
           Mod+Shift+Space cooldown-ms=500 { spawn "noctalia" "msg" "panel-toggle" "launcher" "clipboard"; }
           Mod+Shift+Ctrl+T cooldown-ms=500 { spawn "kitty"; }
