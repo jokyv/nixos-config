@@ -145,15 +145,14 @@
       create = "0600 root root";
     };
 
-    # SSH server (disabled until inbound SSH is needed).
-    # Git push/pull only needs the openssh client package.
+    # SSH server for remote access.
     openssh = {
-      enable = false;
+      enable = true;
       settings = {
         PasswordAuthentication = false; # Disable password auth (use keys only)
         PermitRootLogin = "no"; # Disable root login over SSH
       };
-      openFirewall = false; # Don't open SSH server port.
+      openFirewall = true; # Allow SSH through the firewall.
     };
 
     # Antivirus engine

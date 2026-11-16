@@ -17,6 +17,9 @@
     ./desktop.nix
   ];
 
+  # The shared security module enables SSH for the other host.
+  services.openssh.enable = lib.mkForce false;
+
   time.timeZone = "Asia/Singapore";
 
   # Bootloader

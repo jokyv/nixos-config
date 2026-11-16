@@ -9,6 +9,9 @@
     enableIPv6 = true; # Keep IPv6 enabled
   };
 
+  # Private network access for Herdr remote connections.
+  services.tailscale.enable = true;
+
   # Do not block boot waiting for network; desktop can connect after login.
   # Services that need network should depend on network-online.target explicitly.
   systemd.services.NetworkManager-wait-online.enable = false;
