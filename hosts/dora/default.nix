@@ -49,7 +49,10 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     users.jokyv = {
-      imports = [ ../../home/users/jokyv.nix ];
+      imports = [
+        ../../home/users/jokyv.nix
+        ../../home/users/bun-shell.nix
+      ];
       home.stateVersion = "24.05";
     };
     users.dora = {

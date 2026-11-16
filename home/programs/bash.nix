@@ -127,6 +127,13 @@
     # Functions need to go in initExtra
     initExtra = ''
 
+      # Non-login shells may not inherit Home Manager's session path.
+      case ":$PATH:" in
+        *":$HOME/.bun/bin:"*) ;;
+        *) export PATH="$HOME/.bun/bin:$PATH" ;;
+      esac
+      export BUN_INSTALL="''${BUN_INSTALL:-$HOME/.bun}"
+
       # Set shell options
       set -o vi
       shopt -s cdspell

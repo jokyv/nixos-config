@@ -134,7 +134,7 @@ This setup is for personal accounts and machines, not for managing family member
    ```
 
    This downloads and runs Home Manager without installing it separately. It may take time on the first run. Review any existing dotfile conflicts before moving or backing them up; Home Manager may refuse to overwrite them.
-4. After editing the configuration, run the same `nix run ... switch` command again from the repository. The profile currently includes personal Git, Helix and command-line tool configuration, not the full Linux desktop setup.
+4. After editing the configuration, run the same `nix run ... switch` command again from the repository. The profile currently includes personal Git, Helix and command-line tool configuration, not the full Linux desktop setup. It adds `~/.bun/bin` to Bash; install Bun, Pi, and OMP separately. Pi also needs Node.js.
 
 These steps are a starting point and have not yet been tested on the iMac. The command runs the current Home Manager CLI from GitHub; the configuration's dependencies are pinned by `flake.lock`.
 

@@ -29,6 +29,7 @@
   };
 
   programs.dconf.enable = true;
+  programs.nix-ld.enable = true; # Allow manually managed Bun and OMP binaries.
 
   hardware = {
     enableRedistributableFirmware = true;

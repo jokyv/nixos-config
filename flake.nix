@@ -168,65 +168,14 @@
       # Host policy only: the GNOME machine still needs its own hardware module.
       nixosModules.nixos-gnome = import ./hosts/dora/default.nix;
 
-      checks.${system} = {
-        gnome-policy =
-          let
-            gnome = nixpkgs.lib.nixosSystem {
-              inherit system;
-              specialArgs = { inherit inputs; };
-              modules = [ ./hosts/dora/default.nix ];
-            };
-            config = gnome.config;
-          in
-          assert config.services.desktopManager.gnome.enable;
-          assert config.users.users.jokyv.isNormalUser;
-          assert builtins.elem "wheel" config.users.users.jokyv.extraGroups;
-          assert config.users.users.dora.isNormalUser;
-          assert !(builtins.elem "wheel" config.users.users.dora.extraGroups);
-          assert config.home-manager.users.jokyv.home.username == "jokyv";
-          assert config.home-manager.users.dora.home.username == "dora";
-          assert config.home-manager.users.jokyv.programs.git.enable;
-          assert !config.home-manager.users.dora.programs.git.enable;
-          assert !config.system.autoUpgrade.enable;
-          assert !config.systemd.timers.prefetch-system-closure.enable;
-          assert !config.systemd.paths.prefetch-system-closure.enable;
-          assert !(builtins.hasAttr "/home/jokyv/.cache/fontconfig" config.fileSystems);
-          assert !(builtins.hasAttr "/home/jokyv/.cache/mesa_shader_cache" config.fileSystems);
-          pkgs.runCommand "gnome-policy-check" { } ''
-            touch "$out"
-          '';
-
-        desktop-profiles =
-          let
-            niriDev = self.homeConfigurations."jokyv@nixos-niri-development".config;
-            ng = self.homeConfigurations."jokyv@nixos-niri-gaming".config;
-            gd = self.homeConfigurations."jokyv@nixos-gnome-development".config;
-            gg = self.homeConfigurations."jokyv@nixos-gnome-gaming".config;
-          in
-          assert niriDev.wayland.windowManager.niri.enable && ng.wayland.windowManager.niri.enable;
-          assert !gd.wayland.windowManager.niri.enable && !gg.wayland.windowManager.niri.enable;
-          assert
-            niriDev.programs.noctalia.enable && !gd.programs.noctalia.enable && !gg.programs.noctalia.enable;
-          assert niriDev.home.sessionVariables.WM == "niri" && ng.home.sessionVariables.WM == "niri";
-          assert gd.home.sessionVariables.WM == "gnome" && gg.home.sessionVariables.WM == "gnome";
-          pkgs.runCommand "desktop-profiles-check" { } ''
-            touch "$out"
-          '';
-
-        desktop-sessions =
-          let
-            host = self.nixosConfigurations.nixos.config;
-            sessions = host.services.displayManager.sessionData.sessionNames;
-            home = self.homeConfigurations.jokyv.config;
-          in
-          assert host.services.displayManager.regreet.enable;
-          assert host.services.displayManager.defaultSession == "niri";
-          assert builtins.elem "niri" sessions;
-          assert builtins.elem "gnome" sessions;
-          assert home.systemd.user.services.noctalia.Unit.ConditionEnvironment == "XDG_CURRENT_DESKTOP=niri";
-          pkgs.runCommand "desktop-sessions-check" { } ''
-            touch "$out"
-          '';
+      checks.${system} = import ./checks {
+        inherit
+          self
+          inputs
+          nixpkgs
+          pkgs
+          system
+          ;
       };
 
       devShells.${system}.default = pkgs.mkShell {
@@ -294,7 +243,7 @@
       homeConfigurations."jokyv@nixos-gnome" = mkHome {
         username = "jokyv";
         inherit system;
-        modules = jokyvPortableModules;
+        modules = jokyvPortableModules ++ [ ./home/users/bun-shell.nix ];
       };
       homeConfigurations."dora@nixos-gnome" = mkHome {
         username = "dora";
@@ -304,7 +253,7 @@
       homeConfigurations."jokyv@mac-hm" = mkHome {
         username = "jokyv";
         system = "aarch64-darwin";
-        modules = jokyvPortableModules;
+        modules = jokyvPortableModules ++ [ ./home/users/bun-shell.nix ];
       };
 
       # Gaming mode configuration (minimal + Steam)
