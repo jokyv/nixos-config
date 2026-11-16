@@ -46,7 +46,7 @@ in
           mode "1920x1080@119.982000"
       }
       output "HDMI-A-1" {
-          scale 1.25
+          scale 1.2
           transform "normal"
           position x=0 y=0
           mode "3840x2160@60.000"

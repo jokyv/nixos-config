@@ -50,6 +50,10 @@
       '';
 
       settings = {
+        # Keep Firefox page fonts independent of the larger desktop font size.
+        "font.size.variable.x-western" = lib.mkForce 16;
+        "font.size.monospace.x-western" = lib.mkForce 13;
+
         # General settings
         "browser.startup.homepage" = "about:home";
         "browser.startup.page" = 1;
