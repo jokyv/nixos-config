@@ -195,14 +195,8 @@ diff:
 [group('dev')]
 fmt:
     @echo "[INFO] Formatting code..."
-    treefmt .
+    treefmt --tree-root "$PWD" .
     @echo "[SUCCESS] Formatting completed"
-
-# Create a commit with generation number
-[group('dev')]
-commit:
-    @echo "Committing generation {{ `sudo nixos-rebuild list-generations | awk '/True/ {print $1}'` }}"
-    git commit -am "chore(nixos): apply generation {{ `sudo nixos-rebuild list-generations | awk '/True/ {print $1}'` }}"
 
 # Format and rebuild the system without committing
 [group('rebuild')]
@@ -238,19 +232,12 @@ audit:
 info:
     nix-shell -p nix-info --run "nix-info -m"
 
-# Build the system configuration without applying it, then show differences from current system
-[group('dev')]
-backup:
-    sudo nixos-rebuild build --flake .#nixos
-    sudo nix store diff-closures /run/current-system ./result
-
 # Check the integrity of the Nix store and run 'nix config check' for system health
 [group('maintenance')]
 health:
-    @echo "[INFO] Running system health checks..."
-    @echo "[INFO] Running quick store verification (faster)..."
-    sudo nix-store --verify --check-contents 2>/dev/null || echo "[WARN] Full store verification skipped - use 'health-full' for complete check"
-    nix config check || true
+    @echo "[INFO] Running system health checks (store verification may be slow)..."
+    sudo nix-store --verify --check-contents
+    nix config check
     @echo "[SUCCESS] Health checks completed"
 
 # Show latest Vulnix vulnerability audit report
@@ -270,15 +257,6 @@ vulnix-report:
       sudo head -80 "$latest"; \
     fi; \
     echo "[INFO] Full report: sudo less $latest"
-
-# Full system health check with complete store verification (slow)
-[group('maintenance')]
-health-full:
-    @echo "[INFO] Running full system health checks..."
-    @echo "[INFO] This may take 15-60 minutes depending on system size..."
-    sudo nix-store --verify --check-contents
-    nix config check || true
-    @echo "[SUCCESS] Full health checks completed"
 
 # Calculate the total disk space used by the current system configuration
 [group('maintenance')]
