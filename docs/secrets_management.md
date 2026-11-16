@@ -52,7 +52,7 @@ nix run nixpkgs#ssh-to-age -- -private-key -i ~/.ssh/private > ~/.config/sops/ag
 
   sops.defaultSopsFile = ./secrets/secrets.yaml;
   sops.defaultSopsFormat = "yaml";
-  
+
   sops.age.keyFile = "/home/user/.config/sops/age/secrets.key";
 
   sops.secrets.example-key = { };
@@ -100,15 +100,16 @@ creation_rules:
 
 ## Commands
 
+Use `just edit-secrets` for routine edits. It opens the encrypted file with SOPS
+and avoids creating a persistent plaintext `secrets.yaml` in the repository.
+Editor temporary files or backups may still contain plaintext; configure your editor accordingly.
+
 ```bash
 # Edit secrets interactively (decrypts, opens editor, re-encrypts on save)
-sops secrets.enc.yaml
+just edit-secrets
 
 # Decrypt to stdout
 sops -d secrets.enc.yaml
-
-# Encrypt a plaintext file
-sops -e secrets.yaml > secrets.enc.yaml
 ```
 
 > The `.sops.yaml` config handles key selection automatically — no need for `--age` flags.

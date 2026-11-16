@@ -107,7 +107,7 @@ Complete documentation is available in the [`docs/`](docs/) directory:
 4. **Common Tasks:**
    - Update system: `just up`
    - Rebuild configuration: `just switch`
-   - Manage secrets: `just encode` / `just decode`
+   - Edit secrets: `just edit-secrets`
 
 ## Nix on macOS
 

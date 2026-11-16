@@ -32,9 +32,8 @@ just game       # Gaming mode (minimal + Steam)
 # Maintenance
 just cleanup    # Smart cleanup (keep 3 generations)
 
-# Manage secrets
-just encode    # Encrypt secrets
-just decode    # Decrypt secrets
+# Edit encrypted secrets
+just edit-secrets
 ```
 
 ## Documentation

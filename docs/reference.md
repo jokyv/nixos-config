@@ -205,8 +205,7 @@ The project includes a justfile for common tasks:
 - `just game`: Apply Home Manager configuration (gaming mode)
 - `just up`: Update system packages
 - `just cleanup`: Smart cleanup (keep 3 generations)
-- `just encode`: Encrypt secrets
-- `just decode`: Decrypt secrets
+- `just edit-secrets`: Edit encrypted secrets with SOPS
 - `just audit`: Run flake, dead-code, and Nix lint checks
 
 ## Repository Development Shell

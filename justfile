@@ -168,16 +168,6 @@ cleanup-deep:
 [group('maintenance')]
 cleanup: cleanup-smart
 
-# Encode secrets
-[group('secrets')]
-encode:
-    sops -e secrets.yaml > secrets.enc.yaml
-
-# Decode secrets
-[group('secrets')]
-decode:
-    sops -d secrets.enc.yaml > secrets.yaml
-
 # Safely edit encrypted secrets using SOPS (Secrets OPerationS)
 [group('secrets')]
 edit-secrets:
@@ -190,10 +180,10 @@ validate-secrets:
     sops -d secrets.enc.yaml > /dev/null
     @echo "[SUCCESS] Secrets are valid"
 
-# Rotate the encryption key for secrets (use if keys are compromised)
+# Rotate the SOPS data key and save the encrypted file
 [group('secrets')]
 rotate-secrets:
-    sops --rotate secrets.enc.yaml
+    sops --rotate --in-place secrets.enc.yaml
 
 # Show the current changes
 [group('dev')]
