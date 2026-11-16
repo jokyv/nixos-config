@@ -25,7 +25,7 @@
     };
 
     #--------------------------------------------
-    # nixpkgs
+    # home-manager
     #--------------------------------------------
 
     # hm stable
@@ -59,23 +59,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nh = {
-      url = "github:nix-community/nh";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    devenv = {
-      url = "github:cachix/devenv/latest";
+    herdr = {
+      url = "github:herdrdev/herdr/v0.8.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    herdr = {
-      url = "github:herdrdev/herdr/v0.8.2";
+    lig = {
+      url = "github:KevenGoncalves/lig";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -91,8 +86,6 @@
       home-manager,
       stylix,
       sops-nix,
-      devenv,
-      nixos-hardware,
       noctalia,
       ...
     }@inputs:
@@ -114,17 +107,7 @@
             stylix.homeModules.stylix
             sops-nix.homeManagerModules.sops
             noctalia.homeModules.default
-            {
-              home.packages = with pkgs; [
-                devenv
-                direnv
-              ];
-              programs.direnv = {
-                enable = true;
-                enableBashIntegration = true;
-                nix-direnv.enable = true;
-              };
-            }
+            inputs.lig.homeModules.default
           ];
         };
 
@@ -187,6 +170,7 @@
           nix-index
           nix-prefetch-git
           nixfmt
+          nixfmt-tree
           nix-output-monitor
           nil
         ];

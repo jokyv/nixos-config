@@ -9,6 +9,7 @@
     alacritty
 
     # Development Tools
+    devenv
     neovim
     git-cliff
     gh
