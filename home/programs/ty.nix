@@ -4,7 +4,7 @@ _: {
 
     settings = {
       # Target Python version
-      python-version = "3.13";
+      python-version = "3.14";
 
       # Common exclusions
       exclude = [
